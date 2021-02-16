@@ -14,8 +14,11 @@ const Modal = (modalContent, closeModal) => {
 
   return (
     <>
-      loginOption && <Login /> && setModalContent={loginOption}
-      registerOption && <Register /> && setModalContent={registerOption}
+      {modalContent === loginOption ? (
+        <Login />
+      ) : (
+        <Register /> && setModalContent(registerOption)
+      )}
     </>
   );
 };
