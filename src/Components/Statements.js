@@ -1,7 +1,6 @@
 import React from "react";
 
 const Statements = () => {
-
   document.title = "Return Center - Statements";
 
   return (
