@@ -22,12 +22,12 @@ const Modal = () => {
   // This will be the state of a modal that opens when button is clicked.
   // The modal will show import information based on what info was requested.
   const [modalContent, setModalContent] = useState(loginOption);
-
+  // This will set the modal content based on whether the user selects login or register
   console.log(modalContent);
 
   return (
     <>
-    <h1>Modal</h1>
+      <h1>Modal</h1>
       {/* {modalContent === loginOption ? (
         <Login />
       ) : (
