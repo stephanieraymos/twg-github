@@ -18,7 +18,8 @@ body {
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: rgb(209, 209, 211);
+    background-color: rgb(31, 31, 31);
+    color: white;
   }
 
   h1, h2, h3 {
