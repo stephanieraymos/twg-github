@@ -2,7 +2,7 @@ import React from "react";
 
 const Orders = () => {
 
-  document.title = "Return Center - Orders";
+  document.title = "Orders";
 
   return (
     <>
