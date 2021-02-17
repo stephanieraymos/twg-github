@@ -1,7 +1,7 @@
 import React from "react";
 
 const Register = () => {
-  document.title = "Return Center - Register";
+  document.title = "Register";
 
   return (
     <>
