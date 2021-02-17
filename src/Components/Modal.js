@@ -1,24 +1,38 @@
 import React, { useState, useEffect } from "react";
+import Login from "./Login";
+import Register from "./Register";
 
-const Modal = (modalContent, closeModal) => {
+// Params: modalContent, closeModal
+const Modal = () => {
   useEffect(() => {
     setTimeout(() => {
-      closeModal();
+      // closeModal();
     }, 3000);
   }, []);
+
+  const loginOption = () => {
+    return <h1>Login Option</h1>;
+  };
+
+  const registerOption = () => {
+    return <h1>Register Option</h1>;
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   // This will be the state of a modal that opens when button is clicked.
   // The modal will show import information based on what info was requested.
   const [modalContent, setModalContent] = useState(loginOption);
 
+  console.log(modalContent);
+
   return (
     <>
-      {modalContent === loginOption ? (
+    <h1>Modal</h1>
+      {/* {modalContent === loginOption ? (
         <Login />
       ) : (
         <Register /> && setModalContent(registerOption)
-      )}
+      )} */}
     </>
   );
 };

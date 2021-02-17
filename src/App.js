@@ -1,10 +1,12 @@
 import React from 'react'
+import Modal from './Components/Modal'
 
 import Home from './Components/Home'
 function App() {
   return (
     <div>
-      <Home />
+      <Modal />
+
     </div>
   )
 }
