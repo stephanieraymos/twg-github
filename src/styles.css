@@ -1,4 +1,9 @@
 *,
+:root {
+  --purple: #380082;
+  --dark: #12121f;
+}
+
 ::after,
 ::before {
   margin: 0;
@@ -18,7 +23,7 @@ body {
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: rgb(31, 31, 31);
+    background-color: var(--dark);
     color: white;
   }
 
