@@ -1,7 +1,7 @@
 import React from "react";
 
 const Login = () => {
-  document.title = "Return Center - Login";
+  document.title = "Login";
 
   return (
     <>
