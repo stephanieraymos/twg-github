@@ -3,7 +3,7 @@ import Modal from './Modal';
 
 const Home = () => {
 
-  document.title = "Return Center - Home";
+  document.title = "Home";
 
   const showModal = (e) => {
       return <Modal />
