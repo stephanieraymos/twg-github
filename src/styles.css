@@ -1,9 +1,10 @@
 *,
 :root {
-  --purple: #380082;
   --dark: #12121f;
+  --purple: #380082;
   --modal: #3949AB;
   --sections: #536DFE;
+  --white: #F5F5F5;
 }
 
 ::after,
