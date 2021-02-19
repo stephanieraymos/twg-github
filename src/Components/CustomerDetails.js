@@ -6,15 +6,15 @@ const CustomerDetails = ({ name, orders, cost }) => {
   return (
     <article className="customer-details">
       <header>
-        <h4>Name: {name}</h4>
+        <h4><span className="key">Name:</span> {name}</h4>
         <button className="btn" onClick={() => setShowInfo(!showInfo)}>
           {showInfo ? <AiOutlineMinus /> : <AiOutlinePlus />}
         </button>
       </header>
       {showInfo && (
         <div>
-          <p>Total orders placed: {orders}</p>
-          <p>Total cost of all orders: ${cost}</p>
+          <p><span className="key">Total orders:</span> {orders}</p>
+          <p><span className="key">Spent:</span> ${cost}</p>
         </div>
       )}
     </article>
