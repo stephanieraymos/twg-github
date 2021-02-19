@@ -1,11 +1,10 @@
 import React from 'react'
-import Modal from './Components/Modal'
+import CustomerDb from './Components/CustomerDb'
 
-import Home from './Components/Home'
 function App() {
   return (
     <div>
-      <Home />
+      <CustomerDb />
     </div>
   )
 }

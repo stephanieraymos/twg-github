@@ -35,22 +35,36 @@ body {
   h1, h2, h3 {
       padding: 10px;
       margin: 10px;
-      color: var(--white);
+  }
+
+  .container {
+    width: 90vw;
+    margin: 5rem auto;
+    background: var(--light);
+    border-radius: 0.25rem;
+    padding: 2.5rem 2rem;
+    max-width: 920px;
+    display: grid;
+    gap: 1rem 2rem;
+  }
+  .container h3 {
+    line-height: 1.2;
+    font-weight: 500;
   }
   
   .customer-details {
     padding: 1rem 1.5rem;
-    border: 2px solid var(--clr-grey-special);
+    border: 2px solid var(--dark);
     margin-bottom: 1rem;
-    border-radius: var(--radius);
-    box-shadow: var(--light-shadow);
+    border-radius: 0.25rem;
+    box-shadow: var(--dark-gray);
   }
   .customer-details h4 {
     text-transform: none;
     line-height: 1.5;
   }
   .customer-details p {
-    color: var(--clr-grey-3);
+    color: var(--dark-gray);
     margin-bottom: 0;
     margin-top: 0.5rem;
   }
@@ -67,12 +81,12 @@ body {
     border-color: transparent;
     width: 2rem;
     height: 2rem;
-    background: var(--clr-grey-special);
+    background: var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    color: var(--clr-red-special);
+    color: var(--text);
     cursor: pointer;
     margin-left: 1rem;
     align-self: center;

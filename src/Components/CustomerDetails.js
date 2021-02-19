@@ -1,22 +1,22 @@
-
-import React, { useState } from 'react';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-const CustomerDetails = ({ name, orders }) => {
+import React, { useState } from "react";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+const CustomerDetails = ({ name, orders, cost }) => {
   const [showInfo, setShowInfo] = useState(false);
 
   return (
     <article className="customer-details">
       <header>
-        <h4>{name}</h4>
+        <h4>Customer Name: {name}</h4>
         <button className="btn" onClick={() => setShowInfo(!showInfo)}>
-          {
-            showInfo ? <AiOutlineMinus /> : <AiOutlinePlus />
-          }
+          {showInfo ? <AiOutlineMinus /> : <AiOutlinePlus />}
         </button>
       </header>
-      {
-        showInfo && <p>{orders}</p>
-      }
+      {showInfo && (
+        <div>
+          <p>Total orders placed: {orders}</p>
+          <p>Total cost of all orders: ${cost}</p>
+        </div>
+      )}
     </article>
   );
 };
