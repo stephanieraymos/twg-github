@@ -1,6 +1,7 @@
 *,
 :root {
   --dark: #12121f;
+  --dark-gray: #303133; 
   --light: #F7F8FC;
   --accent: #380082;
   --modal: #3949AB;
