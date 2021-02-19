@@ -6,6 +6,7 @@ const Inventory = () => {
   return (
     <>
       <h1>Inventory</h1>
+      <button>Add Inventory</button>
     </>
   );
 };
