@@ -28,7 +28,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--dark);
+  background-color: var(--dark-gray);
   color: var(--white);
 }
 
@@ -68,10 +68,19 @@ h3 {
   line-height: 1.5;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.45);
 }
+
+.customer-details p:first-child:before {
+  content: " ";
+  display: block;
+  border-bottom: 1px solid black;
+  padding: 4px;
+}
+
 .customer-details p {
   color: var(--dark-gray);
   margin-bottom: 0;
   margin-top: 0.5rem;
+  padding: 4px;
 }
 .customer-details header {
   display: flex;
@@ -86,7 +95,7 @@ h3 {
   border-color: transparent;
   width: 2rem;
   height: 2rem;
-  background: var(--accent);
+  background: var(--sections);
   display: flex;
   align-items: center;
   justify-content: center;
