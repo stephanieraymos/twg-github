@@ -1,6 +1,6 @@
 import React from "react";
 
-const ClientCreation = () => {
+const CustomerCreation = () => {
   document.title = "Client Creation";
 
   return (
@@ -10,4 +10,4 @@ const ClientCreation = () => {
   );
 };
 
-export default ClientCreation;
+export default CustomerCreation;
