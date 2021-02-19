@@ -6,7 +6,7 @@ const CustomerDetails = ({ name, orders, cost }) => {
   return (
     <article className="customer-details">
       <header>
-        <h4>Customer Name: {name}</h4>
+        <h4>Name: {name}</h4>
         <button className="btn" onClick={() => setShowInfo(!showInfo)}>
           {showInfo ? <AiOutlineMinus /> : <AiOutlinePlus />}
         </button>

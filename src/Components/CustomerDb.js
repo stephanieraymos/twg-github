@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import customers from './customers-data';
 import SingleCustomer from './CustomerDetails';
 
 function CustomerDatabase() {
-  const [customer, setCustomer] = useState(customers)
 
   return (
     <main>
       <div className="container">
         <h1>Customer Details Accordion</h1>
-        <section className="info">
+        <section>
           {
             customers.map((customer) => {
               return <SingleCustomer key={customer.id} {...customer} />
