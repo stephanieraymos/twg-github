@@ -6,6 +6,7 @@ const CustomerDetails = () => {
   return (
     <>
       <h1>Customer Details Page</h1>
+      <p>Orders, cost, vendor, date</p>
     </>
   );
 };
