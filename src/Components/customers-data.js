@@ -29,5 +29,19 @@ const customers = [
     orders: 28,
     cost: 26954,
   },
+  {
+    id: 6,
+    name: "Sammy Samson",
+    orders: 465,
+    cost: 456894,
+  },
+  {
+    id: 5,
+    name: "Clark Kentington",
+    orders: 59,
+    cost: 56826,
+  },
 ];
 export default customers;
+
+//TP-58
