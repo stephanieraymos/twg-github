@@ -8,7 +8,7 @@ function CustomerDatabase() {
   return (
     <main>
       <div className="container">
-        <h3>Customer Details Accordian</h3>
+        <h1>Customer Details Accordion</h1>
         <section className="info">
           {
             customers.map((customer) => {
