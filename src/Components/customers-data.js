@@ -25,4 +25,4 @@ const customers = [
     orders: 28,
   },
 ];
-export default customers;
+export default customers
