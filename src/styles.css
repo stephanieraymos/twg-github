@@ -106,4 +106,5 @@ h3 {
   align-self: center;
   min-width: 2rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.45);
+  outline-style: none;
 }
