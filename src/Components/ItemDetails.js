@@ -11,3 +11,5 @@ const ItemDetails = () => {
 };
 
 export default ItemDetails;
+
+// TP-52
