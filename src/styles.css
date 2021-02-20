@@ -116,9 +116,9 @@ h3 {
 }
 
 .btn-container {
-  height: 100vh;
+  height: 100%;
+  width: 100vw;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -141,4 +141,10 @@ h3 {
   outline-style: none;
   text-align: center; 
   margin: 10% 0; 
+}
+
+.home-header {
+  color: var(--text);
+  text-align: center;
+  padding-top: 15rem;
 }
