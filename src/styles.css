@@ -144,7 +144,9 @@ h3 {
 }
 
 .home-header {
+  font-family: 'Montserrat', sans-serif;
   color: var(--text);
   text-align: center;
   padding-top: 15rem;
+  text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
 }
