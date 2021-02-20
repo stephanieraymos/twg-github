@@ -7,7 +7,7 @@ const CustomerDetails = ({ name, orders, cost }) => {
     <article className="customer-details">
       <header>
         <h4><span className="key">Name:</span> {name}</h4>
-        <button className="btn" onClick={() => setShowInfo(!showInfo)}>
+        <button className="ac-btn" onClick={() => setShowInfo(!showInfo)}>
           {showInfo ? <AiOutlineMinus /> : <AiOutlinePlus />}
         </button>
       </header>

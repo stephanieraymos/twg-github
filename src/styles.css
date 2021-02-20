@@ -96,7 +96,7 @@ h3 {
   text-shadow: 0px 4px 4px rgba(79, 6, 88, 0.45);
 }
 
-.btn {
+.ac-btn {
   background: transparent;
   border-color: transparent;
   width: 2rem;
@@ -113,4 +113,32 @@ h3 {
   min-width: 2rem;
   box-shadow: 0px 4px 4px rgba(59, 75, 119, 0.45);
   outline-style: none;
+}
+
+.btn-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  background: transparent;
+  border-color: transparent;
+  width: 10rem;
+  height: 2rem;
+  background: var(--sections);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10%;
+  color: var(--text);
+  cursor: pointer;
+  align-self: center;
+  min-width: 2rem;
+  box-shadow: 0px 4px 4px rgba(59, 75, 119, 0.45);
+  outline-style: none;
+  text-align: center; 
+  margin: 10% 0; 
 }

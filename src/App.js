@@ -1,10 +1,10 @@
 import React from 'react'
-import CustomerDb from './Components/CustomerDb'
+import Home from './Components/Home';
 
 function App() {
   return (
     <div>
-      <CustomerDb />
+      <Home />
     </div>
   )
 }
