@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import video from "../img/video.mp4";
 import warehouse from "../img/warehouse-sm.jpg";
+import Contact from "./Contact"
 
 const Home = () => {
   document.title = "Home";
+
+  const showContactPage = () => {
+    return <Contact />
+  }
 
   return (
     <>
@@ -19,7 +24,7 @@ const Home = () => {
           <div className="sub-content">
             <h1 className="home-header">The WholeSale Group</h1>
             <div className="btn-container">
-              <button className="btn">See more</button>
+              <button className="btn" onClick={() => showContactPage()}>See more</button>
             </div>
           </div>
         </div>
