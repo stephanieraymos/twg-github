@@ -60,8 +60,10 @@ h3 {
 .btn {
   background: transparent;
   border-color: transparent;
-  width: 15rem;
-  height: 5rem;
+  width: 14rem;
+  height: 4.5rem;
+  min-width: 6rem;
+  min-height: 2rem;
   background: var(--sections);
   display: flex;
   flex-direction: column;
@@ -71,11 +73,12 @@ h3 {
   color: var(--text);
   cursor: pointer;
   align-self: center;
-  min-width: 2rem;
   box-shadow: 0px 4px 4px rgba(59, 75, 119, 0.45);
+  text-shadow: 0px 4px 4px rgba(110, 147, 221, 0.45);
   outline-style: none;
   text-align: center;
-  margin: 10% 0;
+  margin: 8% 0;
+  font-size: 1.5rem;
 }
 
 .home-header {
