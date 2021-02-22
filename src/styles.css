@@ -39,6 +39,24 @@ h3 {
   margin: 10px;
 }
 
+.underline {
+  width: 5rem;
+  height: 0.25rem;
+  background: var(--dark);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heading {
+  font-family: "Montserrat", sans-serif;
+  font-size: 3.2rem;
+  display: flex;
+  color: var(--text);
+  justify-content: center;
+  padding-top: 1rem;
+  text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
+}
+
 /* .container {
   width: 90vw;
   margin: 5rem auto;

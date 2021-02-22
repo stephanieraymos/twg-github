@@ -5,7 +5,8 @@ const Contact = () => {
 
   return (
     <>
-      <h1>Contact Page</h1>
+      <main className="heading">About us</main>
+      <div className="underline"></div>
     </>
   );
 };

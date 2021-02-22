@@ -8,9 +8,13 @@ const Home = () => {
   return (
     <>
       <div className="container">
-        {window.innerWidth >= 900 ? <video className="bg-video" autoPlay loop muted>
-          <source src={video} type="video/mp4"/>
-        </video> : <img src={warehouse} alt="Warehouse image" className="bg-img"/>}
+        {window.innerWidth >= 900 ? (
+          <video className="bg-video" autoPlay loop muted>
+            <source src={video} type="video/mp4" />
+          </video>
+        ) : (
+          <img src={warehouse} alt="Warehouse image" className="bg-img" />
+        )}
         <div className="content">
           <div className="sub-content">
             <h1 className="home-header">The WholeSale Group</h1>
