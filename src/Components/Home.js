@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import video from "../img/video.mp4";
-import warehouse from "../img/warehouse.jpg";
+import warehouse from "../img/warehouse-sm.jpg";
 
 const Home = () => {
   document.title = "Home";
@@ -8,9 +8,9 @@ const Home = () => {
   return (
     <>
       <div className="container">
-        {window.innerWidth >= 800 ? <video className="bg-video" autoPlay loop muted>
+        {window.innerWidth >= 900 ? <video className="bg-video" autoPlay loop muted>
           <source src={video} type="video/mp4"/>
-        </video> : <img src={warehouse} alt="Warehouse image"/>}
+        </video> : <img src={warehouse} alt="Warehouse image" className="bg-img"/>}
         <div className="content">
           <div className="sub-content">
             <h1 className="home-header">The WholeSale Group</h1>
