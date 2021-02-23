@@ -6,6 +6,12 @@ const Contact = () => {
   return (
     <>
         <div className="grid-container">
+          <div className="menu-grid grid-items-menu">
+              <p>HOME</p>
+              <p>ORDERS</p>
+              <p>INVENTORY</p>
+              <p>STATEMENTS</p>
+          </div>
           <div className="about-grid grid-items">
             <h1 className="heading">About</h1>
             <div className="underline"></div>
