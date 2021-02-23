@@ -6,15 +6,15 @@ const Contact = () => {
   return (
     <>
         <div className="grid-container">
-          <div className="grid1 grid-items">
-            <h1 className="heading">About us</h1>
+          <div className="about-grid grid-items">
+            <h1 className="heading">About</h1>
             <div className="underline"></div>
           </div>
-          <div className="grid2 grid-items">
-            <h1 className="heading">Contact us</h1>
+          <div className="info-grid grid-items">
+            <h1 className="heading">Info</h1>
             <div className="underline"></div>
           </div>
-          <div className="grid3 grid-items">
+          <div className="paragraph1 grid-items">
             <p>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit.
               Pariatur, ut corporis. Voluptates quas, magni quisquam possimus id
@@ -26,7 +26,7 @@ const Contact = () => {
               aperiam esse nihil voluptatum neque.
             </p>
           </div>
-          <div className="grid4 grid-items">
+          <div className="paragraph2 grid-items">
             <p>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit.
               Pariatur, ut corporis. Voluptates quas, magni quisquam possimus id
@@ -38,7 +38,7 @@ const Contact = () => {
               aperiam esse nihil voluptatum neque.
             </p>
           </div>
-          <div className="grid5 grid-items">
+          <div className="email-grid grid-items">
             <p>Sales: email@email.com</p>
             <p>Support: email@email.com</p>
             <p>Upline: email@email.com</p>
