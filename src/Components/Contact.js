@@ -17,8 +17,6 @@ const Contact = () => {
           </ul>
         </div>
         <div className="about-grid">
-          <div className="section-header">About</div>
-          <div className="underline"></div>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
             ut corporis. Voluptates quas, magni quisquam possimus id quam
