@@ -58,8 +58,7 @@ h3 {
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 8fr));
-  grid-template-rows: repeat(3, auto-fit, minmax(150px, 4fr));
-  grid-auto-rows: 200px auto 100px;
+  grid-auto-rows: auto auto 100px;
   grid-gap:8px;
   margin: 10px 150px 10px; 
   height: 100%;
