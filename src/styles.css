@@ -53,7 +53,7 @@ h3 {
 /* Container for grid text */
 .grid-container {
   display: grid;
-  grid-template: repeat(4, 1fr) / repeat(auto-fit, minmax(100px, 1fr)) ;
+  grid-template: repeat(4, 1fr) / repeat(auto-fit, minmax(100px, 500px)) ;
   grid-gap: 10px;
   margin: 10px 150px 10px; 
   height: 100vh;
@@ -87,7 +87,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
-  background-color: rgba(244, 242, 248, 0.356);
+  background-color: rgba(244, 242, 248, 0.658);
   align-items: center;
   /* max-height: auto; */
 }
