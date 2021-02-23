@@ -5,7 +5,6 @@ const Contact = () => {
 
   return (
     <>
-      <div className="container">
         <div className="grid-container">
           <div className="grid1 grid-items">
             <h1 className="heading">About us</h1>
@@ -45,7 +44,6 @@ const Contact = () => {
             <p>Upline: email@email.com</p>
           </div>
         </div>
-      </div>
     </>
   );
 };
