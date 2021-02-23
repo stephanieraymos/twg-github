@@ -1,0 +1,43 @@
+.grid-container {
+    height: 100%;
+    margin: 20px;
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: [main-start] 1fr [content-start] 5fr [content-end main-end];
+    grid-template-rows: [main-start] auto [content-start] auto [content-end] auto [main-end];
+    align-content: center;
+    justify-content: center;
+    border: purple 1px solid;
+  }
+  
+  .header-grid {
+    grid-column: main;
+    font-size: 3rem;
+    text-align: center;
+    font-family: "Montserrat";
+    font-weight: bold;
+    text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
+    background: white;
+
+  }
+  
+  .menu-grid {
+    grid-column: ;
+    align-content: space-around;
+    background: white;
+
+  }
+  
+  .about-grid {
+    grid-area: content;
+    justify-content: center;
+    background: white;
+
+  }
+  
+  .email-grid {
+    grid-column: main;
+    justify-content: space-around;
+    background: white;
+
+  }
