@@ -57,7 +57,7 @@ h3 {
 /* Container for grid text */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 8fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 8fr));
   grid-template-rows: repeat(auto-fit, minmax(150px, 4fr));
   grid-gap:8px;
   margin: 10px 150px 10px; 
@@ -66,7 +66,7 @@ h3 {
   /* align-items: center; */
   justify-content: center;
   grid-template-areas: 
-    "h h h h h h h h c c c c"
+    "a a a a a a a a i i i i"
     "p1 p1 p1 p1 p1 p1 p1 p1 p2 p2 p2 p2"
     "e e e e e e e e e e e e";
 }
@@ -108,12 +108,12 @@ h3 {
 
 /* Grid Items */
 .about-grid {
-  grid-area: h;
+  grid-area: a;
   justify-content: center;
 }
 
 .info-grid {
-  grid-area: c;
+  grid-area: i;
   justify-content: center;
 }
 .paragraph1 {
