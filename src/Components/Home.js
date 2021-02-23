@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="home-container">
         {window.innerWidth >= 900 ? (
           <video className="bg-video" autoPlay loop muted>
             <source src={video} type="video/mp4" />
