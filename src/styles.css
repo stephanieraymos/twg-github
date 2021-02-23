@@ -57,10 +57,17 @@ h3 {
   grid-gap: 10px;
   margin: 10px 150px 10px; 
   height: 100vh;
+  align-items: stretch;
   /* align-content: center;
   align-items: center;
   justify-content: center; */
 }
+
+/* .grid-container:after {
+  content: "";
+  display: table;
+  clear: both;
+} */
 
 @media only screen and (max-width: 1200px) {
   .grid-container {
@@ -79,11 +86,15 @@ h3 {
 /* Class for all grid items */
 .grid-items{
   display: flex;
-  color: var(--text);
   padding: 20px;
-  background-color: rgba(22, 8, 53, 0.137);
+  background-color: rgba(244, 242, 248, 0.356);
   align-items: center;
   /* max-height: auto; */
+  flex-wrap: wrap;
+}
+
+.grid-items h1 {
+  color: black;
 }
 
 /* Grid Items */
@@ -93,13 +104,15 @@ h3 {
 }
 .grid2 {
   grid-column: 8 / -1;
+  justify-content: center;
 }
 .grid3 {
   grid-column: 1 / 8;
-  justify-content: center;
+  text-align: center;
 }
 .grid4 {
   grid-column: 8 / -1;
+  text-align: center;
 }
 .grid5 {
   grid-column: 1 / -1;
@@ -132,6 +145,8 @@ h3 {
   color: var(--text);
   padding-top: 1rem;
   text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
+  width: 100%;
+  justify-content: center;
 }
 
 /* Container for buttons */

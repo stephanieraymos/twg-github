@@ -9,9 +9,11 @@ const Contact = () => {
         <div className="grid-container">
           <div className="grid1 grid-items">
             <h1 className="heading">About us</h1>
+            <div className="underline"></div>
           </div>
           <div className="grid2 grid-items">
             <h1 className="heading">Contact us</h1>
+            <div className="underline"></div>
           </div>
           <div className="grid3 grid-items">
             <p>
