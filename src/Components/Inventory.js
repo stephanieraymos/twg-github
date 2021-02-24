@@ -3,6 +3,9 @@ import React, { useState } from "react";
 const Inventory = () => {
   document.title = "Inventory";
   const [truckLoad, setTruckLoad] = useState([]);
+  const [truckName, setTruckName] = useState('');
+  const [truckPrice, setTruckPrice] = useState(0);
+  const [truckContents, setTruckContents] = useState([]);
   const [error, setError] = useState(false);
   const [showAddedTruck, setShowAddedTruck] = useState([]);
 
@@ -25,9 +28,25 @@ const Inventory = () => {
           <input
             className="input"
             type="text"
-            value={truckLoad}
-            onChange={(e) => setTruckLoad(e.target.value)}
+            value={truckName}
+            onChange={(e) => setTruckName(e.target.value)}
             placeholder="Name of Truck"
+            style={{textAlign: "center"}}
+          />
+          <input
+            className="input"
+            type="number"
+            value={truckPrice}
+            onChange={(e) => setTruckPrice(e.target.value)}
+            placeholder="Price"
+            style={{textAlign: "center"}}
+          />
+          <input
+            className="input"
+            type="text"
+            value={truckContents}
+            onChange={(e) => setTruckContents(e.target.value)}
+            placeholder="What's in the truck?"
             style={{textAlign: "center"}}
           />
           <button className="btn btn-center" type="submit">

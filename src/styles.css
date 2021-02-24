@@ -79,16 +79,19 @@ h3 {
 }
 
 input {
-  border-color: transparent;
+  display: flex;
+  border: black 1px solid;
+  border-radius: 4px;
   padding: 0.5rem 1rem;
-  font-size: clamp(1.5rem, -0.875rem + 8.333vw, 3rem);
+  font-size: clamp(1rem, -0.875rem + 8.333vw, 2rem);
 }
+
 
 .section {
   min-height: calc(100vh - 100px);
   display: flex;
   justify-content: center;
-  padding-top: 250px;
+  padding-top: 300px;
   color: var(--text);
 }
 
@@ -159,7 +162,7 @@ input {
 
 .btn-center {
   position: absolute;
-  margin-top: 200px;
+  margin-top: 300px;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
