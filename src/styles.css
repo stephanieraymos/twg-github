@@ -108,8 +108,8 @@ h3 {
 .btn {
   background: transparent;
   border-color: transparent;
-  width: 14rem;
-  height: 4.5rem;
+  width: clamp(10rem, -.875rem + 8.333vw, 14rem);
+  height: clamp(3rem, -.875rem + 8.333vw, 4.5rem);
   min-width: 6rem;
   min-height: 2rem;
   background: var(--sections);
@@ -132,19 +132,12 @@ h3 {
 /* Heading text for home page */
 .home-header {
   font-family: "Montserrat", sans-serif;
-  font-size: clamp(1.5rem, -0.875rem + 8.333vw, 3.5rem);
+  font-size: clamp(2rem, -0.875rem + 8.333vw, 3.5rem);
   display: flex;
   color: var(--text);
   justify-content: center;
   padding-top: 15rem;
   text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
-}
-
-/* Decreasing font size for smaller screens */
-@media only screen and (max-width: 450px) {
-  .home-header {
-    font-size: 2rem;
-  }
 }
 
 /* Container class for Home component */
