@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import video from "../img/video.mp4";
 import warehouse from "../img/warehouse-sm.jpg";
 import Contact from "./Contact"
+import Inventory from "./Inventory"
 
 const Home = () => {
   document.title = "Home";
 
   const showContactPage = () => {
-    return <Contact />
+    return <Inventory />
   }
 
   return (
