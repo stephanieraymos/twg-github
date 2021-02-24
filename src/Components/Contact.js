@@ -7,8 +7,8 @@ const Contact = () => {
   return (
     <>
       <div className="grid-container">
-        <div className="header-grid">The WholeSale Group</div>
-        <div className="menu-grid">
+        <div className="header-grid all-grid-items">The WholeSale Group</div>
+        <div className="menu-grid all-grid-items">
           <ul>
             <li>HOME</li>
             <li>ORDERS</li>
@@ -16,7 +16,7 @@ const Contact = () => {
             <li>STATEMENTS</li>
           </ul>
         </div>
-        <div className="about-grid">
+        <div className="about-grid all-grid-items">
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
             ut corporis. Voluptates quas, magni quisquam possimus id quam
@@ -28,7 +28,7 @@ const Contact = () => {
             neque.
           </p>
         </div>
-        <div className="email-grid">
+        <div className="email-grid all-grid-items">
           <p>Sales: email@email.com</p>
           <p>Support: email@email.com</p>
           <p>Upline: email@email.com</p>

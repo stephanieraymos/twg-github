@@ -13,39 +13,40 @@
     border: purple 1px solid;
   }
   
+  .all-grid-items{
+    display: flex;
+    text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
+    background: white;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+  }
+  
   .header-grid {
     grid-area: h;
     font-size: 3rem;
-    text-align: center;
     font-family: "Montserrat";
     font-weight: bold;
-    text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
-    background: white;
-
   }
 
   .menu-grid {
+    display: grid;
     grid-area: m;
-    background: white;
     padding: 20px;
-    text-align: center;
-    align-content: center;
     padding-top: 50px;
-    padding-bottom: 30px ;
+    padding-bottom: 30px;
+    align-content: space-around;
   }
   
   .about-grid {
     grid-area: a;
-    justify-content: center;
-    background: white;
     padding: 20px;
   }
   
   .email-grid {
     grid-area: e;
-    display: flex;
     justify-content: space-around;
-    background: white;
   }
   
   ul {
