@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Inventory = () => {
   document.title = "Inventory";
@@ -9,7 +9,7 @@ const Inventory = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      newTruckLoad = truckLoad;
+      let newTruckLoad = truckLoad;
       console.log(newTruckLoad);
     } catch (error) {
       console.log(error);
@@ -19,24 +19,24 @@ const Inventory = () => {
 
   return (
     <>
-    <section className="container">
-      <h3>Add Truckload</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={truckLoad}
-          onChange={(e) => setTruckLoad(e.target.value)}
-          placeholder="Name of Truck"
-        />
-        <button className="btn" type="submit">
-          Submit
-        </button>
-      </form>
-    </section>
-    <section className="section">
-      <h4>New added truck goes here.</h4>
-    </section>
-  </>
+      <section className="container">
+        <h3>Add Truckload</h3>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={truckLoad}
+            onChange={(e) => setTruckLoad(e.target.value)}
+            placeholder="Name of Truck"
+          />
+          <button className="btn" type="submit">
+            Submit
+          </button>
+        </form>
+      </section>
+      <section className="section">
+        <h4>New added truck goes here.</h4>
+      </section>
+    </>
   );
 };
 

@@ -132,7 +132,7 @@ h3 {
 /* Heading text for home page */
 .home-header {
   font-family: "Montserrat", sans-serif;
-  font-size: 3.2rem;
+  font-size: clamp(1.5rem, -0.875rem + 8.333vw, 3.5rem);
   display: flex;
   color: var(--text);
   justify-content: center;
