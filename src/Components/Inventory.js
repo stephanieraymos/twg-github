@@ -8,6 +8,8 @@ const Inventory = () => {
   const [truckContents, setTruckContents] = useState([]);
   const [error, setError] = useState(false);
 
+  const contents = truckContents.join(","); //All values joined + seperated by commas
+
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
@@ -59,7 +61,7 @@ const Inventory = () => {
         <h1>Truck: {truckName}</h1>
         <div className="underline"></div>
         <p>Price: ${truckPrice}</p>
-        <p>Contents: {truckContents}</p>
+        <p>Contents: {contents}</p>
       </section>
     </>
   );
