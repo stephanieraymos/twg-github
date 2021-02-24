@@ -2,15 +2,19 @@
     height: 100%;
     display: grid;
     grid-gap: 8px;
-    grid-template-columns: [main-start] 1fr [content-start] 5fr [content-end main-end];
-    grid-template-rows: [main-start] 120px [content-start] 730px [content-end] 100px [main-end];
+    grid-template: 
+    "m h h h h h h h"
+    "m a a a a a a a"
+    "m e e e e e e e"
+    ;
+    grid-template-rows: 10% minmax(400px, 870px) 5%;
     align-content: center;
     justify-content: center;
     border: purple 1px solid;
   }
   
   .header-grid {
-    grid-column: main;
+    grid-area: h;
     font-size: 3rem;
     text-align: center;
     font-family: "Montserrat";
@@ -21,6 +25,7 @@
   }
 
   .menu-grid {
+    grid-area: m;
     background: white;
     padding: 20px;
     text-align: center;
@@ -30,14 +35,14 @@
   }
   
   .about-grid {
-    grid-area: content;
+    grid-area: a;
     justify-content: center;
     background: white;
     padding: 20px;
   }
   
   .email-grid {
-    grid-column: main;
+    grid-area: e;
     display: flex;
     justify-content: space-around;
     background: white;
