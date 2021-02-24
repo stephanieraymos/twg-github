@@ -6,7 +6,7 @@ import Inventory from "./Components/Inventory"
 function App() {
   return (
     <>
-      <Contact />
+      <Inventory />
     </>
   )
 }

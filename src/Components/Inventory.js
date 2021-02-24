@@ -19,16 +19,18 @@ const Inventory = () => {
 
   return (
     <>
-      <section className="container">
-        <h3>Add Truckload</h3>
+      <section className="container-main">
+        <h3 class="heading">Add Truckload</h3>
         <form onSubmit={handleSubmit}>
           <input
+            className="input"
             type="text"
             value={truckLoad}
             onChange={(e) => setTruckLoad(e.target.value)}
             placeholder="Name of Truck"
+            style={{textAlign: "center"}}
           />
-          <button className="btn" type="submit">
+          <button className="btn btn-center" type="submit">
             Submit
           </button>
         </form>
