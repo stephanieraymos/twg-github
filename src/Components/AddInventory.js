@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Alert from "./Alert";
+import Inventory from "./Inventory";
 
 const AddInventory = () => {
   document.title = "Add Inventory";
@@ -7,6 +9,7 @@ const AddInventory = () => {
   const [truckPrice, setTruckPrice] = useState('');
   const [truckContents, setTruckContents] = useState([]);
   const [error, setError] = useState(false);
+  const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
 
   const contents = truckContents.join(","); //All values joined + seperated by commas
 
@@ -28,6 +31,7 @@ const AddInventory = () => {
       <section className="container-main">
         <h3 className="heading">Add Truckload</h3>
         <form onSubmit={handleSubmit}>
+        {alert.show && <Alert />}
           <input
             className="input"
             type="text"
@@ -56,6 +60,7 @@ const AddInventory = () => {
             Submit
           </button>
         </form>
+        <Inventory />
       </section>
       <section className="section">
         <h1>Truck: {truckName}</h1>
