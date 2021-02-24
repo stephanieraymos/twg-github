@@ -47,7 +47,8 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   padding: 10px;
   margin: 10px;
 }
@@ -90,9 +91,10 @@ input {
 .section {
   min-height: calc(100vh - 100px);
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 300px;
   color: var(--text);
+  text-align: center;
 }
 
 .section-header {
@@ -113,6 +115,7 @@ input {
   background: var(--light);
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 10px;
 }
 
 /* Heading class for page headings */

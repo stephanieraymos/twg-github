@@ -4,17 +4,17 @@ const Inventory = () => {
   document.title = "Inventory";
   const [truckLoad, setTruckLoad] = useState([]);
   const [truckName, setTruckName] = useState('');
-  const [truckPrice, setTruckPrice] = useState(0);
+  const [truckPrice, setTruckPrice] = useState('');
   const [truckContents, setTruckContents] = useState([]);
   const [error, setError] = useState(false);
-  const [showAddedTruck, setShowAddedTruck] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      let newTruckLoad = {truckName, truckPrice, truckContents};
+      let newTruckLoad = [{truckName, truckPrice, truckContents}];
       setTruckLoad(newTruckLoad)
       console.log(newTruckLoad);
+      return <p>{newTruckLoad}</p>
     } catch (error) {
       console.log(error);
       setError(true);
@@ -24,7 +24,7 @@ const Inventory = () => {
   return (
     <>
       <section className="container-main">
-        <h3 class="heading">Add Truckload</h3>
+        <h3 className="heading">Add Truckload</h3>
         <form onSubmit={handleSubmit}>
           <input
             className="input"
@@ -56,7 +56,10 @@ const Inventory = () => {
         </form>
       </section>
       <section className="section">
-        <h4>New added truck goes here.</h4>
+        <h1>Truck: {truckName}</h1>
+        <div className="underline"></div>
+        <p>Price: ${truckPrice}</p>
+        <p>Contents: {truckContents}</p>
       </section>
     </>
   );
