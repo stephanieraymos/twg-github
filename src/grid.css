@@ -8,9 +8,11 @@
     "m e e e e e e e"
     ;
     grid-template-rows: 10% minmax(400px, 870px) 5%;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr));
     align-content: center;
     justify-content: center;
     border: purple 1px solid;
+    max-width: 100%;
   }
   
   .all-grid-items{
@@ -40,8 +42,10 @@
   }
   
   .about-grid {
+    flex-direction: column;
     grid-area: a;
     padding: 20px;
+    overflow:scroll;
   }
   
   .email-grid {
