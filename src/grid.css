@@ -27,7 +27,7 @@
   
   .header-grid {
     grid-area: h;
-    font-size: 3rem;
+    font-size: clamp(1.5rem, -0.875rem + 8.333vw, 3rem);
     font-family: "Montserrat";
     font-weight: bold;
   }
