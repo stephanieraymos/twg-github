@@ -12,7 +12,8 @@ const Inventory = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      let newTruckLoad = truckLoad;
+      let newTruckLoad = {truckName, truckPrice, truckContents};
+      setTruckLoad(newTruckLoad)
       console.log(newTruckLoad);
     } catch (error) {
       console.log(error);
