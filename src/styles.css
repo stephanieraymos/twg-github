@@ -8,6 +8,9 @@
   --sections: #1f85b4;
   --sections-hover: #036d9e;
   --text: #f5f5f5;
+
+  --transition: all 0.3s linear;
+
 }
 /* 
 #root {
@@ -171,7 +174,7 @@ input:hover {
   font-size: 1.5rem;
 }
 
-.btn:hover{
+.btn:hover {
   transition: all 0.3s linear;
   background-color: var(--sections-hover);
 }
@@ -337,7 +340,7 @@ input:hover::placeholder {
   align-items: center;
   justify-content: space-around;
   margin-bottom: 0.5rem;
-  transition: all 0.3s linear;
+  transition: var(--transition);
   padding: 0.25rem 1rem;
   border-radius: 0.25rem;
   text-transform: capitalize;
@@ -351,7 +354,7 @@ input:hover::placeholder {
   margin-bottom: 0;
   color: var(--light);
   letter-spacing: 2px;
-  transition: all 0.3s linear;
+  transition: var(--transition)
 }
 
 .items:hover {
@@ -363,9 +366,9 @@ input:hover::placeholder {
   background: transparent;
   border-color: transparent;
   cursor: pointer;
-  font-size: .8rem;
+  font-size: 0.8rem;
   margin: 0 0.15rem;
-  transition: all 0.3s linear;
+  transition: var(--transition)
 }
 .edit-btn {
   color: rgb(3, 129, 3);
@@ -392,13 +395,12 @@ input:hover::placeholder {
   font-size: 0.85rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: var(--transition);
   margin-top: 1.25rem;
 }
 .clear-btn:hover {
   color: rgb(110, 14, 14);
 }
-
 
 /* ALERTS */
 
@@ -410,7 +412,7 @@ input:hover::placeholder {
   text-align: center;
   font-size: 0.7rem;
   border-radius: 0.25rem;
-  letter-spacing: var(--spacing);
+  letter-spacing: 0.1rem;
   text-transform: capitalize;
 }
 .alert-danger {
@@ -420,4 +422,143 @@ input:hover::placeholder {
 .alert-success {
   color: #155724;
   background: #d4edda;
+}
+
+/* TRUCK LIST FROM API */
+
+.section {
+  width: 90vw;
+  margin: 5rem auto;
+  max-width: 1170px;
+}
+
+@media screen and (min-width: 992px) {
+  .section {
+    width: 95vw;
+  }
+}
+
+.loading {
+  text-align: center;
+}
+
+.underline {
+  width: 5rem;
+  height: 0.25rem;
+  margin-bottom: 1.25rem;
+  background: var(--sections);
+  margin-left: auto;
+  margin-right: auto;
+}
+.title {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+.trucks-center {
+  width: 80vw;
+  margin: 0 auto;
+  max-width: 1170px;
+}
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
+}
+.trucks-btn {
+  background: transparent;
+  border-color: transparent;
+  text-transform: capitalize;
+  font-size: 1.25rem;
+  letter-spacing: 0.1rem;
+  margin: 0 0.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+  padding: 0.25rem 0;
+  line-height: 1;
+  outline-color: hsl(186, 100%, 94%);
+}
+.trucks-btn:hover {
+  color:  var(--sections);
+  box-shadow:  var(--sections);
+}
+.active-btn {
+  color: var(--sections);
+  box-shadow: 0 2px var(--sections);
+}
+
+.truck-info h3 {
+  font-weight: 400;
+}
+.truck-info h4 {
+  text-transform: uppercase;
+  color: var(--dark-gray);
+  background: var(--dark-gray);
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  border-radius:  0.25rem;
+}
+.truck-name, .truck-price, .truck-contents  {
+  letter-spacing: 0.1rem;
+}
+
+.truck-contents {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 2rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+.truck-contents p {
+  margin-bottom: 0;
+  color: var(--dark-gray);
+}
+.truck-icon {
+  color: var(--sections);
+}
+@media screen and (min-width: 992px) {
+  .trucks-center {
+    width: 90vw;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    column-gap: 4rem;
+  }
+  .btn-container {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .trucks-btn {
+    margin-bottom: 1rem;
+  }
+  .active-btn {
+    box-shadow: -2px 0 var(--sections);
+  }
+  .trucks-btn:hover {
+    box-shadow: -2px 0 var(--sections);
+  }
+}
+.btn {
+  text-transform: uppercase;
+  background: var(--sections);
+  color: hsl(185, 94%, 87%);
+  padding: 0.375rem 0.75rem;
+  letter-spacing: 0.1rem;
+  font-weight: 700;
+  -webkit-transition: var(--transition);
+  transition: var(--transition);
+  font-size: 0.875rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius:  0.25rem;
+  display: block;
+  width: 12rem;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+.btn:hover {
+  color: hsl(184, 91%, 17%);
+  background: hsl(184, 80%, 74%);
 }
