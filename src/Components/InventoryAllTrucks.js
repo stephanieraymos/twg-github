@@ -11,7 +11,7 @@ const Inventory = () => {
 
   const fetchTrucks = async () => {
     const response = await fetch(url);
-    const newTrucks = await response.json();
+    const newTrucks = await response.json(); //returns a promise
     setTrucks(newTrucks);
     setLoading(false);
   };
