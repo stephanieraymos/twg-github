@@ -330,7 +330,7 @@ input:hover {
 .truckLoad {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-bottom: 0.5rem;
   transition: all 0.3s linear;
   padding: 0.25rem 1rem;
@@ -358,21 +358,21 @@ input:hover {
   background: transparent;
   border-color: transparent;
   cursor: pointer;
-  font-size: 0.7rem;
+  font-size: .8rem;
   margin: 0 0.15rem;
   transition: all 0.3s linear;
 }
 .edit-btn {
-  color: green;
+  color: rgb(3, 129, 3);
 }
 .edit-btn:hover {
-  color: rgb(2, 49, 2);
+  color: rgb(8, 228, 8);
 }
 .delete-btn {
-  color: red;
+  color: rgb(170, 5, 5);
 }
 .delete-btn:hover {
-  color: rgb(110, 14, 14);
+  color: rgb(248, 0, 0);
 }
 /* .clear-btn {
   text-transform: capitalize;
