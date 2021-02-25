@@ -1,7 +1,7 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const Inventory = ({ truckLoad }) => {
+const Inventory = ({ truckLoad, editItem }) => {
   return (
     <div className="truckLoad-list">
       {truckLoad.map((item) => {
@@ -12,7 +12,7 @@ const Inventory = ({ truckLoad }) => {
             <p className="items">Price: {truckPrice}</p>
             <p className="items">Contents: {truckContents}</p>
             <div className="side-btn-container">
-              <button type="button" className="edit-btn">
+              <button type="button" className="edit-btn" onClick={() => editItem(id)}>
                 <FaEdit />
               </button>
               <button type="button" className="delete-btn">
