@@ -151,7 +151,6 @@ input:hover {
 
 /* Main button styles for entire site */
 .btn {
-  background: transparent;
   border-color: transparent;
   width: clamp(10rem, -0.875rem + 8.333vw, 14rem);
   height: clamp(3rem, -0.875rem + 8.333vw, 4.5rem);
@@ -170,7 +169,7 @@ input:hover {
   text-shadow: 0px 4px 4px rgba(164, 188, 236, 0.45);
   outline-style: none;
   text-align: center;
-  margin: 8% 0;
+  margin: 5% 0 8%;
   font-size: 1.5rem;
 }
 
