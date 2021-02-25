@@ -459,13 +459,7 @@ input:hover::placeholder {
   margin: 0 auto;
   max-width: 1170px;
 }
-.btn-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-bottom: 4rem;
-  flex-wrap: wrap;
-}
+
 .trucks-btn {
   background: transparent;
   border-color: transparent;
@@ -538,7 +532,7 @@ input:hover::placeholder {
     box-shadow: -2px 0 var(--sections);
   }
 }
-.btn {
+/* .btn {
   text-transform: uppercase;
   background: var(--sections);
   color: hsl(185, 94%, 87%);
@@ -557,8 +551,8 @@ input:hover::placeholder {
   text-align: center;
   margin: 0 auto;
   margin-top: 3rem;
-}
-.btn:hover {
+} */
+/* .btn:hover {
   color: hsl(184, 91%, 17%);
   background: hsl(184, 80%, 74%);
-}
+} */
