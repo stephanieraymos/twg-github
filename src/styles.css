@@ -342,6 +342,7 @@ input:hover::placeholder {
   padding: 0.25rem 1rem;
   text-transform: capitalize;
 }
+
 .truckLoad:hover {
   color: gray;
   background: var(--dark-gray);
@@ -404,8 +405,22 @@ input:hover::placeholder {
   border-radius: .25em;
 }
 
-/* ALERTS */
+/* TABLE */
 
+.truckLoad td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.truckLoad tr:hover {
+  background-color: #ddd;
+}
+
+.rows:nth-child(even){
+  background-color: #949393;
+}
+
+/* ALERTS */
 .alert {
   margin-bottom: 1rem;
   height: 1.25rem;

@@ -29,6 +29,7 @@ const AddInventory = () => {
         truckPrice,
         truckContents,
       };
+
       setTruckLoad([...truckLoad, newTruck]);
       setTruckName(""); //Reseting input box to empty string
       setTruckPrice("");
