@@ -317,7 +317,7 @@ input:hover {
   padding: 2rem;
 }
 .section-center:hover {
-  box-shadow: rgba(0, 0, 0, 0.493);
+  box-shadow: rgba(44, 44, 44, 0.589);
 }
 
 .form-control {
@@ -326,6 +326,10 @@ input:hover {
   justify-content: center;
   width: 100%;
   align-items: center;
+}
+
+input:hover::placeholder {
+  color: var(--light);
 }
 
 .truckLoad {
