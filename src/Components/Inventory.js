@@ -11,7 +11,7 @@ const Inventory = ({ truckLoad }) => {
             <p className="items">Truck name: {truckName}</p>
             <p className="items">Price: {truckPrice}</p>
             <p className="items">Contents: {truckContents}</p>
-            <div className="btn-container">
+            <div className="side-btn-container">
               <button type="button" className="edit-btn">
                 <FaEdit />
               </button>

@@ -87,6 +87,10 @@ input {
   font-size: clamp(1rem, -0.875rem + 8.333vw, 2rem);
 }
 
+input:hover {
+  background-color: var(--dark);
+  color: var(--light);
+}
 
 .section {
   min-height: calc(100vh - 100px);
@@ -125,9 +129,12 @@ input {
   display: flex;
   color: var(--text);
   padding-top: 1rem;
-  text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
-  width: 100%;
+  text-shadow: 0px 4px 4px rgba(85, 86, 90, 0.45);
   justify-content: center;
+}
+
+.heading:hover {
+  color: var(--sections);
 }
 
 /* Container for buttons */
@@ -156,11 +163,16 @@ input {
   cursor: pointer;
   align-self: center;
   box-shadow: 0px 4px 4px rgba(59, 75, 119, 0.45);
-  text-shadow: 0px 4px 4px rgba(110, 147, 221, 0.45);
+  text-shadow: 0px 4px 4px rgba(164, 188, 236, 0.45);
   outline-style: none;
   text-align: center;
   margin: 8% 0;
   font-size: 1.5rem;
+}
+
+.btn:hover{
+  transition: all 0.3s linear;
+  background-color: var(--accent);
 }
 
 /* Heading text for home page */
@@ -289,19 +301,9 @@ input {
   outline-style: none;
 }
 
-
 /* INVENTORY */
 
-.btn-center {
-  position: absolute;
-  margin-top: 0;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-.btn-container {
+.side-btn-container {
   display: flex;
   width: 20%;
 }
@@ -331,17 +333,13 @@ input {
   justify-content: space-between;
   margin-bottom: 0.5rem;
   transition: all 0.3s linear;
-  padding: .25rem 1rem;
-  margin-top: 2rem;
+  padding: 0.25rem 1rem;
   border-radius: 0.25rem;
   text-transform: capitalize;
 }
 .truckLoad:hover {
   color: gray;
-  background: rgba(128, 128, 128, 0.185);
-}
-.truckLoad:hover .item {
-  color: var(--dark);
+  background: var(--dark-gray);
 }
 
 .items {
@@ -349,6 +347,10 @@ input {
   color: var(--light);
   letter-spacing: 2px;
   transition: all 0.3s linear;
+}
+
+.items:hover {
+  color: var(--sections);
 }
 
 .edit-btn,
