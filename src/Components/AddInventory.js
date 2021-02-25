@@ -56,7 +56,7 @@ const AddInventory = () => {
       <section className="section-center">
         <h3 className="heading">Add Truckload</h3>
         <form onSubmit={handleSubmit}>
-          {alert.show && <Alert {...alert} removeAlert={showAlert} />}
+          {alert.show && <Alert {...alert} removeAlert={showAlert} truckLoad={truckLoad} />}
           <div className="form-control">
             <input
               type="text"
