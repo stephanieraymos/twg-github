@@ -336,7 +336,7 @@ input:hover::placeholder {
 .truckLoad {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 0.5rem;
   transition: var(--transition);
   padding: 0.25rem 1rem;
@@ -401,6 +401,7 @@ input:hover::placeholder {
 
 .truckLoad-list {
   background: var(--text);
+  border-radius: .25em;
 }
 
 /* ALERTS */
