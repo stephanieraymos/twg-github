@@ -9,7 +9,7 @@ const Inventory = ({ truckLoad, removeItem }) => {
         return (
           <article key={id} className="truckLoad">
             <p className="items">Truck name: {truckName}</p>
-            <p className="items">Price: {truckPrice}</p>
+            <p className="items">Price: ${truckPrice}</p>
             <p className="items">Contents: {truckContents}</p>
             <div className="side-btn-container">
               <button type="button" className="edit-btn">

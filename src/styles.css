@@ -10,7 +10,6 @@
   --text: #f5f5f5;
 
   --transition: all 0.3s linear;
-
 }
 /* 
 #root {
@@ -341,7 +340,6 @@ input:hover::placeholder {
   margin-bottom: 0.5rem;
   transition: var(--transition);
   padding: 0.25rem 1rem;
-  border-radius: 0.25rem;
   text-transform: capitalize;
 }
 .truckLoad:hover {
@@ -349,15 +347,15 @@ input:hover::placeholder {
   background: var(--dark-gray);
 }
 
-.items {
-  margin-bottom: 0;
-  color: var(--light);
-  letter-spacing: 2px;
-  transition: var(--transition)
+.truckLoad:hover > .items {
+  color: var(--text);
 }
 
-.items:hover {
-  color: var(--sections);
+.items {
+  margin-bottom: 0;
+  color: var(--dark);
+  letter-spacing: 2px;
+  transition: var(--transition);
 }
 
 .edit-btn,
@@ -367,7 +365,7 @@ input:hover::placeholder {
   cursor: pointer;
   font-size: 0.8rem;
   margin: 0 0.15rem;
-  transition: var(--transition)
+  transition: var(--transition);
 }
 .edit-btn {
   color: rgb(3, 129, 3);
@@ -399,6 +397,10 @@ input:hover::placeholder {
 }
 .clear-btn:hover {
   color: rgb(110, 14, 14);
+}
+
+.truckLoad-list {
+  background: var(--text);
 }
 
 /* ALERTS */
@@ -475,8 +477,8 @@ input:hover::placeholder {
   outline-color: hsl(186, 100%, 94%);
 }
 .trucks-btn:hover {
-  color:  var(--sections);
-  box-shadow:  var(--sections);
+  color: var(--sections);
+  box-shadow: var(--sections);
 }
 .active-btn {
   color: var(--sections);
@@ -492,9 +494,11 @@ input:hover::placeholder {
   background: var(--dark-gray);
   display: inline-block;
   padding: 0.375rem 0.75rem;
-  border-radius:  0.25rem;
+  border-radius: 0.25rem;
 }
-.truck-name, .truck-price, .truck-contents  {
+.truck-name,
+.truck-price,
+.truck-contents {
   letter-spacing: 0.1rem;
 }
 
