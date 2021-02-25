@@ -6,6 +6,7 @@
   --accent: #380082;
   --modal: #3949ab;
   --sections: #1f85b4;
+  --sections-hover: #036d9e;
   --text: #f5f5f5;
 }
 /* 
@@ -88,7 +89,7 @@ input {
 }
 
 input:hover {
-  background-color: var(--dark);
+  background-color: var(--dark-gray);
   color: var(--light);
 }
 
@@ -172,7 +173,7 @@ input:hover {
 
 .btn:hover{
   transition: all 0.3s linear;
-  background-color: var(--accent);
+  background-color: var(--sections-hover);
 }
 
 /* Heading text for home page */
