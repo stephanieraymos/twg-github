@@ -8,7 +8,7 @@ import InventoryAllTrucks from "./Components/InventoryAllTrucks"
 function App() {
   return (
     <>
-      <InventoryAllTrucks />
+      <AddInventory />
     </>
   )
 }
