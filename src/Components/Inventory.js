@@ -15,7 +15,11 @@ const Inventory = ({ truckLoad }) => {
               <button type="button" className="edit-btn">
                 <FaEdit />
               </button>
-              <button type="button" className="delete-btn">
+              <button
+                type="button"
+                className="delete-btn"
+                onClick={() => removeItem(id)}
+              >
                 <FaTrash />
               </button>
             </div>
@@ -25,7 +29,6 @@ const Inventory = ({ truckLoad }) => {
     </div>
   );
 };
-
 
 export default Inventory;
 
