@@ -8,6 +8,7 @@ const AddInventory = () => {
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState(false);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
 
@@ -15,15 +16,39 @@ const AddInventory = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      let newTruckLoad = [{ truckName, truckPrice, truckContents }];
-      setTruckLoad(newTruckLoad);
-      console.log(newTruckLoad);
-      return <p>{newTruckLoad}</p>;
-    } catch (error) {
-      console.log(error);
-      setError(true);
+    if (!truckName) {
+      showAlert(true, "danger", "Please enter value");
+    } else if (truckName && isEditing) {
+      // deal with edit if something is in value and user is editing
+    } else {
+      // Show alert and add truck to inventory only if name is true and not editing
+      showAlert(true, "success", "Truck Added");
+      const newTruck = {
+        id: new Date().getTime().toString(),
+        truckName: truckName,
+        truckPrice,
+        truckContents,
+      };
+      setTruckLoad([...truckLoad, newTruck]);
+      setTruckName(""); //Reseting input box to empty string
+      setTruckPrice("")
+      setTruckContents("")
+      console.log(newTruck);
     }
+  };
+
+  const showAlert = (show = false, type = "", msg = "") => {
+    setAlert({ show, type, msg });
+  };
+
+  const clearList = () => {
+    showAlert(true, "danger", "Trucks cleared successfully");
+    setTruckLoad([]);
+  };
+
+  const removeItem = (id) => {
+    showAlert(true, "danger", "Truck Removed");
+    setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
   };
 
   return (
@@ -59,7 +84,14 @@ const AddInventory = () => {
             </button>
           </div>
         </form>
-        <Inventory truckLoad={truckLoad} />
+        {truckLoad.length > 0 && (
+          <div>
+            <Inventory truckLoad={truckLoad} removeItem={removeItem} />
+            <button className="clear-btn" onClick={clearList}>
+              Clear items
+            </button>
+          </div>
+        )}
       </section>
       {/* <section className="section">
         <h1>Truck: {truckName}</h1>

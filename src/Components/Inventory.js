@@ -1,7 +1,7 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const Inventory = ({ truckLoad }) => {
+const Inventory = ({ truckLoad, removeItem }) => {
   return (
     <div className="truckLoad-list">
       {truckLoad.map((item) => {
