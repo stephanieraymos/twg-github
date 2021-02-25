@@ -4,8 +4,8 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 const Inventory = ({ truckLoad, removeItem }) => {
   return (
     <div className="truckLoad-list">
-      {truckLoad.map((item) => {
-        const { id, truckName, truckPrice, truckContents } = item;
+      {truckLoad.map((truck) => {
+        const { id, truckName, truckPrice, truckContents } = truck;
         return (
           <article key={id} className="truckLoad">
             <p className="items">Truck name: {truckName}</p>

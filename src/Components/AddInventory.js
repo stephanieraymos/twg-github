@@ -16,7 +16,7 @@ const AddInventory = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!truckName) {
+    if (!truckName || !truckPrice || !truckContents) {
       showAlert(true, "danger", "Please enter value");
     } else if (truckName && isEditing) {
       // deal with edit if something is in value and user is editing
@@ -31,8 +31,8 @@ const AddInventory = () => {
       };
       setTruckLoad([...truckLoad, newTruck]);
       setTruckName(""); //Reseting input box to empty string
-      setTruckPrice("")
-      setTruckContents("")
+      setTruckPrice("");
+      setTruckContents("");
       console.log(newTruck);
     }
   };
@@ -56,7 +56,7 @@ const AddInventory = () => {
       <section className="section-center">
         <h3 className="heading">Add Truckload</h3>
         <form onSubmit={handleSubmit}>
-          {alert.show && <Alert />}
+          {alert.show && <Alert {...alert} removeAlert={showAlert} />}
           <div className="form-control">
             <input
               type="text"
@@ -80,7 +80,7 @@ const AddInventory = () => {
               style={{ textAlign: "center" }}
             />
             <button className="btn" type="submit">
-              Submit
+              {isEditing ? "Edit" : "Submit"}
             </button>
           </div>
         </form>
@@ -93,12 +93,6 @@ const AddInventory = () => {
           </div>
         )}
       </section>
-      {/* <section className="section">
-        <h1>Truck: {truckName}</h1>
-        <div className="underline"></div>
-        <p>Price: ${truckPrice}</p>
-        <p>Contents: {contents}</p>
-      </section> */}
     </>
   );
 };
