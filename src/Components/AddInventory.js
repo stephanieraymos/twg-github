@@ -107,6 +107,7 @@ const AddInventory = () => {
       <section className="section-center">
         <h3 className="heading">Add Truckload</h3>
         <form onSubmit={handleSubmit}>
+          {/* If alert is showing, we bring in the alert component */}
           {alert.show && (
             <Alert {...alert} removeAlert={showAlert} truckLoad={truckLoad} />
           )}
@@ -137,6 +138,7 @@ const AddInventory = () => {
             </button>
           </div>
         </form>
+        {/* If length of truckLoad array is greater than 0 we show the Inventory component + clear items button */}
         {truckLoad.length > 0 && (
           <div>
             <Inventory
