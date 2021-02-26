@@ -3,17 +3,26 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 612 792" style="enable-background:new 0 0 612 792;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#12121f;}
-	.st1{fill:#FFFFFF;}
-	.st2{fill:#141420;}
-	.st3{fill:#F7F8FC;}
-	.st4{fill:#1f85b4;}
+	<!-- Truck Body -->
+	.st0{fill:#000;}
+	<!-- Tires Outside -->
+	.st1{fill:#f7f8fc;}
+	<!-- Tires Inside -->
+	.st2{fill:#000;}
+	<!-- Window -->
+	.st3{fill:#f7f8fc;}
+	<!-- "The + Group" -->
+	.st4{fill:#000;}
 	.st5{font-family:'MyriadPro-Regular';}
-	.st6{font-size:61.4002px;}
-	.st7{fill:#1f85b4;}
+	.st6{font-size:16px;}
+	<!-- "WholeSale" -->
+	.st7{fill:#f7f8fc;}
+	<!-- Inner Truck Rectangle-->
+	.st8{fill:#1f85b4;}
 </style>
 <rect x="355.2" y="308.1" class="st0" width="19.7" height="7.1"/>
 <rect x="253" y="265.2" class="st0" width="119.6" height="49.9"/>
+<rect x="256" y="268.2" class="st8" width="114" height="43.9"/>
 <ellipse class="st1" cx="287.9" cy="319" rx="9.5" ry="9.2"/>
 <ellipse class="st1" cx="345" cy="319" rx="10.1" ry="9.8"/>
 <circle cx="288" cy="318" r="7.5"/>
@@ -24,8 +33,7 @@
 <path class="st3" d="M389,280.5V296H401l-1.6-10.5c-0.1-0.3-0.3-0.7-0.6-1.1c-0.7-1-1.7-1.6-2.3-1.9L389,280.5z"/>
 <circle class="st1" cx="388.4" cy="319.6" r="9.8"/>
 <circle class="st2" cx="388.3" cy="319.5" r="9"/>
-<circle class="st0" cx="388.3" cy="318.9" r="5.8"/>
-<text transform="matrix(1 0 0 1 153.0408 324.0181)" class="st4 st5 st6">The </text>
-<text transform="matrix(1 0 0 1 168.1951 377.8443)" class="st7 st5 st6">WholeSale</text>
-<text transform="matrix(1 0 0 1 293.5154 428.8072)" class="st4 st5 st6">Group</text>
+<text transform="matrix(1 0 0 1 260 282)" class="st4 st5 st6">The </text>
+<text transform="matrix(1 0 0 1 275 295)" class="st7 st5 st6">WholeSale</text>
+<text transform="matrix(1 0 0 1 320 308)" class="st4 st5 st6">Group</text>
 </svg>
