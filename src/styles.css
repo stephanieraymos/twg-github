@@ -405,21 +405,6 @@ input:hover::placeholder {
   border-radius: .25em;
 }
 
-/* TABLE */
-
-.truckLoad td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.truckLoad tr:hover {
-  background-color: #ddd;
-}
-
-.rows:nth-child(even){
-  background-color: #949393;
-}
-
 /* ALERTS */
 .alert {
   margin-bottom: 1rem;
