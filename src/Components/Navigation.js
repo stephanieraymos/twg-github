@@ -10,8 +10,12 @@ const Navigation = () => {
   const linksRef = useRef(null); //For UL
 
   useEffect(() => {
-    const linksHeight = linksRef.current.getBoundingClientRect(); //Returning size values for links
-    console.log(linksHeight);
+    const linksHeight = linksRef.current.getBoundingClientRect().height; //Returning size values for links
+    if (showLinks) {
+      linksContainerRef.current.style.height = `${linksHeight}px`;
+    } else {
+      linksContainerRef.current.style.height = "0px";
+    }
   }, [showLinks]); //Everytime showLinks changes, run the useEffect
 
   return (
