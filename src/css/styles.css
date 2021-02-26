@@ -1,6 +1,6 @@
 *,
 :root {
-  --dark: #12121f;
+  --dark: #0d0d18;
   --dark-gray: #303133;
   --light: #f7f8fc;
   --accent: #380082;
@@ -9,7 +9,11 @@
   --sections-hover: #036d9e;
   --text: #f5f5f5;
 
+  --spacing: 0.1rem;
+  --radius: 0.25rem;
   --transition: all 0.3s linear;
+  --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 /* 
 #root {

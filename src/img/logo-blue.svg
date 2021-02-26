@@ -13,19 +13,20 @@
 	.st3{fill:#f7f8fc;}
 	<!-- "The + Group" -->
 	.st4{fill:#000;}
-	.st5{font-family:'MyriadPro-Regular';}
+	.st5{font-family:'Poppins';}
 	.st6{font-size:16px;}
 	<!-- "WholeSale" -->
 	.st7{fill:#f7f8fc;}
 	<!-- Inner Truck Rectangle + hub caps-->
 	.st8{fill:#1f85b4;}
 </style>
-<!-- Head and back connecting bar -->
-<rect x="355.2" y="308.1" class="st0" width="19.7" height="7.1"/>
+
 <!-- Main black body rectangle -->
-<rect x="253" y="265.2" class="st0" width="119.6" height="49.9"/>
+<rect x="253" y="265.2" rx="2" class="st0" width="119.6" height="51"/>
 <!-- Blue inner body rectangle -->
-<rect x="256" y="268.2" class="st8" width="114" height="43.9"/>
+<rect x="256" y="268.2" rx="2" class="st8" width="114" height="45"/>
+<!-- Head and back connecting bar -->
+<rect x="355.2" y="313.5" class="st0" width="19.7" height="3"/>
 
 <!-- First Outside Tire -->
 <circle class="st1" cx="287.9" cy="319" rx="9.5" r="10"/>
@@ -37,9 +38,9 @@
 <circle class="st2" cx="345" cy="319" r="9"/>
 
 <!-- Truck Head Shape -->
-<path class="st0" d="M374.4,269.7v45.5h35.4l-4.6-30.8c-0.4-1-1-2.1-1.8-3.3c-2.2-3-5-4.6-6.7-5.5L374.4,269.7z"/>
+<path class="st0" d="M374.4,271v45.5h35.4l-4.6-30.8c-0.4-1-1-2.1-1.8-3.3c-2.2-3-5-4.6-6.7-5.5L375,269z"/>
 <!-- Truck Window Shape -->
-<path class="st3" d="M389,280.5V296H401l-1.6-10.5c-0.1-0.3-0.3-0.7-0.6-1.1c-0.7-1-1.7-1.6-2.3-1.9L389,280.5z"/>
+<path class="st3" d="M389,280V297H401l-1.6-10.5c-0.1-0.3-0.3-0.7-0.6-1.1c-0.7-1-1.7-1.6-2.3-1.9L389,280.5z"/>
 
 <!-- Third Outside Tire -->
 <circle class="st1" cx="388.4" cy="319.6" r="10"/>
