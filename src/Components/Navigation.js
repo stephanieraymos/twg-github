@@ -8,7 +8,12 @@ const Navigation = () => {
   const [showLinks, setShowLinks] = useState(false);
   const linksContainerRef = useRef(null); //For DIV
   const linksRef = useRef(null); //For UL
-  
+
+  useEffect(() => {
+    const linksHeight = linksRef.current.getBoundingClientRect(); //Returning size values for links
+    console.log(linksHeight);
+  }, [showLinks]); //Everytime showLinks changes, run the useEffect
+
   return (
     <nav>
       <div className="nav-center">
@@ -21,18 +26,18 @@ const Navigation = () => {
             <FaBars />
           </button>
         </div>
-          <div className="links-container" ref={linksContainerRef}>
-            <ul className="links" ref={linksRef}>
-              {adminLinks.map((link) => {
-                const { id, url, text } = link;
-                return (
-                  <li key={id}>
-                    <a href={url}>{text}</a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+        <div className="links-container" ref={linksContainerRef}>
+          <ul className="links" ref={linksRef}>
+            {adminLinks.map((link) => {
+              const { id, url, text } = link;
+              return (
+                <li key={id}>
+                  <a href={url}>{text}</a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
         <ul className="social-icons">
           {social.map((socialIcon) => {
             const { id, url, icon } = socialIcon;
