@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import inventory from "../css/inventory.css";
+
 
 const url = ""; //API LINK
 

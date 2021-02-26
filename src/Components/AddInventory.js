@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Alert from "./Alert";
 import Inventory from "./Inventory";
+import inventory from "../css/inventory.css";
 
 const getLocalStorage = () => {
   let truck = localStorage.getItem("truck");

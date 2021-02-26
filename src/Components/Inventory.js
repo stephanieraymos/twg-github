@@ -1,5 +1,6 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import inventory from "../css/inventory.css";
 
 const Inventory = ({ truckLoad, removeItem, editItem }) => {
   return (
