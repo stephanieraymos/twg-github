@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Alert from "./Alert";
 import Inventory from "./Inventory";
 
+const getLocalStorage = () => {
+  let truck = localStorage.getItem("truck");
+  if (truck) {
+    return JSON.parse(localStorage.getItem("truck"));
+  } else {
+    return [];
+  }
+};
+
 const AddInventory = () => {
   document.title = "Add Inventory";
-  const [truckLoad, setTruckLoad] = useState([]);
+  const [truckLoad, setTruckLoad] = useState(getLocalStorage());
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
@@ -39,7 +48,7 @@ const AddInventory = () => {
       setTruckContents("");
       setEditId(null);
       setIsEditing(false);
-      showAlert(true, "success", "Truck Details Edited");
+      showAlert(true, "success", "Truck Details Updated");
     } else {
       // Show alert and add truck to inventory only if name is true and not editing
       showAlert(true, "success", "Truck Added");
@@ -73,7 +82,6 @@ const AddInventory = () => {
   };
 
   const editItem = (id) => {
-    showAlert(true, "success", "Item Edit Successful");
     const specificItem = truckLoad.find((truck) => truck.id === id);
     setIsEditing(true);
     setEditId(id);
@@ -81,6 +89,10 @@ const AddInventory = () => {
     setTruckPrice(specificItem.truckPrice);
     setTruckContents(specificItem.truckContents);
   };
+
+  useEffect(() => {
+    localStorage.setItem("truck", JSON.stringify(truckLoad));
+  }, [truckLoad]);
 
   return (
     <>
@@ -119,7 +131,11 @@ const AddInventory = () => {
         </form>
         {truckLoad.length > 0 && (
           <div>
-            <Inventory truckLoad={truckLoad} removeItem={removeItem} editItem={editItem} />
+            <Inventory
+              truckLoad={truckLoad}
+              removeItem={removeItem}
+              editItem={editItem}
+            />
             <button className="clear-btn" onClick={clearList}>
               Clear items
             </button>
