@@ -5,21 +5,25 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 const url = ""; //API LINK
 
 const Inventory = () => {
+  //Setting state values, params are default values
   const [loading, setLoading] = useState(true);
   const [trucks, setTrucks] = useState([]);
   const [value, setValue] = useState(0);
 
+  //Fetching the trucks db from the API link above
   const fetchTrucks = async () => {
     const response = await fetch(url);
     const newTrucks = await response.json(); //returns a promise
-    setTrucks(newTrucks);
-    setLoading(false);
+    setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
+    setLoading(false); //Loading ends when information is loaded
   };
 
+  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array 
   useEffect(() => {
     fetchTrucks();
   }, []);
 
+  //Display "Loading..." if loading is true
   if (loading) {
     return (
       <section className="section loading">
@@ -27,6 +31,7 @@ const Inventory = () => {
       </section>
     );
   }
+  //Extracting props + binding them to trucks
   const { truckName, truckPrice, truckContents, id } = trucks[value];
 
   return (
@@ -43,6 +48,7 @@ const Inventory = () => {
               <button
                 key={truck.id}
                 onClick={() => setValue(index)}
+                // Setting class to trucks-btn by default, but to active-btn if index is equal to value
                 className={`trucks-btn ${index === value && "active-btn"}`}
               >
                 {truck.truckName}
@@ -50,6 +56,7 @@ const Inventory = () => {
             );
           })}
         </div>
+        {/* Displaying truck information */}
         <article className="truck-info">
           <h3>{truckName}</h3>
           <h4>{truckPrice}</h4>
