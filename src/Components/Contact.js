@@ -1,5 +1,5 @@
 import React from "react";
-import grid from "../grid.css";
+import grid from "../css/grid.css";
 
 const Contact = () => {
   document.title = "Contact";
