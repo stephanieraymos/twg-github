@@ -5,33 +5,39 @@ import logo from "../img/logo-blue.svg";
 import nav from "../css/nav.css";
 
 const Navigation = () => {
+  const [showLinks, setShowLinks] = useState(false);
+
   return (
     <nav>
       <div className="nav-center">
         <div className="nav-header">
-          <img src={logo} alt="logo"/>
-          <button className="nav-toggle">
+          <img src={logo} alt="logo" />
+          <button
+            className="nav-toggle"
+            onClick={() => setShowLinks(!showLinks)}
+          >
             <FaBars />
           </button>
         </div>
-        <div className="links-container show-container">
-          <ul className="links">
-            {adminLinks.map((link) => {
-              const { id, url, text } = link;
-              return (
-                <li key={id}>
-                  <a href={url}>{text}</a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        {showLinks && (
+          <div className="links-container show-container">
+            <ul className="links">
+              {adminLinks.map((link) => {
+                const { id, url, text } = link;
+                return (
+                  <li key={id}>
+                    <a href={url}>{text}</a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </div>
     </nav>
   );
 };
 
 export default Navigation;
-
 
 // TP-39

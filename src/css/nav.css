@@ -106,6 +106,7 @@
     border-color: transparent;
     transition: var(--transition);
     cursor: pointer;
+    outline: none;
   }
   .nav-toggle:hover {
     color: var(--sections);
