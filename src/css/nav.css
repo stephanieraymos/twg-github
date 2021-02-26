@@ -171,7 +171,7 @@
     .links a:hover {
       padding: 0;
       background: var(--dark);
-      color: var(--light);
+      color: var(--sections);
       font-size: 2em;
     }
     .social-icons {
@@ -184,6 +184,7 @@
     }
     .social-icons a:hover {
       color: var(--light);
+      font-size: 2em;
     }
   }
   
