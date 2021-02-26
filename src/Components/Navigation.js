@@ -6,7 +6,9 @@ import nav from "../css/nav.css";
 
 const Navigation = () => {
   const [showLinks, setShowLinks] = useState(false);
-
+  const linksContainerRef = useRef(null); //For DIV
+  const linksRef = useRef(null); //For UL
+  
   return (
     <nav>
       <div className="nav-center">
@@ -19,9 +21,8 @@ const Navigation = () => {
             <FaBars />
           </button>
         </div>
-        {showLinks && (
-          <div className="links-container show-container">
-            <ul className="links">
+          <div className="links-container" ref={linksContainerRef}>
+            <ul className="links" ref={linksRef}>
               {adminLinks.map((link) => {
                 const { id, url, text } = link;
                 return (
@@ -32,7 +33,6 @@ const Navigation = () => {
               })}
             </ul>
           </div>
-        )}
         <ul className="social-icons">
           {social.map((socialIcon) => {
             const { id, url, icon } = socialIcon;
