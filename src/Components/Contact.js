@@ -1,21 +1,15 @@
 import React from "react";
-import grid from "../css/grid.css";
+import Navigation from "./Navigation"
+import contact from "../css/contact.css";
 
 const Contact = () => {
   document.title = "Contact";
 
   return (
     <>
-      <div className="grid-container">
-        <div className="header-grid all-grid-items">The WholeSale Group</div>
-        <div className="menu-grid all-grid-items">
-          <ul>
-            <li>HOME</li>
-            <li>ORDERS</li>
-            <li>INVENTORY</li>
-            <li>STATEMENTS</li>
-          </ul>
-        </div>
+    <div>
+      <Navigation />
+    </div>
         <div className="about-grid all-grid-items">
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
@@ -63,7 +57,6 @@ const Contact = () => {
           <p>Support: email@email.com</p>
           <p>Upline: email@email.com</p>
         </div>
-      </div>
     </>
   );
 };

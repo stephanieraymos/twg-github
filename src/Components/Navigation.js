@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaBars, FaYoutube } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { adminLinks, social } from "./nav-data";
 import logo from "../img/logo-blue.svg";
 import nav from "../css/nav.css";
