@@ -3,27 +3,27 @@ import { FaFacebook } from "react-icons/fa";
 export const adminLinks = [
   {
     id: 1,
-    url: "./Dashboard",
+    url: "/Dashboard",
     text: "Dashboard",
   },
   {
     id: 2,
-    url: "./AddInventory",
+    url: "/AddInventory",
     text: "Add TruckLoad",
   },
   {
     id: 3,
-    url: "./InventoryAllTrucks",
+    url: "/InventoryAllTrucks",
     text: "All Inventory",
   },
   {
     id: 4,
-    url: "./Settings",
+    url: "/Settings",
     text: "Settings",
   },
   {
     id: 5,
-    url: "./Statements",
+    url: "/Statements",
     text: "Statements",
   },
 ];
@@ -39,6 +39,6 @@ export const social = [
 export const logoLink = [
   {
     id: 1,
-    url: "./Home.js",
+    url: "/Home.js",
   },
 ];
