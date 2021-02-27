@@ -10,7 +10,7 @@ const Contact = () => {
     <div>
       <Navigation />
     </div>
-        <div className="about-grid all-grid-items">
+        <div className="about">
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
             ut corporis. Voluptates quas, magni quisquam possimus id quam
@@ -52,7 +52,7 @@ const Contact = () => {
             sequi cumque vitae doloremque nisi, dolores eligendi? Possimus?
           </p>
         </div>
-        <div className="email-grid all-grid-items">
+        <div className="emails">
           <p>Sales: email@email.com</p>
           <p>Support: email@email.com</p>
           <p>Upline: email@email.com</p>
