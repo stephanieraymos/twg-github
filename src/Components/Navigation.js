@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
-import { adminLinks, social } from "./nav-data";
+import { adminLinks, social, logoLink } from "./nav-data";
 import logo from "../img/logo-blue.svg";
 import nav from "../css/nav.css";
 
@@ -22,7 +22,15 @@ const Navigation = () => {
     <nav>
       <div className="nav-center">
         <div className="nav-header">
-          <img src={logo} alt="logo" className="logo"/>
+          {logoLink.map((logoIcon) => {
+            const { id, url } = logoIcon;
+            return (
+              <a href={url}>
+                <img src={logo} alt="logo" className="logo" />
+              </a>
+            );
+          })}
+
           <button
             className="nav-toggle"
             onClick={() => setShowLinks(!showLinks)}
