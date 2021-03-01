@@ -5,6 +5,9 @@ const Favorites = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1>Favorites</h1>
     </>
   );

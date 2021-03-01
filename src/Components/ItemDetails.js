@@ -5,6 +5,9 @@ const ItemDetails = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1>Item Details</h1>
     </>
   );

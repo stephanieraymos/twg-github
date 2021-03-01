@@ -5,6 +5,9 @@ const OrderCreation = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1>Order Creation</h1>
     </>
   );

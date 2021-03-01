@@ -5,6 +5,9 @@ const OrderDetails = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1>Order Details</h1>
     </>
   );

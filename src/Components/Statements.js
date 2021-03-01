@@ -5,6 +5,9 @@ const Statements = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1>Statements</h1>
     </>
   );

@@ -5,6 +5,9 @@ const Verification = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1>Verify your identity</h1>
     </>
   );

@@ -8,7 +8,12 @@ const Dashboard = () => {
   }
 
   return (
-    <>{user === admin ? <h1>Admin Dashboard</h1> : <h1>User Dashboard</h1>}</>
+    <>
+      <div>
+        <Navigation />
+      </div>
+      {user === admin ? <h1>Admin Dashboard</h1> : <h1>User Dashboard</h1>}
+    </>
   );
 };
 

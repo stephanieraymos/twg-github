@@ -5,6 +5,9 @@ const Settings = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1>Settings Page</h1>
     </>
   );
