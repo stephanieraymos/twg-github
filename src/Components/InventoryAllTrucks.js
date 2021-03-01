@@ -8,7 +8,7 @@ const url = "http://143.110.225.28/api/v1/inventory/insert/?name=[string]&price=
 
 const Inventory = () => {
   //Setting state values, params are default values
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [trucks, setTrucks] = useState([]);
   const [value, setValue] = useState(0);
 
@@ -34,7 +34,7 @@ const Inventory = () => {
     );
   }
   //Extracting props + binding them to trucks
-  const { truckName, truckPrice, truckContents, id } = trucks[value];
+  const { truckName, truckPrice, truckContents, id } = trucks[value]; // trucks[value]
 
   return (
     <>
