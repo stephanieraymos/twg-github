@@ -138,7 +138,7 @@ const AddInventory = () => {
               placeholder="What's in the truck?"
               style={{ textAlign: "center" }}
             />
-            <button className="btn" type="submit">
+            <button className="submit-btn" type="submit">
               {isEditing ? "Edit" : "Submit"}
             </button>
           </div>
