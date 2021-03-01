@@ -10,9 +10,9 @@ const Inventory = ({ truckLoad, removeItem, editItem }) => {
           const { id, truckName, truckPrice, truckContents } = item;
           return (
             <article key={id} className="truckLoad">
-              <p className="items">Truck name: {truckName}</p>
-              <p className="items">Price: {truckPrice}</p>
-              <p className="items">Contents: {truckContents}</p>
+              <p className="items truck">Truck name: {truckName}</p>
+              <p className="items price">Price: {truckPrice}</p>
+              <p className="items contents">Contents: {truckContents}</p>
               <div className="side-btn-container">
                 <button
                   type="button"
