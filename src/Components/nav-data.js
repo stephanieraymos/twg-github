@@ -1,5 +1,6 @@
 import React from "react";
 import { FaFacebook } from "react-icons/fa";
+
 export const adminLinks = [
   {
     id: 1,
@@ -25,6 +26,11 @@ export const adminLinks = [
     id: 5,
     url: "/Statements",
     text: "Statements",
+  },
+  {
+    id: 6,
+    url: "/Contact",
+    text: "Contact",
   },
 ];
 

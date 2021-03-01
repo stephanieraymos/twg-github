@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import video from "../img/video.mp4";
 import warehouse from "../img/warehouse-sm.jpg";
 import Contact from "./Contact"
@@ -8,7 +9,13 @@ const Home = () => {
   document.title = "Home";
 
   const showContactPage = () => {
-    return <Inventory />
+    return <BrowserRouter>
+    <Switch>
+      <Route exact path="/Inventory">
+      <Redirect to="/Inventory" />
+      </Route>
+    </Switch>
+  </BrowserRouter>
   }
 
   return (
