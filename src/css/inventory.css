@@ -57,15 +57,12 @@
     letter-spacing: 2px;
     transition: var(--transition);
   }
-
   .truck {
     width: 30%;
   }
-
   .price {
     width: 15%;
   }
-
   .contents {
     width: 45%;
   }
@@ -119,9 +116,8 @@
     background: rgb(194, 192, 192);
 
   }
-  .truckLoad:nth-child(odd):hover {
+  .truckLoad:nth-child(even):hover {
     background: black;
-
   }
 
   /* Main button styles for entire site */
