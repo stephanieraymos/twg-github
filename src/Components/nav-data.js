@@ -32,6 +32,11 @@ export const adminLinks = [
     url: "/Contact",
     text: "Contact",
   },
+  {
+    id: 6,
+    url: "/InventoryAllTrucks",
+    text: "InventoryAllTrucks",
+  },
 ];
 
 export const social = [

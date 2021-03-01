@@ -4,7 +4,7 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 import inventory from "../css/inventory.css";
 import Navigation from "./Navigation";
 
-const url = ""; //API LINK
+const url = "http://143.110.225.28/api/v1/inventory/insert/?name=[string]&price=[string]&content=[string]"; //API LINK
 
 const Inventory = () => {
   //Setting state values, params are default values

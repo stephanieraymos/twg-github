@@ -25,6 +25,7 @@ function App() {
           <Route path="/Settings" exact component={Settings} />
           <Route path="/Statements" exact component={Statements} />
           <Route path="/Contact" exact component={Contact} />
+          <Route path="/InventoryAllTrucks" exact component={InventoryAllTrucks} />
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>
