@@ -100,7 +100,7 @@
     border-radius: .25em;
   }
 
-  .truckLoad:nth-child(odd) {
+  .truckLoad:nth-child(even) {
     background: rgb(194, 192, 192);
 
   }
