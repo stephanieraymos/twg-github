@@ -6,6 +6,8 @@ import Inventory from "./Components/Inventory";
 import AddInventory from "./Components/AddInventory";
 import InventoryAllTrucks from "./Components/InventoryAllTrucks";
 import Navigation from "./Components/Navigation";
+import Dashboard from "./Components/Dashboard";
+import Settings from "./Components/Settings";
 
 function App() {
   return (
@@ -16,8 +18,10 @@ function App() {
             <Redirect to="/Home" />
           </Route>
           <Route path="/Home" exact component={Home} />
-          <Route path="/Inventory" exact component={Inventory} />
+          <Route path="/Dashboard" exact component={Dashboard} />
           <Route path="/AddInventory" exact component={AddInventory} />
+          {/* <Route path="/InventoryAllTrucks" exact component={InventoryAllTrucks} /> */}
+          <Route path="/Settings" exact component={Settings} />
           <Route path="/Contact" exact component={Contact} />
           <Redirect to="/" />
         </Switch>

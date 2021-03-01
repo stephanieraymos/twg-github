@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from "./Navigation";
 
 const ItemDetails = () => {
   document.title = "Item Details";

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 const CustomerDetails = ({ name, orders, cost }) => {
   const [showInfo, setShowInfo] = useState(false);
+  import Navigation from "./Navigation";
 
   return (
     <>

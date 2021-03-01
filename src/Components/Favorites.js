@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from "./Navigation";
 
 const Favorites = () => {
   document.title = "Favorites";

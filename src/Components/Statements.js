@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from "./Navigation";
 
 const Statements = () => {
   document.title = "Statements";
