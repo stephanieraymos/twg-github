@@ -9,7 +9,7 @@ const Statements = () => {
       <div>
         <Navigation />
       </div>
-      <h1>Statements</h1>
+      <h1>Statements Page</h1>
     </>
   );
 };

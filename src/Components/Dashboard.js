@@ -13,6 +13,7 @@ const Dashboard = () => {
       <div>
         <Navigation />
       </div>
+      <h1>Dashboard</h1>
       {/* {user === admin ? <h1>Admin Dashboard</h1> : <h1>User Dashboard</h1>} */}
     </>
   );
