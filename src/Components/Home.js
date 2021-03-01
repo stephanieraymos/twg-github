@@ -1,22 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import video from "../img/video.mp4";
 import warehouse from "../img/warehouse-sm.jpg";
-import Contact from "./Contact"
-import Inventory from "./Inventory"
+import Contact from "./Contact";
+import Inventory from "./Inventory";
 
 const Home = () => {
   document.title = "Home";
-
-  const showContactPage = () => {
-    return <BrowserRouter>
-    <Switch>
-      <Route exact path="/Inventory">
-      <Redirect to="/Inventory" />
-      </Route>
-    </Switch>
-  </BrowserRouter>
-  }
 
   return (
     <>
@@ -32,7 +21,9 @@ const Home = () => {
           <div className="sub-content">
             <h1 className="home-header">The WholeSale Group</h1>
             <div className="btn-container">
-              <button className="btn" onClick={() => showContactPage()}>See more</button>
+              <a href="/AddInventory" className="center-btn">
+                <button className="btn">See more</button>
+              </a>
             </div>
           </div>
         </div>

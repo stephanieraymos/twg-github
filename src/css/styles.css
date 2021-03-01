@@ -177,6 +177,10 @@ input:hover {
   font-size: 1.5rem;
 }
 
+.center-btn {
+  align-self: center;
+}
+
 .btn:hover {
   transition: all 0.3s linear;
   background-color: var(--sections-hover);
