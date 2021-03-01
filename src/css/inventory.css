@@ -37,6 +37,7 @@
     padding: 0.25rem 1rem;
     text-transform: capitalize;
     background: white;
+    padding-bottom: 5px;
   }
   
   .truckLoad:hover {
