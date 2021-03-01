@@ -1,14 +1,10 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import Navigation from "./Navigation"
 import inventory from "../css/inventory.css";
 
 const Inventory = ({ truckLoad, removeItem, editItem }) => {
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <div className="truckLoad-list">
         {truckLoad.map((item) => {
           const { id, truckName, truckPrice, truckContents } = item;

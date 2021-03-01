@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Alert from "./Alert";
 import Inventory from "./Inventory";
+import Navigation from "./Navigation";
 import inventory from "../css/inventory.css";
 
 const getLocalStorage = () => {
@@ -60,7 +61,7 @@ const AddInventory = () => {
         truckPrice,
         truckContents,
       };
-      
+
       //Spreading out current truckLoad and adding newTruck to the list
       setTruckLoad([...truckLoad, newTruck]);
       setTruckName(""); //Reseting input boxes to empty string
@@ -88,7 +89,7 @@ const AddInventory = () => {
     setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
   };
 
-  //editItem grabs the id of the item to be edited, sets the item and sets all required values 
+  //editItem grabs the id of the item to be edited, sets the item and sets all required values
   const editItem = (id) => {
     const specificItem = truckLoad.find((truck) => truck.id === id);
     setIsEditing(true);
@@ -105,6 +106,9 @@ const AddInventory = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <section className="section-center">
         <h3 className="heading">Add Truckload</h3>
         <form onSubmit={handleSubmit}>
