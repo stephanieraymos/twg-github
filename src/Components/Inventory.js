@@ -5,31 +5,39 @@ import inventory from "../css/inventory.css";
 const Inventory = ({ truckLoad, removeItem, editItem }) => {
   return (
     <>
+      <div className="header-items">
+        <p className="truck">TRUCK NAME</p>
+        <p className="price">PRICE</p>
+        <p className="contents">CONTENTS</p>
+        <p className="side-btn-container"></p>
+      </div>
       <div className="truckLoad-list">
         {truckLoad.map((item) => {
           const { id, truckName, truckPrice, truckContents } = item;
           return (
-            <article key={id} className="truckLoad">
-              <p className="items truck">Truck name: {truckName}</p>
-              <p className="items price">Price: {truckPrice}</p>
-              <p className="items contents">Contents: {truckContents}</p>
-              <div className="side-btn-container">
-                <button
-                  type="button"
-                  className="edit-btn"
-                  onClick={() => editItem(id)}
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  type="button"
-                  className="delete-btn"
-                  onClick={() => removeItem(id)}
-                >
-                  <FaTrash />
-                </button>
-              </div>
-            </article>
+            <>
+              <article key={id} className="truckLoad">
+                <p className="items truck">{truckName}</p>
+                <p className="items price">${truckPrice}</p>
+                <p className="items contents">{truckContents}</p>
+                <div className="side-btn-container">
+                  <button
+                    type="button"
+                    className="edit-btn"
+                    onClick={() => editItem(id)}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    type="button"
+                    className="delete-btn"
+                    onClick={() => removeItem(id)}
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              </article>
+            </>
           );
         })}
       </div>
@@ -38,7 +46,6 @@ const Inventory = ({ truckLoad, removeItem, editItem }) => {
 };
 
 export default Inventory;
-
 
 // <table key={id} className="truckLoad">
 // <thead>

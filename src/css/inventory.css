@@ -1,9 +1,9 @@
 /* INVENTORY */
-
-.side-btn-container {
-    width: 5%;
+  p {
+    padding: 0;
+    margin: 0;
   }
-  
+
   .section-center {
     background: rgba(0, 0, 0, 0.199);
     border-radius: 0.25rem;
@@ -33,7 +33,7 @@
     justify-content: space-between;
     margin-bottom: 0.2rem;
     transition: var(--transition);
-    padding: 0.25rem 1rem;
+    padding: 0.4rem 1rem;
     text-transform: capitalize;
     background: white;
     padding-bottom: 5px;
@@ -65,6 +65,17 @@
   }
   .contents {
     width: 45%;
+  }
+
+  .header-items {
+    display: flex;
+    justify-content: space-between;
+    padding: .75rem;
+    background: var(--sections);
+  }
+
+  .side-btn-container {
+    width: 5%;
   }
   
   .edit-btn,
