@@ -5,6 +5,8 @@ import warehouse from "../img/warehouse-sm.jpg";
 import Contact from "./Contact";
 import Inventory from "./Inventory";
 import { useGlobalContext } from "./context";
+import modalandsidebar from "../css/modalandsidebar.css";
+
 
 const Home = () => {
   document.title = "Home";
@@ -13,14 +15,6 @@ const Home = () => {
   return (
     <>
       <div className="home-container">
-        {/* <main>
-          <button className="sidebar-toggle" onClick={openSidebar}>
-            <FaBars />
-          </button>
-          <button className="btn" onClick={openModal}>
-            Show Modal
-          </button>
-        </main> */}
         {window.innerWidth >= 900 ? (
           <video className="bg-video" autoPlay loop muted>
             <source src={video} type="video/mp4" />
@@ -28,7 +22,16 @@ const Home = () => {
         ) : (
           <img src={warehouse} alt="Warehouse image" className="bg-img" />
         )}
+
         <div className="content">
+          <main>
+            <button className="sidebar-toggle" onClick={openSidebar}>
+              <FaBars />
+            </button>
+            <button className="modal-btn" onClick={openModal}>
+              Show Modal
+            </button>
+          </main>
           <div className="sub-content">
             <h1 className="home-header">The WholeSale Group</h1>
             <div className="btn-container">
