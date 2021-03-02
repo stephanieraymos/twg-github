@@ -9,6 +9,7 @@ import Navigation from "./Components/Navigation";
 import Dashboard from "./Components/Dashboard";
 import Settings from "./Components/Settings";
 import Statements from "./Components/Statements";
+import Modal from "./Components/Modal";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>
+      <Modal />
     </>
   );
 }

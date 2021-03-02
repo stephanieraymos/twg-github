@@ -1,15 +1,26 @@
 import React, { useState } from "react";
+import { FaBars } from "react-icons/fa";
 import video from "../img/video.mp4";
 import warehouse from "../img/warehouse-sm.jpg";
 import Contact from "./Contact";
 import Inventory from "./Inventory";
+import { useGlobalContext } from "./context";
 
 const Home = () => {
   document.title = "Home";
+  const { openSidebar, openModal } = useGlobalContext();
 
   return (
     <>
       <div className="home-container">
+        {/* <main>
+          <button className="sidebar-toggle" onClick={openSidebar}>
+            <FaBars />
+          </button>
+          <button className="btn" onClick={openModal}>
+            Show Modal
+          </button>
+        </main> */}
         {window.innerWidth >= 900 ? (
           <video className="bg-video" autoPlay loop muted>
             <source src={video} type="video/mp4" />
