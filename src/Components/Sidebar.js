@@ -6,11 +6,16 @@ import { useGlobalContext } from "./context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 const Sidebar = () => {
+  const { isSidebarOpen, closeSidebar } = useGlobalContext();
+
   return (
     <aside className={`sidebar`}>
       <div className="sidebar-header">
         <img src={logo} className="logo" alt="Logo" />
-        <button className="close-btn">
+        <button
+          className={`${isSidebarOpen ? "show-sidebar" : "close-btn"}`}
+          onClick={closeSidebar}
+        >
           <FaTimes />
         </button>
       </div>
