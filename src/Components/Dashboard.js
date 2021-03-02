@@ -13,8 +13,8 @@ const Dashboard = () => {
         <button className={`${isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"}`} onClick={openSidebar}>
           <FaBars />
         </button>
+        <h1>Dashboard</h1>
       </main>
-      <h1>Dashboard</h1>
     </>
   );
 };

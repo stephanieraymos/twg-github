@@ -67,6 +67,5 @@ export const logoLink = [
   {
     id: 1,
     url: "/Home.js",
-    icon: <FaHome />
   },
 ];
