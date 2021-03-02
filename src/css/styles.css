@@ -193,7 +193,8 @@ input:hover {
   display: flex;
   color: var(--text);
   justify-content: center;
-  padding-top: 15rem;
+  padding-top: 13rem;
+  padding-bottom: 2.5rem;
   text-shadow: 0px 4px 4px rgba(122, 123, 126, 0.45);
 }
 
