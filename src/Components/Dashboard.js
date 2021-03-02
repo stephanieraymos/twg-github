@@ -2,11 +2,7 @@ import React from "react";
 import Navigation from "./Navigation";
 
 const Dashboard = () => {
-  // if (user === admin) {
-  //   document.title = "Admin Dashboard";
-  // } else {
-  //   document.title = "User Dashboard";
-  // }
+  document.title = "Dashboard";
 
   return (
     <>
@@ -14,7 +10,6 @@ const Dashboard = () => {
         <Navigation />
       </div>
       <h1>Dashboard</h1>
-      {/* {user === admin ? <h1>Admin Dashboard</h1> : <h1>User Dashboard</h1>} */}
     </>
   );
 };
