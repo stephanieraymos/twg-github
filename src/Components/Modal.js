@@ -1,39 +1,25 @@
-import React, { useState, useEffect } from "react";
-import Login from "./Login";
-import Register from "./Register";
+import React from "react";
+import { FaTimes } from "react-icons/fa";
+import { useGlobalContext } from "./context";
+import modalandsidebar from "../css/modalandsidebar.css";
 
-// Params: modalContent, closeModal
+
 const Modal = () => {
-  useEffect(() => {
-    setTimeout(() => {
-      // closeModal();
-    }, 3000);
-  }, []);
-
-  const loginOption = () => {
-    return <h1>Login Option</h1>;
-  };
-
-  const registerOption = () => {
-    return <h1>Register Option</h1>;
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // This will be the state of a modal that opens when button is clicked.
-  // The modal will show import information based on what info was requested.
-  const [modalContent, setModalContent] = useState(loginOption);
-  // This will set the modal content based on whether the user selects login or register
-  console.log(modalContent);
+  const { isModalOpen, closeModal } = useGlobalContext();
 
   return (
-    <>
-      <h1>Modal</h1>
-      {/* {modalContent === loginOption ? (
-        <Login />
-      ) : (
-        <Register /> && setModalContent(registerOption)
-      )} */}
-    </>
+    <div
+      className={`${
+        isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
+      }`}
+    >
+      <div className="modal-container">
+        <h3>Modal Content</h3>
+        <button className="close-modal-btn" onClick={closeModal}>
+          <FaTimes />
+        </button>
+      </div>
+    </div>
   );
 };
 

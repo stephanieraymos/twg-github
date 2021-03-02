@@ -1,0 +1,135 @@
+/*
+  =============== 
+  Modal
+  ===============
+  */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  transition: var(--transition); /* root styles */
+  visibility: hidden;
+  z-index: -1;
+}
+/* OPEN/CLOSE MODAL */
+.show-modal {
+  visibility: visible;
+  z-index: 10;
+}
+.modal-container {
+  background: white;
+  border-radius: var(--radius); /* root styles */
+  width: 90vw;
+  height: 30vh;
+  max-width: 620px;
+  text-align: center;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.close-modal-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  color: rgb(121, 36, 36);
+  cursor: pointer;
+}
+
+/*
+    =============== 
+    Sidebar
+    ===============
+    */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+.close-btn {
+  font-size: 1.75rem;
+  background: transparent;
+  border-color: transparent;
+  color: var(--sections); /* root styles */
+  transition: var(--transition); /* root styles */
+  cursor: pointer;
+  color: var(--clr-red-dark);
+  margin-top: 0.2rem;
+}
+.close-btn:hover {
+  color: rgb(241, 129, 129);
+}
+.logo {
+  justify-self: center;
+  height: 40px;
+}
+
+.links a {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  text-transform: capitalize;
+  padding: 1rem 1.5rem;
+  color: gray;
+  transition: var(--transition); /* root styles */
+  letter-spacing: var(--spacing); /* root styles */
+}
+
+.links a:hover {
+  background: gray;
+  color: gray;
+}
+.links a svg {
+  font-size: 1.5rem;
+  color: gray;
+  margin-right: 1rem;
+  transition: var(--transition); /* root styles */
+}
+.links a:hover svg {
+  color: gray;
+}
+.social-icons {
+  justify-self: center;
+  display: flex;
+  padding-bottom: 2rem;
+}
+.social-icons a {
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+  color: var(--sections); /* root styles */
+  transition: var(--transition); /* root styles */
+}
+.social-icons a:hover {
+  color: var(--clr-primary-1);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 1rem;
+  box-shadow: rgb(87, 4, 4);
+  transition: var(--transition); /* root styles */
+  transform: translate(-100%);
+}
+.show-sidebar {
+  transform: translate(0);
+}
+@media screen and (min-width: 676px) {
+  .sidebar {
+    width: 400px;
+  }
+}
