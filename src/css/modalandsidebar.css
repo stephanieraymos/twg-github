@@ -105,6 +105,7 @@ main {
   color: var(--sections);
   cursor: pointer;
   animation: bounce 2s ease-in-out infinite;
+  outline: none;
 }
 
 @keyframes bounce {
@@ -136,8 +137,10 @@ main {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: var(--radius);
   margin: 0.5rem;
+  outline: none;
 }
-.smbtn:hover {
+.modal-btn:hover {
+  transition: all 0.3s linear;
   background: transparent;
 }
 
@@ -184,6 +187,7 @@ main {
   border-color: transparent;
   color: rgb(121, 36, 36);
   cursor: pointer;
+  outline: none;
 }
 
 /*
