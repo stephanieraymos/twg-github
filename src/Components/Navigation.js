@@ -38,8 +38,8 @@ const Navigation = () => {
             <FaBars />
           </button>
         </div>
-        <div className="links-container" ref={linksContainerRef}>
-          <ul className="links" ref={linksRef}>
+        <div className="nav-links-container" ref={linksContainerRef}>
+          <ul className="nav-links" ref={linksRef}>
             {links.map((link) => {
               const { id, url, text } = link;
               return (

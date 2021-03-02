@@ -8,7 +8,7 @@ import modalandsidebar from "../css/modalandsidebar.css";
 
 const Home = () => {
   document.title = "Home";
-  const { openSidebar, openModal } = useGlobalContext();
+  const { openModal } = useGlobalContext();
 
   return (
     <>
@@ -23,9 +23,6 @@ const Home = () => {
 
         <div className="content">
           <main>
-            <button className="sidebar-toggle" onClick={openSidebar}>
-              <FaBars />
-            </button>
             <button className="modal-btn" onClick={openModal}>
               Show Modal
             </button>
