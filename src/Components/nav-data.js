@@ -21,13 +21,13 @@ export const adminLinks = [
   {
     id: 2,
     url: "/AddInventory",
-    text: "Add TruckLoad",
+    text: "Add Truck",
     icon: <FaPlusSquare />
   },
   {
     id: 3,
     url: "/InventoryAllTrucks",
-    text: "All Inventory",
+    text: "Inventory",
     icon: <FaTruckMoving />
   },
   {
