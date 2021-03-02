@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
-import { adminLinks, social, logoLink } from "./nav-data";
+import { links, social, logoLink } from "./nav-data";
 import logo from "../img/logo-blue.svg";
 import nav from "../css/nav.css";
 
@@ -40,7 +40,7 @@ const Navigation = () => {
         </div>
         <div className="links-container" ref={linksContainerRef}>
           <ul className="links" ref={linksRef}>
-            {adminLinks.map((link) => {
+            {links.map((link) => {
               const { id, url, text } = link;
               return (
                 <li key={id}>

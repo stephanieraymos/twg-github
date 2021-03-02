@@ -10,10 +10,13 @@ import Dashboard from "./Components/Dashboard";
 import Settings from "./Components/Settings";
 import Statements from "./Components/Statements";
 import Modal from "./Components/Modal";
+import Sidebar from "./Components/Sidebar";
 
 function App() {
   return (
     <>
+      <Modal />
+      <Sidebar />
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
@@ -29,7 +32,6 @@ function App() {
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>
-      <Modal />
     </>
   );
 }

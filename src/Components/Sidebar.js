@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./logo.svg";
+import logo from "../img/logo-blue.svg";
 import { FaTimes } from "react-icons/fa";
 import { social, links } from "./nav-data";
 import { useGlobalContext } from "./context";

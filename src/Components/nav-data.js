@@ -11,7 +11,7 @@ import {
   FaUserCircle
 } from "react-icons/fa";
 
-export const adminLinks = [
+export const links = [
   {
     id: 1,
     url: "/Dashboard",
