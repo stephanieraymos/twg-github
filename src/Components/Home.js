@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import video from "../img/video.mp4";
 import warehouse from "../img/warehouse-sm.jpg";
-import Contact from "./Contact";
-import Inventory from "./Inventory";
 import { useGlobalContext } from "./context";
 import modalandsidebar from "../css/modalandsidebar.css";
 

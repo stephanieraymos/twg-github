@@ -4,13 +4,13 @@ import { useGlobalContext } from "./context";
 
 const Dashboard = () => {
   document.title = "Dashboard";
-  const { openSidebar } = useGlobalContext();
+  const { openSidebar, isSidebarOpen } = useGlobalContext();
 
 
   return (
     <>
       <main>
-        <button className="sidebar-toggle" onClick={openSidebar}>
+        <button className={`${isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"}`} onClick={openSidebar}>
           <FaBars />
         </button>
       </main>

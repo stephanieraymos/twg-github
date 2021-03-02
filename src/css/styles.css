@@ -183,7 +183,7 @@ input:hover {
 
 .btn:hover {
   transition: all 0.3s linear;
-  background: transparent;
+  background-color: var(--sections-hover);
 }
 
 /* Heading text for home page */
