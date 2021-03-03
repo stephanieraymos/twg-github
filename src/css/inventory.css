@@ -155,3 +155,9 @@
   margin: 5% 0 5.5%;
   font-size: 1.5rem;
 }
+
+/* INVENTORY ALL TRUCKS */
+
+.truck-data-container {
+  display: flex;
+}

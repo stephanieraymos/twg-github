@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import inventory from "../css/inventory.css";
 
 // const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins
 const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
@@ -24,10 +25,10 @@ function Inventory() {
     <>
       {trucks.map((truck) => {
         return (
-          <div className="truck-data-container" key={truck.id}>
-            <h3>{truck.truckName}</h3>
-            <p>${truck.truckPrice}</p>
-            <p>{truck.truckContents}</p>
+          <div className="truckLoad" key={truck.id}>
+            <h3 className="truck">{truck.truckName}</h3>
+            <p className="price">${truck.truckPrice}</p>
+            <p className="contents">{truck.truckContents}</p>
           </div>
         );
       })}

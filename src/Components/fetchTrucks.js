@@ -4,6 +4,8 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 import inventory from "../css/inventory.css";
 import Navigation from "./Navigation";
 
+// THIS COMPONENT IN NOT BEING USED!!
+
 const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
 
 const Inventory = () => {
