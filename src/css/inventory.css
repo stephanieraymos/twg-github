@@ -157,3 +157,8 @@
 }
 
 /* INVENTORY ALL TRUCKS */
+
+.table-wrapper {
+  align-self: center;
+  padding: 2rem;
+}
