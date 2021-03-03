@@ -4,9 +4,9 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 import inventory from "../css/inventory.css";
 import Navigation from "./Navigation";
 
-const url = "http://143.110.225.28/api/v1/inventory/insert/?name=[string]&price=[string]&content=[string]"; //API LINK
+const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
 
-const Inventory = () => {
+function Inventory() {
   //Setting state values, params are default values
   const [loading, setLoading] = useState(false);
   const [trucks, setTrucks] = useState([]);
@@ -20,9 +20,11 @@ const Inventory = () => {
     setLoading(false); //Loading ends when information is loaded
   };
 
+
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
   useEffect(() => {
     fetchTrucks();
+    console.log("Hello")
   }, []);
 
   //Display "Loading..." if loading is true
