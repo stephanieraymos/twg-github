@@ -16,6 +16,7 @@
   }
   
   .form-control {
+    padding-top: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,10 +34,10 @@
     justify-content: space-between;
     margin-bottom: 0.2rem;
     transition: var(--transition);
-    padding: 0.4rem 1rem;
+    padding: 0.5rem 1rem;
     text-transform: capitalize;
     background: white;
-    padding-bottom: 5px;
+    padding-bottom: 6px;
   }
 
   
