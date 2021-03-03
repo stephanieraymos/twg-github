@@ -227,7 +227,11 @@ main {
 
 .links a:hover {
   background: transparent;
-  color: rgb(90, 90, 90);
+  color: var(--sections);
+  transform: scale(.9, 1.3);
+  -webkit-transform: scale(.9, 1.3);
+  -ms-transform: scale(.9, 1.3);
+  -moz-transform: scale(.9, 1.3);
 }
 .links a svg {
   font-size: 1.5rem;
