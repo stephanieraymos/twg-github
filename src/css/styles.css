@@ -324,8 +324,8 @@ input:hover {
   border-radius: 0.25rem;
   letter-spacing: 0.1rem;
   text-transform: capitalize;
-  margin-left: 39%;
-  margin-right: 39%;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 .alert-danger {
   color: #721c24;
