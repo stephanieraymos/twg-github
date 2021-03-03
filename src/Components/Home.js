@@ -24,7 +24,7 @@ const Home = () => {
         <div className="content">
           <main>
             <button className="modal-btn" onClick={openModal}>
-              Show Modal
+              Login / Signup
             </button>
           </main>
           <div className="sub-content">
