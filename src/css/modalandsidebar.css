@@ -172,6 +172,7 @@ main {
   display: grid;
   place-items: center;
   position: relative;
+  border-radius: var(--radius);
 }
 .close-modal-btn {
   position: absolute;

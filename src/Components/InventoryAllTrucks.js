@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navigation from "./Navigation";
 import inventory from "../css/inventory.css";
 
 // const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins
@@ -23,6 +24,9 @@ function Inventory() {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <div className="table-wrapper">
         <div className="header-items">
           <p className="all-trucks-table-header-name truck">TRUCK NAME</p>
@@ -38,7 +42,9 @@ function Inventory() {
               <div className="truckLoad" key={truck.id}>
                 <p className="items all-trucks-name">{truck.truckName}</p>
                 <p className="items all-trucks-price">${truck.truckPrice}</p>
-                <p className="items all-trucks-contents">{truck.truckContents}</p>
+                <p className="items all-trucks-contents">
+                  {truck.truckContents}
+                </p>
               </div>
             );
           })}

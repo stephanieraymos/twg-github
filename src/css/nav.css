@@ -128,13 +128,7 @@
     padding: 0.5rem 1rem;
     transition: var(--transition);
   }
-  .nav-links:hover {
-    color: var(--dark);
-    font-size: 1.2em;
-    padding-left: 1.5rem;
-    box-shadow: var(--light-shadow);
-    
-  }
+
   .social-icons {
     display: none;
   }
@@ -174,7 +168,6 @@
       margin: 0 0.5rem;
     }
     .nav-links a:hover {
-      padding: 0;
       background: var(--dark);
       color: var(--sections);
     }
