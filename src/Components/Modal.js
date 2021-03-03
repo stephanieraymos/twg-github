@@ -134,8 +134,9 @@ const Modal = () => {
               placeholder="Email"
               style={{ textAlign: "center" }}
             />
+            <div className="no-account">Don't have an account?</div>
             <button className="submit-modal-btn" type="submit">
-              {isEditing ? "Edit" : "Submit"}
+              Submit
             </button>
           </div>
         </form>
