@@ -1,24 +1,9 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 
-const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
+const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins 
+// const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
 
-const Inventory = () => {
+function Inventory() {
   //Setting state values, params are default values
   const [trucks, setTrucks] = useState([]);
 
@@ -27,7 +12,6 @@ const Inventory = () => {
     const response = await fetch(url);
     const newTrucks = await response.json(); //returns a promise
     setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-    console.log(trucks);
   };
 
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
