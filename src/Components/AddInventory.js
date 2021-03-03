@@ -104,6 +104,19 @@ const AddInventory = () => {
     localStorage.setItem("truck", JSON.stringify(truckLoad));
   }, [truckLoad]);
 
+  useEffect(() => {
+    const postRequest = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: "Post request to TruckLoad" }),
+    };
+    fetch("http://143.110.225.28/api/v1/inventory/data/", postRequest)
+      .then((response) => response.json())
+      .then((data) => setPostId(data.id));
+
+    // empty dependency array means this effect will only run once (like componentDidMount in classes)
+  }, []);
+
   return (
     <>
       <div>
