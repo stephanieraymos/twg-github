@@ -1,138 +1,136 @@
 /* INVENTORY */
-  p {
-    padding: 0;
-    margin: 0;
-  }
+p {
+  padding: 0;
+  margin: 0;
+}
 
-  .section-center {
-    background: rgba(0, 0, 0, 0.199);
-    border-radius: 0.25rem;
-    box-shadow: rgba(128, 128, 128, 0.212);
-    transition: all 0.3s linear;
-    padding: 2rem;
-  }
-  .section-center:hover {
-    box-shadow: rgba(44, 44, 44, 0.589);
-  }
-  
-  .form-control {
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    align-items: center;
-  }
-  
-  input:hover::placeholder {
-    color: var(--light);
-  }
-  
-  .truckLoad {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.2rem;
-    transition: var(--transition);
-    padding: 0.5rem 1rem;
-    text-transform: capitalize;
-    background: white;
-    padding-bottom: 6px;
-  }
+.section-center {
+  background: rgba(0, 0, 0, 0.199);
+  border-radius: 0.25rem;
+  box-shadow: rgba(128, 128, 128, 0.212);
+  transition: all 0.3s linear;
+  padding: 2rem;
+}
+.section-center:hover {
+  box-shadow: rgba(44, 44, 44, 0.589);
+}
 
-  
-  .truckLoad:hover {
-    color: gray;
-    background: var(--dark-gray);
-  }
-  
-  .truckLoad:hover > .items {
-    color: var(--text);
-  }
-  
-  .items {
-    margin-bottom: 0;
-    justify-content: center;
-    /* text-align: center; */
-    color: var(--dark);
-    letter-spacing: 2px;
-    transition: var(--transition);
-  }
-  .truck {
-    width: 30%;
-  }
-  .price {
-    width: 15%;
-  }
-  .contents {
-    width: 45%;
-  }
+.form-control {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
 
-  .header-items {
-    display: flex;
-    justify-content: space-between;
-    padding: .75rem;
-    background: var(--sections);
-  }
+input:hover::placeholder {
+  color: var(--light);
+}
 
-  .side-btn-container {
-    width: 5%;
-  }
-  
-  .edit-btn,
-  .delete-btn {
-    background: transparent;
-    border-color: transparent;
-    cursor: pointer;
-    font-size: 0.8rem;
-    margin: 0 0.15rem;
-    transition: var(--transition);
-  }
-  .edit-btn {
-    color: rgb(3, 129, 3);
-  }
-  .edit-btn:hover {
-    color: rgb(8, 228, 8);
-  }
-  .delete-btn {
-    color: rgb(170, 5, 5);
-  }
-  .delete-btn:hover {
-    color: rgb(248, 0, 0);
-  }
-  .clear-btn {
-    text-transform: capitalize;
-    width: 10rem;
-    height: 1.5rem;
-    display: grid;
-    align-items: center;
-    background: transparent;
-    border-color: transparent;
-    color: red;
-    margin: 0 auto;
-    font-size: 0.85rem;
-    letter-spacing: 0.1rem;
-    cursor: pointer;
-    transition: var(--transition);
-    margin-top: 1.25rem;
-  }
-  .clear-btn:hover {
-    color: rgb(110, 14, 14);
-  }
-  
-  .truckLoad-list {
-    border-radius: .25em;
-  }
+.truckLoad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.2rem;
+  transition: var(--transition);
+  padding: 0.5rem 1rem;
+  text-transform: capitalize;
+  background: white;
+  padding-bottom: 6px;
+}
 
-  .truckLoad:nth-child(even) {
-    background: rgb(194, 192, 192);
+.truckLoad:hover {
+  color: gray;
+  background: var(--dark-gray);
+}
 
-  }
-  .truckLoad:nth-child(even):hover {
-    background: black;
-  }
+.truckLoad:hover > .items {
+  color: var(--text);
+}
 
-  /* Main button styles for entire site */
+.items {
+  margin-bottom: 0;
+  justify-content: center;
+  /* text-align: center; */
+  color: var(--dark);
+  letter-spacing: 2px;
+  transition: var(--transition);
+}
+.truck {
+  width: 30%;
+}
+.price {
+  width: 15%;
+}
+.contents {
+  width: 45%;
+}
+
+.header-items {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: var(--sections);
+}
+
+.side-btn-container {
+  width: 5%;
+}
+
+.edit-btn,
+.delete-btn {
+  background: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin: 0 0.15rem;
+  transition: var(--transition);
+}
+.edit-btn {
+  color: rgb(3, 129, 3);
+}
+.edit-btn:hover {
+  color: rgb(8, 228, 8);
+}
+.delete-btn {
+  color: rgb(170, 5, 5);
+}
+.delete-btn:hover {
+  color: rgb(248, 0, 0);
+}
+.clear-btn {
+  text-transform: capitalize;
+  width: 10rem;
+  height: 1.5rem;
+  display: grid;
+  align-items: center;
+  background: transparent;
+  border-color: transparent;
+  color: red;
+  margin: 0 auto;
+  font-size: 0.85rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 1.25rem;
+}
+.clear-btn:hover {
+  color: rgb(110, 14, 14);
+}
+
+.truckLoad-list {
+  border-radius: 0.25em;
+}
+
+.truckLoad:nth-child(even) {
+  background: rgb(194, 192, 192);
+}
+.truckLoad:nth-child(even):hover {
+  background: black;
+}
+
+/* Main button styles for entire site */
 .submit-btn {
   border-color: transparent;
   width: clamp(10rem, -0.875rem + 8.333vw, 14rem);
@@ -161,4 +159,24 @@
 .table-wrapper {
   align-self: center;
   padding: 2rem;
+}
+
+.all-trucks-table-header-name {
+  width: 35%;
+}
+p.all-trucks-table-header-price {
+  width: 18%;
+}
+p.all-trucks-table-header-contents {
+  width: 42%;
+}
+
+.all-trucks-name {
+  width: 35%;
+}
+.all-trucks-price {
+  width: 18%;
+}
+.all-trucks-contents {
+  width: 42%;
 }

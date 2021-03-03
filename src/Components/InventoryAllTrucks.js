@@ -25,10 +25,9 @@ function Inventory() {
     <>
       <div className="table-wrapper">
         <div className="header-items">
-          <p className="truck">TRUCK NAME</p>
-          <p className="price">PRICE</p>
-          <p className="contents">CONTENTS</p>
-          <p className="side-btn-container"></p>
+          <p className="all-trucks-table-header-name truck">TRUCK NAME</p>
+          <p className="all-trucks-table-header-price price">PRICE</p>
+          <p className="all-trucks-table-header-contents contents">CONTENTS</p>
         </div>
 
         <div className="truckLoad-list">
@@ -37,9 +36,9 @@ function Inventory() {
 
             return (
               <div className="truckLoad" key={truck.id}>
-                <p className="items truck">{truck.truckName}</p>
-                <p className="items price">${truck.truckPrice}</p>
-                <p className="items contents">{truck.truckContents}</p>
+                <p className="items all-trucks-name">{truck.truckName}</p>
+                <p className="items all-trucks-price">${truck.truckPrice}</p>
+                <p className="items all-trucks-contents">{truck.truckContents}</p>
               </div>
             );
           })}
