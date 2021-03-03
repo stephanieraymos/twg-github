@@ -11,6 +11,7 @@ const Inventory = ({ truckLoad, removeItem, editItem }) => {
         <p className="contents">CONTENTS</p>
         <p className="side-btn-container"></p>
       </div>
+      
       <div className="truckLoad-list">
         {truckLoad.map((item) => {
           const { id, truckName, truckPrice, truckContents } = item;
