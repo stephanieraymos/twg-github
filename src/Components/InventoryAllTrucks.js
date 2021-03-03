@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins 
-// const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
+// const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins
+const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
 
 function Inventory() {
   //Setting state values, params are default values
@@ -20,14 +20,18 @@ function Inventory() {
     console.log("Hello");
   }, []);
 
-  const { truckName, truckPrice, truckContents, id } = trucks;
-
   return (
     <>
       {trucks.map((truck) => {
-        return <div key={truck.id}>{truck.truckName}</div>;
+        return (
+          <div className="truck-data-container" key={truck.id}>
+            <h3>{truck.truckName}</h3>
+            <p>${truck.truckPrice}</p>
+            <p>{truck.truckContents}</p>
+          </div>
+        );
       })}
     </>
   );
-};
+}
 export default Inventory;
