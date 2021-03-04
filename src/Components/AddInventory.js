@@ -28,6 +28,10 @@ const AddInventory = () => {
     setAlert,
     id,
     setId,
+    showAlert,
+    clearList,
+    removeItem,
+    editItem
   } = useGlobalContext();
 
   // const contents = truckContents.join(","); //All values joined + seperated by commas
@@ -57,7 +61,8 @@ const AddInventory = () => {
       setEditId(null); //Reseting editId
       setIsEditing(false); //Reseting isEditing to false
       showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
-    } else {
+    }
+    else {
       // Show alert and add truck to inventory only if name is true and not editing
       showAlert(true, "success", "Truck Added");
       //Creating new truck
@@ -77,38 +82,9 @@ const AddInventory = () => {
     }
   };
 
-
-  //showAlert function, when called the values for each param are passed in as arguments
-  const showAlert = (show = false, type = "", msg = "") => {
-    setAlert({ show, type, msg });
-  };
-
-  //clearList function. Once list is cleared an alert confirms this to the user + truckLoad is set back to empty array
-  const clearList = () => {
-    showAlert(true, "danger", "Trucks cleared successfully");
-    setTruckLoad([]);
-  };
-
-  //removeItem grabs the id of the item to be removed, shows an alert to the user confirming
-  //deletion + filters through the truckLoad to keep only the trucks whose id doesn't match the removed truck
-  const removeItem = (id) => {
-    showAlert(true, "danger", "Truck Removed");
-    setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
-  };
-
-  //editItem grabs the id of the item to be edited, sets the item and sets all required values
-  const editItem = (id) => {
-    const specificItem = truckLoad.find((truck) => truck.id === id);
-    setIsEditing(true);
-    setEditId(id);
-    setTruckName(specificItem.truckName);
-    setTruckPrice(specificItem.truckPrice);
-    setTruckContents(specificItem.truckContents);
-  };
-
   //useEffect happens only when truckLoad array changes. The truckLoad gets saved to localStorage
   useEffect(() => {
-    localStorage.setItem("truck", JSON.stringify(truckLoad));
+    localStorage.setItem("truck", JSON.stringify(truckName, truckPrice, truckContents));
   }, []);
 
   // useEffect for post request

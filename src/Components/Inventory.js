@@ -48,37 +48,4 @@ const Inventory = ({ truckLoad, removeItem, editItem }) => {
 
 export default Inventory;
 
-// <table key={id} className="truckLoad">
-// <thead>
-//   <tr>
-//     <th className="items">Truck name</th>
-//     <th className="items">Price</th>
-//     <th className="items">Contents</th>
-//   </tr>
-// </thead>
-// <tbody>
-//   <tr>
-//     <td className="items">Truck name: {truckName}</td>
-//     <td className="items">Price: {truckPrice}</td>
-//     <td className="items">Contents: {truckContents}</td>
-//     <td className="side-btn-container">
-//       <button
-//         type="button"
-//         className="edit-btn"
-//         onClick={() => editItem(id)}
-//       >
-//         <FaEdit />
-//       </button>
-//       <button
-//         type="button"
-//         className="delete-btn"
-//         onClick={() => removeItem(id)}
-//       >
-//         <FaTrash />
-//       </button>
-//     </td>
-//   </tr>
-// </tbody>
-// </table>
-
 // TP-51
