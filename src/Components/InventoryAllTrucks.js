@@ -3,7 +3,7 @@ import Navigation from "./Navigation";
 import inventory from "../css/inventory.css";
 
 // const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins
-const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
+const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
 function Inventory() {
   //Setting state values, params are default values
@@ -26,13 +26,19 @@ function Inventory() {
     fetchTrucks();
     console.log("Trucks fetched successfully");
   }, []);
+  // End of useEffect for fetch
 
+  // useEffect for delete method
   useEffect(() => {
-    fetch(
-      "http://143.110.225.28/api/v1/inventory/delete/?id=22fb7bff-45ff-484e-b51d-300028adc4a1",
-      { method: "DELETE" }
-    ).then((err) => console.log(err));
+    fetch("http://143.110.225.28/api/v1/inventory/", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: "",
+      }),
+    }).then((err) => console.log(err));
   }, []);
+  // End of useEffect for delete
 
   return (
     <>

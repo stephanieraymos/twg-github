@@ -1,6 +1,7 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "./context";
+import Inventory from "./Inventory";
 
 const Dashboard = () => {
   document.title = "Dashboard";
