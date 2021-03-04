@@ -162,7 +162,7 @@ main {
   z-index: 10;
 }
 .modal-container {
-  background: var(--dark);
+  background: transparent;
   border-radius: var(--radius); /* root styles */
   width: 90vw;
   height: 30vh;

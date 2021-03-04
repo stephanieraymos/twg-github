@@ -24,6 +24,7 @@ const AddInventory = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  const [error, setError] = useState(false);
 
   // const contents = truckContents.join(","); //All values joined + seperated by commas
 
@@ -105,6 +106,7 @@ const AddInventory = () => {
     localStorage.setItem("truck", JSON.stringify(truckLoad));
   }, [truckLoad]);
 
+  // useEffect for post request
   useEffect(() => {
     const postRequest = {
       method: "POST",
@@ -112,17 +114,23 @@ const AddInventory = () => {
       body: JSON.stringify({ title: "Post request to TruckLoad" }),
     };
     fetch(
-      " http://http://143.110.225.28/api/v1/inventory/insert/?name=truckName&price=truckPrice&content=truckContents",
+      "http://143.110.225.28/api/v1/inventory/insert/?truckName=truckName&truckPrice=truckPrice&truckContents=truckContents",
       postRequest
     )
       .then((response) => {
+        if (response.ok) {
+          setError(false);
+          console.log("SUCCESSS");
+          return response.json();
+        } else if (response.status >= 408) {
+          console.log(error, "There is an unknown error");
+          setError(true);
+        }
         console.log(response);
-        return response.json()
+        return response.json();
       })
-      .then((data) => setTruckId(data.id));
-
-    // empty dependency array means this effect will only run once (like componentDidMount in classes)
-  }, []);
+      .then((truck) => setTruckId(truck.id));
+  }, [truckLoad]);
 
   return (
     <>
