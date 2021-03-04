@@ -24,7 +24,7 @@ function Inventory() {
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
   useEffect(() => {
     fetchTrucks();
-    console.log("Trucks fetched successfully");
+    console.log("Trucks fetched successfully inside the useEffect");
   }, []);
   // End of useEffect for fetch
 

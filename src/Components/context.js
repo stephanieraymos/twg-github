@@ -4,17 +4,8 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   
-  const getLocalStorage = () => {
-    let truck = localStorage.getItem("truck");
-    if (truck) {
-      return JSON.parse(localStorage.getItem("truck"));
-    } else {
-      return [];
-    }
-  };
-
   //Wrapping whole app in Provider
-  const [truckLoad, setTruckLoad] = useState(getLocalStorage());
+  const [truckLoad, setTruckLoad] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckName, setTruckName] = useState("");
@@ -96,7 +87,6 @@ const AppProvider = ({ children }) => {
         setPostToDb,
         error,
         setError,
-        getLocalStorage,
         openModal,
         openSidebar,
         closeModal,

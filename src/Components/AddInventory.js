@@ -37,6 +37,7 @@ const AddInventory = () => {
   // const contents = truckContents.join(","); //All values joined + seperated by commas
 
   const handleSubmit = (e) => {
+    console.log(truckLoad)
     e.preventDefault();
     if (!truckName || !truckPrice || !truckContents) {
       showAlert(true, "danger", "Please enter value");
@@ -82,11 +83,6 @@ const AddInventory = () => {
     }
   };
 
-  //useEffect happens only when truckLoad array changes. The truckLoad gets saved to localStorage
-  useEffect(() => {
-    localStorage.setItem("truck", JSON.stringify(truckName, truckPrice, truckContents));
-  }, []);
-
   // useEffect for post request
   useEffect(() => {
     fetch("http://143.110.225.28/api/v1/inventory/", {
@@ -101,10 +97,10 @@ const AddInventory = () => {
       .then((response) => {
         if (response.ok) {
           setError(false);
-          console.log("SUCCESSS");
+          console.log("SUCCESSFULLY ADDED TRUCK TO DATABASE");
           return response.json();
         } else if (response.status >= 408) {
-          console.log(error, "There is an unknown error");
+          console.log(error, "There is an unknown error preventing the truck from being added to the database");
           setError(true);
         }
         console.log(response);
