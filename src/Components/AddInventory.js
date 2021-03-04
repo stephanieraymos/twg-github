@@ -5,18 +5,11 @@ import Navigation from "./Navigation";
 import { useGlobalContext } from "./context";
 import inventory from "../css/inventory.css";
 
-const getLocalStorage = () => {
-  let truck = localStorage.getItem("truck");
-  if (truck) {
-    return JSON.parse(localStorage.getItem("truck"));
-  } else {
-    return [];
-  }
-};
-
 const AddInventory = () => {
   document.title = "Add Inventory";
   const {
+    truckLoad,
+    setTruckLoad,
     truckName,
     setTruckName,
     truckPrice,
@@ -29,81 +22,15 @@ const AddInventory = () => {
     setEditId,
     error,
     setError,
+    postToDb,
+    setPostToDb,
     alert,
     setAlert,
     id,
     setId,
   } = useGlobalContext();
-  const [truckLoad, setTruckLoad] = useState(getLocalStorage());
 
-  //showAlert function, when called the values for each param are passed in as arguments
-  const showAlert = (show = false, type = "", msg = "") => {
-    setAlert({ show, type, msg });
-  };
-
-  //clearList function. Once list is cleared an alert confirms this to the user + truckLoad is set back to empty array
-  const clearList = () => {
-    showAlert(true, "danger", "Trucks cleared successfully");
-    setTruckLoad([]);
-  };
-
-  //removeItem grabs the id of the item to be removed, shows an alert to the user confirming
-  //deletion + filters through the truckLoad to keep only the trucks whose id doesn't match the removed truck
-  const removeItem = (id) => {
-    showAlert(true, "danger", "Truck Removed");
-    setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
-  };
-
-  //editItem grabs the id of the item to be edited, sets the item and sets all required values
-  const editItem = (id) => {
-    const specificItem = truckLoad.find((truck) => truck.id === id);
-    setIsEditing(true);
-    setEditId(id);
-    setTruckName(specificItem.truckName);
-    setTruckPrice(specificItem.truckPrice);
-    setTruckContents(specificItem.truckContents);
-  };
-
-  //useEffect happens only when truckLoad array changes. The truckLoad gets saved to localStorage
-  useEffect(() => {
-    localStorage.setItem("truck", JSON.stringify(truckLoad));
-  }, [truckLoad]);
-
-  // useEffect for post request
-  useEffect(() => {
-    fetch("http://143.110.225.28/api/v1/inventory/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        truckName: { truckName },
-        truckPrice: { truckPrice },
-        truckContents: { truckContents },
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setError(false);
-          console.log("SUCCESSS");
-          return response.json();
-        } else if (response.status >= 408) {
-          console.log(error, "There is an unknown error");
-          setError(true);
-        }
-        console.log(response);
-        return response.json();
-      })
-      .then((truck) => setId(truck.id));
-  }, []);
-
-  const handleNameChange = (event) => {
-    setTruckName(event.target.value);
-  };
-  const handlePriceChange = (event) => {
-    setTruckPrice(event.target.value);
-  };
-  const handleContentsChange = (event) => {
-    setTruckContents(event.target.value);
-  };
+  // const contents = truckContents.join(","); //All values joined + seperated by commas
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -136,7 +63,7 @@ const AddInventory = () => {
       //Creating new truck
       const newTruck = {
         id: new Date().getTime().toString(),
-        truckName: truckName,
+        truckName,
         truckPrice,
         truckContents,
       };
@@ -149,6 +76,66 @@ const AddInventory = () => {
       console.log(newTruck); //Logging new truck for testing purposes
     }
   };
+
+
+  //showAlert function, when called the values for each param are passed in as arguments
+  const showAlert = (show = false, type = "", msg = "") => {
+    setAlert({ show, type, msg });
+  };
+
+  //clearList function. Once list is cleared an alert confirms this to the user + truckLoad is set back to empty array
+  const clearList = () => {
+    showAlert(true, "danger", "Trucks cleared successfully");
+    setTruckLoad([]);
+  };
+
+  //removeItem grabs the id of the item to be removed, shows an alert to the user confirming
+  //deletion + filters through the truckLoad to keep only the trucks whose id doesn't match the removed truck
+  const removeItem = (id) => {
+    showAlert(true, "danger", "Truck Removed");
+    setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
+  };
+
+  //editItem grabs the id of the item to be edited, sets the item and sets all required values
+  const editItem = (id) => {
+    const specificItem = truckLoad.find((truck) => truck.id === id);
+    setIsEditing(true);
+    setEditId(id);
+    setTruckName(specificItem.truckName);
+    setTruckPrice(specificItem.truckPrice);
+    setTruckContents(specificItem.truckContents);
+  };
+
+  //useEffect happens only when truckLoad array changes. The truckLoad gets saved to localStorage
+  useEffect(() => {
+    localStorage.setItem("truck", JSON.stringify(truckLoad));
+  }, []);
+
+  // useEffect for post request
+  useEffect(() => {
+    fetch("http://143.110.225.28/api/v1/inventory/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        truckName: truckName,
+        truckPrice: truckPrice,
+        truckContents: truckContents,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setError(false);
+          console.log("SUCCESSS");
+          return response.json();
+        } else if (response.status >= 408) {
+          console.log(error, "There is an unknown error");
+          setError(true);
+        }
+        console.log(response);
+        return response.json();
+      })
+      .then((truck) => setId(truck.id));
+  }, [postToDb]);
 
   return (
     <>
@@ -166,29 +153,25 @@ const AddInventory = () => {
             <input
               type="text"
               value={truckName}
-              onChange={((e) => setTruckName(e.target.value), handleNameChange)}
+              onChange={(e) => setTruckName(e.target.value)}
               placeholder="Name of Truck"
               style={{ textAlign: "center" }}
             />
             <input
               type="number"
               value={truckPrice}
-              onChange={
-                ((e) => setTruckPrice(e.target.value), handlePriceChange)
-              }
+              onChange={(e) => setTruckPrice(e.target.value)}
               placeholder="Price"
               style={{ textAlign: "center" }}
             />
             <input
               type="text"
               value={truckContents}
-              onChange={
-                ((e) => setTruckContents(e.target.value), handleContentsChange)
-              }
+              onChange={(e) => setTruckContents(e.target.value)}
               placeholder="What's in the truck?"
               style={{ textAlign: "center" }}
             />
-            <button className="submit-btn" type="submit">
+            <button className="submit-btn" type="submit" onClick={setPostToDb}>
               {isEditing ? "Edit" : "Submit"}
             </button>
           </div>
