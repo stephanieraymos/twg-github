@@ -17,7 +17,7 @@ function Inventory() {
     if (response.ok) {
       console.log(response.status, "Get request successful");
     } else {
-      console.log(response.status, "Somthing went wrong with the get request")
+      console.log(response.status, "Somthing went wrong with the get request");
     }
   };
 
@@ -25,6 +25,13 @@ function Inventory() {
   useEffect(() => {
     fetchTrucks();
     console.log("Trucks fetched successfully");
+  }, []);
+
+  useEffect(() => {
+    fetch(
+      "http://143.110.225.28/api/v1/inventory/delete/?id=22fb7bff-45ff-484e-b51d-300028adc4a1",
+      { method: "DELETE" }
+    ).then((err) => console.log(err));
   }, []);
 
   return (
