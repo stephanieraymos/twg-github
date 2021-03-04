@@ -13,8 +13,8 @@ const Inventory = ({ truckLoad, removeItem, editItem }) => {
       </div>
       
       <div className="truckLoad-list">
-        {truckLoad.map((item) => {
-          const { id, truckName, truckPrice, truckContents } = item;
+        {truckLoad.map((truck) => {
+          const { id, truckName, truckPrice, truckContents } = truck;
           return (
             <>
               <article key={id} className="truckLoad">

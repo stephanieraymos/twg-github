@@ -20,7 +20,7 @@ const AddInventory = () => {
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
-  const [truckId, setTruckId] = useState("");
+  const [id, setId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
@@ -132,7 +132,7 @@ const AddInventory = () => {
         console.log(response);
         return response.json();
       })
-      .then((truck) => setTruckId(truck.id));
+      .then((truck) => setId(truck.id));
   }, [truckLoad]);
 
   return (
