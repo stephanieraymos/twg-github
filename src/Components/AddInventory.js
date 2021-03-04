@@ -20,6 +20,7 @@ const AddInventory = () => {
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
+  const [truckId, setTruckId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
@@ -110,9 +111,15 @@ const AddInventory = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: "Post request to TruckLoad" }),
     };
-    fetch("http://143.110.225.28/api/v1/inventory/data/", postRequest)
-      .then((response) => response.json())
-      .then((data) => setPostId(data.id));
+    fetch(
+      " http://http://143.110.225.28/api/v1/inventory/insert/?name=truckName&price=truckPrice&content=truckContents",
+      postRequest
+    )
+      .then((response) => {
+        console.log(response);
+        return response.json()
+      })
+      .then((data) => setTruckId(data.id));
 
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
