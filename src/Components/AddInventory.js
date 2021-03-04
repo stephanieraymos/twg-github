@@ -110,7 +110,7 @@ const AddInventory = () => {
   useEffect(() => {
     const postRequest = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Access": "application/json" },
       // body: JSON.stringify({ title: "Post request to TruckLoad" }),
       body:
         "truckName=truckName&truckPrice=truckPrice&truckContents=truckContents",
