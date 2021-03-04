@@ -14,12 +14,17 @@ function Inventory() {
     const response = await fetch(url);
     const newTrucks = await response.json(); //returns a promise
     setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
+    if (response.ok) {
+      console.log(response.status, "Get request successful");
+    } else {
+      console.log(response.status, "Somthing went wrong with the get request")
+    }
   };
 
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
   useEffect(() => {
     fetchTrucks();
-    console.log("Hello");
+    console.log("Trucks fetched successfully");
   }, []);
 
   return (
@@ -39,12 +44,10 @@ function Inventory() {
             const { id, truckName, truckPrice, truckContents } = truck;
 
             return (
-              <div className="truckLoad" key={truck.id}>
-                <p className="items all-trucks-name">{truck.truckName}</p>
-                <p className="items all-trucks-price">${truck.truckPrice}</p>
-                <p className="items all-trucks-contents">
-                  {truck.truckContents}
-                </p>
+              <div className="truckLoad" key={id}>
+                <p className="items all-trucks-name">{truckName}</p>
+                <p className="items all-trucks-price">${truckPrice}</p>
+                <p className="items all-trucks-contents">{truckContents}</p>
               </div>
             );
           })}

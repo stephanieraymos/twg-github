@@ -2,7 +2,6 @@ import React from "react";
 import {
   FaFacebook,
   FaLinkedin,
-  FaHome,
   FaUserFriends,
   FaFolderOpen,
   FaWpforms,
@@ -57,7 +56,7 @@ export const social = [
     icon: <FaFacebook />,
   },
   {
-    id: 1,
+    id: 2,
     url: "https://www.linkedin.com",
     icon: <FaLinkedin />,
   },

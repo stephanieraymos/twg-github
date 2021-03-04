@@ -25,7 +25,7 @@ const Navigation = () => {
           {logoLink.map((logoIcon) => {
             const { id, url } = logoIcon;
             return (
-              <a href={url}>
+              <a key={id} href={url}>
                 <img src={logo} alt="logo" className="logo" />
               </a>
             );

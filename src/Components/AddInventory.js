@@ -112,9 +112,12 @@ const AddInventory = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: "Post request to TruckLoad" }),
+      if(response) {
+        console.log(response.status)
+      }
     };
     fetch(
-      "http://143.110.225.28/api/v1/inventory/insert/?truckName=truckName&truckPrice=truckPrice&truckContents=truckContents",
+      "http://143.110.225.28/api/v1/inventory/insert?truckName=truckName&truckPrice=truckPrice&truckContents=truckContents",
       postRequest
     )
       .then((response) => {
