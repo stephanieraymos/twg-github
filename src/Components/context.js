@@ -4,7 +4,7 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   //Wrapping whole app in Provider
-  const [truckLoad, setTruckLoad] = useState([]);
+  const [truckLoad, setTruckLoad] = useState();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckName, setTruckName] = useState("");

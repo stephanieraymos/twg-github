@@ -6,6 +6,7 @@ import { useGlobalContext } from "./context";
 import inventory from "../css/inventory.css";
 
 const AddInventory = () => {
+
   document.title = "Add Inventory";
   const {
     truckLoad,
@@ -32,11 +33,15 @@ const AddInventory = () => {
     clearList,
     removeItem,
     editItem,
-  } = useGlobalContext();
+  } = useGlobalContext();  
+  
+  // const handleChange=(e)=>{
+  //   setTruckLoad({
+  //       [e.target.id]:e.target.value
+  //   },()=>{
+  //       console.log(truckLoad);
+  //   })
 
-  // const contents = truckContents.join(","); //All values joined + seperated by commas
-  
-  
   const handleSubmit = (e) => {
     console.log(truckLoad);
     e.preventDefault();
@@ -191,7 +196,7 @@ const AddInventory = () => {
     </>
   );
 };
+// TP-51
 
 export default AddInventory;
 
-// TP-51
