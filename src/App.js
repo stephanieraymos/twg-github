@@ -12,6 +12,7 @@ import Statements from "./Components/Statements";
 import Modal from "./Components/Modal";
 import Sidebar from "./Components/Sidebar";
 import Signup from "./Components/Signup";
+import CustomerDb from "./Components/CustomerDb";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/Statements" exact component={Statements} />
           <Route path="/Contact" exact component={Contact} />
           <Route path="/Signup" exact component={Signup} />
+          <Route path="/CustomerDb" exact component={CustomerDb} />
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>

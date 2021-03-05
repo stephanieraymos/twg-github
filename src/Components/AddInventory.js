@@ -31,13 +31,14 @@ const AddInventory = () => {
     showAlert,
     clearList,
     removeItem,
-    editItem
+    editItem,
   } = useGlobalContext();
 
   // const contents = truckContents.join(","); //All values joined + seperated by commas
-
+  
+  
   const handleSubmit = (e) => {
-    console.log(truckLoad)
+    console.log(truckLoad);
     e.preventDefault();
     if (!truckName || !truckPrice || !truckContents) {
       showAlert(true, "danger", "Please enter value");
@@ -62,8 +63,7 @@ const AddInventory = () => {
       setEditId(null); //Reseting editId
       setIsEditing(false); //Reseting isEditing to false
       showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
-    }
-    else {
+    } else {
       // Show alert and add truck to inventory only if name is true and not editing
       showAlert(true, "success", "Truck Added");
       //Creating new truck
@@ -83,31 +83,57 @@ const AddInventory = () => {
     }
   };
 
-  // useEffect for post request
-  useEffect(() => {
-    fetch("http://143.110.225.28/api/v1/inventory/", {
+  // // useEffect for post request
+  // useEffect(() => {
+  //   fetch("http://143.110.225.28/api/v1/inventory/", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       truckName: truckName,
+  //       truckPrice: truckPrice,
+  //       truckContents: truckContents,
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         setError(false);
+  //         console.log("SUCCESSFULLY ADDED TRUCK TO DATABASE");
+  //         return response.json();
+  //       } else if (response.status >= 408) {
+  //         console.log(error, "There is an unknown error preventing the truck from being added to the database");
+  //         setError(true);
+  //       }
+  //       console.log(response);
+  //       return response.json();
+  //     })
+  //     .then((truck) => setId(truck.id));
+  // }, [postToDb]);
+
+  //Fetching the trucks db from the API link above
+  const postTrucks = async () => {
+    const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         truckName: truckName,
         truckPrice: truckPrice,
-        truckContents: truckContents,
+        truckContents: truckContents
       }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setError(false);
-          console.log("SUCCESSFULLY ADDED TRUCK TO DATABASE");
-          return response.json();
-        } else if (response.status >= 408) {
-          console.log(error, "There is an unknown error preventing the truck from being added to the database");
-          setError(true);
-        }
-        console.log(response);
-        return response.json();
-      })
-      .then((truck) => setId(truck.id));
+    });
+    if (response.ok) {
+      console.log(response.status, "Post request successful");
+    } else {
+      console.log(response.status, "Somthing went wrong with the post request");
+    }
+    return response.json();
+  };
+
+  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
+  useEffect(() => {
+    postTrucks();
+    console.log("Trucks posted successfully after submit button was clicked");
   }, [postToDb]);
+  // End of useEffect for fetch
 
   return (
     <>
