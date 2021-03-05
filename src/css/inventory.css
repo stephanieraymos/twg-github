@@ -154,6 +154,10 @@ input:hover::placeholder {
   font-size: 1.5rem;
 }
 
+.submit-btn:hover {
+  background-color: transparent;
+}
+
 /* INVENTORY ALL TRUCKS */
 
 .table-wrapper {
