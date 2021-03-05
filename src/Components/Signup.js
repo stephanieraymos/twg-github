@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "./context";
+
 const Signup = () => {
   document.title = "Sign up";
 
@@ -20,11 +21,24 @@ const Signup = () => {
     personId,
     setPersonId,
     postToDb,
-    setPostToDb
+    setPostToDb,
+    showAlert
   } = useGlobalContext();
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
+    if (!firstName || lastName || !email) {
+        showAlert(true, "danger", "Please enter value");
+      } else {
+        // Show alert and add truck to inventory only if name is true and not editing
+        showAlert(true, "success", "Truck Added");
+        //Creating new truck
+        const newUser = {
+          id: new Date().getTime().toString(),
+          firstName,
+          lastName,
+          email,
+        };
     console.log("Sign up successful");
     setFirstName("");
     setLastName("");
@@ -32,6 +46,7 @@ const Signup = () => {
     setPassword("");
     setConfirmPassword("");
   };
+}
 
   // useEffect for user post request
   useEffect(() => {

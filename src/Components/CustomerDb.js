@@ -11,11 +11,11 @@ function CustomerDb() {
 
   //Fetching the trucks db from the API link above
   const fetchUsers = async () => {
-    const response = await fetch(url);
-    // , {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json", 'Authorization': "Bearer {accessToken}" },
-    // }
+    console.log(accessToken)
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", 'Authorization': "Bearer " + accessToken },
+    });
     const newUsers = await response.json(); //returns a promise
     setUsers(newUsers); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
     setAccessToken("access_token")
