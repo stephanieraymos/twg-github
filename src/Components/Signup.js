@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "./context";
 const Signup = () => {
@@ -13,6 +13,10 @@ const Signup = () => {
     setEmail,
     password,
     setPassword,
+    error,
+    setError,
+    personId,
+    setPersonId
   } = useGlobalContext();
 
   const handleSignupSubmit = (e) => {
@@ -23,6 +27,40 @@ const Signup = () => {
     setEmail("");
     setPassword("");
   };
+
+  // useEffect for post request
+  useEffect(() => {
+    fetch(
+      " http://[website url]/register/?email=[string]&password=[string]&confirm_password=[string]&first_name=[string]&last_name=[string]",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          id: personId
+        }),
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          setError(false);
+          console.log("SUCCESSFULLY ADDED USER TO DATABASE");
+          return response.json();
+        } else if (response.status >= 408) {
+          console.log(
+            error,
+            "There is an unknown error preventing the user from being added to the database"
+          );
+          setError(true);
+        }
+        console.log(response);
+        return response.json();
+      })
+      .then((person) => setPersonId(person.id));
+  }, []);
 
   return (
     <>
