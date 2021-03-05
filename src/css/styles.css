@@ -237,6 +237,10 @@ input:hover {
   padding: 10px;
 }
 
+.sub-content-dis {
+  display: none;
+}
+
 /* Home page background video */
 .bg-video {
   position: absolute;

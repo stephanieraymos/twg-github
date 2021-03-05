@@ -5,10 +5,9 @@ import warehouse from "../img/warehouse-sm.jpg";
 import { useGlobalContext } from "./context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
-
 const Home = () => {
   document.title = "Home";
-  const { openModal } = useGlobalContext();
+  const { openModal, isModalOpen } = useGlobalContext();
 
   return (
     <>
@@ -27,7 +26,7 @@ const Home = () => {
               Login / Signup
             </button>
           </main>
-          <div className="sub-content">
+          <div className={`${isModalOpen ? "sub-content-dis" : "sub-content"}`}>
             <h1 className="home-header">The WholeSale Group</h1>
             <div className="btn-container">
               <a href="/AddInventory" className="center-btn">
