@@ -115,7 +115,7 @@ const AddInventory = () => {
         <Navigation />
       </div>
       <section className="section-center">
-        <h3 className="heading">Add Truckload</h3>
+        <h3 className="form-header">Add Truckload</h3>
         <form onSubmit={handleSubmit}>
           {/* If alert is showing, we bring in the alert component */}
           {alert.show && (

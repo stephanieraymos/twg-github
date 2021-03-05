@@ -3,7 +3,6 @@ import React, { useState, useContext } from "react";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  
   //Wrapping whole app in Provider
   const [truckLoad, setTruckLoad] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -17,6 +16,11 @@ const AppProvider = ({ children }) => {
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
   const [postToDb, setPostToDb] = useState(true);
   const [error, setError] = useState(false);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -94,7 +98,16 @@ const AppProvider = ({ children }) => {
         showAlert,
         clearList,
         removeItem,
-        editItem
+        editItem,
+
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
+        email,
+        setEmail,
+        password,
+        setPassword,
       }}
     >
       {children}

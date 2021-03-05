@@ -140,7 +140,7 @@ main {
   */
 
 .modal-header {
-  color: var(--light);  
+  color: var(--light);
 }
 
 .modal-overlay {
@@ -192,6 +192,11 @@ main {
 
 .no-account {
   padding: 1rem;
+  color: white;
+}
+
+.no-account:hover {
+  color: rgb(218, 216, 216);
 }
 
 .submit-modal-btn {

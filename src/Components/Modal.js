@@ -134,7 +134,9 @@ const Modal = () => {
               placeholder="Email"
               style={{ textAlign: "center" }}
             />
-            <div className="no-account">Don't have an account?</div>
+            <a href="/Signup">
+              <div className="no-account">Don't have an account?</div>
+            </a>
             <button className="submit-modal-btn" type="submit">
               Submit
             </button>
