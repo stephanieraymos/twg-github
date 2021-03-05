@@ -17,6 +17,8 @@ const AddInventory = () => {
     setTruckPrice,
     truckContents,
     setTruckContents,
+    truckManifest,
+    setTruckManifest,
     isEditing,
     setIsEditing,
     editId,
@@ -172,6 +174,13 @@ const AddInventory = () => {
               value={truckContents}
               onChange={(e) => setTruckContents(e.target.value)}
               placeholder="What's in the truck?"
+              style={{ textAlign: "center" }}
+            />
+            <input
+              type="file"
+              value={truckManifest}
+              onChange={(e) => setTruckManifest(e.target.value)}
+              placeholder="Choose file"
               style={{ textAlign: "center" }}
             />
             <button className="submit-btn" type="submit" onClick={setPostToDb}>
