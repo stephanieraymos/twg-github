@@ -15,8 +15,13 @@ const Signup = () => {
     setPassword,
   } = useGlobalContext();
 
-  const handleSignupSubmit = () => {
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
     console.log("Sign up successful");
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
   };
 
   return (
