@@ -28,6 +28,13 @@ input:hover::placeholder {
   color: var(--light);
 }
 
+.truckload-inputs {
+  width: 28rem;
+  background-color: var(--light);
+  color: var(--light-gray);
+  text-align: center;
+}
+
 .truckLoad {
   display: flex;
   align-items: center;
