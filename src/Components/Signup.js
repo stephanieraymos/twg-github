@@ -13,10 +13,14 @@ const Signup = () => {
     setEmail,
     password,
     setPassword,
+    confirmPassword,
+    setConfirmPassword,
     error,
     setError,
     personId,
-    setPersonId
+    setPersonId,
+    postToDb,
+    setPostToDb
   } = useGlobalContext();
 
   const handleSignupSubmit = (e) => {
@@ -26,21 +30,22 @@ const Signup = () => {
     setLastName("");
     setEmail("");
     setPassword("");
+    setConfirmPassword("");
   };
 
-  // useEffect for post request
+  // useEffect for user post request
   useEffect(() => {
     fetch(
-      " http://[website url]/register/?email=[string]&password=[string]&confirm_password=[string]&first_name=[string]&last_name=[string]",
+      " http://143.110.225.28/register/",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
+          first_name: firstName,
+          last_name: lastName,
           email: email,
           password: password,
-          id: personId
+          confirm_password: confirmPassword,
         }),
       }
     )
@@ -60,7 +65,7 @@ const Signup = () => {
         return response.json();
       })
       .then((person) => setPersonId(person.id));
-  }, []);
+  }, [postToDb]);
 
   return (
     <>
@@ -101,12 +106,12 @@ const Signup = () => {
             />
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Repeat Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
               style={{ textAlign: "center" }}
             />
-            <button className="submit-btn" type="submit">
+            <button className="submit-btn" type="submit" onClick={setPostToDb}>
               Submit
             </button>
           </div>

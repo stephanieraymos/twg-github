@@ -21,6 +21,7 @@ const AppProvider = ({ children }) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [personId, setPersonId] = useState("");
 
   const openSidebar = () => {
@@ -109,6 +110,8 @@ const AppProvider = ({ children }) => {
         setEmail,
         password,
         setPassword,
+        confirmPassword,
+        setConfirmPassword,
         personId,
         setPersonId
       }}
