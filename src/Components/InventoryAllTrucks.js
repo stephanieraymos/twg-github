@@ -65,6 +65,7 @@ function Inventory() {
             );
           })}
         </div>
+        <button className="download-manifest">Download Manifest</button>
       </div>
     </>
   );
