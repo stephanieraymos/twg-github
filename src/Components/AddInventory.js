@@ -58,6 +58,7 @@ const AddInventory = () => {
               truckName: truckName,
               truckPrice: truckPrice,
               truckContents: truckContents,
+              truckManifest: truckManifest
             };
           }
           return truck;
@@ -66,6 +67,7 @@ const AddInventory = () => {
       setTruckName(""); //Reseting input boxes to empty string
       setTruckPrice("");
       setTruckContents("");
+      setTruckManifest(null);
       setEditId(null); //Reseting editId
       setIsEditing(false); //Reseting isEditing to false
       showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
@@ -78,6 +80,7 @@ const AddInventory = () => {
         truckName,
         truckPrice,
         truckContents,
+        truckManifest
       };
 
       //Spreading out current truckLoad and adding newTruck to the list
@@ -179,7 +182,6 @@ const AddInventory = () => {
               type="file"
               className="truckload-inputs"
               value={truckManifest}
-              onChange={(e) => setTruckManifest(e.target.value)}
             />
             <button className="submit-btn" type="submit" onClick={setPostToDb}>
               {isEditing ? "Edit" : "Submit"}
