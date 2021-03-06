@@ -6,7 +6,6 @@ import { useGlobalContext } from "./context";
 import inventory from "../css/inventory.css";
 
 const AddInventory = () => {
-
   document.title = "Add Inventory";
   const {
     truckLoad,
@@ -17,6 +16,8 @@ const AddInventory = () => {
     setTruckPrice,
     truckContents,
     setTruckContents,
+    truckManifest,
+    setTruckManifest,
     isEditing,
     setIsEditing,
     editId,
@@ -33,8 +34,8 @@ const AddInventory = () => {
     clearList,
     removeItem,
     editItem,
-  } = useGlobalContext();  
-  
+  } = useGlobalContext();
+
   // const handleChange=(e)=>{
   //   setTruckLoad({
   //       [e.target.id]:e.target.value
@@ -57,6 +58,7 @@ const AddInventory = () => {
               truckName: truckName,
               truckPrice: truckPrice,
               truckContents: truckContents,
+              truckManifest: truckManifest
             };
           }
           return truck;
@@ -65,6 +67,7 @@ const AddInventory = () => {
       setTruckName(""); //Reseting input boxes to empty string
       setTruckPrice("");
       setTruckContents("");
+      setTruckManifest(null);
       setEditId(null); //Reseting editId
       setIsEditing(false); //Reseting isEditing to false
       showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
@@ -77,6 +80,7 @@ const AddInventory = () => {
         truckName,
         truckPrice,
         truckContents,
+        truckManifest
       };
 
       //Spreading out current truckLoad and adding newTruck to the list
@@ -122,7 +126,7 @@ const AddInventory = () => {
       body: JSON.stringify({
         truckName: truckName,
         truckPrice: truckPrice,
-        truckContents: truckContents
+        truckContents: truckContents,
       }),
     });
     if (response.ok) {
@@ -154,25 +158,30 @@ const AddInventory = () => {
           )}
           <div className="form-control">
             <input
+              className="truckload-inputs"
               type="text"
               value={truckName}
               onChange={(e) => setTruckName(e.target.value)}
               placeholder="Name of Truck"
-              style={{ textAlign: "center" }}
             />
             <input
+              className="truckload-inputs"
               type="number"
               value={truckPrice}
               onChange={(e) => setTruckPrice(e.target.value)}
               placeholder="Price"
-              style={{ textAlign: "center" }}
             />
             <input
+              className="truckload-inputs"
               type="text"
               value={truckContents}
               onChange={(e) => setTruckContents(e.target.value)}
               placeholder="What's in the truck?"
-              style={{ textAlign: "center" }}
+            />
+            <input
+              type="file"
+              className="truckload-inputs"
+              value={truckManifest}
             />
             <button className="submit-btn" type="submit" onClick={setPostToDb}>
               {isEditing ? "Edit" : "Submit"}
@@ -199,4 +208,3 @@ const AddInventory = () => {
 // TP-51
 
 export default AddInventory;
-

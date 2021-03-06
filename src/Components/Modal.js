@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useGlobalContext } from "./context";
 import Alert from "./Alert";
@@ -22,6 +22,28 @@ const Modal = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  const outerDiv = useRef(); //This reference is used to refer to the outer div, it's purpose is for closing the sidebar when clicked anywhere but the sidebar
+
+  //This useEffect is to add event listeners for the click off modal
+  useEffect(() => {
+    // add when mounted
+    document.addEventListener("mousedown", handleClick);
+    // return function to be called when unmounted
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
+  const handleClick = (e) => {
+    if (outerDiv.current.contains(e.target)) {
+      // inside click
+      return;
+    }
+    // outside click
+    {
+      closeModal();
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -107,7 +129,7 @@ const Modal = () => {
         isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
       }`}
     >
-      <div className="modal-container">
+      <div className="modal-container" ref={outerDiv}>
         <h3 className="modal-header">Login</h3>
         <form onSubmit={handleSubmit}>
           {/* If alert is showing, we bring in the alert component */}

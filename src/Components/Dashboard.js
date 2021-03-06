@@ -7,14 +7,21 @@ const Dashboard = () => {
   document.title = "Dashboard";
   const { openSidebar, isSidebarOpen } = useGlobalContext();
 
-
   return (
     <>
       <main>
-        <button className={`${isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"}`} onClick={openSidebar}>
+        <button
+          className={`${
+            isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"
+          }`}
+          onClick={openSidebar}
+        >
           <FaBars />
         </button>
         <h1>Dashboard</h1>
+        {/* <div className="dashboard-inventory">
+          <Inventory />
+        </div> */}
       </main>
     </>
   );

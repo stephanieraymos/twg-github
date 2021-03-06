@@ -28,6 +28,13 @@ input:hover::placeholder {
   color: var(--light);
 }
 
+.truckload-inputs {
+  width: 28rem;
+  background-color: var(--light);
+  color: var(--light-gray);
+  text-align: center;
+}
+
 .truckLoad {
   display: flex;
   align-items: center;
@@ -58,13 +65,16 @@ input:hover::placeholder {
   transition: var(--transition);
 }
 .truck {
-  width: 30%;
+  width: 25%;
 }
 .price {
   width: 15%;
 }
 .contents {
-  width: 45%;
+  width: 40%;
+}
+.manifest {
+  width: 15%;
 }
 
 .header-items {

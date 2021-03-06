@@ -10,6 +10,7 @@ const AppProvider = ({ children }) => {
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
+  const [truckManifest, setTruckManifest] = useState(null);
   const [id, setId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
