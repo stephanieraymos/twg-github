@@ -151,7 +151,7 @@ const AddInventory = () => {
       </div>
       <section className="section-center">
         <h3 className="form-header">Add Truckload</h3>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} method="post" enctype="multipart/form-data">
           {/* If alert is showing, we bring in the alert component */}
           {alert.show && (
             <Alert {...alert} removeAlert={showAlert} truckLoad={truckLoad} />
@@ -180,6 +180,8 @@ const AddInventory = () => {
             />
             <input
               type="file"
+              multiple
+              name="truckManifest[]"
               className="truckload-inputs"
               value={truckManifest}
             />
