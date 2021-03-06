@@ -65,13 +65,16 @@ input:hover::placeholder {
   transition: var(--transition);
 }
 .truck {
-  width: 30%;
+  width: 25%;
 }
 .price {
   width: 15%;
 }
 .contents {
-  width: 45%;
+  width: 40%;
+}
+.manifest {
+  width: 15%;
 }
 
 .header-items {
