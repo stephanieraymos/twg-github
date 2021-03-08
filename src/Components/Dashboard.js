@@ -42,6 +42,13 @@ const Dashboard = () => {
             <h2>64</h2>
           </div>
         </div>
+
+        <div className="sales-graph-container">
+          <div className="sales-graph">
+            <p className="sales-graph-heading">Sales</p>
+            <p className="sales-graph-date-range">March 2021 insights</p>
+          </div>
+        </div>
         {/* <div className="dashboard-inventory">
           <Inventory />
         </div> */}

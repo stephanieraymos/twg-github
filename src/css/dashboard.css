@@ -11,8 +11,7 @@ body {
   text-align: left;
   margin-left: clamp(18%, -2rem + 8.333vw, 10%);
   font-size: clamp(2rem, -2rem + 8.333vw, 2.5rem);
-  padding: .5em;
-
+  padding: 0.5em;
 }
 
 .section-container {
@@ -45,4 +44,21 @@ body {
   font-size: 1rem;
   font-size: clamp(0.7rem, -2rem + 8.333vw, 1rem);
   padding: 0.5rem;
+}
+
+.sales-graph-container {
+  min-width: 90%;
+  min-height: 25%;
+}
+
+.sales-graph-heading {
+  color: black;
+  text-align: left;
+  padding-left: 5%;
+}
+
+.sales-graph-date-range {
+  color: black;
+  text-align: left;
+  padding-left: 5%;
 }
