@@ -1,0 +1,15 @@
+.admin-dashboard-content {
+    text-align: center;
+}
+
+.dashboard-heading {
+}
+
+.section-container {
+    display: flex;
+}
+
+.section-items {
+    border: black 1px solid;
+
+}

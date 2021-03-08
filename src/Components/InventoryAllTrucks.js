@@ -17,7 +17,7 @@ function Inventory() {
     if (response.ok) {
       console.log(response.status, "Get request successful");
     } else {
-      console.log(response.status, "Somthing went wrong with the get request");
+      console.log(response.status, "Something went wrong with the get request");
     }
   };
 
