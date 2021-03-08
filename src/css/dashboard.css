@@ -1,31 +1,48 @@
+body {
+  background-color: var(--light);
+}
+
 .admin-dashboard-content {
-    text-align: center;
+  text-align: center;
 }
 
 .dashboard-heading {
+  color: black;
+  text-align: left;
+  margin-left: clamp(18%, -2rem + 8.333vw, 10%);
+  font-size: clamp(2rem, -2rem + 8.333vw, 2.5rem);
+  padding: .5em;
+
 }
 
 .section-container {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: center;
 }
 
 .section-items {
-    border: var(--accent) 1px solid;
-    background-color: var(--text);
-    color: black;
-    margin: 1rem;
-    min-width: 15%;
-
+  border: var(--accent) 1px solid;
+  border-radius: var(--radius);
+  background-color: white;
+  color: black;
+  margin: 1.5rem;
+  min-width: 12%;
 }
 
-.section-items >h2{
-    font-size: 1.5rem;
-
+@media only screen and (max-width: 800px) {
+  .section-items {
+    margin: 0.5rem;
+    min-width: 12%;
+  }
 }
 
-.section-items > p{
-    color: black;
-    font-size: 1rem;
-    padding: .5rem;
+.section-items > h2 {
+  font-size: 1.5rem;
+}
+
+.section-items-desc {
+  color: rgb(109, 107, 107);
+  font-size: 1rem;
+  font-size: clamp(0.7rem, -2rem + 8.333vw, 1rem);
+  padding: 0.5rem;
 }

@@ -25,20 +25,20 @@ const Dashboard = () => {
         
         <div className="section-container">
           <div className="trucks-available section-items">
-            <p>Trucks Available</p>
+            <p className="section-items-desc">Trucks Available</p>
             <h2>143</h2>
             {/* <p>{trucks.length}</p> */}
           </div>
           <div className="trucks-needing-approval section-items">
-            <p>Needing Approval</p>
+            <p className="section-items-desc">Needing Approval</p>
             <h2>14</h2>
           </div>
           <div className="trucks-sold-30days section-items">
-            <p>Sold Last 30 Days</p>
+            <p className="section-items-desc">Sold Last 30 Days</p>
             <h2>100</h2>
           </div>
           <div className="trucks-contacts section-items">
-            <p>Contacts</p>
+            <p className="section-items-desc">Contacts</p>
             <h2>64</h2>
           </div>
         </div>
