@@ -127,6 +127,7 @@ const AddInventory = () => {
         truckName: truckName,
         truckPrice: truckPrice,
         truckContents: truckContents,
+        manifestURL: truckManifest
       }),
     });
     if (response.ok) {

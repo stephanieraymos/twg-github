@@ -12,6 +12,7 @@ body {
   text-align: center;
   font-size: clamp(2rem, -2rem + 8.333vw, 2.5rem);
   padding: 0.5em;
+  text-shadow: var(--light-shadow);
 }
 
 .section-container {

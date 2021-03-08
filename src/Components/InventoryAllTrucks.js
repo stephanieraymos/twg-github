@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import inventory from "../css/inventory.css";
+import { useGlobalContext } from "./context";
 
 // const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins
 const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
 function Inventory() {
-  //Setting state values, params are default values
-  const [trucks, setTrucks] = useState([]);
+  document.title = "Add Inventory";
+  const {
+    trucks,
+    setTrucks
+  } = useGlobalContext();
 
   //Fetching the trucks db from the API link above
   const fetchTrucks = async () => {
@@ -50,17 +54,19 @@ function Inventory() {
           <p className="all-trucks-table-header-name truck">TRUCK NAME</p>
           <p className="all-trucks-table-header-price price">PRICE</p>
           <p className="all-trucks-table-header-contents contents">CONTENTS</p>
+          <p className="all-trucks-table-header-manifest manifest">MANIFEST</p>
         </div>
 
         <div className="truckLoad-list">
           {trucks.map((truck) => {
-            const { id, truckName, truckPrice, truckContents } = truck;
+            const { id, truckName, truckPrice, truckContents, truckManifest } = truck;
 
             return (
               <div className="truckLoad" key={id}>
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
+                <p className="items all-trucks-manifest">{truckManifest}</p>
               </div>
             );
           })}
