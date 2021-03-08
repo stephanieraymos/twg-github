@@ -25,20 +25,20 @@ const Dashboard = () => {
         <div className="section-container">
           <div className="trucks-available section-items">
             <p className="section-items-desc">Trucks Available</p>
-            <h2>143</h2>
+            <p className="dash-count">143</p>
             {/* <p>{trucks.length}</p> */}
           </div>
           <div className="trucks-needing-approval section-items">
             <p className="section-items-desc">Needing Approval</p>
-            <h2>14</h2>
+            <p className="dash-count">14</p>
           </div>
           <div className="trucks-sold-30days section-items">
             <p className="section-items-desc">Sold Last 30 Days</p>
-            <h2>100</h2>
+            <p className="dash-count">100</p>
           </div>
           <div className="trucks-contacts section-items">
             <p className="section-items-desc">Contacts</p>
-            <h2>64</h2>
+            <p className="dash-count">64</p>
           </div>
         </div>
 
@@ -58,19 +58,19 @@ const Dashboard = () => {
             </div>
             <div className="lead-items">
               <div className="lead-item">
-                <p>Waiting on Feature Request</p>
+                <p className="lead-items-left">Waiting on Feature Request</p>
                 <p>4238</p>
               </div>
               <div className="lead-item">
-                <p>Awaiting Customer Response</p>
+                <p className="lead-items-left">Awaiting Customer Response</p>
                 <p>1005</p>
               </div>
               <div className="lead-item">
-                <p>Awaiting Developer Fix</p>
+                <p className="lead-items-left">Awaiting Developer Fix</p>
                 <p>42</p>
               </div>
               <div className="lead-item">
-                <p>Pending</p>
+                <p className="lead-items-left">Pending</p>
                 <p>281</p>
               </div>
             </div>

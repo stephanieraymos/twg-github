@@ -23,7 +23,7 @@ body {
 @media only screen and (max-width: 800px) {
   .section-container {
     width: 100%;
-    margin-left: 0;
+    margin: 0;
   }
 }
 
@@ -39,33 +39,33 @@ body {
 
 @media only screen and (max-width: 800px) {
   .section-items {
-    margin: 0.5rem;
-    min-width: 12%;
+    width: 25%;
+    margin: 0;
   }
 }
 
 @media only screen and (max-width: 800px) {
-  .bottom-content-items {
+  .section-items {
     margin: 0.5rem;
-    min-width: 58%;
+    min-width: 12%;
+    display: flex;
+    flex-direction: column;
   }
-}
-
-/* @media only screen and (max-width: 800px) {
-    .lead-item {
-
-    }
-} */
-
-.section-items > h2 {
-  font-size: 1.5rem;
 }
 
 .section-items-desc {
   color: rgb(109, 107, 107);
   font-size: 1rem;
-  font-size: clamp(0.7rem, -2rem + 8.333vw, 1rem);
+  font-size: clamp(0.5rem, 0.6rem, 1rem);
   padding: 0.5rem;
+  padding-bottom: 2rem;
+  text-align: center;
+}
+
+.dash-count {
+  font-size: 1.5rem;
+  color: black;
+  margin-top: auto;
 }
 
 .sales-graph-container {
@@ -127,6 +127,13 @@ body {
   margin-bottom: 2rem;
 }
 
+@media only screen and (max-width: 800px) {
+  .bottom-content-items {
+    margin: 1rem, 0.5rem;
+    min-width: 58%;
+  }
+}
+
 .bottom-content-items:first-child {
   margin-right: 1rem;
 }
@@ -137,9 +144,25 @@ body {
   padding: 1.5rem;
 }
 
+@media only screen and (max-width: 800px) {
+  .top-leads-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem;
+    text-align: left;
+  }
+  .leads-view-more {
+    text-align: right;
+  }
+}
+
+.lead-items-left {
+  text-align: left;
+}
+
 .leads-container-header {
   color: black;
-  font-size: clamp(1rem, 1.2rem, 1.5rem);
+  font-size: clamp(0.5rem, 1rem, 1.5rem);
 }
 
 .leads-view-more {
@@ -149,9 +172,10 @@ body {
 .lead-item {
   display: flex;
   justify-content: space-between;
-  padding: clamp(.2rem, .5rem, 0.8rem);
-  font-size: clamp(.5rem, .7rem, 1rem);
+  padding: clamp(0.2rem, 0.5rem, 0.8rem);
+  font-size: clamp(0.5rem, 0.7rem, 1rem);
   color: black;
+  align-items: center;
 }
 
 .lead-item:not(:last-child) {
