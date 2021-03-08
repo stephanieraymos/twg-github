@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import inventory from "../css/inventory.css";
-import { useGlobalContext } from "./context";
 
 // const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins
 const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
 function Inventory() {
   document.title = "Add Inventory";
-  const {
-    trucks,
-    setTrucks
-  } = useGlobalContext();
+  const [trucks, setTrucks] = useState([]);
 
   //Fetching the trucks db from the API link above
   const fetchTrucks = async () => {
@@ -23,6 +19,7 @@ function Inventory() {
     } else {
       console.log(response.status, "Something went wrong with the get request");
     }
+    console.log(trucks)
   };
 
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
@@ -44,6 +41,8 @@ function Inventory() {
   }, []);
   // End of useEffect for delete
 
+  console.log(trucks)
+
   return (
     <>
       <div>
@@ -59,14 +58,20 @@ function Inventory() {
 
         <div className="truckLoad-list">
           {trucks.map((truck) => {
-            const { id, truckName, truckPrice, truckContents, truckManifest } = truck;
+            const {
+              id,
+              truckName,
+              truckPrice,
+              truckContents,
+              truckManifest,
+            } = truck;
 
             return (
               <div className="truckLoad" key={id}>
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <p className="items all-trucks-manifest">{truckManifest}</p>
+                <a href={truckManifest} target="_blank"><p className="items all-trucks-manifest">MANIFEST</p></a>
               </div>
             );
           })}
