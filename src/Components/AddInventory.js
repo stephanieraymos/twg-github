@@ -151,7 +151,7 @@ const AddInventory = () => {
       </div>
       <section className="section-center">
         <h3 className="form-header">Add Truckload</h3>
-        <form onSubmit={handleSubmit} method="post" enctype="multipart/form-data">
+        <form onSubmit={handleSubmit} method="post" encType="multipart/form-data">
           {/* If alert is showing, we bring in the alert component */}
           {alert.show && (
             <Alert {...alert} removeAlert={showAlert} truckLoad={truckLoad} />
