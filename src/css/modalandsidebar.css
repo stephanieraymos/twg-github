@@ -266,7 +266,7 @@ main {
   font-size: 1.25rem;
   text-transform: capitalize;
   padding: 1rem 1.5rem;
-  color: var(--dark);
+  color: var(--text);
   transition: var(--transition); /* root styles */
   letter-spacing: var(--spacing); /* root styles */
 }
@@ -277,7 +277,7 @@ main {
 }
 .links a svg {
   font-size: 1.5rem;
-  color: var(--dark);
+  color: var(--text);
   margin-right: 0.75rem;
   transition: var(--transition); /* root styles */
 }
@@ -305,7 +305,7 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background: white;
+  background: var(--dark-gray);
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 1rem;
