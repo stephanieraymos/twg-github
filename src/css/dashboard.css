@@ -21,7 +21,7 @@ body {
 }
 
 .section-items {
-  border: var(--accent) 1px solid;
+  border: #cccccc 1px solid;
   border-radius: var(--radius);
   background-color: white;
   color: black;
@@ -54,7 +54,7 @@ body {
   width: 80%;
   height: 40%;
   min-width: none;
-  border: var(--accent) 1px solid;
+  border: #cccccc 1px solid;
   border-radius: var(--radius);
 }
 
@@ -81,6 +81,48 @@ body {
 }
 
 .graph {
-    color: black;
-    font-size: 3rem;
+  color: black;
+  font-size: 3rem;
 }
+
+/* BOTTOM CONTAINER */
+.bottom-content {
+  color: black;
+  display: flex;
+  justify-content: center;
+}
+
+.bottom-content-items {
+  background-color: white;
+  width: 40%;
+  margin: 1rem;
+  border: #cccccc 1px solid;
+  border-radius: var(--radius);
+}
+
+.top-leads-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.leads-container-header {
+  color: black;
+  font-size: clamp(1rem, 1.2rem, 1.5rem);
+}
+
+.leads-view-more {
+  color: var(--sections);
+}
+
+.lead-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem;
+  color: black;
+}
+
+.lead-item:not(:last-child) {
+  border-bottom: #cccccc 1px solid;
+}
+

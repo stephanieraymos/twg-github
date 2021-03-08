@@ -4,7 +4,6 @@ import { useGlobalContext } from "./context";
 import Inventory from "./Inventory";
 import dashboard from "../css/dashboard.css";
 
-
 const Dashboard = () => {
   document.title = "Dashboard";
   const { openSidebar, isSidebarOpen } = useGlobalContext();
@@ -22,7 +21,7 @@ const Dashboard = () => {
         </button>
 
         <h1 className="dashboard-heading">Dashboard</h1>
-        
+
         <div className="section-container">
           <div className="trucks-available section-items">
             <p className="section-items-desc">Trucks Available</p>
@@ -50,6 +49,58 @@ const Dashboard = () => {
             <p className="graph">GRAPH CONTENTS</p>
           </div>
         </div>
+
+        <div className="bottom-content">
+          <div className="new-leads-container bottom-content-items">
+            <div className="top-leads-container">
+              <p className="leads-container-header">New Leads</p>
+              <p className="leads-view-more">View Details</p>
+            </div>
+            <div className="lead-items">
+              <div className="lead-item">
+                <p>Waiting on Feature Request</p>
+                <p>4238</p>
+              </div>
+              <div className="lead-item">
+                <p>Awaiting Customer Response</p>
+                <p>1005</p>
+              </div>
+              <div className="lead-item">
+                <p>Awaiting Developer Fix</p>
+                <p>42</p>
+              </div>
+              <div className="lead-item">
+                <p>Pending</p>
+                <p>281</p>
+              </div>
+            </div>
+          </div>
+          <div className="orders-to-approve-container bottom-content-items">
+            <div className="top-leads-container">
+              <p className="leads-container-header">Orders Needing Approval</p>
+              <p className="leads-view-more">View All</p>
+            </div>
+            <div className="lead-items">
+              <div className="lead-item">
+                <p>Waiting on Feature Request</p>
+                <p>4238</p>
+              </div>
+              <div className="lead-item">
+                <p>Awaiting Customer Response</p>
+                <p>1005</p>
+              </div>
+              <div className="lead-item">
+                <p>Awaiting Developer Fix</p>
+                <p>42</p>
+              </div>
+              <div className="lead-item">
+                <p>Pending</p>
+                <p>281</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* <div className="dashboard-inventory">
           <Inventory />
         </div> */}
