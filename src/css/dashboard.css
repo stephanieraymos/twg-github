@@ -48,22 +48,21 @@ body {
 
 .sales-graph-container {
   justify-content: center;
-
   margin: 0 auto;
   background-color: white;
-  width: 90%;
+  width: 80%;
   height: 35%;
   min-width: none;
   min-height: 35vh;
   border: var(--accent) 1px solid;
-
-  /*   
-position: absolute;
-height: 546px;
-left: 285px;
-right: 33px;
-top: 292px; */
+  border-radius: var(--radius);
 }
+
+@media only screen and (max-width: 800px) {
+    .sales-graph-container {
+      width: 97%;
+    }
+  }
 
 .sales-graph-heading {
   display: flex;
