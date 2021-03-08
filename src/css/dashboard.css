@@ -53,13 +53,26 @@ body {
   }
 }
 
+.section-items:hover {
+  border: var(--accent) 2px solid;
+  background: var(--light-purple);
+}
+
 .section-items-desc {
   color: rgb(109, 107, 107);
   font-size: 1rem;
-  font-size: clamp(0.5rem, 0.6rem, 1rem);
+  font-size: clamp(0.5rem, 0.75rem, 1.5rem);
   padding: 0.5rem;
   padding-bottom: 2rem;
   text-align: center;
+}
+
+.dash-count:hover {
+  color: var(--accent);
+}
+
+.section-items-desc:hover {
+  color: var(--accent);
 }
 
 .dash-count {
@@ -73,7 +86,7 @@ body {
   margin: 0 auto;
   background-color: white;
   width: 80%;
-  height: 40%;
+  height: 45%;
   min-width: none;
   border: #cccccc 1px solid;
   border-radius: var(--radius);
@@ -84,6 +97,11 @@ body {
     width: 97%;
     margin: 0.5rem;
     margin-bottom: -1rem;
+  }
+}
+@media only screen and (min-width: 1250px) {
+  .sales-graph-container {
+    height: 50%;
   }
 }
 
@@ -167,6 +185,7 @@ body {
 
 .leads-view-more {
   color: var(--sections);
+  cursor: pointer;
 }
 
 .lead-item {
@@ -174,10 +193,14 @@ body {
   justify-content: space-between;
   padding: clamp(0.2rem, 0.5rem, 0.8rem);
   font-size: clamp(0.5rem, 0.7rem, 1rem);
-  color: black;
   align-items: center;
 }
 
 .lead-item:not(:last-child) {
   border-bottom: #cccccc 1px solid;
+}
+
+.lead-item:hover {
+    background: var(--light-purple);
+    color: black;
 }
