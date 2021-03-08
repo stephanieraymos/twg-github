@@ -82,20 +82,20 @@ const Dashboard = () => {
             </div>
             <div className="lead-items">
               <div className="lead-item">
-                <p>Waiting on Feature Request</p>
-                <p>4238</p>
+                <p>TRUCK123456</p>
+                <p>$456</p>
               </div>
               <div className="lead-item">
-                <p>Awaiting Customer Response</p>
-                <p>1005</p>
+                <p>TRUCK123456</p>
+                <p>$456</p>
               </div>
               <div className="lead-item">
-                <p>Awaiting Developer Fix</p>
-                <p>42</p>
+                <p>TRUCK123456</p>
+                <p>$456</p>
               </div>
               <div className="lead-item">
-                <p>Pending</p>
-                <p>281</p>
+                <p>TRUCK123456</p>
+                <p>$456</p>
               </div>
             </div>
           </div>

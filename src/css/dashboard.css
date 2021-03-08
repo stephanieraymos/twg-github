@@ -9,24 +9,32 @@ body {
 
 .dashboard-heading {
   color: black;
-  text-align: left;
-  margin-left: clamp(18%, -2rem + 8.333vw, 10%);
+  text-align: center;
   font-size: clamp(2rem, -2rem + 8.333vw, 2.5rem);
   padding: 0.5em;
 }
 
 .section-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  width: 80%;
+  margin-left: 10%;
+}
+@media only screen and (max-width: 800px) {
+  .section-container {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
+/* TOP BOXES */
 .section-items {
   border: #cccccc 1px solid;
   border-radius: var(--radius);
   background-color: white;
   color: black;
-  margin: 1.5rem;
-  min-width: 12%;
+  margin: 1rem;
+  min-width: 20%;
 }
 
 @media only screen and (max-width: 800px) {
@@ -35,6 +43,19 @@ body {
     min-width: 12%;
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .bottom-content-items {
+    margin: 0.5rem;
+    min-width: 58%;
+  }
+}
+
+/* @media only screen and (max-width: 800px) {
+    .lead-item {
+
+    }
+} */
 
 .section-items > h2 {
   font-size: 1.5rem;
@@ -61,6 +82,8 @@ body {
 @media only screen and (max-width: 800px) {
   .sales-graph-container {
     width: 97%;
+    margin: 0.5rem;
+    margin-bottom: -1rem;
   }
 }
 
@@ -90,14 +113,22 @@ body {
   color: black;
   display: flex;
   justify-content: center;
+  width: 80%;
+  margin: 0 auto;
 }
 
+/* BOXES ON BOTTOM */
 .bottom-content-items {
   background-color: white;
-  width: 40%;
-  margin: 1rem;
+  width: 50%;
   border: #cccccc 1px solid;
   border-radius: var(--radius);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.bottom-content-items:first-child {
+  margin-right: 1rem;
 }
 
 .top-leads-container {
@@ -118,11 +149,11 @@ body {
 .lead-item {
   display: flex;
   justify-content: space-between;
-  padding: 0.8rem;
+  padding: clamp(.2rem, .5rem, 0.8rem);
+  font-size: clamp(.5rem, .7rem, 1rem);
   color: black;
 }
 
 .lead-item:not(:last-child) {
   border-bottom: #cccccc 1px solid;
 }
-
