@@ -66,15 +66,19 @@ input:hover::placeholder {
 }
 .truck {
   width: 25%;
+  color: white;
 }
 .price {
   width: 15%;
+  color: white;
 }
 .contents {
   width: 40%;
+  color: white;
 }
 .manifest {
   width: 15%;
+  color: white;
 }
 
 .header-items {
