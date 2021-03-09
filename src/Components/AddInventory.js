@@ -90,32 +90,6 @@ const AddInventory = () => {
     }
   };
 
-  // // useEffect for post request
-  // useEffect(() => {
-  //   fetch("http://143.110.225.28/api/v1/inventory/", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       truckName: truckName,
-  //       truckPrice: truckPrice,
-  //       truckContents: truckContents,
-  //     }),
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         setError(false);
-  //         console.log("SUCCESSFULLY ADDED TRUCK TO DATABASE");
-  //         return response.json();
-  //       } else if (response.status >= 408) {
-  //         console.log(error, "There is an unknown error preventing the truck from being added to the database");
-  //         setError(true);
-  //       }
-  //       console.log(response);
-  //       return response.json();
-  //     })
-  //     .then((truck) => setId(truck.id));
-  // }, [postToDb]);
-
   //Fetching the trucks db from the API link above
   const postTrucks = async () => {
     const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
