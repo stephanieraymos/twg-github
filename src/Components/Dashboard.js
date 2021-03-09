@@ -6,7 +6,7 @@ import dashboard from "../css/dashboard.css";
 
 const Dashboard = () => {
   document.title = "Dashboard";
-  const { openSidebar, isSidebarOpen } = useGlobalContext();
+  const { openSidebar, isSidebarOpen, trucks } = useGlobalContext();
 
   return (
     <>
@@ -25,7 +25,7 @@ const Dashboard = () => {
         <div className="section-container">
           <div className="trucks-available section-items">
             <p className="section-items-desc">Trucks Available</p>
-            <p className="dash-count">143</p>
+            <p className="dash-count">{trucks.length}</p>
             {/* <p>{trucks.length}</p> */}
           </div>
           <div className="trucks-needing-approval section-items">

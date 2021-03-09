@@ -4,6 +4,7 @@ import inventory from "../css/inventory.css";
 import { useGlobalContext } from "./context";
 const Inventory = () => {
   const { truckLoad, removeItem, editItem } = useGlobalContext();
+  
   return (
     <>
       <div className="header-items">
