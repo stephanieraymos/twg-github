@@ -1,7 +1,6 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useGlobalContext } from "./context";
-
 import inventory from "../css/inventory.css";
 
 const Inventory = () => {

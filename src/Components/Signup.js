@@ -30,15 +30,18 @@ const Signup = () => {
     if (!firstName || lastName || !email) {
         showAlert(true, "danger", "Please enter value");
       } else {
-        // Show alert and add truck to inventory only if name is true and not editing
+
+        //* Show alert and add user to inventory only if name is true and not editing
         showAlert(true, "success", "Truck Added");
-        //Creating new truck
+
+        //* Creating new user
         const newUser = {
           id: new Date().getTime().toString(),
           firstName,
           lastName,
           email,
         };
+
     console.log("Sign up successful");
     setFirstName("");
     setLastName("");
@@ -48,7 +51,7 @@ const Signup = () => {
   };
 }
 
-  // useEffect for user post request
+  //* useEffect for user post request
   useEffect(() => {
     fetch(
       " http://143.110.225.28/register/",

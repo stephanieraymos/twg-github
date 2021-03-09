@@ -1,7 +1,6 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "./context";
-import Inventory from "./Inventory";
 import dashboard from "../css/dashboard.css";
 
 const Dashboard = () => {
@@ -11,6 +10,7 @@ const Dashboard = () => {
   return (
     <>
       <article className="admin-dashboard-content">
+
         <button
           className={`${
             isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"
@@ -26,7 +26,6 @@ const Dashboard = () => {
           <div className="trucks-available section-items">
             <p className="section-items-desc">Trucks Available</p>
             <p className="dash-count">{trucks.length}</p>
-            {/* <p>{trucks.length}</p> */}
           </div>
           <div className="trucks-needing-approval section-items">
             <p className="section-items-desc">Needing Approval</p>
@@ -101,9 +100,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* <div className="dashboard-inventory">
-          <Inventory />
-        </div> */}
       </article>
     </>
   );

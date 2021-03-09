@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 
-const url = "http://143.110.225.28/account/user/"; //API LINK
+const url = "http://143.110.225.28/account/user/"; //* API LINK
 
 function CustomerDb() {
-  //Setting state values, params are default values
+  //* Setting state values, params are default values
   const [users, setUsers] = useState([]);
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
 
-  //Fetching the trucks db from the API link above
+  //* Fetching the trucks db from the API link above
   const fetchUsers = async () => {
     console.log(accessToken)
     const response = await fetch(url, {
@@ -27,24 +27,12 @@ function CustomerDb() {
     }
   };
 
-  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
+  //* useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
   useEffect(() => {
     fetchUsers();
     console.log("Users fetched successfully inside the useEffect");
   }, []);
   // End of useEffect for fetch
-
-  // // useEffect for delete method
-  // useEffect(() => {
-  //   fetch("http://143.110.225.28/api/v1/inventory/", {
-  //     method: "DELETE",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       id: "",
-  //     }),
-  //   }).then((err) => console.log(err));
-  // }, []);
-  // // End of useEffect for delete
 
   return (
     <>

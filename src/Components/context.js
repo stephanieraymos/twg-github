@@ -127,7 +127,7 @@ const AppProvider = ({ children }) => {
 
   //////////////////////// &&--FETCH--&& ///////////////////////////////
 
-  //Fetching the trucks db from the API link above ----GET----
+  //Fetching the trucks db from the API link above //^----GET----
   const fetchTrucks = async () => {
     const response = await fetch(url, {
       method: "GET",
@@ -150,7 +150,7 @@ const AppProvider = ({ children }) => {
   }, []);
   // End of useEffect for fetch
 
-  // useEffect for delete method ----DELETE----
+  // useEffect for delete method //^----DELETE----
   // useEffect(async() => {
   //   await fetch("http://143.110.225.28/api/v1/inventory/", {
   //     method: "DELETE",
@@ -188,7 +188,7 @@ const AppProvider = ({ children }) => {
   }, [trucks]);
   // End of useEffect for fetch
 
-  //Fetching the trucks db from the API link above ----ADD INVENTORY----
+  //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
     const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
       method: "POST",
@@ -281,7 +281,7 @@ const AppProvider = ({ children }) => {
   );
 };
 
-// Custom hook for using context within app
+//! Custom hook for using context within app
 export const useGlobalContext = () => {
   return useContext(AppContext);
 };

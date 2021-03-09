@@ -4,6 +4,8 @@ import { useGlobalContext } from "./context";
 import Alert from "./Alert";
 import modalandsidebar from "../css/modalandsidebar.css";
 
+//todo ----REFACTOR THIS COMPONENT TO USE CONTEXT----
+
 const getLocalStorage = () => {
   let person = localStorage.getItem("person");
   if (person) {

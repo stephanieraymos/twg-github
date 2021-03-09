@@ -7,9 +7,9 @@ import modalandsidebar from "../css/modalandsidebar.css";
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useGlobalContext();
-  const outerDiv = useRef(); //This reference is used to refer to the outer div, it's purpose is for closing the sidebar when clicked anywhere but the sidebar
+  const outerDiv = useRef(); //* This reference is used to refer to the outer div, it's purpose is for closing the sidebar when clicked anywhere but the sidebar
 
-  //This useEffect is to add event listeners for the click off sidebar
+  //* This useEffect is to add event listeners for the click off sidebar
   useEffect(() => {
     // add when mounted
     document.addEventListener("mousedown", handleClick);
