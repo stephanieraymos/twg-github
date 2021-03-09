@@ -127,7 +127,10 @@ const AppProvider = ({ children }) => {
 
   //Fetching the trucks db from the API link above ----GET----
   const fetchTrucks = async () => {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
     const newTrucks = await response.json(); //returns a promise
     setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
     if (response.ok) {
@@ -208,7 +211,7 @@ const AppProvider = ({ children }) => {
         setTrucks,
         id,
         setId,
-        
+
         isEditing,
         setIsEditing,
         editId,

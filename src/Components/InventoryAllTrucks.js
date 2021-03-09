@@ -5,7 +5,7 @@ import inventory from "../css/inventory.css";
 
 function Inventory() {
   document.title = "Add Inventory";
-  const { trucks, fetchTrucks } = useGlobalContext();
+  const { trucks } = useGlobalContext();
 
 
   console.log(trucks);
