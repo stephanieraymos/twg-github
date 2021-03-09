@@ -18,75 +18,19 @@ const AddInventory = () => {
     setTruckContents,
     truckManifest,
     setTruckManifest,
-    isEditing,
-    setIsEditing,
-    editId,
-    setEditId,
-    alert,
     id,
+
+    isEditing,
+    alert,
     showAlert,
     clearList,
     removeItem,
     editItem,
+    handleSubmit,
+
     postTrucks
   } = useGlobalContext();
 
-  // const handleChange=(e)=>{
-  //   setTruckLoad({
-  //       [e.target.id]:e.target.value
-  //   },()=>{
-  //       console.log(truckLoad);
-  //   })
-
-  const handleSubmit = (e) => {
-    console.log(truckLoad);
-    e.preventDefault();
-    if (!truckName || !truckPrice || !truckContents) {
-      showAlert(true, "danger", "Please enter value");
-    } else if (truckName && isEditing) {
-      // deal with edit if something is in value and user is editing
-      setTruckLoad(
-        truckLoad.map((truck, id) => {
-          if (truck.id === editId) {
-            return {
-              ...truck,
-              id: id,
-              truckName: truckName,
-              truckPrice: truckPrice,
-              truckContents: truckContents,
-              truckManifest: truckManifest
-            };
-          }
-          return truck;
-        })
-      );
-      setTruckName(""); //Reseting input boxes to empty string
-      setTruckPrice("");
-      setTruckContents("");
-      setTruckManifest("");
-      setEditId(""); //Reseting editId
-      setIsEditing(false); //Reseting isEditing to false
-      showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
-    } else {
-      // Show alert and add truck to inventory only if name is true and not editing
-      showAlert(true, "success", "Truck Added");
-      //Creating new truck
-      const newTruck = {
-        id,
-        truckName,
-        truckPrice,
-        truckContents,
-        truckManifest
-      };
-
-      //Spreading out current truckLoad and adding newTruck to the list
-      setTruckLoad([...truckLoad, newTruck]);
-      setTruckName(""); //Reseting input boxes to empty string
-      setTruckPrice("");
-      setTruckContents("");
-      console.log(newTruck); //Logging new truck for testing purposes
-    }
-  };
 
   return (
     <>

@@ -5,7 +5,6 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
-
   ////////////////////////// --STATE-- /////////////////////////////////
   //Wrapping whole app in Provider
   const [truckLoad, setTruckLoad] = useState([]);
@@ -74,6 +73,56 @@ const AppProvider = ({ children }) => {
     setTruckContents(specificItem.truckContents);
   };
 
+  const handleSubmit = (e) => {
+    console.log(truckLoad);
+    e.preventDefault();
+    if (!truckName || !truckPrice || !truckContents) {
+      showAlert(true, "danger", "Please enter value");
+    } else if (truckName && isEditing) {
+      // deal with edit if something is in value and user is editing
+      setTruckLoad(
+        truckLoad.map((truck, id) => {
+          if (truck.id === editId) {
+            return {
+              ...truck,
+              id: id,
+              truckName: truckName,
+              truckPrice: truckPrice,
+              truckContents: truckContents,
+              truckManifest: truckManifest,
+            };
+          }
+          return truck;
+        })
+      );
+      setTruckName(""); //Reseting input boxes to empty string
+      setTruckPrice("");
+      setTruckContents("");
+      setTruckManifest("");
+      setEditId(""); //Reseting editId
+      setIsEditing(false); //Reseting isEditing to false
+      showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
+    } else {
+      // Show alert and add truck to inventory only if name is true and not editing
+      showAlert(true, "success", "Truck Added");
+      //Creating new truck
+      const newTruck = {
+        id,
+        truckName,
+        truckPrice,
+        truckContents,
+        truckManifest,
+      };
+
+      //Spreading out current truckLoad and adding newTruck to the list
+      setTruckLoad([...truckLoad, newTruck]);
+      setTruckName(""); //Reseting input boxes to empty string
+      setTruckPrice("");
+      setTruckContents("");
+      console.log(newTruck); //Logging new truck for testing purposes
+    }
+  };
+
   /////////////////////////// --FETCH-- ///////////////////////////////////
 
   //Fetching the trucks db from the API link above ----GET----
@@ -139,6 +188,8 @@ const AppProvider = ({ children }) => {
   // End of useEffect for fetch
 
   return (
+    ////////////////////////// --PROVIDER-- ///////////////////////////////
+
     <AppContext.Provider
       value={{
         isModalOpen,
@@ -157,6 +208,7 @@ const AppProvider = ({ children }) => {
         setTrucks,
         id,
         setId,
+        
         isEditing,
         setIsEditing,
         editId,
@@ -173,6 +225,7 @@ const AppProvider = ({ children }) => {
         clearList,
         removeItem,
         editItem,
+        handleSubmit,
 
         firstName,
         setFirstName,
@@ -196,7 +249,7 @@ const AppProvider = ({ children }) => {
   );
 };
 
-// Custom hook
+// Custom hook for using context within app
 export const useGlobalContext = () => {
   return useContext(AppContext);
 };
