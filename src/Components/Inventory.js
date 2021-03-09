@@ -1,10 +1,12 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import inventory from "../css/inventory.css";
 import { useGlobalContext } from "./context";
+
+import inventory from "../css/inventory.css";
+
 const Inventory = () => {
   const { truckLoad, removeItem, editItem } = useGlobalContext();
-  
+
   return (
     <>
       <div className="header-items">

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "./context";
 import inventory from "../css/inventory.css";
 
 function Inventory() {
-  document.title = "Add Inventory";
+  document.title = "Inventory - Database";
   const { trucks } = useGlobalContext();
-
 
   console.log(trucks);
 
