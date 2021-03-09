@@ -5,6 +5,8 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
+
+  ////////////////////////// --STATE-- /////////////////////////////////
   //Wrapping whole app in Provider
   const [truckLoad, setTruckLoad] = useState([]);
   const [trucks, setTrucks] = useState([]);
@@ -27,6 +29,7 @@ const AppProvider = ({ children }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [personId, setPersonId] = useState("");
 
+  ///////////////////////// --FUNCTIONS-- /////////////////////////
   const openSidebar = () => {
     setIsSidebarOpen(true);
   };
@@ -71,8 +74,9 @@ const AppProvider = ({ children }) => {
     setTruckContents(specificItem.truckContents);
   };
 
-  /////////////////////////// FETCH /////////////////////////////////////
-  //Fetching the trucks db from the API link above
+  /////////////////////////// --FETCH-- ///////////////////////////////////
+
+  //Fetching the trucks db from the API link above ----GET----
   const fetchTrucks = async () => {
     const response = await fetch(url);
     const newTrucks = await response.json(); //returns a promise
@@ -92,7 +96,7 @@ const AppProvider = ({ children }) => {
   }, []);
   // End of useEffect for fetch
 
-  // useEffect for delete method
+  // useEffect for delete method ----DELETE----
   useEffect(() => {
     fetch("http://143.110.225.28/api/v1/inventory/", {
       method: "DELETE",
@@ -104,32 +108,35 @@ const AppProvider = ({ children }) => {
   }, []);
   // End of useEffect for delete
 
-    //Fetching the trucks db from the API link above
-    const postTrucks = async () => {
-      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          truckName: truckName,
-          truckPrice: truckPrice,
-          truckContents: truckContents,
-          truckManifest: truckManifest
-        }),
-      });
-      if (response.ok) {
-        console.log(response.status, "Post request successful");
-      } else {
-        console.log(response.status, "Something went wrong with the post request");
-      }
-      return await response.json();
-    };
-  
-    //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
-    useEffect(() => {
-      postTrucks();
-      console.log("postTrucks useEffect ran successfully");
-    }, []);
-    // End of useEffect for fetch
+  //Fetching the trucks db from the API link above ----ADD INVENTORY----
+  const postTrucks = async () => {
+    const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        truckName: truckName,
+        truckPrice: truckPrice,
+        truckContents: truckContents,
+        truckManifest: truckManifest,
+      }),
+    });
+    if (response.ok) {
+      console.log(response.status, "Post request successful");
+    } else {
+      console.log(
+        response.status,
+        "Something went wrong with the post request"
+      );
+    }
+    return await response.json();
+  };
+
+  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
+  useEffect(() => {
+    postTrucks();
+    console.log("postTrucks useEffect ran successfully");
+  }, []);
+  // End of useEffect for fetch
 
   return (
     <AppContext.Provider
@@ -181,7 +188,7 @@ const AppProvider = ({ children }) => {
         setPersonId,
 
         fetchTrucks,
-        postTrucks
+        postTrucks,
       }}
     >
       {children}
