@@ -1,4 +1,6 @@
-/* INVENTORY */
+/*=============================================
+=                  INVENTORY                 =
+=============================================*/
 p {
   padding: 0;
   margin: 0;
@@ -149,7 +151,9 @@ input:hover::placeholder {
   background: black;
 }
 
-/* INVENTORY ALL TRUCKS */
+/*=============================================
+=           INVENTORY ALL TRUCKS             =
+=============================================*/
 
 .table-wrapper {
   align-self: center;

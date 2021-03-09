@@ -5,7 +5,8 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
-  ////////////////////////// --STATE-- /////////////////////////////////
+  //////////////////////// &&--STATE--&& /////////////////////////////
+
   //Wrapping whole app in Provider
   const [truckLoad, setTruckLoad] = useState([]);
   const [trucks, setTrucks] = useState([]);
@@ -28,7 +29,8 @@ const AppProvider = ({ children }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [personId, setPersonId] = useState("");
 
-  ///////////////////////// --FUNCTIONS-- /////////////////////////
+  ////////////////////// &&--FUNCTIONS--&& /////////////////////////
+
   const openSidebar = () => {
     setIsSidebarOpen(true);
   };
@@ -123,7 +125,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  /////////////////////////// --FETCH-- ///////////////////////////////////
+  //////////////////////// &&--FETCH--&& ///////////////////////////////
 
   //Fetching the trucks db from the API link above ----GET----
   const fetchTrucks = async () => {
@@ -148,7 +150,7 @@ const AppProvider = ({ children }) => {
   }, []);
   // End of useEffect for fetch
 
-  // // useEffect for delete method ----DELETE----
+  // useEffect for delete method ----DELETE----
   // useEffect(async() => {
   //   await fetch("http://143.110.225.28/api/v1/inventory/", {
   //     method: "DELETE",
@@ -158,7 +160,7 @@ const AppProvider = ({ children }) => {
   //     }),
   //   }).then((err) => console.log(err));
   // }, []);
-  // // End of useEffect for delete
+  // End of useEffect for delete
 
   const deleteTrucks = async () => {
     const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
@@ -217,7 +219,8 @@ const AppProvider = ({ children }) => {
   // End of useEffect for fetch
 
   return (
-    ////////////////////////// --PROVIDER-- ///////////////////////////////
+
+    ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
 
     <AppContext.Provider
       value={{
