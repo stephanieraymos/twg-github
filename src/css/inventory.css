@@ -47,6 +47,10 @@ input:hover::placeholder {
   padding-bottom: 6px;
 }
 
+.truckLoad > p {
+  color: black;
+}
+
 .truckLoad:hover {
   color: gray;
   background: var(--dark-gray);
@@ -64,6 +68,7 @@ input:hover::placeholder {
   letter-spacing: 2px;
   transition: var(--transition);
 }
+
 .truck {
   width: 25%;
   color: white;

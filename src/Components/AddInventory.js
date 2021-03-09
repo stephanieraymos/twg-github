@@ -22,14 +22,10 @@ const AddInventory = () => {
     setIsEditing,
     editId,
     setEditId,
-    error,
-    setError,
     postToDb,
     setPostToDb,
     alert,
-    setAlert,
     id,
-    setId,
     showAlert,
     clearList,
     removeItem,
@@ -51,10 +47,11 @@ const AddInventory = () => {
     } else if (truckName && isEditing) {
       // deal with edit if something is in value and user is editing
       setTruckLoad(
-        truckLoad.map((truck) => {
+        truckLoad.map((truck, id) => {
           if (truck.id === editId) {
             return {
               ...truck,
+              id: id,
               truckName: truckName,
               truckPrice: truckPrice,
               truckContents: truckContents,
@@ -76,7 +73,7 @@ const AddInventory = () => {
       showAlert(true, "success", "Truck Added");
       //Creating new truck
       const newTruck = {
-        id: new Date().getTime().toString(),
+        id,
         truckName,
         truckPrice,
         truckContents,
@@ -88,6 +85,7 @@ const AddInventory = () => {
       setTruckName(""); //Reseting input boxes to empty string
       setTruckPrice("");
       setTruckContents("");
+      setPostToDb(false);
       console.log(newTruck); //Logging new truck for testing purposes
     }
   };
@@ -127,13 +125,13 @@ const AddInventory = () => {
         truckName: truckName,
         truckPrice: truckPrice,
         truckContents: truckContents,
-        manifestURL: truckManifest
+        truckManifest: truckManifest
       }),
     });
     if (response.ok) {
       console.log(response.status, "Post request successful");
     } else {
-      console.log(response.status, "Somthing went wrong with the post request");
+      console.log(response.status, "Something went wrong with the post request");
     }
     return response.json();
   };
@@ -141,7 +139,7 @@ const AddInventory = () => {
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
   useEffect(() => {
     postTrucks();
-    console.log("Trucks posted successfully after submit button was clicked");
+    console.log("postTrucks useEffect ran successfully");
   }, [postToDb]);
   // End of useEffect for fetch
 
