@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
+import { useGlobalContext } from "./context";
 import inventory from "../css/inventory.css";
 
 // const url = "https://cors-anywhere.herokuapp.com/http://143.110.225.28/api/v1/inventory/data/"; //API LINK with proxy server to allow all origins
@@ -7,7 +8,7 @@ const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
 function Inventory() {
   document.title = "Add Inventory";
-  const [trucks, setTrucks] = useState([]);
+  const { trucks, setTrucks } = useGlobalContext();
 
   //Fetching the trucks db from the API link above
   const fetchTrucks = async () => {
@@ -19,7 +20,7 @@ function Inventory() {
     } else {
       console.log(response.status, "Something went wrong with the get request");
     }
-    console.log(trucks)
+    console.log(trucks);
   };
 
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
@@ -41,7 +42,7 @@ function Inventory() {
   }, []);
   // End of useEffect for delete
 
-  console.log(trucks)
+  console.log(trucks);
 
   return (
     <>
@@ -71,7 +72,9 @@ function Inventory() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <a href={truckManifest} target="_blank"><p className="items all-trucks-manifest">MANIFEST</p></a>
+                <a href={truckManifest} target="_blank">
+                  <p className="items all-trucks-manifest">MANIFEST</p>
+                </a>
               </div>
             );
           })}

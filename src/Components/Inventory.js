@@ -1,8 +1,9 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import inventory from "../css/inventory.css";
-
-const Inventory = ({ truckLoad, removeItem, editItem }) => {
+import { useGlobalContext } from "./context";
+const Inventory = () => {
+  const { truckLoad, removeItem, editItem } = useGlobalContext();
   return (
     <>
       <div className="header-items">
@@ -12,10 +13,16 @@ const Inventory = ({ truckLoad, removeItem, editItem }) => {
         <p className="manifest">MANIFEST</p>
         <p className="side-btn-container"></p>
       </div>
-      
+
       <div className="truckLoad-list">
         {truckLoad.map((truck) => {
-          const { id, truckName, truckPrice, truckContents, truckManifest } = truck;
+          const {
+            id,
+            truckName,
+            truckPrice,
+            truckContents,
+            truckManifest,
+          } = truck;
           return (
             <>
               <article key={id} className="truckLoad">

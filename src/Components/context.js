@@ -5,6 +5,7 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   //Wrapping whole app in Provider
   const [truckLoad, setTruckLoad] = useState([]);
+  const [trucks, setTrucks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckName, setTruckName] = useState("");
@@ -82,6 +83,8 @@ const AppProvider = ({ children }) => {
         setTruckContents,
         truckLoad,
         setTruckLoad,
+        trucks,
+        setTrucks,
         id,
         setId,
         isEditing,
@@ -114,7 +117,7 @@ const AppProvider = ({ children }) => {
         confirmPassword,
         setConfirmPassword,
         personId,
-        setPersonId
+        setPersonId,
       }}
     >
       {children}

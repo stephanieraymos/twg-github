@@ -133,7 +133,7 @@ const AddInventory = () => {
     } else {
       console.log(response.status, "Something went wrong with the post request");
     }
-    return response.json();
+    return await response.json();
   };
 
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
