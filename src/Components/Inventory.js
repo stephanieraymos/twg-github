@@ -26,6 +26,7 @@ const Inventory = () => {
             truckContents,
             truckManifest,
           } = truck;
+
           return (
             <>
               <article key={id} className="truckLoad">
