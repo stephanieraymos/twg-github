@@ -18,7 +18,6 @@ const AppProvider = ({ children }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
-  const [postToDb, setPostToDb] = useState(true);
   const [error, setError] = useState(false);
 
   const [firstName, setFirstName] = useState("");
@@ -105,6 +104,33 @@ const AppProvider = ({ children }) => {
   }, []);
   // End of useEffect for delete
 
+    //Fetching the trucks db from the API link above
+    const postTrucks = async () => {
+      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          truckName: truckName,
+          truckPrice: truckPrice,
+          truckContents: truckContents,
+          truckManifest: truckManifest
+        }),
+      });
+      if (response.ok) {
+        console.log(response.status, "Post request successful");
+      } else {
+        console.log(response.status, "Something went wrong with the post request");
+      }
+      return await response.json();
+    };
+  
+    //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
+    useEffect(() => {
+      postTrucks();
+      console.log("postTrucks useEffect ran successfully");
+    }, []);
+    // End of useEffect for fetch
+
   return (
     <AppContext.Provider
       value={{
@@ -130,8 +156,6 @@ const AppProvider = ({ children }) => {
         setEditId,
         alert,
         setAlert,
-        postToDb,
-        setPostToDb,
         error,
         setError,
         openModal,
@@ -156,7 +180,8 @@ const AppProvider = ({ children }) => {
         personId,
         setPersonId,
 
-        fetchTrucks
+        fetchTrucks,
+        postTrucks
       }}
     >
       {children}

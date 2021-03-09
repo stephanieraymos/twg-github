@@ -22,14 +22,13 @@ const AddInventory = () => {
     setIsEditing,
     editId,
     setEditId,
-    postToDb,
-    setPostToDb,
     alert,
     id,
     showAlert,
     clearList,
     removeItem,
     editItem,
+    postTrucks
   } = useGlobalContext();
 
   // const handleChange=(e)=>{
@@ -85,37 +84,9 @@ const AddInventory = () => {
       setTruckName(""); //Reseting input boxes to empty string
       setTruckPrice("");
       setTruckContents("");
-      setPostToDb(false);
       console.log(newTruck); //Logging new truck for testing purposes
     }
   };
-
-  //Fetching the trucks db from the API link above
-  const postTrucks = async () => {
-    const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        truckName: truckName,
-        truckPrice: truckPrice,
-        truckContents: truckContents,
-        truckManifest: truckManifest
-      }),
-    });
-    if (response.ok) {
-      console.log(response.status, "Post request successful");
-    } else {
-      console.log(response.status, "Something went wrong with the post request");
-    }
-    return await response.json();
-  };
-
-  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
-  useEffect(() => {
-    postTrucks();
-    console.log("postTrucks useEffect ran successfully");
-  }, [postToDb]);
-  // End of useEffect for fetch
 
   return (
     <>
@@ -159,7 +130,7 @@ const AddInventory = () => {
               value={truckManifest}
               onChange={(e) => setTruckManifest(e.target.value)}
             />
-            <button className="submit-btn" type="submit" onClick={setPostToDb}>
+            <button className="submit-btn" type="submit" onClick={postTrucks}>
               {isEditing ? "Edit" : "Submit"}
             </button>
           </div>
