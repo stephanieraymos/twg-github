@@ -9,7 +9,6 @@ const AddInventory = () => {
   document.title = "Add Inventory";
   const {
     truckLoad,
-    setTruckLoad,
     truckName,
     setTruckName,
     truckPrice,
