@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useReducer } from "react";
+import reducer from "./reducer";
 
 const AppContext = React.createContext();
 
@@ -6,8 +7,16 @@ const AppProvider = ({ children }) => {
   const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
   //////////////////////// &&--STATE--&& /////////////////////////////
-
+  const initialState = {
+    loading: false,
+    truckName: "",
+    truckPrice: "",
+    truckContents: [],
+    truckManifest: "",
+  };
   //Wrapping whole app in Provider
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const [truckLoad, setTruckLoad] = useState([]);
   const [trucks, setTrucks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -97,10 +106,7 @@ const AppProvider = ({ children }) => {
           return truck;
         })
       );
-      setTruckName(""); //Reseting input boxes to empty string
-      setTruckPrice("");
-      setTruckContents("");
-      setTruckManifest("");
+      dispatch({ type: "RESET_TRUCK_VALUES", payload: id });
       setEditId(""); //Reseting editId
       setIsEditing(false); //Reseting isEditing to false
       showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
