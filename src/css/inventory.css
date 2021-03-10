@@ -62,6 +62,10 @@ input:hover::placeholder {
   color: var(--text);
 }
 
+.truckLoad:hover > .items > p {
+  color: var(--text);
+}
+
 .items {
   margin-bottom: 0;
   justify-content: center;
