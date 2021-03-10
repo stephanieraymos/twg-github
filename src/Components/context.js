@@ -162,31 +162,32 @@ const AppProvider = ({ children }) => {
   // }, []);
   // End of useEffect for delete
 
-  const deleteTrucks = async () => {
-    const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: "",
-      }),
-    });
-    if (response.ok) {
-      console.log(response.status, "Delete request successful");
-    } else {
-      console.log(
-        response.status,
-        "Something went wrong with the delete request"
-      );
-    }
-    return await response.json();
-  };
+  // New delete request
+  // const deleteTrucks = async () => {
+  //   const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+  //     method: "DELETE",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       id: "",
+  //     }),
+  //   });
+  //   if (response.ok) {
+  //     console.log(response.status, "Delete request successful");
+  //   } else {
+  //     console.log(
+  //       response.status,
+  //       "Something went wrong with the delete request"
+  //     );
+  //   }
+  //   return await response.json();
+  // };
 
-  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
-  useEffect(() => {
-    deleteTrucks();
-    console.log("deleteTrucks useEffect ran successfully");
-  }, [trucks]);
-  // End of useEffect for fetch
+  // //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
+  // useEffect(() => {
+  //   deleteTrucks();
+  //   console.log("deleteTrucks useEffect ran successfully");
+  // }, [trucks]);
+  // // End of useEffect for fetch
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {

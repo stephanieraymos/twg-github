@@ -2,8 +2,6 @@ import Navigation from "./Navigation";
 import { useGlobalContext } from "./context";
 import inventory from "../css/inventory.css";
 
-const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
-
 function Inventory() {
   document.title = "Inventory - Database";
   const { trucks, url, truckManifest, setTruckManifest } = useGlobalContext();
@@ -11,18 +9,18 @@ function Inventory() {
   console.log(trucks);
 
   const getManifest = async () => {
-    const response = await fetch(url, {
+    const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        truckManifestName: truckManifest
-      })
-    })
+        truckManifestName: truckManifest,
+      }),
+    });
     const json = await response.json();
-    setTruckManifest(json["truckManifest"])
-    console.log("test", response)
-    
-  }
+    window.open({truckManifest})
+    console.log(json, response);
+  };
+
 
   return (
     <>
@@ -52,9 +50,9 @@ function Inventory() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-       
-                  <p className="items all-trucks-manifest" onClick={getManifest}>MANIFEST</p>
-
+                <a href="#" onClick={getManifest} target="_blank">
+                  <p className="items all-trucks-manifest">MANIFEST</p>
+                </a>
               </div>
             );
           })}
