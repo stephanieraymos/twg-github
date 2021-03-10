@@ -7,15 +7,14 @@ const AppProvider = ({ children }) => {
   const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
   //////////////////////// &&--STATE--&& /////////////////////////////
-  const initialState = {
-    loading: false,
+  const initialTruckState = {
     truckName: "",
     truckPrice: "",
     truckContents: [],
     truckManifest: "",
   };
   //Wrapping whole app in Provider
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialTruckState);
 
   const [truckLoad, setTruckLoad] = useState([]);
   const [trucks, setTrucks] = useState([]);
@@ -79,9 +78,7 @@ const AppProvider = ({ children }) => {
     const specificItem = truckLoad.find((truck) => truck.id === id);
     setIsEditing(true);
     setEditId(id);
-    setTruckName(specificItem.truckName);
-    setTruckPrice(specificItem.truckPrice);
-    setTruckContents(specificItem.truckContents);
+    dispatch({ type: "RESET_TRUCK_VALUES", payload: id });
   };
 
   const handleSubmit = (e) => {
@@ -96,11 +93,11 @@ const AppProvider = ({ children }) => {
           if (truck.id === editId) {
             return {
               ...truck,
-              id: id,
-              truckName: truckName,
-              truckPrice: truckPrice,
-              truckContents: truckContents,
-              truckManifest: truckManifest,
+              id,
+              truckName,
+              truckPrice,
+              truckContents,
+              truckManifest,
             };
           }
           return truck;
@@ -124,9 +121,7 @@ const AppProvider = ({ children }) => {
 
       //Spreading out current truckLoad and adding newTruck to the list
       setTruckLoad([...truckLoad, newTruck]);
-      setTruckName(""); //Reseting input boxes to empty string
-      setTruckPrice("");
-      setTruckContents("");
+      dispatch({ type: "RESET_TRUCK_VALUES", payload: id });
       console.log(newTruck); //Logging new truck for testing purposes
     }
   };
@@ -226,7 +221,6 @@ const AppProvider = ({ children }) => {
   // End of useEffect for fetch
 
   return (
-
     ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
 
     <AppContext.Provider
