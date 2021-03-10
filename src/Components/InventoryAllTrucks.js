@@ -2,7 +2,7 @@ import Navigation from "./Navigation";
 import { useGlobalContext } from "./context";
 import inventory from "../css/inventory.css";
 
-function Inventory() {
+function InventoryAllTrucks() {
   document.title = "Inventory - Database";
   const { trucks, truckManifest } = useGlobalContext();
 
@@ -40,7 +40,6 @@ function Inventory() {
               truckName,
               truckPrice,
               truckContents,
-              truckManifest,
             } = truck;
 
             return (
@@ -48,7 +47,7 @@ function Inventory() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <a href="#" onClick={getManifest} target="_blank">
+                <a href="#" onClick={getManifest} target="_blank" className="items">
                   <p className="items all-trucks-manifest">MANIFEST</p>
                 </a>
               </div>
@@ -59,4 +58,4 @@ function Inventory() {
     </>
   );
 }
-export default Inventory;
+export default InventoryAllTrucks;
