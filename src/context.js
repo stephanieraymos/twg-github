@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
+import AddInventory from "./Components/AddInventory";
+import Inventory from "./Components/Inventory";
 import reducer from "./reducer";
 
 const AppContext = React.createContext();
@@ -141,14 +143,13 @@ const AppProvider = ({ children }) => {
     } else {
       console.log(response.status, "Something went wrong with the get request");
     }
-    console.log(trucks);
   };
 
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
   useEffect(() => {
     fetchTrucks();
     console.log("Trucks fetched successfully inside the useEffect");
-  }, []);
+  }, [Inventory]);
   // End of useEffect for fetch
 
   // useEffect for delete method //^----DELETE----
@@ -217,7 +218,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     postTrucks();
     console.log("postTrucks useEffect ran successfully");
-  }, []);
+  }, [AddInventory]);
   // End of useEffect for fetch
 
   return (
@@ -225,6 +226,8 @@ const AppProvider = ({ children }) => {
 
     <AppContext.Provider
       value={{
+        ...state, 
+
         isModalOpen,
         isSidebarOpen,
         truckName,

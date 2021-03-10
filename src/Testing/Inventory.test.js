@@ -15,3 +15,10 @@ it("inserts text in each p tag", () => {
   expect(getByTestId("manifestEl")).toHaveTextContent("Yo");
   expect(getByText("Yo")).toHaveClass("items");
 });
+
+
+test("Renders the top p tag", () => {
+    const { getByText } = render(<Inventory />);
+    const p = getByText(/PRICE/);
+    expect(p).toHaveTextContent("PRICE");
+  });
