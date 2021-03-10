@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import Settings from "./Components/Settings";
+import Settings from "../Components/Settings";
 
 test("Renders the h1", () => {
   const { getByText } = render(<Settings />);
