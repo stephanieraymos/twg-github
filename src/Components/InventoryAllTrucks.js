@@ -6,8 +6,6 @@ function Inventory() {
   document.title = "Inventory - Database";
   const { trucks, url, truckManifest, setTruckManifest } = useGlobalContext();
 
-  console.log(trucks);
-
   const getManifest = async () => {
     const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
       method: "POST",
