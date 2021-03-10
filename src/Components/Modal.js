@@ -17,6 +17,7 @@ const getLocalStorage = () => {
 
 const Modal = () => {
   const { isModalOpen, closeModal } = useGlobalContext();
+  
   const [person, setPerson] = useState(getLocalStorage());
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
