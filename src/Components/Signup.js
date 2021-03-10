@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Navigation from "./Navigation";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 
 const Signup = () => {
   document.title = "Sign up";

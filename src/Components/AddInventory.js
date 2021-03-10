@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Alert from "./Alert";
 import Inventory from "./Inventory";
 import Navigation from "./Navigation";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 import inventory from "../css/inventory.css";
 
 const AddInventory = () => {

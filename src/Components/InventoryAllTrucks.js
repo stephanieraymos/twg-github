@@ -1,5 +1,5 @@
 import Navigation from "./Navigation";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 import inventory from "../css/inventory.css";
 
 function InventoryAllTrucks() {

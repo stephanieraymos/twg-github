@@ -1,6 +1,6 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 import inventory from "../css/inventory.css";
 
 const Inventory = () => {
@@ -32,7 +32,7 @@ const Inventory = () => {
                 <p className="items truck">{truckName}</p>
                 <p className="items price">${truckPrice}</p>
                 <p className="items contents">{truckContents}</p>
-                <p className="items manifest">{truckManifest}</p>
+                <p data-testid="manifestEl" className="items manifest">{truckManifest}</p>
                 <div className="side-btn-container">
                   <button
                     type="button"

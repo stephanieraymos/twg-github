@@ -1,6 +1,6 @@
 import video from "../img/video.mp4";
 import warehouse from "../img/warehouse-sm.jpg";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 const Home = () => {

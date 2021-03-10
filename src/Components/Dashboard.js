@@ -1,6 +1,6 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 import dashboard from "../css/dashboard.css";
 
 const Dashboard = () => {
