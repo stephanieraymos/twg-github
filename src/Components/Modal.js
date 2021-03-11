@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 import Alert from "./Alert";
 import modalandsidebar from "../css/modalandsidebar.css";
+
+//todo ----REFACTOR THIS COMPONENT TO USE CONTEXT----
 
 const getLocalStorage = () => {
   let person = localStorage.getItem("person");
@@ -15,6 +17,7 @@ const getLocalStorage = () => {
 
 const Modal = () => {
   const { isModalOpen, closeModal } = useGlobalContext();
+
   const [person, setPerson] = useState(getLocalStorage());
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

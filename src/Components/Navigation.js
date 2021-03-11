@@ -10,7 +10,7 @@ const Navigation = () => {
   const linksRef = useRef(null); //For UL
 
   useEffect(() => {
-    const linksHeight = linksRef.current.getBoundingClientRect().height; //Returning size values for links
+    const linksHeight = linksRef.current.getBoundingClientRect().height; //* Returning size values for links
     if (showLinks) {
       linksContainerRef.current.style.height = `${linksHeight}px`;
     } else {
@@ -21,6 +21,7 @@ const Navigation = () => {
   return (
     <nav>
       <div className="nav-center">
+
         <div className="nav-header">
           {logoLink.map((logoIcon) => {
             const { id, url } = logoIcon;
@@ -38,6 +39,7 @@ const Navigation = () => {
             <FaBars />
           </button>
         </div>
+        
         <div className="nav-links-container" ref={linksContainerRef}>
           <ul className="nav-links" ref={linksRef}>
             {links.map((link) => {
@@ -50,16 +52,7 @@ const Navigation = () => {
             })}
           </ul>
         </div>
-        {/* <ul className="social-icons">
-          {social.map((socialIcon) => {
-            const { id, url, icon } = socialIcon;
-            return (
-              <li key={id}>
-                <a href={url}>{icon}</a>
-              </li>
-            );
-          })}
-        </ul> */}
+
       </div>
     </nav>
   );

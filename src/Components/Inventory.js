@@ -1,8 +1,11 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { useGlobalContext } from "../context";
 import inventory from "../css/inventory.css";
 
-const Inventory = ({ truckLoad, removeItem, editItem }) => {
+const Inventory = () => {
+  const { truckLoad, removeItem, editItem } = useGlobalContext();
+
   return (
     <>
       <div className="header-items">
@@ -12,37 +15,37 @@ const Inventory = ({ truckLoad, removeItem, editItem }) => {
         <p className="manifest">MANIFEST</p>
         <p className="side-btn-container"></p>
       </div>
-      
+
       <div className="truckLoad-list">
-        {truckLoad.map((truck) => {
-          const { id, truckName, truckPrice, truckContents, truckManifest } = truck;
-          return (
+       
+
+
             <>
-              <article key={id} className="truckLoad">
-                <p className="items truck">{truckName}</p>
-                <p className="items price">${truckPrice}</p>
-                <p className="items contents">{truckContents}</p>
-                <p className="items manifest">{truckManifest}</p>
+              <article key={truckLoad.id} className="truckLoad">
+                <p className="items truck">{truckLoad.truckName}</p>
+                <p className="items price">${truckLoad.truckPrice}</p>
+                <p className="items contents">{truckLoad.truckContents}</p>
+                <p data-testid="manifestEl" className="items manifest">{truckLoad.truckManifest}</p>
                 <div className="side-btn-container">
                   <button
                     type="button"
                     className="edit-btn"
-                    onClick={() => editItem(id)}
+                    onClick={() => editItem(truckLoad.id)}
                   >
                     <FaEdit />
                   </button>
                   <button
                     type="button"
                     className="delete-btn"
-                    onClick={() => removeItem(id)}
+                    onClick={() => removeItem(truckLoad.id)}
                   >
                     <FaTrash />
                   </button>
                 </div>
               </article>
             </>
-          );
-        })}
+
+
       </div>
     </>
   );

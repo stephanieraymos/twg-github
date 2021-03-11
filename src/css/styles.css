@@ -1,3 +1,7 @@
+/*=============================================
+=                GLOBAL STYLES               =
+=============================================*/
+
 *,
 :root {
   --dark: #0d0d18;
@@ -5,26 +9,18 @@
   --light: #f7f8fc;
   --light-gray: #cecfcf;
   --accent: #380082;
+  --light-purple: rgba(136, 72, 238, 0.055);
   --modal: #3949ab;
   --sections: #1f85b4;
   --sections-hover: #036d9e;
   --text: #f5f5f5;
 
   --spacing: 0.1rem;
-  --radius: 0.25rem;
+  --radius: 0.4rem;
   --transition: all 0.3s linear;
   --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
-/* 
-#root {
-  height: 100vh;
-} */
-/* 
-html {
-  height: 100%;
-  width: 100%;
-} */
 
 ::after,
 ::before {
@@ -40,6 +36,10 @@ p {
 code {
   font-family: "Montserrat", source-code-pro, Menlo, Monaco, Consolas,
     "Courier New", monospace;
+}
+
+html {
+  min-height: 100vh;
 }
 
 body {
@@ -60,6 +60,10 @@ h4 {
   padding: 10px;
   margin: 10px;
 }
+
+/*=============================================
+=              END GLOBAL STYLES             =
+=============================================*/
 
 /* Paragraph text class for large screens */
 .body-text {
@@ -86,6 +90,10 @@ h4 {
   padding-left: 2rem;
   position: relative;
 }
+
+/*=============================================
+=              FORM/INPUT CLASSES             =
+=============================================*/
 
 input {
   display: flex;
@@ -128,6 +136,21 @@ input:hover {
   background-color: transparent;
 }
 
+/* Heading class for form headings */
+.form-header {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2rem, -0.875rem + 8.333vw, 3.5rem);
+  display: flex;
+  color: var(--dark-gray);
+  padding-top: 1rem;
+  text-shadow: 0px 4px 4px rgba(85, 86, 90, 0.45);
+  justify-content: center;
+}
+
+/*=============================================
+=                  SECTIONS                  =
+=============================================*/
+
 .section {
   min-height: calc(100vh - 100px);
   display: flex;
@@ -158,60 +181,8 @@ input:hover {
   margin-bottom: 10px;
 }
 
-/* Heading class for form headings */
-.form-header {
-  font-family: "Montserrat", sans-serif;
-  font-size: clamp(2rem, -0.875rem + 8.333vw, 3.5rem);
-  display: flex;
-  color: var(--text);
-  padding-top: 1rem;
-  text-shadow: 0px 4px 4px rgba(85, 86, 90, 0.45);
-  justify-content: center;
-}
-
 .heading:hover {
   color: var(--sections);
-}
-
-/* Container for buttons */
-.btn-container {
-  height: 100%;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-}
-
-/* Main button styles for entire site */
-.btn {
-  border-color: transparent;
-  width: clamp(10rem, -0.875rem + 8.333vw, 14rem);
-  height: clamp(3rem, -0.875rem + 8.333vw, 4.5rem);
-  min-width: 6rem;
-  min-height: 2rem;
-  background: var(--sections);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  color: var(--text);
-  cursor: pointer;
-  align-self: center;
-  box-shadow: 0px 4px 4px rgba(59, 75, 119, 0.45);
-  text-shadow: 0px 4px 4px rgba(164, 188, 236, 0.45);
-  outline-style: none;
-  text-align: center;
-  margin: 5% 0 8%;
-  font-size: 1.5rem;
-}
-
-.center-btn {
-  align-self: center;
-}
-
-.btn:hover {
-  transition: all 0.3s linear;
-  background-color: var(--sections-hover);
 }
 
 /* Heading text for home page */
@@ -269,6 +240,55 @@ input:hover {
   display: none;
 }
 
+/*=============================================
+=                BUTTON CLASSES              =
+=============================================*/
+
+.btn-container {
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+/* Main button styles for entire site */
+.btn {
+  border-color: transparent;
+  width: clamp(10rem, -0.875rem + 8.333vw, 14rem);
+  height: clamp(3rem, -0.875rem + 8.333vw, 4.5rem);
+  min-width: 6rem;
+  min-height: 2rem;
+  background: var(--sections);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--text);
+  cursor: pointer;
+  align-self: center;
+  box-shadow: 0px 4px 4px rgba(59, 75, 119, 0.45);
+  text-shadow: 0px 4px 4px rgba(164, 188, 236, 0.45);
+  outline-style: none;
+  text-align: center;
+  margin: 5% 0 8%;
+  font-size: 1.5rem;
+}
+
+.center-btn {
+  align-self: center;
+}
+
+.btn:hover {
+  transition: all 0.3s linear;
+  background-color: var(--sections-hover);
+}
+
+
+/*=============================================
+=              HOME PAGE CLASSES              =
+=============================================*/
+
 /* Home page background video */
 .bg-video {
   position: absolute;
@@ -284,68 +304,12 @@ input:hover {
   height: 100vh;
 }
 
-/* Accordian for customer details */
-.customer-details {
-  padding: 1rem 1.5rem;
-  border: 2px solid rgb(173, 173, 173);
-  margin-bottom: 1rem;
-  border-radius: 0.25rem;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.45);
-}
-.customer-details h4 {
-  text-transform: none;
-  line-height: 1.5;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.45);
-}
 
-.customer-details p:first-child:before {
-  content: " ";
-  display: block;
-  border-bottom: 1px solid black;
-  width: 25%;
-}
 
-.customer-details p {
-  color: var(--dark-gray);
-  margin-bottom: 0;
-  margin-top: 0.5rem;
-  font-weight: bold;
-}
+/*=============================================
+=                ALERT CLASSES              =
+=============================================*/
 
-.customer-details header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.customer-details header h4 {
-  margin-bottom: 0;
-}
-
-.key {
-  color: var(--accent);
-  text-shadow: 0px 4px 4px rgba(79, 6, 88, 0.45);
-}
-
-.ac-btn {
-  background: transparent;
-  border-color: transparent;
-  width: 2rem;
-  height: 2rem;
-  background: var(--sections);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: var(--text);
-  cursor: pointer;
-  margin-left: 1rem;
-  align-self: center;
-  min-width: 2rem;
-  box-shadow: 0px 4px 4px rgba(59, 75, 119, 0.45);
-  outline-style: none;
-}
-
-/* ALERTS */
 .alert {
   margin-bottom: 1rem;
   height: 1.25rem;
@@ -368,7 +332,9 @@ input:hover {
   background: #d4edda;
 }
 
-/* TRUCK LIST FROM API */
+/*=============================================
+=         TRUCK LIST FROM API CLASSES         =
+=============================================*/
 
 .section {
   width: 90vw;
@@ -478,27 +444,3 @@ input:hover {
     box-shadow: -2px 0 var(--sections);
   }
 }
-/* .btn {
-  text-transform: uppercase;
-  background: var(--sections);
-  color: hsl(185, 94%, 87%);
-  padding: 0.375rem 0.75rem;
-  letter-spacing: 0.1rem;
-  font-weight: 700;
-  -webkit-transition: var(--transition);
-  transition: var(--transition);
-  font-size: 0.875rem;
-  border: 2px solid transparent;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  border-radius:  0.25rem;
-  display: block;
-  width: 12rem;
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 3rem;
-} */
-/* .btn:hover {
-  color: hsl(184, 91%, 17%);
-  background: hsl(184, 80%, 74%);
-} */
