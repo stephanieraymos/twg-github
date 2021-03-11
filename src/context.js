@@ -138,16 +138,15 @@ const AppProvider = ({ children }) => {
 
   //Fetching the trucks db from the API link above //^----GET----
   const fetchTrucks = async () => {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const newTrucks = await response.json(); //returns a promise
-    setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-    if (response.ok) {
-      console.log(response.status, "Get request successful");
-    } else {
-      console.log(response.status, "Something went wrong with the get request");
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const newTrucks = await response.json(); //returns a promise
+      setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
+    } catch (error) {
+      console.log(error);
     }
   };
 
