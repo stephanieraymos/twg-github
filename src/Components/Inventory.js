@@ -17,35 +17,44 @@ const Inventory = () => {
       </div>
 
       <div className="truckLoad-list">
-       
+        {truckLoad.map((truck) => {
+          const {
+            id,
+            truckName,
+            truckPrice,
+            truckContents,
+            truckManifest,
+          } = truck;
 
-
+          return (
             <>
-              <article key={truckLoad.id} className="truckLoad">
-                <p className="items truck">{truckLoad.truckName}</p>
-                <p className="items price">${truckLoad.truckPrice}</p>
-                <p className="items contents">{truckLoad.truckContents}</p>
-                <p data-testid="manifestEl" className="items manifest">{truckLoad.truckManifest}</p>
+              <article key={id} className="truckLoad">
+                <p className="items truck">{truckName}</p>
+                <p className="items price">${truckPrice}</p>
+                <p className="items contents">{truckContents}</p>
+                <p data-testid="manifestEl" className="items manifest">
+                  {truckManifest}
+                </p>
                 <div className="side-btn-container">
                   <button
                     type="button"
                     className="edit-btn"
-                    onClick={() => editItem(truckLoad.id)}
+                    onClick={() => editItem(id)}
                   >
                     <FaEdit />
                   </button>
                   <button
                     type="button"
                     className="delete-btn"
-                    onClick={() => removeItem(truckLoad.id)}
+                    onClick={() => removeItem(id)}
                   >
                     <FaTrash />
                   </button>
                 </div>
               </article>
             </>
-
-
+          );
+        })}
       </div>
     </>
   );

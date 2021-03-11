@@ -9,30 +9,19 @@ const AppProvider = ({ children }) => {
   const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
   //////////////////////// &&--STATE--&& /////////////////////////////
-  const initialTruckState = {
-    truckName: "",
-    truckPrice: "",
-    truckContents: [],
-    truckManifest: "",
-  };
-  //Wrapping whole app in Provider
-  const [state, dispatch] = useReducer(reducer, initialTruckState);
 
-  const [truckLoad, setTruckLoad] = useState([{
-    truckName: "",
-    truckPrice: "",
-    truckContents: [],
-    truckManifest: "",
-    id: "",
-  }]);
+  //Wrapping whole app in Provider
+
+  const [truckLoad, setTruckLoad] = useState([]);
+  const [truckName, setTruckName] = useState("");
+  const [truckPrice, setTruckPrice] = useState("");
+  const [truckContents, setTruckContents] = useState([]);
+  const [truckManifest, setTruckManifest] = useState("");
+  const [id, setId] = useState("");
   const [trucks, setTrucks] = useState([]);
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [truckName, setTruckName] = useState("");
-  // const [truckPrice, setTruckPrice] = useState("");
-  // const [truckContents, setTruckContents] = useState([]);
-  // const [truckManifest, setTruckManifest] = useState("");
-  // const [id, setId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
@@ -72,15 +61,10 @@ const AppProvider = ({ children }) => {
     setAlert({ show, type, msg });
   };
 
-    //showAlert function, when called the values for each param are passed in as arguments
-    const showTruckLoad = (truckName = "", truckPrice = "", truckContents = [], truckManifest="") => {
-      setAlert({ truckName, truckPrice, truckContents, truckManifest });
-    };
-
   //clearList function. Once list is cleared an alert confirms this to the user + truckLoad is set back to empty array
   const clearList = () => {
     showAlert(true, "danger", "Trucks cleared successfully");
-    setTruckLoad([...truckLoad]);
+    setTruckLoad([]);
   };
 
   //removeItem grabs the id of the item to be removed, shows an alert to the user confirming
@@ -95,32 +79,38 @@ const AppProvider = ({ children }) => {
     const specificItem = truckLoad.find((truck) => truck.id === id);
     setIsEditing(true);
     setEditId(id);
-    dispatch({ type: "RESET_TRUCK_VALUES", payload: id });
+    setTruckName("");
+    setTruckPrice("");
+    setTruckContents([]);
+    setTruckManifest("");
   };
 
   const handleSubmit = (e) => {
     console.log(truckLoad);
     e.preventDefault();
-    if (!truckLoad.truckName || !truckLoad.truckPrice || !truckLoad.truckContents) {
+    if (!truckName || !truckPrice || !truckContents) {
       showAlert(true, "danger", "Please enter value");
-    } else if (truckLoad.truckName && isEditing) {
+    } else if (truckName && isEditing) {
       // deal with edit if something is in value and user is editing
       setTruckLoad(
         truckLoad.map((truck, id) => {
           if (truck.id === editId) {
             return {
               ...truck,
-              id: truckLoad.id,
-              truckName: truckLoad.truckName,
-              truckPrice: truckLoad.truckPrice,
-              truckContents: truckLoad.truckContents,
-              truckManifest: truckLoad.truckManifest,
+              id,
+              truckName,
+              truckPrice,
+              truckContents,
+              truckManifest,
             };
           }
           return truck;
         })
       );
-      dispatch({ type: "RESET_TRUCK_VALUES", payload: truckLoad.id });
+      setTruckName("");
+      setTruckPrice("");
+      setTruckContents([]);
+      setTruckManifest("");
       setEditId(""); //Reseting editId
       setIsEditing(false); //Reseting isEditing to false
       showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
@@ -129,16 +119,19 @@ const AppProvider = ({ children }) => {
       showAlert(true, "success", "Truck Added");
       //Creating new truck
       const newTruck = {
-        id: truckLoad.id,
-        truckName: truckLoad.truckName,
-        truckPrice: truckLoad.truckPrice,
-        truckContents: truckLoad.truckContents,
-        truckManifest: truckLoad.truckManifest,
+        id,
+        truckName,
+        truckPrice,
+        truckContents,
+        truckManifest,
       };
 
       //Spreading out current truckLoad and adding newTruck to the list
       setTruckLoad([...truckLoad, newTruck]);
-      dispatch({ type: "RESET_TRUCK_VALUES", payload: truckLoad.id });
+      setTruckName("");
+      setTruckPrice("");
+      setTruckContents([]);
+      setTruckManifest("");
       console.log(newTruck); //Logging new truck for testing purposes
     }
   };
@@ -212,10 +205,10 @@ const AppProvider = ({ children }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        truckName: truckLoad.truckName,
-        truckPrice: truckLoad.truckPrice,
-        truckContents: truckLoad.truckContents,
-        truckManifest: truckLoad.truckManifest,
+        truckName: truckName,
+        truckPrice: truckPrice,
+        truckContents: truckContents,
+        truckManifest: truckManifest,
       }),
     });
     if (response.ok) {
@@ -240,20 +233,23 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        ...state,
 
         isModalOpen,
         isSidebarOpen,
-        truckName: truckLoad.truckName,
-        truckPrice: truckLoad.truckPrice,
-        truckContents: truckLoad.truckContents,
-        truckManifest: truckLoad.truckManifest,
+        truckName,
+        setTruckName,
+        truckPrice,
+        setTruckPrice,
+        truckContents,
+        setTruckContents,
+        truckManifest,
+        setTruckManifest,
         truckLoad,
         setTruckLoad,
         trucks,
         setTrucks,
-        id: truckLoad.id,
-        showTruckLoad,
+        id,
+        setId,
 
         isEditing,
         setIsEditing,
