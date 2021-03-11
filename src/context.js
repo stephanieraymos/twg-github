@@ -199,25 +199,21 @@ const AppProvider = ({ children }) => {
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
-    const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        truckName: truckName,
-        truckPrice: truckPrice,
-        truckContents: truckContents,
-        truckManifest: truckManifest,
-      }),
-    });
-    if (response.ok) {
-      console.log(response.status, "Post request successful");
-    } else {
-      console.log(
-        response.status,
-        "Something went wrong with the post request"
-      );
+    try {
+      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          truckName: truckName,
+          truckPrice: truckPrice,
+          truckContents: truckContents,
+          truckManifest: truckManifest,
+        }),
+      });
+      return await response.json();
+    } catch (error) {
+      console.log(error);
     }
-    return await response.json();
   };
 
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
@@ -231,7 +227,6 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-
         isModalOpen,
         isSidebarOpen,
         truckName,
