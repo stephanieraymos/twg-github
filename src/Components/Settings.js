@@ -9,7 +9,7 @@ const Settings = () => {
       <div>
         <Navigation />
       </div>
-      <h1>Settings Page</h1>
+      <h1 className="black-header">Settings Page</h1>
     </>
   );
 };

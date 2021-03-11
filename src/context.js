@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
-import AddInventory from "./Components/AddInventory";
 import Inventory from "./Components/Inventory";
-import reducer from "./reducer";
 
 const AppContext = React.createContext();
 

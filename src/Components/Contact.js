@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "./Navigation"
+import Navigation from "./Navigation";
 import contact from "../css/contact.css";
 
 const Contact = () => {
@@ -7,56 +7,49 @@ const Contact = () => {
 
   return (
     <>
-    <div>
-      <Navigation />
-    </div>
-        <div className="about">
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
-            ut corporis. Voluptates quas, magni quisquam possimus id quam
-            cupiditate odio distinctio similique, atque fugit consequuntur
-            aperiam esse nihil voluptatum neque. Lorem, ipsum dolor sit amet
-            consectetur adipisicing elit. Pariatur, ut corporis. Voluptates
-            quas, magni quisquam possimus id quam cupiditate odio distinctio
-            similique, atque fugit consequuntur aperiam esse nihil voluptatum
-            neque. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-            Enim consectetur pariatur, natus nulla deleniti sapiente cupiditate
-            ipsam officia rerum sunt fugit est dolor totam animi repellendus?
-            Quod voluptate unde vitae tenetur delectus, repudiandae voluptas,
-            dolorum quaerat vel dolor voluptatem dolores saepe suscipit officia
-            quisquam. Porro repudiandae nesciunt distinctio itaque perspiciatis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-            excepturi repellendus vitae sunt itaque, quis vel non deleniti
-            officiis ullam, ipsam enim qui aperiam placeat laborum nam. Tempora
-            cum saepe tenetur ea, fugiat rem eaque et corrupti praesentium,
-            dolores adipisci veniam sit. Ex quidem nam culpa, reiciendis
-            possimus ipsam nostrum assumenda repudiandae quae, unde deleniti
-            quos. Adipisci amet voluptatibus debitis nesciunt a earum iure eos
-            dignissimos asperiores. Nobis ipsam culpa quam molestiae fuga
-            expedita quod deserunt corrupti, eveniet nam numquam laborum non
-            minus minima, dicta unde saepe quidem?
-          </p>
-          <p>
-            Numquam error, fugiat fugit atque incidunt nam aperiam quae autem
-            exercitationem blanditiis voluptatem facere sunt labore omnis,
-            molestiae sed corrupti temporibus, laborum quo. Quisquam dolor nihil
-            eligendi id eos natus perferendis doloribus fuga sed. Tempore eum
-            quam reiciendis, beatae, deserunt consequuntur laboriosam omnis,
-            iusto ipsa libero dolore recusandae tenetur inventore autem ducimus
-            rem. Ipsam commodi molestiae asperiores iste laboriosam minus
-            corrupti quo neque error nulla voluptate adipisci similique est,
-            obcaecati cum quidem dolore, aliquid vitae? Laboriosam, nulla
-            officiis, numquam delectus nisi a quaerat porro consequatur rem
-            omnis hic. Laboriosam quam maiores nemo, veniam voluptas eaque
-            temporibus itaque quo minus officiis animi officia placeat sint
-            sequi cumque vitae doloremque nisi, dolores eligendi? Possimus?
-          </p>
-        </div>
-        <div className="emails">
-          <p>Sales: email@email.com</p>
-          <p>Support: email@email.com</p>
-          <p>Upline: email@email.com</p>
-        </div>
+      <div>
+        <Navigation />
+      </div>
+      <div className="about">
+        <p>
+          Founded in 2009 by Ryan Babineau and Larry Morgan, RL Liquidators has
+          quickly grown to be the largest liquidation company in the western
+          United States. When RL Liquidators started in 2009, Ryan and Larry
+          each had over twenty years of experience in the retail and logistics
+          industries. As they met with companies that needed liquidation
+          services and those that offered them, they quickly realized that the
+          liquidation side of the industry was not adequately adapting to the
+          rapidly changing retail landscape. It became clear that the
+          liquidation services available were quickly becoming obsolete as the
+          needs of the industry changed. Retailers, manufacturers and those in
+          distribution were beginning to require services that many liquidation
+          companies did not provide. Responding to those needs, Ryan and Larry
+          have spent the last decade creating and developing the tools,
+          processes, facilities, equipment, software and teams to meet them;
+          both now and far into the future. The bullet points below outlines
+          only some of the advantages RL Liquidators brings to the Reverse
+          Logistics Liquidation landscape.
+        </p>
+        <p>
+          RL Liquidators created multiple proprietary B2C sales channels
+          designed to move any category of retail product, at any volume, while
+          producing the highest recovery rates in the industry. We do not rely
+          on any third party websites or liquidation outlets. All sales channels
+          are owned and operated by RL Liquidators to ensure we maintain
+          complete control over where inventory is sold.
+        </p>
+        <p>
+          The WholeSale Group is the newest of the sales channels and will offer
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum id
+          hic repellat doloribus facilis saepe vero? Vel commodi natus nisi
+          animi ratione dicta aliquid aspernatur!
+        </p>
+      </div>
+      <div className="emails">
+        <p>Sales: email@email.com</p>
+        <p>Support: email@email.com</p>
+        <p>Upline: email@email.com</p>
+      </div>
     </>
   );
 };
