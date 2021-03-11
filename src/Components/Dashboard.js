@@ -2,15 +2,19 @@ import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../context";
 import dashboard from "../css/dashboard.css";
+import OrderDetails from "./OrderDetails";
 
 const Dashboard = () => {
   document.title = "Dashboard";
   const { openSidebar, isSidebarOpen, trucks } = useGlobalContext();
 
+  const handleViewDetails = () => {
+    return <OrderDetails />;
+  };
+
   return (
     <>
       <article className="admin-dashboard-content">
-
         <button
           className={`${
             isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"
@@ -53,7 +57,9 @@ const Dashboard = () => {
           <div className="new-leads-container bottom-content-items">
             <div className="top-leads-container">
               <p className="leads-container-header">New Leads</p>
-              <p className="leads-view-more">View Details</p>
+              <a href="/OrderDetails">
+                <p className="leads-view-more">View Details</p>
+              </a>
             </div>
             <div className="lead-items">
               <div className="lead-item">
@@ -99,7 +105,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
       </article>
     </>
   );
