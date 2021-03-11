@@ -9,7 +9,7 @@ const Orders = () => {
       <div>
         <Navigation />
       </div>
-      <h1>Orders</h1>
+      <h1 className="black-header">Orders</h1>
     </>
   );
 };

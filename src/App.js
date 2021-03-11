@@ -14,6 +14,7 @@ import Sidebar from "./Components/Sidebar";
 import Signup from "./Components/Signup";
 import CustomerDb from "./Components/CustomerDb";
 import OrderDetails from "./Components/OrderDetails";
+import Orders from "./Components/Orders";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/Signup" exact component={Signup} />
           <Route path="/CustomerDb" exact component={CustomerDb} />
           <Route path="/OrderDetails" exact component={OrderDetails} />
+          <Route path="/Orders" exact component={Orders} />
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>

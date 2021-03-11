@@ -83,7 +83,9 @@ const Dashboard = () => {
           <div className="orders-to-approve-container bottom-content-items">
             <div className="top-leads-container">
               <p className="leads-container-header">Orders Needing Approval</p>
-              <p className="leads-view-more">View All</p>
+              <a href="/Orders">
+                <p className="leads-view-more">View All</p>
+              </a>
             </div>
             <div className="lead-items">
               <div className="lead-item">
