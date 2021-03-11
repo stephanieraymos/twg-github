@@ -9,6 +9,7 @@ const AddInventory = () => {
   document.title = "Add Inventory";
   const {
     truckLoad,
+    setTruckLoad,
     truckName,
     setTruckName,
     truckPrice,
@@ -30,7 +31,18 @@ const AddInventory = () => {
     postTrucks
   } = useGlobalContext();
 
-
+const handleNameChange = (e) => {
+  e.preventDefault();
+  setTruckLoad(...truckLoad, truckName=e.target.value)
+}
+const handlePriceChange = (e) => {
+  e.preventDefault();
+  setTruckLoad(...truckLoad, truckPrice=e.target.value)
+}
+const handleContentChange = (e) => {
+  e.preventDefault();
+  setTruckLoad(...truckLoad, truckContents=e.target.value)
+}
   return (
     <>
       <div>
@@ -48,21 +60,21 @@ const AddInventory = () => {
               className="truckload-inputs"
               type="text"
               value={truckName}
-              onChange={(e) => setTruckName(e.target.value)}
+              onChange={(e) => handleNameChange}
               placeholder="Name of Truck"
             />
             <input
               className="truckload-inputs"
               type="number"
               value={truckPrice}
-              onChange={(e) => setTruckPrice(e.target.value)}
+              onChange={(e) => handlePriceChange}
               placeholder="Price"
             />
             <input
               className="truckload-inputs"
               type="text"
               value={truckContents}
-              onChange={(e) => setTruckContents(e.target.value)}
+              onChange={(e) => handleContentChange}
               placeholder="What's in the truck?"
             />
             <input
