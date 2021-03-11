@@ -18,19 +18,21 @@ const AppProvider = ({ children }) => {
   //Wrapping whole app in Provider
   const [state, dispatch] = useReducer(reducer, initialTruckState);
 
-  const [truckLoad, setTruckLoad] = useState({
+  const [truckLoad, setTruckLoad] = useState([{
     truckName: "",
     truckPrice: "",
     truckContents: [],
-  });
+    truckManifest: "",
+    id: "",
+  }]);
   const [trucks, setTrucks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [truckName, setTruckName] = useState("");
-  const [truckPrice, setTruckPrice] = useState("");
-  const [truckContents, setTruckContents] = useState([]);
-  const [truckManifest, setTruckManifest] = useState("");
-  const [id, setId] = useState("");
+  // const [truckName, setTruckName] = useState("");
+  // const [truckPrice, setTruckPrice] = useState("");
+  // const [truckContents, setTruckContents] = useState([]);
+  // const [truckManifest, setTruckManifest] = useState("");
+  // const [id, setId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
@@ -70,10 +72,15 @@ const AppProvider = ({ children }) => {
     setAlert({ show, type, msg });
   };
 
+    //showAlert function, when called the values for each param are passed in as arguments
+    const showTruckLoad = (truckName = "", truckPrice = "", truckContents = [], truckManifest="") => {
+      setAlert({ truckName, truckPrice, truckContents, truckManifest });
+    };
+
   //clearList function. Once list is cleared an alert confirms this to the user + truckLoad is set back to empty array
   const clearList = () => {
     showAlert(true, "danger", "Trucks cleared successfully");
-    setTruckLoad([]);
+    setTruckLoad([...truckLoad]);
   };
 
   //removeItem grabs the id of the item to be removed, shows an alert to the user confirming
@@ -94,26 +101,26 @@ const AppProvider = ({ children }) => {
   const handleSubmit = (e) => {
     console.log(truckLoad);
     e.preventDefault();
-    if (!truckName || !truckPrice || !truckContents) {
+    if (!truckLoad.truckName || !truckLoad.truckPrice || !truckLoad.truckContents) {
       showAlert(true, "danger", "Please enter value");
-    } else if (truckName && isEditing) {
+    } else if (truckLoad.truckName && isEditing) {
       // deal with edit if something is in value and user is editing
       setTruckLoad(
         truckLoad.map((truck, id) => {
           if (truck.id === editId) {
             return {
               ...truck,
-              id,
-              truckName,
-              truckPrice,
-              truckContents,
-              truckManifest,
+              id: truckLoad.id,
+              truckName: truckLoad.truckName,
+              truckPrice: truckLoad.truckPrice,
+              truckContents: truckLoad.truckContents,
+              truckManifest: truckLoad.truckManifest,
             };
           }
           return truck;
         })
       );
-      dispatch({ type: "RESET_TRUCK_VALUES", payload: id });
+      dispatch({ type: "RESET_TRUCK_VALUES", payload: truckLoad.id });
       setEditId(""); //Reseting editId
       setIsEditing(false); //Reseting isEditing to false
       showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
@@ -122,16 +129,16 @@ const AppProvider = ({ children }) => {
       showAlert(true, "success", "Truck Added");
       //Creating new truck
       const newTruck = {
-        id,
-        truckName,
-        truckPrice,
-        truckContents,
-        truckManifest,
+        id: truckLoad.id,
+        truckName: truckLoad.truckName,
+        truckPrice: truckLoad.truckPrice,
+        truckContents: truckLoad.truckContents,
+        truckManifest: truckLoad.truckManifest,
       };
 
       //Spreading out current truckLoad and adding newTruck to the list
       setTruckLoad([...truckLoad, newTruck]);
-      dispatch({ type: "RESET_TRUCK_VALUES", payload: id });
+      dispatch({ type: "RESET_TRUCK_VALUES", payload: truckLoad.id });
       console.log(newTruck); //Logging new truck for testing purposes
     }
   };
@@ -205,10 +212,10 @@ const AppProvider = ({ children }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        truckName: truckName,
-        truckPrice: truckPrice,
-        truckContents: truckContents,
-        truckManifest: truckManifest,
+        truckName: truckLoad.truckName,
+        truckPrice: truckLoad.truckPrice,
+        truckContents: truckLoad.truckContents,
+        truckManifest: truckLoad.truckManifest,
       }),
     });
     if (response.ok) {
@@ -237,20 +244,16 @@ const AppProvider = ({ children }) => {
 
         isModalOpen,
         isSidebarOpen,
-        truckName,
-        setTruckName,
-        truckPrice,
-        setTruckPrice,
-        truckContents,
-        setTruckContents,
-        truckManifest,
-        setTruckManifest,
+        truckName: truckLoad.truckName,
+        truckPrice: truckLoad.truckPrice,
+        truckContents: truckLoad.truckContents,
+        truckManifest: truckLoad.truckManifest,
         truckLoad,
         setTruckLoad,
         trucks,
         setTrucks,
-        id,
-        setId,
+        id: truckLoad.id,
+        showTruckLoad,
 
         isEditing,
         setIsEditing,
