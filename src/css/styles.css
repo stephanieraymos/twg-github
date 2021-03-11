@@ -448,3 +448,15 @@ input:hover {
     box-shadow: -2px 0 var(--sections);
   }
 }
+
+/*=============================================
+=                   ERRORS                    =
+=============================================*/
+  .error-page {
+    display: flex;
+    justify-content: center;
+  }
+  .error-container {
+    text-align: center;
+    text-transform: capitalize;
+  }
