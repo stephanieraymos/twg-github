@@ -9,7 +9,7 @@ const Statements = () => {
       <div>
         <Navigation />
       </div>
-      <h1>Statements Page</h1>
+      <h1 className="black-header">Statements Page</h1>
     </>
   );
 };
