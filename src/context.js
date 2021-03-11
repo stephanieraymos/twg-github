@@ -18,7 +18,11 @@ const AppProvider = ({ children }) => {
   //Wrapping whole app in Provider
   const [state, dispatch] = useReducer(reducer, initialTruckState);
 
-  const [truckLoad, setTruckLoad] = useState([]);
+  const [truckLoad, setTruckLoad] = useState({
+    truckName: "",
+    truckPrice: "",
+    truckContents: [],
+  });
   const [trucks, setTrucks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,6 +42,10 @@ const AppProvider = ({ children }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [personId, setPersonId] = useState("");
+
+  if (truckLoad.truckName === "") {
+    console.log("The truck name is empty but printing");
+  }
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
 
@@ -149,7 +157,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     fetchTrucks();
     console.log("Trucks fetched successfully inside the useEffect");
-  }, [Inventory]);
+  }, []);
   // End of useEffect for fetch
 
   // useEffect for delete method //^----DELETE----
@@ -218,15 +226,14 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     postTrucks();
     console.log("postTrucks useEffect ran successfully");
-  }, [AddInventory]);
+  }, []);
   // End of useEffect for fetch
 
+  ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
-    ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
-
     <AppContext.Provider
       value={{
-        ...state, 
+        ...state,
 
         isModalOpen,
         isSidebarOpen,
