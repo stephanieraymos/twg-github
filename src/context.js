@@ -72,8 +72,8 @@ const AppProvider = ({ children }) => {
     setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
   };
 
-   //editItem grabs the id of the item to be edited, sets the item and sets all required values
-   const editItem = (id) => {
+  //editItem grabs the id of the item to be edited, sets the item and sets all required values
+  const editItem = (id) => {
     const specificItem = truckLoad.find((truck) => truck.id === id);
     setIsEditing(true);
     setEditId(id);
@@ -86,6 +86,7 @@ const AppProvider = ({ children }) => {
   const handleSubmit = (e) => {
     console.log(truckLoad);
     e.preventDefault();
+    // setId(new Date().getTime().toString());
     if (!truckName || !truckPrice || !truckContents) {
       showAlert(true, "danger", "Please enter value");
     } else if (truckName && isEditing) {

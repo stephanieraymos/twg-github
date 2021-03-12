@@ -18,6 +18,7 @@ function InventoryAllTrucks() {
     window.open({truckManifest})
     console.log(json, response);
   };
+  console.log(trucks)
 
 
   return (
