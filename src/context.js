@@ -14,7 +14,7 @@ const AppProvider = ({ children }) => {
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
-  const [truckManifest, setTruckManifest] = useState("");
+  const [truckManifest, setTruckManifest] = useState([]);
   const [id, setId] = useState("");
   const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
 
@@ -109,7 +109,7 @@ const AppProvider = ({ children }) => {
       setTruckName("");
       setTruckPrice("");
       setTruckContents([]);
-      setTruckManifest("");
+      setTruckManifest([]);
       setEditId(""); //Reseting editId
       setIsEditing(false); //Reseting isEditing to false
       showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
@@ -124,13 +124,14 @@ const AppProvider = ({ children }) => {
         truckContents,
         truckManifest,
       };
+      console.log(truckManifest)
 
       //Spreading out current truckLoad and adding newTruck to the list
       setTruckLoad([...truckLoad, newTruck]);
       setTruckName("");
       setTruckPrice("");
       setTruckContents([]);
-      setTruckManifest("");
+      setTruckManifest([]);
       console.log(newTruck); //Logging new truck for testing purposes
     }
   };
@@ -183,22 +184,27 @@ const AppProvider = ({ children }) => {
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
-    try {
-      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          truckName: truckName,
-          truckPrice: truckPrice,
-          truckContents: truckContents,
-          truckManifest: truckManifest,
-        }),
-      });
-      return response.json();
-    } catch (error) {
-      console.log(error);
+    if ((truckName != "", truckPrice != "")) {
+      try {
+        const response = await fetch(
+          "http://143.110.225.28/api/v1/inventory/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              truckName: truckName,
+              truckPrice: truckPrice,
+              truckContents: truckContents,
+              truckManifest: truckManifest,
+            }),
+          }
+        );
+        return response.json();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

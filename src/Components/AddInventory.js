@@ -55,7 +55,7 @@ const AddInventory = () => {
             />
             <input
               className="truckload-inputs"
-              type="number"
+              type="text"
               value={truckPrice}
               onChange={(e) => setTruckPrice(e.target.value)}
               placeholder="Price"
@@ -72,8 +72,7 @@ const AddInventory = () => {
               multiple
               name="truckManifest[]"
               className="truckload-inputs"
-              value={truckManifest}
-              onChange={(e) => setTruckManifest(e.target.value)}
+              onChange={(e) => setTruckManifest(e.target.files[0])}
             />
             <button className="submit-btn" type="submit" onClick={postTrucks}>
               {isEditing ? "Edit" : "Submit"}
