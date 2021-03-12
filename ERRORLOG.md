@@ -10,6 +10,7 @@ KEY:
 ## 🟡 Manifest not posting with truck. After posting; manifest is still empty. 
 
 🔵 Tried setting truckManifest(e.target.value[0]) and got this error: 
+
 🔴 ERROR A: Uncaught DOMException: Failed to set the 'value' property on 'HTMLInputElement': This input element accepts a filename, which may only be programmatically set to the empty string. at HTMLInputElement.set [as value]
 
 🔵 If I delete the [0] there is no error but the manifest will not post.
@@ -139,7 +140,7 @@ KEY:
 ```
 🔵 Tried removing the array index from the onChange and still got the same error (🔴error B)
 
-* Changed from:      `onChange={(e) => setTruckManifest(e.target.files[0])}`
+* Changed from: `onChange={(e) => setTruckManifest(e.target.files[0])}`
 * Changed to: `onChange={(e) => setTruckManifest(e.target.files)}`
 
 🔵 Tried uploading two files to see if that might trigger the array since there would be multiple files. Same error (🔴error B)
