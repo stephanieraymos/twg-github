@@ -2,7 +2,9 @@ KEY:
  🔴ERRORS
  🟡THE ISSUE
  🔵ATTEMPTED SOLUTIONS
+ 🟠PARTIAL SOLUTIONS
  🟢SOLUTIONS
+ ⚪SUGGESTED SOLUTIONS
 
 
 # FILE UPLOAD ERRORS
@@ -139,27 +141,51 @@ KEY:
 	 truckPrice: "456"
 	 __proto__: Object
 ```
-🔵 Tried removing the array index from the onChange and still got the same error (🔴error B)
+🔵 Tried removing the array index from the onChange and also tried wrapping in an array; each time I still got the same error (🔴error B)
 
 * Changed from: `onChange={(e) => setTruckManifest(e.target.files[0])}`
 * Changed to: `onChange={(e) => setTruckManifest(e.target.files)}`
+* Changed to: `onChange={(e) => setTruckManifest([e.target.files[0]])}`
 
 🔵 Tried uploading two files to see if that might trigger the array since there would be multiple files. Same error (🔴error B)
 
+🟠 Changed files to value in onChange
+
+* Changed to: `onChange={(e) => setTruckManifest([e.target.value[0]])}`
+
+ERROR B is no longer an issue.
+
+### Console on addInventory page reads:
+
+`{id: "", truckName: "CHECKING WITH VALUE", truckPrice: "456", truckContents: "sdf", truckManifest: Array(1)}
+id: ""
+truckContents: "sdf"
+truckManifest: ["C"]
+truckName: "CHECKING WITH VALUE"
+truckPrice: "456"
+__proto__: Object `
+
+
+# FETCH ISSUES
+
+## 🟡 Post request no longer working 
+
+🔴context.js:189 POST http://143.110.225.28/api/v1/inventory/ 500 (Internal Server Error)
+postTrucks @ context.js:189
+
+🔴Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 1
+
+🟠Errors go away and posting is successful if contents + manifest (both of which are arrays) are commented out. The contents have not been edited on the front end. Edits were made on the back end to make contents + manifest an array instead of a string.
+
+⚪Need to figure out a way to send over the data as an array without errors
 
 
 
 
 
 
+| CIRCLES | SQUARES | HEARTS | MORE |
+| --- | ---| --- | ---|
+|🔴🟠🟡🟢🔵🟣🟤⚫⚪🔘🛑 | 🟥🟧🟨🟩🟦🟪🟫⬛⬜🔲🔳 | ❤️🧡💛💚💜💙🤎🖤🤍♥️💔♡ | 🔺🔻🔷🔶🔹🔸 |  
 
-----------EMOJI BOX----------  
- ____________________________  
-|🔴🟠🟡🟢🔵🟣🟤⚫⚪🔘🛑|   
-|                            |  
-|🟥🟧🟨🟩🟦🟪🟫⬛⬜🔲🔳|  
-|                            |  
-|❤️🧡💛💚💜💙🤎🖤🤍♥️💔♡ |  
-|                            |  
-|🔺🔻🔷🔶🔹🔸              |  
-|____________________________|  
+

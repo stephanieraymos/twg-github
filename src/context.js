@@ -124,7 +124,7 @@ const AppProvider = ({ children }) => {
         truckContents,
         truckManifest,
       };
-      console.log(truckManifest)
+      console.log(truckManifest);
 
       //Spreading out current truckLoad and adding newTruck to the list
       setTruckLoad([...truckLoad, newTruck]);
@@ -197,7 +197,7 @@ const AppProvider = ({ children }) => {
               truckName: truckName,
               truckPrice: truckPrice,
               truckContents: truckContents,
-              truckManifest: truckManifest,
+              // truckManifest: truckManifest,
             }),
           }
         );
