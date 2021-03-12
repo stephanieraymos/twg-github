@@ -139,10 +139,11 @@ KEY:
 	 truckPrice: "456"
 	 __proto__: Object
 ```
-🔵 Tried removing the array index from the onChange and still got the same error (🔴error B)
+🔵 Tried removing the array index from the onChange and also tried wrapping in an array; each time I still got the same error (🔴error B)
 
 * Changed from: `onChange={(e) => setTruckManifest(e.target.files[0])}`
 * Changed to: `onChange={(e) => setTruckManifest(e.target.files)}`
+* Changed to: `onChange={(e) => setTruckManifest([e.target.files[0]])}`
 
 🔵 Tried uploading two files to see if that might trigger the array since there would be multiple files. Same error (🔴error B)
 

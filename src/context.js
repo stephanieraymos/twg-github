@@ -198,9 +198,19 @@ const AppProvider = ({ children }) => {
               truckPrice: truckPrice,
               truckContents: truckContents,
               truckManifest: truckManifest,
+              id, id
             }),
           }
         );
+        {trucks.map((truck) => {
+          return (
+            <li key={truckManifest.id}>{truckManifest.name}</li>
+          )
+        })}
+        // let i;
+        // for (i = 0; i < truckManifest.length; i++) {
+        //   file += truckManifest[i];
+        // }
         return response.json();
       } catch (error) {
         console.log(error);
