@@ -179,8 +179,49 @@ postTrucks @ context.js:189
 
 ⚪Need to figure out a way to send over the data as an array without errors
 
+🔵ATTEMPTED
+```
+            <input
+              className="truckload-inputs"
+              type="text"
+              value={[truckContents]}
+              onChange={(e) => setTruckContents(e.target.value)}
+              placeholder="What's in the truck?"
+            />
+            <input
+              type="file"
+              multiple
+              value={[truckManifest]}
+              name="truckManifest[]"
+              className="truckload-inputs"
+              onChange={(e) => setTruckManifest(e.target.value)}
+            />
+```
 
+🔴context.js:189 POST http://143.110.225.28/api/v1/inventory/ 500 (Internal Server Error)
+postTrucks @ context.js:189
 
+🔴VM1184:2 Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 1
+
+🔵ATTEMPTED 
+```
+            <input
+              className="truckload-inputs"
+              type="text"
+              value={[truckContents[0]]}
+              onChange={(e) => setTruckContents(e.target.value)}
+              placeholder="What's in the truck?"
+            />
+            <input
+              type="file"
+              multiple
+              value={[truckManifest[0]]}
+              name="truckManifest[]"
+              className="truckload-inputs"
+              onChange={(e) => setTruckManifest(e.target.value)}
+            />
+```
+🔴 ERROR A: Uncaught DOMException: Failed to set the 'value' property on 'HTMLInputElement': This input element accepts a filename, which may only be programmatically set to the empty string. at HTMLInputElement.set [as value]
 
 
 
