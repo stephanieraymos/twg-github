@@ -165,6 +165,17 @@ truckName: "CHECKING WITH VALUE"
 truckPrice: "456"
 __proto__: Object `
 
+THIS CONSOLE RESULT IS WHEN THE CODE FROM MANIFEST INPUT IS:
+
+```
+<input
+              type="file"
+              multiple
+              name="truckManifest[]"
+              className="truckload-inputs"
+              onChange={(e) => setTruckManifest([e.target.value[0]])}
+            />
+```
 
 # FETCH ISSUES
 
