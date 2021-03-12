@@ -10,13 +10,13 @@ const AppProvider = ({ children }) => {
 
   //Wrapping whole app in Provider
 
-  const [truckLoad, setTruckLoad] = useState([]);
+  const [truckLoad, setTruckLoad] = useState([]); //INVENTORY LIST ON ADD TRUCKLOAD PAGE
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
   const [truckManifest, setTruckManifest] = useState("");
   const [id, setId] = useState("");
-  const [trucks, setTrucks] = useState([]);
+  const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,15 +77,16 @@ const AppProvider = ({ children }) => {
     const specificItem = truckLoad.find((truck) => truck.id === id);
     setIsEditing(true);
     setEditId(id);
-    setTruckName("");
-    setTruckPrice("");
-    setTruckContents([]);
-    setTruckManifest("");
+    setTruckName(specificItem.truckName);
+    setTruckPrice(specificItem.truckPrice);
+    setTruckContents(specificItem.truckContents);
+    setTruckManifest(specificItem.truckManifest);
   };
 
   const handleSubmit = (e) => {
     console.log(truckLoad);
     e.preventDefault();
+    // setId(new Date().getTime().toString());
     if (!truckName || !truckPrice || !truckContents) {
       showAlert(true, "danger", "Please enter value");
     } else if (truckName && isEditing) {
@@ -138,16 +139,15 @@ const AppProvider = ({ children }) => {
 
   //Fetching the trucks db from the API link above //^----GET----
   const fetchTrucks = async () => {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const newTrucks = await response.json(); //returns a promise
-    setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-    if (response.ok) {
-      console.log(response.status, "Get request successful");
-    } else {
-      console.log(response.status, "Something went wrong with the get request");
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const newTrucks = await response.json(); //returns a promise
+      setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -158,80 +158,61 @@ const AppProvider = ({ children }) => {
   }, []);
   // End of useEffect for fetch
 
-  // useEffect for delete method //^----DELETE----
-  // useEffect(async() => {
-  //   await fetch("http://143.110.225.28/api/v1/inventory/", {
-  //     method: "DELETE",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       id: "",
-  //     }),
-  //   }).then((err) => console.log(err));
-  // }, []);
-  // End of useEffect for delete
+  // New delete request //^----DELETE----
+  const deleteTrucks = async () => {
+    try {
+      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: "",
+        }),
+      });
+      return response.json();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // New delete request
-  // const deleteTrucks = async () => {
-  //   const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-  //     method: "DELETE",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       id: "",
-  //     }),
-  //   });
-  //   if (response.ok) {
-  //     console.log(response.status, "Delete request successful");
-  //   } else {
-  //     console.log(
-  //       response.status,
-  //       "Something went wrong with the delete request"
-  //     );
-  //   }
-  //   return await response.json();
-  // };
-
-  // //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
-  // useEffect(() => {
-  //   deleteTrucks();
-  //   console.log("deleteTrucks useEffect ran successfully");
-  // }, [trucks]);
-  // // End of useEffect for fetch
+  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
+  useEffect(() => {
+    deleteTrucks();
+    console.log("deleteTrucks useEffect ran successfully");
+  }, [truckLoad]);
+  // End of useEffect for fetch
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
-    const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        truckName: truckName,
-        truckPrice: truckPrice,
-        truckContents: truckContents,
-        truckManifest: truckManifest,
-      }),
-    });
-    if (response.ok) {
-      console.log(response.status, "Post request successful");
-    } else {
-      console.log(
-        response.status,
-        "Something went wrong with the post request"
-      );
+    try {
+      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          truckName: truckName,
+          truckPrice: truckPrice,
+          truckContents: truckContents,
+          truckManifest: truckManifest,
+        }),
+      });
+      return response.json();
+    } catch (error) {
+      console.log(error);
     }
-    return await response.json();
   };
 
   //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
   useEffect(() => {
     postTrucks();
     console.log("postTrucks useEffect ran successfully");
-  }, []);
+  }, [truckLoad]);
   // End of useEffect for fetch
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
     <AppContext.Provider
       value={{
-
         isModalOpen,
         isSidebarOpen,
         truckName,

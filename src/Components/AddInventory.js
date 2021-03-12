@@ -17,7 +17,6 @@ const AddInventory = () => {
     setTruckContents,
     truckManifest,
     setTruckManifest,
-    id,
 
     isEditing,
     alert,
