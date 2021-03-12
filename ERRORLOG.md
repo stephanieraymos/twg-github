@@ -144,3 +144,21 @@ KEY:
 * Changed to: `onChange={(e) => setTruckManifest(e.target.files)}`
 
 🔵 Tried uploading two files to see if that might trigger the array since there would be multiple files. Same error (🔴error B)
+
+
+
+
+
+
+
+
+----------EMOJI BOX----------
+ ____________________________
+|🔴🟠🟡🟢🔵🟣🟤⚫⚪🔘🛑| 
+|                            |
+|🟥🟧🟨🟩🟦🟪🟫⬛⬜🔲🔳|
+|                            |
+|❤️🧡💛💚💜💙🤎🖤🤍♥️💔♡ |
+|                            |
+|🔺🔻🔷🔶🔹🔸              |
+|____________________________|
