@@ -9,6 +9,7 @@ KEY:
 
 ## 🟡 Manifest not posting with truck. After posting; manifest is still empty. 
 
+
 🔵 Tried setting truckManifest(e.target.value[0]) and got this error: 
 
 🔴 ERROR A: Uncaught DOMException: Failed to set the 'value' property on 'HTMLInputElement': This input element accepts a filename, which may only be programmatically set to the empty string. at HTMLInputElement.set [as value]
@@ -152,13 +153,13 @@ KEY:
 
 
 
-----------EMOJI BOX----------
- ____________________________
-|🔴🟠🟡🟢🔵🟣🟤⚫⚪🔘🛑| 
-|                            |
-|🟥🟧🟨🟩🟦🟪🟫⬛⬜🔲🔳|
-|                            |
-|❤️🧡💛💚💜💙🤎🖤🤍♥️💔♡ |
-|                            |
-|🔺🔻🔷🔶🔹🔸              |
-|____________________________|
+----------EMOJI BOX----------  
+ ____________________________  
+|🔴🟠🟡🟢🔵🟣🟤⚫⚪🔘🛑|   
+|                            |  
+|🟥🟧🟨🟩🟦🟪🟫⬛⬜🔲🔳|  
+|                            |  
+|❤️🧡💛💚💜💙🤎🖤🤍♥️💔♡ |  
+|                            |  
+|🔺🔻🔷🔶🔹🔸              |  
+|____________________________|  
