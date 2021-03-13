@@ -331,6 +331,8 @@ CHANGE:
 🟠FILE IS POSTING TO DATABASE! But contents are still not printing to the Inventory list on the add inventory page
 [Changes - bitbucket commit](https://bitbucket.org/rldev2/twg/commits/62d5446827153d6b1f2cf924dad6c63c6027667f)
 
+🟣Need to find solution for fetching file
+
 | CIRCLES | SQUARES | HEARTS | MORE |
 | --- | ---| --- | ---|
 |🔴🟠🟡🟢🔵🟣🟤⚫⚪🔘🛑 | 🟥🟧🟨🟩🟦🟪🟫⬛⬜🔲🔳 | ❤️🧡💛💚💜💙🤎🖤🤍♥️💔♡ | 🔺🔻🔷🔶🔹🔸 |  
