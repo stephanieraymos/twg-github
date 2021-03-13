@@ -70,9 +70,10 @@ const AddInventory = () => {
             <input
               type="file"
               multiple
-              name="truckManifest[]"
+              name={[truckManifest.name]}
               className="truckload-inputs"
-              onChange={(e) => setTruckManifest([e.target.value[0]])}
+              onChange={(e) => setTruckManifest([e.target.files[0]])}
+              onClick={(e) => {console.log(e.target.files)}}
             />
             <button className="submit-btn" type="submit" onClick={postTrucks}>
               {isEditing ? "Edit" : "Submit"}

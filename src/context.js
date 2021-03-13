@@ -117,13 +117,13 @@ const AppProvider = ({ children }) => {
       // Show alert and add truck to inventory only if name is true and not editing
       showAlert(true, "success", "Truck Added");
       //Creating new truck
-      const newTruck = {
+      const newTruck = [
         id,
         truckName,
         truckPrice,
         truckContents,
         truckManifest,
-      };
+      ];
       console.log(truckManifest);
 
       //Spreading out current truckLoad and adding newTruck to the list
@@ -197,7 +197,7 @@ const AppProvider = ({ children }) => {
               truckName: truckName,
               truckPrice: truckPrice,
               truckContents: truckContents,
-              // truckManifest: truckManifest,
+              truckManifest: truckManifest,
             }),
           }
         );
@@ -212,6 +212,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     postTrucks();
     console.log("postTrucks useEffect ran successfully");
+    console.log(truckLoad)
   }, [truckLoad]);
   // End of useEffect for fetch
 

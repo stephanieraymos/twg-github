@@ -234,6 +234,33 @@ postTrucks @ context.js:189
 ```
 🔴 ERROR A: Uncaught DOMException: Failed to set the 'value' property on 'HTMLInputElement': This input element accepts a filename, which may only be programmatically set to the empty string. at HTMLInputElement.set [as value]
 
+ 🟠ERROR B was solved while still keeping e.target.files by changing newTrucks to an array instead of an object like so:
+```      
+const newTruck = [
+        id,
+        truckName,
+        truckPrice,
+        truckContents,
+        truckManifest,
+      ];
+```
+Was:
+```   
+   const newTruck = {
+        id,
+        truckName,
+        truckPrice,
+        truckContents,
+        truckManifest,
+      };
+```
+
+But now the post is still not showing on database, or in the list below the add truckLoad inputs. But the truckLoad is displaying all the data properly in the console on the page with the inputs.
+
+Current errors:
+🔴context.js:189 POST http://143.110.225.28/api/v1/inventory/ 500 (Internal Server Error)
+postTrucks @ context.js:189
+🔴VM1487:2 Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 1
 
 
 | CIRCLES | SQUARES | HEARTS | MORE |
