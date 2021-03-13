@@ -117,11 +117,11 @@ const AppProvider = ({ children }) => {
       showAlert(true, "success", "Truck Added");
       //Creating new truck
       let newTruck = [
-        {id},
-        {truckName},
-        {truckPrice},
-        [truckContents],
-        [truckManifest],
+        id,
+        truckName,
+        truckPrice,
+        truckContents,
+        truckManifest,
       ];
       console.log("Truck Manifest", truckManifest);
 
