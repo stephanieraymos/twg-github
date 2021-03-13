@@ -84,7 +84,6 @@ const AppProvider = ({ children }) => {
   };
 
   const handleSubmit = (e) => {
-    console.log(truckLoad);
     e.preventDefault();
     // setId(new Date().getTime().toString());
     if (!truckName || !truckPrice || !truckContents) {
@@ -117,14 +116,14 @@ const AppProvider = ({ children }) => {
       // Show alert and add truck to inventory only if name is true and not editing
       showAlert(true, "success", "Truck Added");
       //Creating new truck
-      const newTruck = [
-        id,
-        truckName,
-        truckPrice,
-        truckContents,
-        truckManifest,
+      let newTruck = [
+        {id},
+        {truckName},
+        {truckPrice},
+        [truckContents],
+        [truckManifest],
       ];
-      console.log(truckManifest);
+      console.log("Truck Manifest", truckManifest);
 
       //Spreading out current truckLoad and adding newTruck to the list
       setTruckLoad([...truckLoad, newTruck]);
@@ -132,7 +131,7 @@ const AppProvider = ({ children }) => {
       setTruckPrice("");
       setTruckContents([]);
       setTruckManifest([]);
-      console.log(newTruck); //Logging new truck for testing purposes
+      console.log("New Truck", newTruck); //Logging new truck for testing purposes
     }
   };
 
@@ -212,7 +211,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     postTrucks();
     console.log("postTrucks useEffect ran successfully");
-    console.log(truckLoad)
+    console.log("TruckLoad:", truckLoad)
   }, [truckLoad]);
   // End of useEffect for fetch
 
