@@ -325,7 +325,8 @@ CHANGE:
       ];
 ```
 
-
+🟠Post is working again, but file still is not posting to db, and contents are not printing to the Inventory list on the add inventory page
+[Changes - bitbucket commit](https://bitbucket.org/rldev2/twg/commits/add072b0fa893003bb37fc984074c1aa4f91ad28)
 
 
 | CIRCLES | SQUARES | HEARTS | MORE |
