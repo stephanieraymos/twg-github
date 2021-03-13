@@ -7,11 +7,11 @@ function InventoryAllTrucks() {
   const { trucks, truckManifest } = useGlobalContext();
 
   const getManifest = async () => {
-    const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+    const response = await fetch("http://143.110.225.28/api/v1/inventory/manifest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        truckManifestName: truckManifest,
+        truckManifestId: truckManifest[0],
       }),
     });
     const json = await response.json();
