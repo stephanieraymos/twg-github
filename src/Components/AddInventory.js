@@ -38,9 +38,7 @@ const AddInventory = () => {
 
     e.preventDefault();
     // setId(new Date().getTime().toString());
-    if (e.target.value === "") {
-      showAlert(true, "danger", "Please enter value");
-    } else if (truckName && isEditing) {
+    if (truckName && isEditing) {
       // deal with edit if something is in value and user is editing
       setTruckLoad(
         truckLoad.map((truck, id) => {
@@ -113,6 +111,7 @@ const AddInventory = () => {
           <div className="form-control">
             <input
               className="truckload-inputs"
+              required
               type="text"
               name="truckName"
               value={truckName}
@@ -121,6 +120,7 @@ const AddInventory = () => {
             />
             <input
               className="truckload-inputs"
+              required
               type="text"
               name="truckPrice"
               value={truckPrice}
@@ -129,6 +129,7 @@ const AddInventory = () => {
             />
             <input
               className="truckload-inputs"
+              required
               type="text"
               name="truckContents"
               value={[truckContents]}
@@ -140,6 +141,7 @@ const AddInventory = () => {
               multiple
               name="truckManifest"
               className="truckload-inputs"
+              value={[truckManifest]}
               onChange={(e) => setTruckManifest(e.target.value)}
             />
             <button className="submit-btn" type="submit" onClick={postTrucks}>
