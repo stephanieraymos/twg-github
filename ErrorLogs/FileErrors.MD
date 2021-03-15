@@ -165,7 +165,14 @@ THIS CONSOLE RESULT IS WHEN THE CODE FROM MANIFEST INPUT IS:
             />
 ```
 
-</div>
+🟠Changed back to onChange with value and file uploads fine, but alerts are not working.
+🔵Tried setting this line in handleSubmit 
+    if (truckName === "" || truckPrice === "" || truckContents === "" ) {
+Instead of if(e.target.value === "") {
+
+Got error:
+🔴 Unhandled Rejection (TypeError): Failed to construct 'FormData': parameter 1 is not of type 'HTMLFormElement'.
+
 
 | CIRCLES                | SQUARES                | HEARTS                  | MORE         |
 | ---------------------- | ---------------------- | ----------------------- | ------------ |

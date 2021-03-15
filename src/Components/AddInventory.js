@@ -34,7 +34,7 @@ const AddInventory = () => {
   const form = useRef(null);
 
   const handleSubmit = (e) => {
-    console.log(e.target)
+    console.log(e.target);
 
     e.preventDefault();
     // setId(new Date().getTime().toString());
@@ -83,16 +83,19 @@ const AddInventory = () => {
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
-    const data = new FormData(form.current);
-    try {
-      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-        method: "POST",
-        body: data,
-      });
-      return response.json();
-    } catch (error) {
-      console.log(error);
-    }
+      const data = new FormData(form.current);
+      try {
+        const response = await fetch(
+          "http://143.110.225.28/api/v1/inventory/",
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+        return response.json();
+      } catch (error) {
+        console.log(error);
+      }
   };
 
   return (
@@ -102,8 +105,7 @@ const AddInventory = () => {
       </div>
       <section className="section-center">
         <h3 className="form-header">Add Truckload</h3>
-        <form ref={form} onSubmit={handleSubmit} method="post" >
-          
+        <form ref={form} onSubmit={handleSubmit} method="post">
           {/* //* If alert is showing, we bring in the alert component */}
           {alert.show && (
             <Alert {...alert} removeAlert={showAlert} truckLoad={truckLoad} />
@@ -130,7 +132,7 @@ const AddInventory = () => {
               type="text"
               name="truckContents"
               value={[truckContents]}
-              onChange={(e) => setTruckContents(e.target.value)}
+              onChange={(e) => setTruckContents([e.target.value])}
               placeholder="What's in the truck?"
             />
             <input
