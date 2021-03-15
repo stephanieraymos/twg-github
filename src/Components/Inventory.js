@@ -4,7 +4,7 @@ import { useGlobalContext } from "../context";
 import inventory from "../css/inventory.css";
 
 const Inventory = () => {
-  const { truckLoad, removeItem, editItem } = useGlobalContext();
+  const { trucks, removeItem, editItem } = useGlobalContext();
 
   return (
     <>
@@ -17,7 +17,7 @@ const Inventory = () => {
       </div>
 
       <div className="truckLoad-list">
-        {truckLoad.map((truck) => {
+        {trucks.map((truck) => {
           const {
             id,
             truckName,

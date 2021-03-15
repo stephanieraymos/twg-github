@@ -34,11 +34,11 @@ const AddInventory = () => {
   const form = useRef(null);
 
   const handleSubmit = (e) => {
+    console.log(e.target);
+
     e.preventDefault();
     // setId(new Date().getTime().toString());
-    if (e.target.value === "") {
-      showAlert(true, "danger", "Please enter value");
-    } else if (truckName && isEditing) {
+    if (truckName && isEditing) {
       // deal with edit if something is in value and user is editing
       setTruckLoad(
         truckLoad.map((truck, id) => {
@@ -66,13 +66,7 @@ const AddInventory = () => {
       // Show alert and add truck to inventory only if name is true and not editing
       showAlert(true, "success", "Truck Added");
       //Creating new truck
-      let newTruck = [
-        id,
-        truckName,
-        truckPrice,
-        truckContents,
-        truckManifest,
-      ];
+      let newTruck = [id, truckName, truckPrice, truckContents, truckManifest];
       console.log("Truck Manifest", truckManifest);
 
       //Spreading out current truckLoad and adding newTruck to the list
@@ -87,16 +81,19 @@ const AddInventory = () => {
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
-    const data = new FormData(form.current);
-    try {
-      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-        method: "POST",
-        body: data,
-      });
-      return response.json();
-    } catch (error) {
-      console.log(error);
-    }
+      const data = new FormData(form.current);
+      try {
+        const response = await fetch(
+          "http://143.110.225.28/api/v1/inventory/",
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+        return response.json();
+      } catch (error) {
+        console.log(error);
+      }
   };
 
   return (
@@ -106,11 +103,7 @@ const AddInventory = () => {
       </div>
       <section className="section-center">
         <h3 className="form-header">Add Truckload</h3>
-        <form
-          ref={form}
-          onSubmit={handleSubmit}
-          method="post"
-        >
+        <form ref={form} onSubmit={handleSubmit} method="post">
           {/* //* If alert is showing, we bring in the alert component */}
           {alert.show && (
             <Alert {...alert} removeAlert={showAlert} truckLoad={truckLoad} />
@@ -118,23 +111,29 @@ const AddInventory = () => {
           <div className="form-control">
             <input
               className="truckload-inputs"
+              required
               type="text"
               name="truckName"
-              defaultValue={truckName}
+              value={truckName}
+              onChange={(e) => setTruckName(e.target.value)}
               placeholder="Name of Truck"
             />
             <input
               className="truckload-inputs"
+              required
               type="text"
               name="truckPrice"
-              defaultValue={truckPrice}
+              value={truckPrice}
+              onChange={(e) => setTruckPrice(e.target.value)}
               placeholder="Price"
             />
             <input
               className="truckload-inputs"
+              required
               type="text"
               name="truckContents"
-              defaultValue={[truckContents]}
+              value={[truckContents]}
+              onChange={(e) => setTruckContents([e.target.value])}
               placeholder="What's in the truck?"
             />
             <input
@@ -142,6 +141,8 @@ const AddInventory = () => {
               multiple
               name="truckManifest"
               className="truckload-inputs"
+              value={[truckManifest]}
+              onChange={(e) => setTruckManifest(e.target.value)}
             />
             <button className="submit-btn" type="submit" onClick={postTrucks}>
               {isEditing ? "Edit" : "Submit"}
