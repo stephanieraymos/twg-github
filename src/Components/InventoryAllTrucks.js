@@ -1,3 +1,4 @@
+import React from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
 import download from "../img/download.svg";
@@ -5,25 +6,46 @@ import inventory from "../css/inventory.css";
 
 function InventoryAllTrucks() {
   document.title = "Inventory - Database";
-  const { trucks, truckManifest } = useGlobalContext();
+
+  const { trucks } = useGlobalContext();
 
   const getManifest = async (truckManifest) => {
-    const response = await fetch("http://143.110.225.28/api/v1/inventory/manifest/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        truckManifestId: truckManifest[0],
-      }),
-    });
+    const response = await fetch(
+      "http://143.110.225.28/api/v1/inventory/manifest/",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          truckManifestId: truckManifest[0],
+        }),
+      }
+    );
     const json = await response.json();
-    const file = await json["truckManifest"]
-    console.log(file)
-    console.log(truckManifest)
-    window.open(file)
-    console.log(json, response);
-  };
-  console.log(trucks)
+    const file = await json["truckManifest"];
 
+    // Creating new File link to download
+    // const url = window.URL.createObjectURL(
+    //   new File([truckManifest], file + "_" + "name" + ".txt", {
+
+    //   })
+    // );
+    const link = document.createElement("a");
+    link.href = truckManifest;
+    // window.open(truckManifest[0])
+
+    link.setAttribute("download", `sample.${truckManifest[0]}`);
+    // Appending to html page
+    document.body.appendChild(link);
+    // Forcing download
+    link.click();
+
+    console.log(file);
+    console.log(truckManifest);
+    console.log(json);
+    console.log(response);
+    // link.download = await truckManifest;
+  };
+  console.log(trucks);
 
   return (
     <>
@@ -45,16 +67,22 @@ function InventoryAllTrucks() {
               truckName,
               truckPrice,
               truckContents,
-              truckManifest
+              truckManifest,
             } = truck;
-
             return (
               <div className="truckLoad" key={id}>
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <a href="#" onClick={() => getManifest(truckManifest)} target="_blank" className="items">
-                  <p className="items all-trucks-manifest"><img src={download} alt="download icon"/></p>
+                <a
+                  href="#"
+                  onClick={() => getManifest(truckManifest)}
+                  target="_blank"
+                  className="items"
+                >
+                  <p className="items all-trucks-manifest">
+                    <img src={download} alt="download icon" />
+                  </p>
                 </a>
               </div>
             );
