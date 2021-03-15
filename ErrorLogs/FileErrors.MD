@@ -166,6 +166,7 @@ THIS CONSOLE RESULT IS WHEN THE CODE FROM MANIFEST INPUT IS:
 ```
 
 🟠Changed back to onChange with value and file uploads fine, but alerts are not working.
+
 🔵Tried setting this line in handleSubmit 
     if (truckName === "" || truckPrice === "" || truckContents === "" ) {
 Instead of if(e.target.value === "") {
@@ -173,6 +174,8 @@ Instead of if(e.target.value === "") {
 Got error:
 🔴 Unhandled Rejection (TypeError): Failed to construct 'FormData': parameter 1 is not of type 'HTMLFormElement'.
 
+🟢 Working with file validation; added "required" to all inputs that are required.
+[WORKING CODE](https://bitbucket.org/rldev2/twg/commits/d8257ff2d648b79010e54d6c56e60e5116b11711)
 
 | CIRCLES                | SQUARES                | HEARTS                  | MORE         |
 | ---------------------- | ---------------------- | ----------------------- | ------------ |
