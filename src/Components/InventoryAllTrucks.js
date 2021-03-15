@@ -1,5 +1,6 @@
 import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
+import download from "../img/download.svg";
 import inventory from "../css/inventory.css";
 
 function InventoryAllTrucks() {
@@ -53,7 +54,7 @@ function InventoryAllTrucks() {
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
                 <a href="#" onClick={() => getManifest(truckManifest)} target="_blank" className="items">
-                  <p className="items all-trucks-manifest">MANIFEST</p>
+                  <p className="items all-trucks-manifest"><img src={download} alt="download icon"/></p>
                 </a>
               </div>
             );
