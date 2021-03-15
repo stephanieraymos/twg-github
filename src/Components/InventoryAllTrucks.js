@@ -6,15 +6,19 @@ function InventoryAllTrucks() {
   document.title = "Inventory - Database";
   const { trucks, truckManifest } = useGlobalContext();
 
-  const getManifest = async () => {
-    const response = await fetch(`http://143.110.225.28/api/v1/inventory/manifest/?truckManifestId=${truckManifest}`, {
+  const getManifest = async (truckManifest) => {
+    const response = await fetch("http://143.110.225.28/api/v1/inventory/manifest/", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        truckManifestId: truckManifest
+        truckManifestId: truckManifest[0],
       }),
     });
     const json = await response.json();
-    window.open({truckManifest})
+    const file = await json["truckManifest"]
+    console.log(file)
+    console.log(truckManifest)
+    window.open(file)
     console.log(json, response);
   };
   console.log(trucks)
@@ -40,6 +44,7 @@ function InventoryAllTrucks() {
               truckName,
               truckPrice,
               truckContents,
+              truckManifest
             } = truck;
 
             return (
@@ -47,7 +52,7 @@ function InventoryAllTrucks() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <a href="#" onClick={getManifest} target="_blank" className="items">
+                <a href="#" onClick={() => getManifest(truckManifest)} target="_blank" className="items">
                   <p className="items all-trucks-manifest">MANIFEST</p>
                 </a>
               </div>
