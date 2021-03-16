@@ -280,6 +280,10 @@ input:hover {
   margin: 5% 0 8%;
 }
 
+.button:hover {
+  background-color: transparent;
+}
+
 
 .center-btn {
   align-self: center;
