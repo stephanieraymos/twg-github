@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
 import download from "../img/download.svg";
@@ -11,6 +11,7 @@ function InventoryAllTrucks() {
 
   const getManifest = async (truckManifest) => {
     const response = await fetch(
+    
       "http://143.110.225.28/api/v1/inventory/manifest/",
       {
         method: "POST",
@@ -40,7 +41,7 @@ function InventoryAllTrucks() {
     link.click();
 
     console.log(file);
-    console.log(truckManifest);
+    console.log(truckManifest[0]);
     console.log(json);
     console.log(response);
     // link.download = await truckManifest;

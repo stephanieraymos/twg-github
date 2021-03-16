@@ -3,10 +3,10 @@ import Inventory from "./Components/Inventory";
 
 
 // Generating context
-const AppContext = React.createContext(undefined);
+const TruckContext = React.createContext();
 
 //Generating provider
-const AppProvider = ({ children }) => {
+const TruckProvider = ({ children }) => {
   const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
   //////////////////////// &&--STATE--&& /////////////////////////////
@@ -19,41 +19,12 @@ const AppProvider = ({ children }) => {
   const [id, setId] = useState("");
   const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editId, setEditId] = useState(null);
-  const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
-  const [error, setError] = useState(false);
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [personId, setPersonId] = useState("");
-
   if (truckLoad.truckName === "") {
     console.log("The truck name is empty but printing");
   }
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
 
-  const openSidebar = () => {
-    setIsSidebarOpen(true);
-  };
-
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   //showAlert function, when called the values for each param are passed in as arguments
   const showAlert = (show = false, type = "", msg = "") => {
@@ -135,10 +106,9 @@ const AppProvider = ({ children }) => {
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
-    <AppContext.Provider
+    <TruckContext.Provider
       value={{
-        isModalOpen,
-        isSidebarOpen,
+
         truckName,
         setTruckName,
         truckPrice,
@@ -154,47 +124,17 @@ const AppProvider = ({ children }) => {
         id,
         setId,
 
-        isEditing,
-        setIsEditing,
-        editId,
-        setEditId,
-        alert,
-        setAlert,
-        error,
-        setError,
-        openModal,
-        openSidebar,
-        closeModal,
-        closeSidebar,
-        showAlert,
-        clearList,
-        removeItem,
-        editItem,
-
-        firstName,
-        setFirstName,
-        lastName,
-        setLastName,
-        email,
-        setEmail,
-        password,
-        setPassword,
-        confirmPassword,
-        setConfirmPassword,
-        personId,
-        setPersonId,
-
         fetchTrucks,
       }}
     >
       {children}
-    </AppContext.Provider>
+    </TruckContext.Provider>
   );
 };
 
 //! Custom hook for using context within app
-const useGlobalContext = () => {
+const useTruckContext = () => {
   return useContext(AppContext);
 };
 
-export { AppContext, AppProvider, useGlobalContext };
+export { AppContext, AppProvider, useTruckContext };
