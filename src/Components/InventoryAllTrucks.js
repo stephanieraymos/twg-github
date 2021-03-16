@@ -15,10 +15,11 @@ function InventoryAllTrucks() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          truckManifestId: truckManifest[0],
+          truckManifestId: truckManifest,
         }),
       }
     );
+    console.log(truckManifest)
     const json = await response.json();
     const file = await json["truckManifest"];
     window.location.href = file;
