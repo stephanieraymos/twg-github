@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
+import { Button, Modal, Form } from "react-bootstrap";
 
 const Signup = () => {
   document.title = "Sign up";
@@ -19,10 +20,9 @@ const Signup = () => {
     setConfirmPassword,
     error,
     setError,
-    personId,
     setPersonId,
     postToDb,
-    setPostToDb,
+    closeModal
   } = useGlobalContext();
 
   const {
@@ -96,48 +96,60 @@ const Signup = () => {
       </div>
       <div>
         <h1 className="form-header">Sign up</h1>
-        <form onSubmit={handleSignupSubmit}>
-          <div className="form-control">
-            <input
+        <Form onSubmit={handleSignupSubmit}>
+          <Modal.Header>
+          <button onClick={closeModal} className="close-trucks-modal ml-auto">X</button>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group className="center-form-group">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
               type="text"
+              required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name"
-              style={{ textAlign: "center" }}
-            />
-            <input
+              />
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
               type="text"
+              required
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Last Name"
-              style={{ textAlign: "center" }}
-            />
-            <input
+              />
+              <Form.Label>Email</Form.Label>
+              <Form.Control
               type="text"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              style={{ textAlign: "center" }}
-            />
-            <input
+              />
+              <Form.Label>Password</Form.Label>
+              <Form.Control
               type="password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              style={{ textAlign: "center" }}
-            />
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm Password"
-              style={{ textAlign: "center" }}
-            />
-            <button className="submit-btn" type="submit" onClick={setPostToDb}>
-              Submit
-            </button>
-          </div>
-        </form>
+              />
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+              type="text"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+              <Button type="submit" onClick={closeModal} className="boot-button ml-5 mr-4">
+                Sign up
+              </Button>
+          </Modal.Footer>
+        </Form>
       </div>
     </>
   );
