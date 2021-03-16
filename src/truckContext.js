@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import Inventory from "./Components/Inventory";
+import InventoryAllTrucks from "./Components/InventoryAllTrucks"
 
 
 // Generating context
-const TruckContext = React.createContext();
+const TruckContext = createContext()
 
 //Generating provider
 const TruckProvider = ({ children }) => {
@@ -152,4 +153,4 @@ const useTruckContext = () => {
   return useContext(TruckContext);
 };
 
-export { TruckContext, TruckProvider, useTruckContext };
+export { TruckProvider, useTruckContext };
