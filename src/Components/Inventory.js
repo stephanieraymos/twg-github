@@ -1,6 +1,5 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { Button } from "react-bootstrap";
 import { useTruckContext } from "../truckContext";
 import inventory from "../css/inventory.css";
 

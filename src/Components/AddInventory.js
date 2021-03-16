@@ -26,6 +26,8 @@ const AddInventory = () => {
     showAlert,
   } = useTruckContext();
 
+  const form = useRef(null);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -33,8 +35,6 @@ const AddInventory = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  const form = useRef(null);
 
   const handleSubmit = (e) => {
     console.log(e.target);
@@ -72,6 +72,7 @@ const AddInventory = () => {
       console.log(error);
     }
   };
+  
 
   return (
     <>
@@ -81,7 +82,7 @@ const AddInventory = () => {
         </Button>
       </div>
 
-      <Modal show={isModalOpen} onHide={closeModal}>
+      <Modal show={isModalOpen} onHide={closeModal} className="">
         <Form ref={form} onSubmit={handleSubmit} method="post">
           <Modal.Body>
             <Form.Group>
