@@ -110,8 +110,7 @@ input {
 }
 
 input:hover {
-  background-color: var(--dark-gray);
-  color: var(--light);
+  background-color: var(--light-gray);
 }
 
 /* Main button styles for entire site */
