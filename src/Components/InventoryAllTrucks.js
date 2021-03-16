@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
 import Navigation from "./Navigation";
 import { useTruckContext } from "../truckContext";
+import { Button } from "react-bootstrap";
 import download from "../img/download.svg";
+import { Link } from "react-router-dom";
 import inventory from "../css/inventory.css";
+import AddInventory from "./AddInventory";
 
 function InventoryAllTrucks() {
   document.title = "Inventory - Database";
@@ -11,7 +14,6 @@ function InventoryAllTrucks() {
 
   const getManifest = async (truckManifest) => {
     const response = await fetch(
-    
       "http://143.110.225.28/api/v1/inventory/manifest/",
       {
         method: "POST",
@@ -52,6 +54,9 @@ function InventoryAllTrucks() {
     <>
       <div>
         <Navigation />
+      </div>
+      <div className="inventory-top-buttons" style={{justifyContent: "center", display: "flex"}}>
+        <Button as={Link} to="/AddInventory" style={{margin: "1rem 0 -.75rem 0"}}>Add Truck</Button>
       </div>
       <div className="table-wrapper">
         <div className="header-items">
