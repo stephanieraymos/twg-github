@@ -6,20 +6,24 @@ const url = "http://143.110.225.28/account/user/"; //* API LINK
 function CustomerDb() {
   //* Setting state values, params are default values
   const [users, setUsers] = useState([]);
+  const [userId, setUserId] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
 
   //* Fetching the trucks db from the API link above
   const fetchUsers = async () => {
-    console.log(accessToken)
+    console.log(accessToken);
     const response = await fetch(url, {
       method: "GET",
-      headers: { "Content-Type": "application/json", 'Authorization': "Bearer " + accessToken },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
     });
     const newUsers = await response.json(); //returns a promise
     setUsers(newUsers); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-    setAccessToken("access_token")
-    setRefreshToken("refresh_token")
+    setAccessToken("access_token");
+    setRefreshToken("refresh_token");
     if (response.ok) {
       console.log(response.status, "Get request successful");
     } else {
@@ -48,10 +52,10 @@ function CustomerDb() {
 
         <div className="truckLoad-list">
           {users.map((user) => {
-            const { id, firstName, lastName, email } = user;
+            const { userId, firstName, lastName, email } = user;
 
             return (
-              <div className="truckLoad" key={id}>
+              <div className="truckLoad" key={userId}>
                 <p className="items all-trucks-name">{firstName}</p>
                 <p className="items all-trucks-price">{lastName}</p>
                 <p className="items all-trucks-contents">{email}</p>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { useTruckContext } from "../truckContext";
 import { useGlobalContext } from "../context";
@@ -9,11 +9,15 @@ import { Link } from "react-router-dom";
 
 const AddInventory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const url =
+    "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
   document.title = "Add Inventory";
   const {
     truckLoad,
     setTruckLoad,
+    trucks,
+    setTrucks,
     id,
     truckName,
     setTruckName,
@@ -26,6 +30,8 @@ const AddInventory = () => {
 
     showAlert,
   } = useTruckContext();
+
+  const { userId, setUserId } = useGlobalContext();
 
   const form = useRef(null);
 
@@ -60,14 +66,37 @@ const AddInventory = () => {
     }
   };
 
+  //Fetching the trucks db from the API link above //^----GET----
+  const fetchTrucks = async () => {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const newTrucks = await response.json(); //returns a promise
+      setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
+  useEffect(() => {
+    fetchTrucks();
+    console.log("Trucks fetched successfully inside the useEffect");
+  }, []);
+  // End of useEffect for fetch
+
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
+    setUserId("d73897ef-9b70-463f-8dc1-bdafbe8891ff")
     const data = new FormData(form.current);
     try {
       const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
         method: "POST",
         body: data,
       });
+      console.log(response)
       return response.json();
     } catch (error) {
       console.log(error);
@@ -77,7 +106,11 @@ const AddInventory = () => {
   return (
     <>
       <div className="btn-container">
-        <Button className="boot-button" style={{ margin: "1rem 0 -.75rem 0" }} onClick={openModal}>
+        <Button
+          className="boot-button"
+          style={{ margin: "1rem 0 -.75rem 0" }}
+          onClick={openModal}
+        >
           Add Truck
         </Button>
       </div>
@@ -85,8 +118,10 @@ const AddInventory = () => {
       <Modal show={isModalOpen} onHide={closeModal} className="form-in-modal">
         <Form ref={form} onSubmit={handleSubmit} method="post">
           <Modal.Header>
-          <h1 className="truck-modal-header">Add Truck</h1>
-          <button onClick={closeModal} className="close-trucks-modal ml-auto">X</button>
+            <h1 className="truck-modal-header">Add Truck</h1>
+            <button onClick={closeModal} className="close-trucks-modal ml-auto">
+              X
+            </button>
           </Modal.Header>
           <Modal.Body>
             <Form.Group className="center-form-group">
@@ -98,6 +133,8 @@ const AddInventory = () => {
                 onChange={(e) => setTruckName(e.target.value)}
                 name="truckName"
               />
+              <Form.Label>User ID</Form.Label>
+              <Form.Control type="text" value={userId} name="userId" />
               <Form.Label>Truck Price</Form.Label>
               <Form.Control
                 type="text"
@@ -126,9 +163,13 @@ const AddInventory = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-              <Button type="submit" onClick={postTrucks} className="boot-button mr-auto ml-auto">
-                Add Truck
-              </Button>
+            <Button
+              type="submit"
+              onClick={postTrucks}
+              className="boot-button mr-auto ml-auto"
+            >
+              Add Truck
+            </Button>
           </Modal.Footer>
         </Form>
       </Modal>

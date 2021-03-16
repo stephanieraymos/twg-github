@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import Inventory from "./Components/Inventory";
 import InventoryAllTrucks from "./Components/InventoryAllTrucks"
 
 
@@ -64,27 +63,6 @@ const TruckProvider = ({ children }) => {
 
   //////////////////////// &&--FETCH--&& ///////////////////////////////
 
-  //Fetching the trucks db from the API link above //^----GET----
-  const fetchTrucks = async () => {
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const newTrucks = await response.json(); //returns a promise
-      setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
-  useEffect(() => {
-    fetchTrucks();
-    console.log("Trucks fetched successfully inside the useEffect");
-  }, []);
-  // End of useEffect for fetch
-
   // New delete request //^----DELETE----
   const deleteTrucks = async () => {
     try {
@@ -129,7 +107,6 @@ const TruckProvider = ({ children }) => {
         id,
         setId,
 
-        fetchTrucks,
         clearList,
         showAlert,
         editItem,

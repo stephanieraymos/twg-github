@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
-import Inventory from "./Components/Inventory";
 
 
 // Generating context
@@ -23,7 +22,7 @@ const AppProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [personId, setPersonId] = useState("");
+  const [userId, setUserId] = useState("");
 
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
@@ -79,8 +78,8 @@ const AppProvider = ({ children }) => {
         setPassword,
         confirmPassword,
         setConfirmPassword,
-        personId,
-        setPersonId,
+        userId,
+        setUserId,
       }}
     >
       {children}
