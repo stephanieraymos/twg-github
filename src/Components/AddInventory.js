@@ -77,13 +77,17 @@ const AddInventory = () => {
   return (
     <>
       <div className="btn-container">
-        <Button style={{ margin: "1rem 0 -.75rem 0" }} onClick={openModal}>
+        <Button className="boot-button" style={{ margin: "1rem 0 -.75rem 0" }} onClick={openModal}>
           Add Truck
         </Button>
       </div>
 
       <Modal show={isModalOpen} onHide={closeModal} className="form-in-modal">
         <Form ref={form} onSubmit={handleSubmit} method="post">
+          <Modal.Header>
+          <h1 className="truck-modal-header">Add Truck</h1>
+          <button onClick={closeModal} className="close-trucks-modal ml-auto">X</button>
+          </Modal.Header>
           <Modal.Body>
             <Form.Group className="center-form-group">
               <Form.Label>Truck Name</Form.Label>
@@ -122,13 +126,9 @@ const AddInventory = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <div className="btn-container">
-              <Button onClick={closeModal}>Close</Button>
-
-              <Button type="submit" onClick={postTrucks}>
+              <Button type="submit" onClick={postTrucks} className="boot-button mr-auto ml-auto">
                 Add Truck
               </Button>
-            </div>
           </Modal.Footer>
         </Form>
       </Modal>

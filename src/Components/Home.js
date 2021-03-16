@@ -28,7 +28,7 @@ const Home = () => {
             <h1 className="home-header">The WholeSale Group</h1>
             <div className="btn-container">
               <a href="/InventoryAllTrucks" className="center-btn">
-                <button className="btn">See more</button>
+                <button className="button">See more</button>
               </a>
             </div>
           </div>

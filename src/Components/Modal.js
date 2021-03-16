@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
+import { Button, Modal, Form } from "react-bootstrap";
 import { useGlobalContext } from "../context";
 import Alert from "./Alert";
 import modalandsidebar from "../css/modalandsidebar.css";
@@ -15,7 +16,7 @@ const getLocalStorage = () => {
   }
 };
 
-const Modal = () => {
+const LoginModal = () => {
   const { isModalOpen, closeModal } = useGlobalContext();
 
   const [person, setPerson] = useState(getLocalStorage());
@@ -25,28 +26,6 @@ const Modal = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
-  const outerDiv = useRef(); //This reference is used to refer to the outer div, it's purpose is for closing the sidebar when clicked anywhere but the sidebar
-
-  //This useEffect is to add event listeners for the click off modal
-  useEffect(() => {
-    // add when mounted
-    document.addEventListener("mousedown", handleClick);
-    // return function to be called when unmounted
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, []);
-
-  const handleClick = (e) => {
-    if (outerDiv.current.contains(e.target)) {
-      // inside click
-      return;
-    }
-    // outside click
-    {
-      closeModal();
-    }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -127,54 +106,65 @@ const Modal = () => {
   }, [person]);
 
   return (
+
+
+    
     <div
       className={`${
         isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
       }`}
     >
-      <div className="modal-container" ref={outerDiv}>
-        <h3 className="modal-header">Login</h3>
-        <form onSubmit={handleSubmit}>
-          {/* If alert is showing, we bring in the alert component */}
-          {alert.show && <Alert {...alert} removeAlert={showAlert} />}
-          <div className="form-control">
-            <input
+
+
+<Modal show={isModalOpen} onHide={closeModal} className="form-in-modal">
+        <Form onSubmit={handleSubmit}>
+          <Modal.Header>
+          <h1 className="truck-modal-header">Login</h1>
+          <button onClick={closeModal} className="close-trucks-modal ml-auto">X</button>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group className="center-form-group">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
               type="text"
+              required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name"
-              style={{ textAlign: "center" }}
-            />
-            <input
+              />
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
               type="text"
+              required
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Last Name"
-              style={{ textAlign: "center" }}
-            />
-            <input
+              />
+              <Form.Label>Email</Form.Label>
+              <Form.Control
               type="text"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              style={{ textAlign: "center" }}
-            />
-            <a href="/Signup">
-              <div className="no-account">Don't have an account?</div>
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+          <a href="/Signup">
+              <div>Don't have an account?</div>
             </a>
-            <button className="submit-modal-btn" type="submit">
-              Submit
-            </button>
-          </div>
-        </form>
-        <button className="close-modal-btn" onClick={closeModal}>
-          <FaTimes />
-        </button>
-      </div>
+              <Button type="submit" onClick={closeModal} className="boot-button ml-5 mr-4">
+                Login
+              </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
     </div>
   );
 };
 
-export default Modal;
+export default LoginModal;
 
 // TP-42
