@@ -2,6 +2,7 @@ import video from "../img/video.mp4";
 import warehouse from "../img/warehouse-sm.jpg";
 import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
+import {Link} from "react-router-dom"
 
 const Home = () => {
   document.title = "Home";
@@ -27,9 +28,9 @@ const Home = () => {
           <div className={`${isModalOpen ? "sub-content-dis" : "sub-content"}`}>
             <h1 className="home-header">The WholeSale Group</h1>
             <div className="btn-container">
-              <a href="/AddInventory" className="center-btn">
-                <button className="btn">See more</button>
-              </a>
+              <div className="center-btn">
+                <Link to="/InventoryAllTrucks" style={{textDecoration: "none", color: "white"}} className="button">See more</Link>
+                </div>
             </div>
           </div>
         </div>

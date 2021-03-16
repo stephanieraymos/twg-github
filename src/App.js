@@ -5,6 +5,8 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import { AppProvider, useGlobalContext } from "./context";
+
 import Contact from "./Components/Contact";
 import Home from "./Components/Home";
 import Inventory from "./Components/Inventory";
@@ -22,7 +24,7 @@ import OrderDetails from "./Components/OrderDetails";
 import Orders from "./Components/Orders";
 import Error from "./Pages/Error";
 
-function App() {
+const App = () => {
   return (
     <>
       <Modal />

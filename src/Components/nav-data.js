@@ -19,36 +19,30 @@ export const links = [
   },
   {
     id: 2,
-    url: "/AddInventory",
-    text: "Add Truck",
-    icon: <FaPlusSquare />
-  },
-  {
-    id: 3,
     url: "/InventoryAllTrucks",
     text: "Inventory",
     icon: <FaTruckMoving />
   },
   {
-    id: 4,
+    id: 3,
     url: "/Settings",
     text: "Settings",
     icon: <FaWpforms />,
   },
   {
-    id: 5,
+    id: 4,
     url: "/Statements",
     text: "Statements",
     icon: <FaFolderOpen />,
   },
   {
-    id: 6,
+    id: 5,
     url: "/Contact",
     text: "Contact",
     icon: <FaUserFriends />,
   },
   {
-    id: 7,
+    id: 6,
     url: "/CustomerDb",
     text: "Users",
     icon: <FaUserFriends />,
@@ -71,6 +65,6 @@ export const social = [
 export const logoLink = [
   {
     id: 1,
-    url: "/Home.js",
+    url: "/Home",
   },
 ];

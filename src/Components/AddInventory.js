@@ -1,11 +1,15 @@
-import React, { useRef } from "react";
-import Alert from "./Alert";
-import Inventory from "./Inventory";
-import Navigation from "./Navigation";
+import React, { useState, useRef } from "react";
+import { Button, Modal, Form } from "react-bootstrap";
+import { useTruckContext } from "../truckContext";
 import { useGlobalContext } from "../context";
+import Alert from "./Alert";
 import inventory from "../css/inventory.css";
+import modalandsidebar from "../css/modalandsidebar.css";
+import { Link } from "react-router-dom";
 
 const AddInventory = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   document.title = "Add Inventory";
   const {
     truckLoad,
@@ -20,49 +24,25 @@ const AddInventory = () => {
     truckManifest,
     setTruckManifest,
 
-    isEditing,
-    setIsEditing,
-    editId,
-    setEditId,
-    alert,
     showAlert,
-    clearList,
-    removeItem,
-    editItem,
-  } = useGlobalContext();
+  } = useTruckContext();
 
   const form = useRef(null);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleSubmit = (e) => {
     console.log(e.target);
 
     e.preventDefault();
     // setId(new Date().getTime().toString());
-    if (truckName && isEditing) {
-      // deal with edit if something is in value and user is editing
-      setTruckLoad(
-        truckLoad.map((truck, id) => {
-          if (truck.id === editId) {
-            return {
-              ...truck,
-              id,
-              truckName,
-              truckPrice,
-              truckContents,
-              truckManifest,
-            };
-          }
-          return truck;
-        })
-      );
-      setTruckName("");
-      setTruckPrice("");
-      setTruckContents([]);
-      setTruckManifest([]);
-      setEditId(""); //Reseting editId
-      setIsEditing(false); //Reseting isEditing to false
-      showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
-    } else {
+    if (truckName) {
       // Show alert and add truck to inventory only if name is true and not editing
       showAlert(true, "success", "Truck Added");
       //Creating new truck
@@ -75,94 +55,83 @@ const AddInventory = () => {
       setTruckPrice("");
       setTruckContents([]);
       setTruckManifest([]);
+      closeModal();
       console.log("New Truck", newTruck); //Logging new truck for testing purposes
     }
   };
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
-      const data = new FormData(form.current);
-      try {
-        const response = await fetch(
-          "http://143.110.225.28/api/v1/inventory/",
-          {
-            method: "POST",
-            body: data,
-          }
-        );
-        return response.json();
-      } catch (error) {
-        console.log(error);
-      }
+    const data = new FormData(form.current);
+    try {
+      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+        method: "POST",
+        body: data,
+      });
+      return response.json();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
-      <div>
-        <Navigation />
+      <div className="btn-container">
+        <Button className="boot-button" style={{ margin: "1rem 0 -.75rem 0" }} onClick={openModal}>
+          Add Truck
+        </Button>
       </div>
-      <section className="section-center">
-        <h3 className="form-header">Add Truckload</h3>
-        <form ref={form} onSubmit={handleSubmit} method="post">
-          {/* //* If alert is showing, we bring in the alert component */}
-          {alert.show && (
-            <Alert {...alert} removeAlert={showAlert} truckLoad={truckLoad} />
-          )}
-          <div className="form-control">
-            <input
-              className="truckload-inputs"
-              required
-              type="text"
-              name="truckName"
-              value={truckName}
-              onChange={(e) => setTruckName(e.target.value)}
-              placeholder="Name of Truck"
-            />
-            <input
-              className="truckload-inputs"
-              required
-              type="text"
-              name="truckPrice"
-              value={truckPrice}
-              onChange={(e) => setTruckPrice(e.target.value)}
-              placeholder="Price"
-            />
-            <input
-              className="truckload-inputs"
-              required
-              type="text"
-              name="truckContents"
-              value={[truckContents]}
-              onChange={(e) => setTruckContents([e.target.value])}
-              placeholder="What's in the truck?"
-            />
-            <input
-              type="file"
-              multiple
-              name="truckManifest"
-              className="truckload-inputs"
-              value={[truckManifest]}
-              onChange={(e) => setTruckManifest(e.target.value)}
-            />
-            <button className="submit-btn" type="submit" onClick={postTrucks}>
-              {isEditing ? "Edit" : "Submit"}
-            </button>
-          </div>
-        </form>
-        {/* //* If length of truckLoad array is greater than 0 we show the Inventory component + clear items button */}
-        {truckLoad.length > 0 && (
-          <div>
-            <Inventory
-              truckLoad={truckLoad}
-              removeItem={removeItem}
-              editItem={editItem}
-            />
-            <button className="clear-btn" onClick={clearList}>
-              Clear items
-            </button>
-          </div>
-        )}
-      </section>
+
+      <Modal show={isModalOpen} onHide={closeModal} className="form-in-modal">
+        <Form ref={form} onSubmit={handleSubmit} method="post">
+          <Modal.Header>
+          <h1 className="truck-modal-header">Add Truck</h1>
+          <button onClick={closeModal} className="close-trucks-modal ml-auto">X</button>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group className="center-form-group">
+              <Form.Label>Truck Name</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={truckName}
+                onChange={(e) => setTruckName(e.target.value)}
+                name="truckName"
+              />
+              <Form.Label>Truck Price</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={truckPrice}
+                onChange={(e) => setTruckPrice(e.target.value)}
+                name="truckPrice"
+              />
+              <Form.Label>Truck Contents</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={[truckContents]}
+                onChange={(e) => setTruckContents(e.target.value)}
+                name="truckContents"
+              />
+              <Form.Label>Truck Manifest</Form.Label>
+              <Form.Control
+                type="file"
+                multiple
+                required
+                value={[truckManifest]}
+                onChange={(e) => setTruckManifest(e.target.value)}
+                name="truckManifest"
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+              <Button type="submit" onClick={postTrucks} className="boot-button mr-auto ml-auto">
+                Add Truck
+              </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     </>
   );
 };
