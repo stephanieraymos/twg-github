@@ -6,6 +6,7 @@ import download from "../img/download.svg";
 import { Link } from "react-router-dom";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
+import { Container } from "react-bootstrap";
 
 function InventoryAllTrucks() {
   document.title = "Inventory - Database";
@@ -55,7 +56,9 @@ function InventoryAllTrucks() {
       <div>
         <Navigation />
       </div>
-      <AddInventory />
+      <Container fluid>
+        <AddInventory />
+      </Container>
       <div className="table-wrapper">
         <div className="header-items">
           <p className="all-trucks-table-header-name truck">TRUCK NAME</p>

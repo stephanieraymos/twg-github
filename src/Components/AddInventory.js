@@ -5,11 +5,9 @@ import { useGlobalContext } from "../context";
 import Alert from "./Alert";
 import inventory from "../css/inventory.css";
 import { Link } from "react-router-dom";
-import Navigation from "./Navigation";
 
 const AddInventory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
 
   document.title = "Add Inventory";
   const {
@@ -25,15 +23,7 @@ const AddInventory = () => {
     truckManifest,
     setTruckManifest,
 
-    isEditing,
-    setIsEditing,
-    editId,
-    setEditId,
-    alert,
     showAlert,
-    clearList,
-    removeItem,
-    editItem,
   } = useTruckContext();
 
   const openModal = () => {
@@ -51,31 +41,7 @@ const AddInventory = () => {
 
     e.preventDefault();
     // setId(new Date().getTime().toString());
-    if (truckName && isEditing) {
-      // deal with edit if something is in value and user is editing
-      setTruckLoad(
-        truckLoad.map((truck, id) => {
-          if (truck.id === editId) {
-            return {
-              ...truck,
-              id,
-              truckName,
-              truckPrice,
-              truckContents,
-              truckManifest,
-            };
-          }
-          return truck;
-        })
-      );
-      setTruckName("");
-      setTruckPrice("");
-      setTruckContents([]);
-      setTruckManifest([]);
-      setEditId(""); //Reseting editId
-      setIsEditing(false); //Reseting isEditing to false
-      showAlert(true, "success", "Truck Details Updated"); //Showing alert after edit is submitted
-    } else {
+    if (truckName) {
       // Show alert and add truck to inventory only if name is true and not editing
       showAlert(true, "success", "Truck Added");
       //Creating new truck
@@ -88,6 +54,7 @@ const AddInventory = () => {
       setTruckPrice("");
       setTruckContents([]);
       setTruckManifest([]);
+      closeModal();
       console.log("New Truck", newTruck); //Logging new truck for testing purposes
     }
   };
@@ -108,75 +75,71 @@ const AddInventory = () => {
 
   return (
     <>
-        <div
-          className="inventory-top-buttons"
-          style={{ justifyContent: "center", display: "flex" }}
-        >
-          <Button
-            as={Link}
-            to="/AddInventory"
-            style={{ margin: "1rem 0 -.75rem 0" }}
-            onClick={openModal}
-          >
-            Add Truck
-          </Button>
-        </div>
+      <div className="btn-container">
+        <Button style={{ margin: "1rem 0 -.75rem 0"}} onClick={openModal}>
+          Add Truck
+        </Button>
+      </div>
 
-        <Modal show={isModalOpen} onHide={closeModal}>
-          <Form ref={form} onSubmit={handleSubmit} method="post">
-            <Modal.Body>
-              <Form.Group>
-                <Form.Label>Truck Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  value={truckName}
-                  onChange={(e) => setTruckName(e.target.value)}
-                  name="truckName"
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Truck Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  value={truckPrice}
-                  onChange={(e) => setTruckPrice(e.target.value)}
-                  name="truckPrice"
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Truck Contents</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  value={[truckContents]}
-                  onChange={(e) => setTruckContents(e.target.value)}
-                  name="truckContents"
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Truck Manifest</Form.Label>
-                <Form.Control
-                  type="file"
-                  multiple
-                  required
-                  value={[truckManifest]}
-                  onChange={(e) => setTruckManifest(e.target.value)}
-                  name="truckManifest"
-                />
-              </Form.Group>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={closeModal}>
-                Close
-              </Button>
-              <Button variant="success" type="submit" onClick={postTrucks}>
-                Add Truck
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal>
+      <Modal show={isModalOpen} onHide={closeModal}>
+        <Form ref={form} onSubmit={handleSubmit} method="post">
+          <Modal.Body>
+            <Form.Group>
+              <Form.Label>Truck Name</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={truckName}
+                onChange={(e) => setTruckName(e.target.value)}
+                name="truckName"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Truck Price</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={truckPrice}
+                onChange={(e) => setTruckPrice(e.target.value)}
+                name="truckPrice"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Truck Contents</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                value={[truckContents]}
+                onChange={(e) => setTruckContents(e.target.value)}
+                name="truckContents"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Truck Manifest</Form.Label>
+              <Form.Control
+                type="file"
+                multiple
+                required
+                value={[truckManifest]}
+                onChange={(e) => setTruckManifest(e.target.value)}
+                name="truckManifest"
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={closeModal}
+              className="center-btn"
+            >
+              Close
+            </Button>
+            <Button variant="success" type="submit" onClick={postTrucks}>
+              Add Truck
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     </>
   );
 };

@@ -17,15 +17,6 @@ p {
   box-shadow: rgba(44, 44, 44, 0.589);
 }
 
-.form-control {
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  align-items: center;
-}
-
 input:hover::placeholder {
   color: var(--light);
 }
