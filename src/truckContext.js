@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import Inventory from "./Components/Inventory";
 import InventoryAllTrucks from "./Components/InventoryAllTrucks"
 
 

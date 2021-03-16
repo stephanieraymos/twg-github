@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
-import Inventory from "./Components/Inventory";
 
 
 // Generating context
