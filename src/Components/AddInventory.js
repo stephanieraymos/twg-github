@@ -1,11 +1,16 @@
-import React, { useRef } from "react";
-import Alert from "./Alert";
-import Inventory from "./Inventory";
-import Navigation from "./Navigation";
+import React, { useState, useRef } from "react";
+import { Button, Modal, Form } from "react-bootstrap";
 import { useTruckContext } from "../truckContext";
+import { useGlobalContext } from "../context";
+import Alert from "./Alert";
 import inventory from "../css/inventory.css";
+import { Link } from "react-router-dom";
+import Navigation from "./Navigation";
 
 const AddInventory = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
   document.title = "Add Inventory";
   const {
     truckLoad,
@@ -30,6 +35,14 @@ const AddInventory = () => {
     removeItem,
     editItem,
   } = useTruckContext();
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const form = useRef(null);
 
@@ -81,88 +94,89 @@ const AddInventory = () => {
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
-      const data = new FormData(form.current);
-      try {
-        const response = await fetch(
-          "http://143.110.225.28/api/v1/inventory/",
-          {
-            method: "POST",
-            body: data,
-          }
-        );
-        return response.json();
-      } catch (error) {
-        console.log(error);
-      }
+    const data = new FormData(form.current);
+    try {
+      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+        method: "POST",
+        body: data,
+      });
+      return response.json();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
-      <section className="section-center">
-        <h3 className="form-header">Add Truckload</h3>
-        <form ref={form} onSubmit={handleSubmit} method="post">
-          {/* //* If alert is showing, we bring in the alert component */}
-          {alert.show && (
-            <Alert {...alert} removeAlert={showAlert} truckLoad={truckLoad} />
-          )}
-          <div className="form-control">
-            <input
-              className="truckload-inputs"
-              required
-              type="text"
-              name="truckName"
-              value={truckName}
-              onChange={(e) => setTruckName(e.target.value)}
-              placeholder="Name of Truck"
-            />
-            <input
-              className="truckload-inputs"
-              required
-              type="text"
-              name="truckPrice"
-              value={truckPrice}
-              onChange={(e) => setTruckPrice(e.target.value)}
-              placeholder="Price"
-            />
-            <input
-              className="truckload-inputs"
-              required
-              type="text"
-              name="truckContents"
-              value={[truckContents]}
-              onChange={(e) => setTruckContents([e.target.value])}
-              placeholder="What's in the truck?"
-            />
-            <input
-              type="file"
-              multiple
-              name="truckManifest"
-              className="truckload-inputs"
-              value={[truckManifest]}
-              onChange={(e) => setTruckManifest(e.target.value)}
-            />
-            <button className="submit-btn" type="submit" onClick={postTrucks}>
-              {isEditing ? "Edit" : "Submit"}
-            </button>
-          </div>
-        </form>
-        {/* //* If length of truckLoad array is greater than 0 we show the Inventory component + clear items button */}
-        {truckLoad.length > 0 && (
-          <div>
-            <Inventory
-              truckLoad={truckLoad}
-              removeItem={removeItem}
-              editItem={editItem}
-            />
-            <button className="clear-btn" onClick={clearList}>
-              Clear items
-            </button>
-          </div>
-        )}
-      </section>
+        <div
+          className="inventory-top-buttons"
+          style={{ justifyContent: "center", display: "flex" }}
+        >
+          <Button
+            as={Link}
+            to="/AddInventory"
+            style={{ margin: "1rem 0 -.75rem 0" }}
+            onClick={openModal}
+          >
+            Add Truck
+          </Button>
+        </div>
+
+        <Modal show={isModalOpen} onHide={closeModal}>
+          <Form ref={form} onSubmit={handleSubmit} method="post">
+            <Modal.Body>
+              <Form.Group>
+                <Form.Label>Truck Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={truckName}
+                  onChange={(e) => setTruckName(e.target.value)}
+                  name="truckName"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Truck Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={truckPrice}
+                  onChange={(e) => setTruckPrice(e.target.value)}
+                  name="truckPrice"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Truck Contents</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={[truckContents]}
+                  onChange={(e) => setTruckContents(e.target.value)}
+                  name="truckContents"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Truck Manifest</Form.Label>
+                <Form.Control
+                  type="file"
+                  multiple
+                  required
+                  value={[truckManifest]}
+                  onChange={(e) => setTruckManifest(e.target.value)}
+                  name="truckManifest"
+                />
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeModal}>
+                Close
+              </Button>
+              <Button variant="success" type="submit" onClick={postTrucks}>
+                Add Truck
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Modal>
     </>
   );
 };

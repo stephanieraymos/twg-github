@@ -55,9 +55,7 @@ function InventoryAllTrucks() {
       <div>
         <Navigation />
       </div>
-      <div className="inventory-top-buttons" style={{justifyContent: "center", display: "flex"}}>
-        <Button as={Link} to="/AddInventory" style={{margin: "1rem 0 -.75rem 0"}}>Add Truck</Button>
-      </div>
+      <AddInventory />
       <div className="table-wrapper">
         <div className="header-items">
           <p className="all-trucks-table-header-name truck">TRUCK NAME</p>
