@@ -3,7 +3,7 @@ import Inventory from "./Components/Inventory";
 
 
 // Generating context
-const AppContext = React.createContext(undefined);
+const AppContext = React.createContext(null, trucks= []);
 
 //Generating provider
 const AppProvider = ({ children }) => {

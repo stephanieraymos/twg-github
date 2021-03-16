@@ -4,7 +4,7 @@ import InventoryAllTrucks from "./Components/InventoryAllTrucks"
 
 
 // Generating context
-const TruckContext = createContext()
+const TruckContext = createContext(null)
 
 //Generating provider
 const TruckProvider = ({ children }) => {
