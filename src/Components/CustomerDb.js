@@ -13,7 +13,7 @@ function CustomerDb() {
   const fetchUsers = async () => {
     console.log(accessToken)
     const response = await fetch(url, {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json", 'Authorization': "Bearer " + accessToken },
     });
     const newUsers = await response.json(); //returns a promise
