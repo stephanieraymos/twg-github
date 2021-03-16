@@ -4,6 +4,7 @@ import { useTruckContext } from "../truckContext";
 import { useGlobalContext } from "../context";
 import Alert from "./Alert";
 import inventory from "../css/inventory.css";
+import modalandsidebar from "../css/modalandsidebar.css";
 import { Link } from "react-router-dom";
 
 const AddInventory = () => {
@@ -72,20 +73,19 @@ const AddInventory = () => {
       console.log(error);
     }
   };
-  
 
   return (
     <>
       <div className="btn-container">
-        <Button style={{ margin: "1rem 0 -.75rem 0"}} onClick={openModal}>
+        <Button style={{ margin: "1rem 0 -.75rem 0" }} onClick={openModal}>
           Add Truck
         </Button>
       </div>
 
-      <Modal show={isModalOpen} onHide={closeModal} className="">
+      <Modal show={isModalOpen} onHide={closeModal} className="form-in-modal">
         <Form ref={form} onSubmit={handleSubmit} method="post">
           <Modal.Body>
-            <Form.Group>
+            <Form.Group className="center-form-group">
               <Form.Label>Truck Name</Form.Label>
               <Form.Control
                 type="text"
@@ -94,8 +94,6 @@ const AddInventory = () => {
                 onChange={(e) => setTruckName(e.target.value)}
                 name="truckName"
               />
-            </Form.Group>
-            <Form.Group>
               <Form.Label>Truck Price</Form.Label>
               <Form.Control
                 type="text"
@@ -104,8 +102,6 @@ const AddInventory = () => {
                 onChange={(e) => setTruckPrice(e.target.value)}
                 name="truckPrice"
               />
-            </Form.Group>
-            <Form.Group>
               <Form.Label>Truck Contents</Form.Label>
               <Form.Control
                 type="text"
@@ -114,8 +110,6 @@ const AddInventory = () => {
                 onChange={(e) => setTruckContents(e.target.value)}
                 name="truckContents"
               />
-            </Form.Group>
-            <Form.Group>
               <Form.Label>Truck Manifest</Form.Label>
               <Form.Control
                 type="file"
@@ -128,16 +122,13 @@ const AddInventory = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={closeModal}
-              className="center-btn"
-            >
-              Close
-            </Button>
-            <Button variant="success" type="submit" onClick={postTrucks}>
-              Add Truck
-            </Button>
+            <div className="btn-container">
+              <Button onClick={closeModal}>Close</Button>
+
+              <Button type="submit" onClick={postTrucks}>
+                Add Truck
+              </Button>
+            </div>
           </Modal.Footer>
         </Form>
       </Modal>

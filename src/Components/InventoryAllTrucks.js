@@ -49,7 +49,6 @@ function InventoryAllTrucks() {
     console.log(response);
     // link.download = await truckManifest;
   };
-  console.log(trucks);
 
   return (
     <>
