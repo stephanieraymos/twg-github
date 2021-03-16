@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import Navigation from "./Navigation";
-import { useGlobalContext } from "../context";
+import { useTruckContext } from "../truckContext";
 import download from "../img/download.svg";
 import inventory from "../css/inventory.css";
 
 function InventoryAllTrucks() {
   document.title = "Inventory - Database";
 
-  const { trucks } = useGlobalContext();
+  const { trucks } = useTruckContext();
 
   const getManifest = async (truckManifest) => {
     const response = await fetch(

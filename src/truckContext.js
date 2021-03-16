@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useReducer } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Inventory from "./Components/Inventory";
 
 
@@ -18,6 +18,10 @@ const TruckProvider = ({ children }) => {
   const [truckManifest, setTruckManifest] = useState([]);
   const [id, setId] = useState("");
   const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
 
   if (truckLoad.truckName === "") {
     console.log("The truck name is empty but printing");
@@ -125,6 +129,17 @@ const TruckProvider = ({ children }) => {
         setId,
 
         fetchTrucks,
+        clearList,
+        showAlert,
+        editItem,
+        removeItem,
+
+        alert,
+        isEditing,
+        editId,
+        setAlert,
+        setIsEditing,
+        setEditId
       }}
     >
       {children}
@@ -134,7 +149,7 @@ const TruckProvider = ({ children }) => {
 
 //! Custom hook for using context within app
 const useTruckContext = () => {
-  return useContext(AppContext);
+  return useContext(TruckContext);
 };
 
-export { AppContext, AppProvider, useTruckContext };
+export { TruckContext, TruckProvider, useTruckContext };

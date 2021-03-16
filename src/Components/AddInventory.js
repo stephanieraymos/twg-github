@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Alert from "./Alert";
 import Inventory from "./Inventory";
 import Navigation from "./Navigation";
-import { useGlobalContext } from "../context";
+import { useTruckContext } from "../truckContext";
 import inventory from "../css/inventory.css";
 
 const AddInventory = () => {
@@ -29,7 +29,7 @@ const AddInventory = () => {
     clearList,
     removeItem,
     editItem,
-  } = useGlobalContext();
+  } = useTruckContext();
 
   const form = useRef(null);
 

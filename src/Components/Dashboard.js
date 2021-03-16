@@ -1,12 +1,14 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../context";
+import { useTruckContext } from "../truckContext";
 import dashboard from "../css/dashboard.css";
 import OrderDetails from "./OrderDetails";
 
 const Dashboard = () => {
   document.title = "Dashboard";
-  const { openSidebar, isSidebarOpen, trucks } = useGlobalContext();
+  const { openSidebar, isSidebarOpen } = useGlobalContext();
+  const { trucks } = useTruckContext();
 
   const handleViewDetails = () => {
     return <OrderDetails />;

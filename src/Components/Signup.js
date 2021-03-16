@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
+import { useTruckContext } from "../truckContext";
 
 const Signup = () => {
   document.title = "Sign up";
@@ -22,8 +23,11 @@ const Signup = () => {
     setPersonId,
     postToDb,
     setPostToDb,
-    showAlert
   } = useGlobalContext();
+
+  const {
+    showAlert
+  } = useTruckContext();
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
