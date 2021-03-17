@@ -26,27 +26,31 @@ const InventoryAllTrucks = () => {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = async (truckManifest) => {
-    let data = new FormData();
-    data.append("truckManifestId", truckManifest);
-    const response = await fetch(
-      "http://143.110.225.28/api/v1/inventory/manifest/",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    console.log("log inside getManifest: (truckManifest)", truckManifest);
-    console.log("log inside getManifest: (response)", response);
-    console.log("log inside getManifest: (data)", data);
-    console.log(trucks) 
-    const json = await response.json();
-    console.log(json);
-    setTruckFile(json);
-    return json;
-    // const file = await json["truckManifest"];
-    // console.log(file);
-    // window.location.assign([file]);
-    // console.log([truckManifestName])
+    try {
+      let data = new FormData();
+      data.append("truckManifestId", truckManifest);
+      const response = await fetch(
+        "http://143.110.225.28/api/v1/inventory/manifest/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body:  JSON.stringify([data]),
+        }
+      );
+      const json = await response.json();
+      console.log("log inside getManifest: (truckManifest)", truckManifest);
+      console.log("log inside getManifest: (response)", response);
+      console.log("log inside getManifest: (data)", data);
+      console.log(json);
+      setTruckFile(json);
+      return json;
+      // const file = await json["truckManifest"];
+      // console.log(file);
+      // window.location.assign([file]);
+      // console.log([truckManifestName])
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -91,10 +95,9 @@ const InventoryAllTrucks = () => {
                   </Modal.Header>
                   <Modal.Body>
                     {/*//^ Map method to get list of files for each truck inside modal */}
-                    {trucks.map((manifest, index) => {
+                    {truckFile.map((manifest, index) => {
                       const { truckManifestName, truckManifest } = manifest;
-                      console.log("truckManifestName", truckManifestName);
-                      console.log(trucks);
+                      // console.log("truckManifestName", truckManifestName);
                       return (
                         <ul>
                           <li
@@ -115,5 +118,5 @@ const InventoryAllTrucks = () => {
       </div>
     </>
   );
-}
+};
 export default InventoryAllTrucks;
