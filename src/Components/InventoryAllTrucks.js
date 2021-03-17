@@ -5,23 +5,27 @@ import download from "../img/download.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container } from "react-bootstrap";
+
 function InventoryAllTrucks() {
   document.title = "Inventory - Database";
+
   const { trucks } = useTruckContext();
   const getManifest = async (truckManifest) => {
+    let data = new FormData()
+    data.append("truckManifestId", truckManifest)
     const response = await fetch(
       "http://143.110.225.28/api/v1/inventory/manifest/",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          truckManifestId: truckManifest,
-        }),
+        body: data
       }
     );
     console.log(truckManifest)
+    console.log(response)
     const json = await response.json();
+    console.log(json)
     const file = await json["truckManifest"];
+    console.log(file)
     window.location.href = file;
   };
 
