@@ -79,7 +79,7 @@ function InventoryAllTrucks() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <button onClick={getManifest, openModal}>
+                <button onClick={() => getManifest(truckManifest), openModal}>
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
@@ -91,9 +91,9 @@ function InventoryAllTrucks() {
                   </Modal.Header>
                   <Modal.Body>
                     {/*//^ Map method to get list of files for each truck inside modal */}
-                    {truckFile.map((manifest, index) => {
+                    {trucks.map((manifest, index) => {
                       const { truckManifestName, truckManifest } = manifest;
-                      console.log(manifest);
+                      console.log("truckManifestName", truckManifestName);
 
                       return (
                         <ul>
