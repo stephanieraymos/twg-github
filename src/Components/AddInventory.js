@@ -116,65 +116,67 @@ const AddInventory = () => {
 
       <Modal show={isModalOpen} onHide={closeModal} className="form-in-modal">
         <Form ref={form} onSubmit={handleSubmit} method="post">
-          <Modal.Header>
-            <h1 className="truck-modal-header">Add Truck</h1>
-            <button onClick={closeModal} className="close-trucks-modal ml-auto">
-              X
-            </button>
-          </Modal.Header>
-          <Modal.Body>
-            <Form.Group className="center-form-group">
-              <Form.Label>Truck Name</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={truckName}
-                onChange={(e) => setTruckName(e.target.value)}
-                name="truckName"
-              />
+            <Modal.Header>
+              <h1 className="modal-header">Add Truck</h1>
+              <button
+                onClick={closeModal}
+                className="close-trucks-modal ml-auto"
+              >
+                X
+              </button>
+            </Modal.Header>
+            <Modal.Body style={{backgroundColor:"white"}}>
+              <Form.Group className="center-form-group">
+                <Form.Label>Truck Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={truckName}
+                  onChange={(e) => setTruckName(e.target.value)}
+                  name="truckName"
+                />
 
-              <Form.Label>Truck Price</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={truckPrice}
-                onChange={(e) => setTruckPrice(e.target.value)}
-                name="truckPrice"
-              />
+                <Form.Label>Truck Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={truckPrice}
+                  onChange={(e) => setTruckPrice(e.target.value)}
+                  name="truckPrice"
+                />
 
-              <Form.Label>Truck Contents</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={truckContents}
-                onChange={(e) => setTruckContents(e.target.value)}
-                name="truckContents"
-              />
+                <Form.Label>Truck Contents</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={truckContents}
+                  onChange={(e) => setTruckContents(e.target.value)}
+                  name="truckContents"
+                />
 
-              <Form.Label>Truck Manifest</Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                required
-                value={truckManifest}
-                onChange={(e) => setTruckManifest(e.target.value)}
-                name="truckManifest"
-              />
+                <Form.Label>Truck Manifest</Form.Label>
+                <Form.Control
+                  type="file"
+                  multiple
+                  required
+                  value={truckManifest}
+                  onChange={(e) => setTruckManifest(e.target.value)}
+                  name="truckManifest"
+                />
 
-              <Form.Label>User ID</Form.Label>
-              <Form.Control type="text" defaultValue={userId} name="userId" />
-              
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              type="submit"
-              onClick={postTrucks}
-              className="boot-button mr-auto ml-auto"
-            >
-              Add Truck
-            </Button>
-          </Modal.Footer>
+                <Form.Label>User ID</Form.Label>
+                <Form.Control type="text" defaultValue={userId} name="userId" />
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                type="submit"
+                onClick={postTrucks}
+                className="boot-button mr-auto ml-auto"
+              >
+                Add Truck
+              </Button>
+            </Modal.Footer>
         </Form>
       </Modal>
     </>

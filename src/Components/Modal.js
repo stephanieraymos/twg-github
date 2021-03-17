@@ -5,8 +5,6 @@ import { useGlobalContext } from "../context";
 import Alert from "./Alert";
 import modalandsidebar from "../css/modalandsidebar.css";
 
-//todo ----REFACTOR THIS COMPONENT TO USE CONTEXT----
-
 const getLocalStorage = () => {
   let person = localStorage.getItem("person");
   if (person) {
@@ -106,61 +104,61 @@ const LoginModal = () => {
   }, [person]);
 
   return (
-
-
-    
     <div
       className={`${
         isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
       }`}
     >
-
-
-<Modal show={isModalOpen} onHide={closeModal} className="form-in-modal">
+      <Modal show={isModalOpen} onHide={closeModal} className="form-in-modal" style={{backgroundColor: "transparent"}}>
         <Form onSubmit={handleSubmit}>
           <Modal.Header>
-          <h1 className="truck-modal-header">Login</h1>
-          <button onClick={closeModal} className="close-trucks-modal ml-auto">X</button>
+            <h1 className="modal-header">Login</h1>
+            <button onClick={closeModal} className="close-trucks-modal ml-auto">
+              X
+            </button>
           </Modal.Header>
           <Modal.Body>
             <Form.Group className="center-form-group">
-              <Form.Label>First Name</Form.Label>
+              <Form.Label style={{color:"white"}}>First Name</Form.Label>
               <Form.Control
-              type="text"
-              required
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder="First Name"
+                type="text"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="First Name"
               />
-              <Form.Label>Last Name</Form.Label>
+              <Form.Label style={{color:"white"}}>Last Name</Form.Label>
               <Form.Control
-              type="text"
-              required
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              placeholder="Last Name"
+                type="text"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Last Name"
               />
-              <Form.Label>Email</Form.Label>
+              <Form.Label style={{color:"white"}}>Email</Form.Label>
               <Form.Control
-              type="text"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
+                type="text"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
               />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-          <a href="/Signup">
+            <a href="/Signup">
               <div>Don't have an account?</div>
             </a>
-              <Button type="submit" onClick={closeModal} className="boot-button ml-5 mr-4">
-                Login
-              </Button>
+            <Button
+              type="submit"
+              onClick={closeModal}
+              className="boot-button ml-5 mr-4"
+            >
+              Login
+            </Button>
           </Modal.Footer>
         </Form>
       </Modal>
-
     </div>
   );
 };

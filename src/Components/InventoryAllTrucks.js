@@ -6,7 +6,7 @@ import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container, Modal } from "react-bootstrap";
 
-function InventoryAllTrucks() {
+const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +17,6 @@ function InventoryAllTrucks() {
     getManifest(truckManifest);
     setIsModalOpen(true);
   };
-
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -37,8 +36,9 @@ function InventoryAllTrucks() {
       }
     );
     console.log("log inside getManifest: (truckManifest)", truckManifest);
-    console.log("log inside getManifest: (response)",response);
-    console.log("log inside getManifest: (data)",data);
+    console.log("log inside getManifest: (response)", response);
+    console.log("log inside getManifest: (data)", data);
+    console.log(trucks) 
     const json = await response.json();
     console.log(json);
     setTruckFile(json);
@@ -79,7 +79,7 @@ function InventoryAllTrucks() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <button onClick={() => getManifest(truckManifest), openModal}>
+                <button onClick={(() => getManifest(truckManifest), openModal)}>
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
@@ -94,7 +94,7 @@ function InventoryAllTrucks() {
                     {trucks.map((manifest, index) => {
                       const { truckManifestName, truckManifest } = manifest;
                       console.log("truckManifestName", truckManifestName);
-
+                      console.log(trucks);
                       return (
                         <ul>
                           <li
