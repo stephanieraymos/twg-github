@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import { useTruckContext } from "../truckContext";
 import download from "../img/download.svg";
@@ -13,9 +13,11 @@ function InventoryAllTrucks() {
   const [truckFile, setTruckFile] = useState([]);
 
   const openModal = (truckManifest) => {
+    // e.preventDefault()
     getManifest(truckManifest);
     setIsModalOpen(true);
   };
+
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -77,7 +79,7 @@ function InventoryAllTrucks() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <button onClick={openModal}>
+                <button onClick={getManifest, openModal}>
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
