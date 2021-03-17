@@ -26,7 +26,7 @@ function InventoryAllTrucks() {
     console.log(json)
     const file = await json["truckManifest"];
     console.log(file)
-    window.location.href = file;
+    window.location.href = [file];
   };
 
   return (
