@@ -16,6 +16,7 @@ const TruckProvider = ({ children }) => {
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
   const [truckManifest, setTruckManifest] = useState([]);
+  const [truckFile, setTruckFile] = useState([]);
   const [id, setId] = useState("");
   const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
 

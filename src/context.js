@@ -22,7 +22,7 @@ const AppProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("d73897ef-9b70-463f-8dc1-bdafbe8891ff");
 
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////

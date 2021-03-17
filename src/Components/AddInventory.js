@@ -125,6 +125,7 @@ const AddInventory = () => {
           </Modal.Header>
           <Modal.Body>
             <Form.Group className="center-form-group">
+
               <Form.Label>Truck Name</Form.Label>
               <Form.Control
                 type="text"
@@ -133,8 +134,10 @@ const AddInventory = () => {
                 onChange={(e) => setTruckName(e.target.value)}
                 name="truckName"
               />
+
               <Form.Label>User ID</Form.Label>
-              <Form.Control type="text" value={userId} name="userId" />
+              <Form.Control type="text" defaultValue={userId} name="userId" />
+
               <Form.Label>Truck Price</Form.Label>
               <Form.Control
                 type="text"
@@ -143,20 +146,22 @@ const AddInventory = () => {
                 onChange={(e) => setTruckPrice(e.target.value)}
                 name="truckPrice"
               />
+
               <Form.Label>Truck Contents</Form.Label>
               <Form.Control
                 type="text"
                 required
-                value={[truckContents]}
+                value={truckContents}
                 onChange={(e) => setTruckContents(e.target.value)}
                 name="truckContents"
               />
+
               <Form.Label>Truck Manifest</Form.Label>
               <Form.Control
                 type="file"
                 multiple
                 required
-                value={[truckManifest]}
+                value={truckManifest}
                 onChange={(e) => setTruckManifest(e.target.value)}
                 name="truckManifest"
               />
