@@ -58,7 +58,7 @@ function InventoryAllTrucks() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <button onClick={() => getManifest(truckManifest)}>
+                <button onClick={() => getManifest([truckManifest[0]])}>
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
