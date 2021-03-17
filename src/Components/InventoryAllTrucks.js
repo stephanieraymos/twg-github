@@ -1,32 +1,42 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import Navigation from "./Navigation";
 import { useTruckContext } from "../truckContext";
 import download from "../img/download.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
-import { Container } from "react-bootstrap";
+import { Container, Modal } from "react-bootstrap";
 
 function InventoryAllTrucks() {
   document.title = "Inventory - Database";
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const { trucks } = useTruckContext();
   const getManifest = async (truckManifest) => {
-    let data = new FormData()
-    data.append("truckManifestId", truckManifest)
+    let data = new FormData();
+    data.append("truckManifestId", truckManifest);
     const response = await fetch(
       "http://143.110.225.28/api/v1/inventory/manifest/",
       {
         method: "POST",
-        body: data
+        body: data,
       }
     );
-    console.log(truckManifest)
-    console.log(response)
+    console.log(truckManifest);
+    console.log(response);
     const json = await response.json();
-    console.log(json)
+    console.log(json);
     const file = await json["truckManifest"];
-    console.log(file)
-    window.location.assign([file])
+    console.log(file);
+    window.location.assign([file]);
   };
 
   return (
@@ -58,11 +68,29 @@ function InventoryAllTrucks() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <button onClick={() => getManifest([truckManifest[0]])}>
+
+                <button onClick={openModal}>
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
                 </button>
+
+                {truckManifest.map((manifest, index) => {
+                  const { truckManifestName, truckManifest } = manifest;
+
+                  return (
+                    <Modal show={isModalOpen} onHide={closeModal}>
+                      <Modal.Header style={{color: "black"}}>Manifests for this truck</Modal.Header>
+                      <Modal.Body>
+                        <ul>
+                          <li key={index} onClick={() => getManifest([truckManifest[0]])}>
+                            {truckManifestName}
+                          </li>
+                        </ul>
+                      </Modal.Body>
+                    </Modal>
+                  );
+                })}
               </div>
             );
           })}
