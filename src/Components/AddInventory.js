@@ -117,12 +117,12 @@ const AddInventory = () => {
       <Modal show={isModalOpen} onHide={closeModal} className="form-in-modal">
         <Form ref={form} onSubmit={handleSubmit} method="post">
           <Modal.Header>
-            <h1 className="truck-modal-header">Add Truck</h1>
+            <h1 className="modal-header">Add Truck</h1>
             <button onClick={closeModal} className="close-trucks-modal ml-auto">
               X
             </button>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body style={{ backgroundColor: "white" }}>
             <Form.Group className="center-form-group">
               <Form.Label>Truck Name</Form.Label>
               <Form.Control
@@ -135,7 +135,7 @@ const AddInventory = () => {
 
               <Form.Label>Truck Price</Form.Label>
               <Form.Control
-                type="text"
+                type="textarea"
                 required
                 value={truckPrice}
                 onChange={(e) => setTruckPrice(e.target.value)}
@@ -149,6 +149,8 @@ const AddInventory = () => {
                 value={truckContents}
                 onChange={(e) => setTruckContents(e.target.value)}
                 name="truckContents"
+                as="textarea"
+                rows={3}
               />
 
               <Form.Label>Truck Manifest</Form.Label>
@@ -162,8 +164,12 @@ const AddInventory = () => {
               />
 
               <Form.Label>User ID</Form.Label>
-              <Form.Control type="text" defaultValue={userId} name="userId" />
-              
+              <Form.Control
+                type="text"
+                defaultValue={userId}
+                name="userId"
+                readOnly
+              />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>

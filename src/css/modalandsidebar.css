@@ -137,10 +137,6 @@ main {
 =                   MODAL            =
 =============================================*/
 
-.modal-header {
-  color: var(--light);
-}
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -224,6 +220,26 @@ main {
   background-color: transparent;
 }
 
+
+.modal-backdrop-bg  {
+  background-color: black !important;
+}
+
+.modal-content {
+  background-color: transparent !important;
+  flex-direction: row !important; 
+  border: none !important;
+}
+
+.modal-header {
+  border-bottom: none !important;
+  color: var(--light);
+  padding: .5rem .5rem .5rem .5rem !important; 
+}
+
+.modal-footer {
+  border-top: none !important;
+}
 
 /*=============================================
 =                   SIDEBAR            =

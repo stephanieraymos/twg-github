@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import { useTruckContext } from "../truckContext";
 import download from "../img/download.svg";
@@ -6,13 +6,14 @@ import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container, Modal } from "react-bootstrap";
 
-function InventoryAllTrucks() {
+const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
 
   const openModal = (truckManifest) => {
+    // e.preventDefault()
     getManifest(truckManifest);
     setIsModalOpen(true);
   };
@@ -25,26 +26,31 @@ function InventoryAllTrucks() {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = async (truckManifest) => {
-    let data = new FormData();
-    data.append("truckManifestId", truckManifest);
-    const response = await fetch(
-      "http://143.110.225.28/api/v1/inventory/manifest/",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    console.log("log inside getManifest: (truckManifest)", truckManifest);
-    console.log("log inside getManifest: (response)",response);
-    console.log("log inside getManifest: (data)",data);
-    const json = await response.json();
-    console.log(json);
-    setTruckFile(json);
-    return json;
-    // const file = await json["truckManifest"];
-    // console.log(file);
-    // window.location.assign([file]);
-    // console.log([truckManifestName])
+    try {
+      let data = new FormData();
+      data.append("truckManifestId", truckManifest);
+      const response = await fetch(
+        "http://143.110.225.28/api/v1/inventory/manifest/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body:  JSON.stringify([data]),
+        }
+      );
+      const json = await response.json();
+      console.log("log inside getManifest: (truckManifest)", truckManifest);
+      console.log("log inside getManifest: (response)", response);
+      console.log("log inside getManifest: (data)", data);
+      console.log(json);
+      setTruckFile(json);
+      return json;
+      // const file = await json["truckManifest"];
+      // console.log(file);
+      // window.location.assign([file]);
+      // console.log([truckManifestName])
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -77,7 +83,7 @@ function InventoryAllTrucks() {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <button onClick={openModal}>
+                <button onClick={(() => getManifest(truckManifest), openModal)}>
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
@@ -91,8 +97,7 @@ function InventoryAllTrucks() {
                     {/*//^ Map method to get list of files for each truck inside modal */}
                     {truckFile.map((manifest, index) => {
                       const { truckManifestName, truckManifest } = manifest;
-                      console.log(manifest);
-
+                      // console.log("truckManifestName", truckManifestName);
                       return (
                         <ul>
                           <li
@@ -113,5 +118,5 @@ function InventoryAllTrucks() {
       </div>
     </>
   );
-}
+};
 export default InventoryAllTrucks;
