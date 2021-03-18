@@ -29,6 +29,7 @@ const InventoryAllTrucks = () => {
     try {
       const response = await fetch(
         "http://143.110.225.28/api/v1/inventory/manifest/",
+        // "http://143.110.225.28/api/v1/inventory/manifest/?id={truckManifestId}",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -37,9 +38,9 @@ const InventoryAllTrucks = () => {
           }),
         }
       );
-      const json = await response.json();
       console.log("log inside getManifest: (truckManifest)", truckManifest);
       console.log("log inside getManifest: (response)", response);
+      const json = await response.json();
       // console.log("log inside getManifest: (data)", data);
       console.log(json);
       // setTruckFile(json);
