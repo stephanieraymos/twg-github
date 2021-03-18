@@ -10,7 +10,7 @@ const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [truckFile, setTruckFile] = useState([]);
+  // const [truckFile, setTruckFile] = useState([]);
 
   const openModal = (truckManifest) => {
     // e.preventDefault()
@@ -22,10 +22,10 @@ const InventoryAllTrucks = () => {
     setIsModalOpen(false);
   };
 
-  const { trucks } = useTruckContext();
+  const { trucks, truckManifest } = useTruckContext();
 
   //^ GET MANIFEST REQUEST //
-  const getManifest = async (truckManifest) => {
+  const getManifest = async () => {
     try {
       let data = new FormData();
       data.append("truckManifestId", truckManifest);
@@ -42,7 +42,7 @@ const InventoryAllTrucks = () => {
       console.log("log inside getManifest: (response)", response);
       console.log("log inside getManifest: (data)", data);
       console.log(json);
-      setTruckFile(json);
+      // setTruckFile(json);
       return json;
       // const file = await json["truckManifest"];
       // console.log(file);
@@ -95,7 +95,7 @@ const InventoryAllTrucks = () => {
                   </Modal.Header>
                   <Modal.Body>
                     {/*//^ Map method to get list of files for each truck inside modal */}
-                    {truckFile.map((manifest, index) => {
+                    {truckManifest.map((manifest, index) => {
                       const { truckManifestName, truckManifest } = manifest;
                       // console.log("truckManifestName", truckManifestName);
                       return (
