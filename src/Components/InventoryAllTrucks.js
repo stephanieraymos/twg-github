@@ -96,13 +96,13 @@ const InventoryAllTrucks = () => {
                   </Modal.Header>
                   <Modal.Body>
                     {/*//^ Map method to get list of files for each truck inside modal */}
-                    {trucks.map((manifest, index) => {
+                    {truckManifest.map((manifest, id) => {
                       const { truckManifestName, truckManifest, ...trucks } = manifest;
                       // console.log("truckManifestName", truckManifestName);
                       return (
                         <ul>
                           <li
-                            key={index}
+                            key={id}
                             onClick={() => getManifest([truckManifest])}
                           >
                             {truckManifestName}
