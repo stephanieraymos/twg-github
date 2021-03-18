@@ -27,20 +27,20 @@ const InventoryAllTrucks = () => {
   //^ GET MANIFEST REQUEST //
   const getManifest = async () => {
     try {
-      let data = new FormData();
-      data.append("truckManifestId", truckManifest);
       const response = await fetch(
         "http://143.110.225.28/api/v1/inventory/manifest/",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body:  JSON.stringify([data]),
+          body: JSON.stringify({
+            truckManifestId: truckManifest[0],
+          }),
         }
       );
       const json = await response.json();
       console.log("log inside getManifest: (truckManifest)", truckManifest);
       console.log("log inside getManifest: (response)", response);
-      console.log("log inside getManifest: (data)", data);
+      // console.log("log inside getManifest: (data)", data);
       console.log(json);
       // setTruckFile(json);
       return json;
