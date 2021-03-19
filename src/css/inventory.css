@@ -1,10 +1,6 @@
 /*=============================================
 =                  INVENTORY                 =
 =============================================*/
-p {
-  padding: 0;
-  margin: 0;
-}
 
 .section-center {
   background: rgba(0, 0, 0, 0.199);
@@ -46,10 +42,14 @@ input:hover::placeholder {
 
 .truckLoad:hover {
   color: gray;
-  background: var(--dark-gray);
+  background: var(--gray);
 }
 
 .truckLoad:hover > .items {
+  color: var(--text);
+}
+
+.truckLoad:hover > button {
   color: var(--text);
 }
 
@@ -142,8 +142,14 @@ input:hover::placeholder {
 .truckLoad:nth-child(even) {
   background: rgb(194, 192, 192);
 }
+
 .truckLoad:nth-child(even):hover {
-  background: black;
+  background: var(--gray);
+}
+
+.folder-icon {
+  background-color: transparent;
+  border: none;
 }
 
 /*=============================================
@@ -156,21 +162,29 @@ input:hover::placeholder {
 }
 
 .all-trucks-table-header-name {
-  width: 35%;
+  width: 39%;
 }
 p.all-trucks-table-header-price {
-  width: 18%;
+  width: 20%;
 }
 p.all-trucks-table-header-contents {
   width: 42%;
 }
+p.all-trucks-table-header-manifest {
+  width: 10%;
+  text-align: right;
+  padding-right: .2rem;
+}
 
 .all-trucks-name {
-  width: 35%;
+  width: 33%;
 }
 .all-trucks-price {
   width: 18%;
 }
 .all-trucks-contents {
   width: 42%;
+}
+.all-trucks-manifest {
+  width: 10%;
 }

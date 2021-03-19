@@ -13,6 +13,7 @@ const Dashboard = () => {
   const handleViewDetails = () => {
     return <OrderDetails />;
   };
+  console.log(trucks)
 
   return (
     <>
