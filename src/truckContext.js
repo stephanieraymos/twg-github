@@ -16,7 +16,6 @@ const TruckProvider = ({ children }) => {
   const [truckPrice, setTruckPrice] = useState("");
   const [truckContents, setTruckContents] = useState([]);
   const [truckManifest, setTruckManifest] = useState([]);
-  const [truckFile, setTruckFile] = useState([]);
   const [id, setId] = useState("");
   const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
 
@@ -64,28 +63,28 @@ const TruckProvider = ({ children }) => {
 
   //////////////////////// &&--FETCH--&& ///////////////////////////////
 
-  // New delete request //^----DELETE----
-  const deleteTrucks = async () => {
-    try {
-      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: "",
-        }),
-      });
-      return response.json();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // // New delete request //^----DELETE----
+  // const deleteTrucks = async () => {
+  //   try {
+  //     const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+  //       method: "DELETE",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         id: "",
+  //       }),
+  //     });
+  //     return response.json();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
-  useEffect(() => {
-    deleteTrucks();
-    console.log("deleteTrucks useEffect ran successfully");
-  }, [truckLoad]);
-  // End of useEffect for fetch
+  // //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
+  // useEffect(() => {
+  //   deleteTrucks();
+  //   console.log("deleteTrucks useEffect ran successfully");
+  // }, [truckLoad]);
+  // // End of useEffect for fetch
 
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////

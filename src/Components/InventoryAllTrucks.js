@@ -10,6 +10,7 @@ const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [truckManifestId, setTruckManifestId] = useState("");
   // const [truckFile, setTruckFile] = useState([]);
 
   const openModal = (truckManifest) => {
@@ -22,37 +23,42 @@ const InventoryAllTrucks = () => {
     setIsModalOpen(false);
   };
 
-  const { trucks, truckManifest } = useTruckContext();
+  const { trucks } = useTruckContext();
 
   //^ GET MANIFEST REQUEST //
-  const getManifest = async () => {
-    try {
-      const response = await fetch(
-        "http://143.110.225.28/api/v1/inventory/manifest/",
-        // "http://143.110.225.28/api/v1/inventory/manifest/?id={truckManifestId}",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            truckManifestId: truckManifest[0],
-          }),
-        }
-      );
-      console.log("log inside getManifest: (truckManifest)", truckManifest);
-      console.log("log inside getManifest: (response)", response);
-      const json = await response.json();
-      // console.log("log inside getManifest: (data)", data);
-      console.log(json);
-      // setTruckFile(json);
-      return json;
-      // const file = await json["truckManifest"];
-      // console.log(file);
-      // window.location.assign([file]);
-      // console.log([truckManifestName])
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // useEffect(() => {
+    const getManifest = async (truckManifest) => {
+      try {
+        const response = await fetch(
+          "http://143.110.225.28/api/v1/inventory/manifest/",
+          // "http://143.110.225.28/api/v1/inventory/manifest/?id={truckManifestId}",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              // truckManifestId: truckManifest[0],
+              // truckManifest: truckManifestId,
+              truckManifestId: truckManifestId,
+            }),
+          }
+        );
+
+        console.log("log inside getManifest: (truckManifest)", truckManifest);
+        console.log("log inside getManifest: (response)", response);
+        const json = await response.json();
+        // console.log("log inside getManifest: (data)", data);
+        console.log(json);
+        // setTruckFile(json);
+        return json;
+        // const file = await json["truckManifest"];
+        // console.log(file);
+        // window.location.assign([file]);
+        // console.log([truckManifestName])
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  // }, []);
 
   return (
     <>
@@ -85,6 +91,7 @@ const InventoryAllTrucks = () => {
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
                 <button onClick={(() => getManifest(truckManifest), openModal)}>
+                  {/* <button onClick={openModal}> */}
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
@@ -96,13 +103,13 @@ const InventoryAllTrucks = () => {
                   </Modal.Header>
                   <Modal.Body>
                     {/*//^ Map method to get list of files for each truck inside modal */}
-                    {truckManifest.map((manifest, index) => {
-                      const { truckManifestName, truckManifest } = manifest;
+                    {trucks.map((manifest) => {
+                      const { truckManifestName, truckManifest, id } = manifest;
                       // console.log("truckManifestName", truckManifestName);
                       return (
                         <ul>
                           <li
-                            key={index}
+                            key={id}
                             onClick={() => getManifest([truckManifest])}
                           >
                             {truckManifestName}
