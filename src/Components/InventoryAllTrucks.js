@@ -26,36 +26,39 @@ const InventoryAllTrucks = () => {
   const { trucks } = useTruckContext();
 
   //^ GET MANIFEST REQUEST //
-  const getManifest = async (truckManifest) => {
-    try {
-      const response = await fetch(
-        "http://143.110.225.28/api/v1/inventory/manifest/",
-        // "http://143.110.225.28/api/v1/inventory/manifest/?id={truckManifestId}",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            // truckManifestId: truckManifest[0],
-            // truckManifest: truckManifestId,
-            truckManifestId: truckManifestId,
-          }),
-        }
-      );
-      console.log("log inside getManifest: (truckManifest)", truckManifest);
-      console.log("log inside getManifest: (response)", response);
-      const json = await response.json();
-      // console.log("log inside getManifest: (data)", data);
-      console.log(json);
-      // setTruckFile(json);
-      return json;
-      // const file = await json["truckManifest"];
-      // console.log(file);
-      // window.location.assign([file]);
-      // console.log([truckManifestName])
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // useEffect(() => {
+    const getManifest = async (truckManifest) => {
+      try {
+        const response = await fetch(
+          "http://143.110.225.28/api/v1/inventory/manifest/",
+          // "http://143.110.225.28/api/v1/inventory/manifest/?id={truckManifestId}",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              // truckManifestId: truckManifest[0],
+              // truckManifest: truckManifestId,
+              truckManifestId: truckManifestId,
+            }),
+          }
+        );
+
+        console.log("log inside getManifest: (truckManifest)", truckManifest);
+        console.log("log inside getManifest: (response)", response);
+        const json = await response.json();
+        // console.log("log inside getManifest: (data)", data);
+        console.log(json);
+        // setTruckFile(json);
+        return json;
+        // const file = await json["truckManifest"];
+        // console.log(file);
+        // window.location.assign([file]);
+        // console.log([truckManifestName])
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  // }, []);
 
   return (
     <>
@@ -88,7 +91,7 @@ const InventoryAllTrucks = () => {
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
                 <button onClick={(() => getManifest(truckManifest), openModal)}>
-                {/* <button onClick={openModal}> */}
+                  {/* <button onClick={openModal}> */}
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
