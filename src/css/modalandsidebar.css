@@ -225,9 +225,8 @@ main {
   background-color: black !important;
 }
 
-.modal-content {
+.modal-content{
   background-color: transparent !important;
-  flex-direction: row !important; 
   border: none !important;
 }
 

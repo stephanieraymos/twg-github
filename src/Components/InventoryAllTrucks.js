@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import { useTruckContext } from "../truckContext";
-import download from "../img/download.svg";
+import folder from "../img/folder.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container, Modal } from "react-bootstrap";
@@ -13,8 +13,11 @@ const InventoryAllTrucks = () => {
   const [truckFile, setTruckFile] = useState([]);
 
   const openModal = () => {
+<<<<<<< HEAD
     // e.preventDefault()
     //getManifest(truckManifest);
+=======
+>>>>>>> stephanie
     setIsModalOpen(true);
   };
 
@@ -25,6 +28,7 @@ const InventoryAllTrucks = () => {
   const { trucks } = useTruckContext();
 
   //^ GET MANIFEST REQUEST //
+<<<<<<< HEAD
   // useEffect(() => {
     const getManifest = (truckManifestId) => {
       try {
@@ -56,6 +60,23 @@ const InventoryAllTrucks = () => {
       }
     };
   // }, []);
+=======
+  const getManifest = (truckManifestId) => {
+    try {
+      const data = new FormData();
+      truckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch("http://143.110.225.28/api/v1/inventory/manifest/", {
+        method: "POST",
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((manifest) => setTruckFile(manifest))
+        .then(() => openModal());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+>>>>>>> stephanie
 
   return (
     <>
@@ -71,7 +92,7 @@ const InventoryAllTrucks = () => {
           <p className="all-trucks-table-header-name truck">TRUCK NAME</p>
           <p className="all-trucks-table-header-price price">PRICE</p>
           <p className="all-trucks-table-header-contents contents">CONTENTS</p>
-          <p className="all-trucks-table-header-manifest manifest">MANIFEST</p>
+          <p className="all-trucks-table-header-manifest manifest">FILES</p>
         </div>
         <div className="truckLoad-list">
           {trucks.map((truck) => {
@@ -85,6 +106,7 @@ const InventoryAllTrucks = () => {
 
             return (
               <div className="truckLoad" key={id}>
+<<<<<<< HEAD
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
@@ -92,12 +114,30 @@ const InventoryAllTrucks = () => {
                   getManifest(truckManifestId)
                 }}>
                   {/* <button onClick={openModal}> */}
+=======
+                <p className="items all-trucks-name text-truncate">
+                  {truckName}
+                </p>
+                <p className="items all-trucks-price text-truncate">
+                  ${truckPrice}
+                </p>
+                <p className="items all-trucks-contents text-truncate">
+                  {truckContents}
+                </p>
+                <button
+                  className="folder-icon"
+                  onClick={() => {
+                    getManifest(truckManifestId);
+                  }}
+                >
+>>>>>>> stephanie
                   <p className="items all-trucks-manifest">
-                    <img src={download} alt="download icon" />
+                    <img src={folder} alt="download icon" />
                   </p>
                 </button>
 
                 <Modal show={isModalOpen} onHide={closeModal}>
+<<<<<<< HEAD
                   <Modal.Header style={{ color: "white" }}>
                     Manifests for this truck
                   </Modal.Header>
@@ -117,6 +157,55 @@ const InventoryAllTrucks = () => {
                       );
                     })}
                   </Modal.Body>
+=======
+                  <Modal.Dialog
+                    style={{
+                      backgroundColor: "white",
+                      flexDirection: "column",
+                      minWidth:"20rem",
+                      minHeight:"20rem",
+                      textAlign: "center"
+                    }}
+                  >
+                    <Modal.Header style={{ color: "black", display: "block" }}>
+                      <h1
+                        style={{
+                          textShadow: "0px 4px 4px rgba(164, 188, 236, 0.45)",
+                        }}
+                      >
+                        File List
+                      </h1>
+                    </Modal.Header>
+                    <Modal.Body
+                      style={{ color: "white", borderTop: "1px black solid" }}
+                    >
+                      {/*//^ Map method to get list of files for each truck inside modal */}
+                      {truckFile.map((manifest) => {
+                        const {
+                          truckManifest,
+                          truckManifestName,
+                          truckManifestId,
+                        } = manifest;
+                        return (
+                          <ul>
+                            <li
+                              key={truckManifestId}
+                              onClick={
+                                () =>
+                                  window.open(truckManifest, "_blank") ||
+                                  window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                              }
+                            >
+                              <p style={{ cursor: "pointer", color:"black" }}>
+                                {truckManifestName}
+                              </p>
+                            </li>
+                          </ul>
+                        );
+                      })}
+                    </Modal.Body>
+                  </Modal.Dialog>
+>>>>>>> stephanie
                 </Modal>
 
               </div>
