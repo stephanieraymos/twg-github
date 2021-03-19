@@ -20,7 +20,7 @@ const Signup = () => {
     setConfirmPassword,
     error,
     setError,
-    setPersonId,
+    setUserId,
     postToDb,
     closeModal
   } = useGlobalContext();
@@ -86,7 +86,7 @@ const Signup = () => {
         console.log(response);
         return response.json();
       })
-      .then((person) => setPersonId(person.id));
+      .then((user) => setUserId(user.id));
   }, [postToDb]);
 
   return (
@@ -96,11 +96,7 @@ const Signup = () => {
       </div>
       <div>
         <h1 className="form-header">Sign up</h1>
-        <Form onSubmit={handleSignupSubmit}>
-          <Modal.Header>
-          <button onClick={closeModal} className="close-trucks-modal ml-auto">X</button>
-          </Modal.Header>
-          <Modal.Body>
+        <Form onSubmit={handleSignupSubmit} style={{width: "25%", margin: "0 auto"}}>
             <Form.Group className="center-form-group">
               <Form.Label>First Name</Form.Label>
               <Form.Control
@@ -143,12 +139,10 @@ const Signup = () => {
               placeholder="Password"
               />
             </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-              <Button type="submit" onClick={closeModal} className="boot-button ml-5 mr-4">
+
+              <Button type="submit" onClick={closeModal} className="boot-button" block style={{width: "10rem", margin: "2rem auto"}}>
                 Sign up
               </Button>
-          </Modal.Footer>
         </Form>
       </div>
     </>
