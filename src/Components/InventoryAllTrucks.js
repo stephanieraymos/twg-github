@@ -110,7 +110,7 @@ const InventoryAllTrucks = () => {
                           <li
                             key={truckManifestName}
                             onClick={() =>
-                              window.location.assign(truckManifest)
+                              window.open(truckManifest, "_blank") || window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
                             }
                           >
                             <p style={{cursor: "pointer"}}>{truckManifestName}</p>
