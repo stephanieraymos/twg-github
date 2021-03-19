@@ -10,7 +10,7 @@ const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [truckFile, setTruckFile] = useState({});
+  const [truckFile, setTruckFile] = useState([]);
 
   const openModal = () => {
     // e.preventDefault()
@@ -26,24 +26,27 @@ const InventoryAllTrucks = () => {
 
   //^ GET MANIFEST REQUEST //
   // useEffect(() => {
-    const getManifest = async (truckManifestId) => {
+    const getManifest = (truckManifestId) => {
       try {
         const data = new FormData();
         truckManifestId.map(id => data.append("truckManifestId", id))
-        const response = await fetch(
+        fetch(
           "http://143.110.225.28/api/v1/inventory/manifest/",
           {
             method: "POST",
             body: data,
           }
-        );
+        )
+        .then(response => response.json())
+        .then(manifest => setTruckFile(manifest))
+        .then(_ => openModal());
 
-        console.log("log inside getManifest: (truckManifest)", truckManifestId);
-        console.log("log inside getManifest: (response)", response);
-        const json = await response.json();
-        // console.log("log inside getManifest: (data)", data);
-        console.log(json);
-        return json;
+        // console.log("log inside getManifest: (truckManifest)", truckManifestId);
+        // console.log("log inside getManifest: (response)", response);
+        // const json = await response.json();
+        // // console.log("log inside getManifest: (data)", data);
+        // console.log(json);
+        // return json;
         // const file = await json["truckManifest"];
         // console.log(file);
         // window.location.assign([file]);
@@ -53,44 +56,6 @@ const InventoryAllTrucks = () => {
       }
     };
   // }, []);
-
-  const populateManifest = (truckManifestId) => {
-    console.log("Populate manifest")
-    getManifest(truckManifestId);
-    openModal()
-  }
-
-  const InventoryModal = () => {
-    console.log("Inventory", truckFile)
-    return Object.keys(truckFile).map((key, index) => {
-      console.log("Inventory Key", key)
-      console.log("Inventory Value", truckFile[key])
-      return (<Modal show={isModalOpen} onHide={closeModal}>
-        <Modal.Header style={{ color: "white" }}>
-          Manifests for this truck
-        </Modal.Header>
-        <Modal.Body>
-          {/*//^ Map method to get list of files for each truck inside modal */}
-          {truckFile[key].map((manifest) => {
-            const { truckManifest, truckManifestName } = manifest;
-            console.log("Truck", truckManifest)
-            // console.log("truckManifestName", truckManifestName);
-            return (
-              <ul>
-                <li
-                  key={truckManifestName}
-                  onClick={() => window.location.assign(truckManifest)}
-                >
-                  {truckManifestName}
-                </li>
-              </ul>
-            );
-          })}
-        </Modal.Body>
-      </Modal>
-      )
-    });
-  }
 
   return (
     <>
@@ -123,18 +88,8 @@ const InventoryAllTrucks = () => {
                 <p className="items all-trucks-name">{truckName}</p>
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
-                <button onClick={async () => {
-                  console.log("Populate manifest")
+                <button onClick={() => {
                   getManifest(truckManifestId)
-                    .then(response => {
-                      setTruckFile({})
-                      truckFile[truckManifestId] = response
-                      setTruckFile(truckFile)
-                    })
-                    .then(_ => {
-                      console.log("truckManifest", truckFile)
-                      setIsModalOpen(true);
-                    })
                 }}>
                   {/* <button onClick={openModal}> */}
                   <p className="items all-trucks-manifest">
@@ -142,10 +97,27 @@ const InventoryAllTrucks = () => {
                   </p>
                 </button>
 
-                {
-                  InventoryModal()
-                }
-
+                <Modal show={isModalOpen} onHide={closeModal}>
+                  <Modal.Header style={{ color: "white" }}>
+                    Manifests for this truck
+                  </Modal.Header>
+                  <Modal.Body>
+                    {/*//^ Map method to get list of files for each truck inside modal */}
+                    {truckFile.map((manifest) => {
+                      const { truckManifest, truckManifestName } = manifest;
+                      return (
+                        <ul>
+                          <li
+                            key={truckManifestName}
+                            onClick={() => window.location.assign(truckManifest)}
+                          >
+                            {truckManifestName}
+                          </li>
+                        </ul>
+                      );
+                    })}
+                  </Modal.Body>
+                </Modal>
 
               </div>
             );
