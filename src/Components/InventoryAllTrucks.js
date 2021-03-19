@@ -97,10 +97,11 @@ const InventoryAllTrucks = () => {
                 </button>
 
                 <Modal show={isModalOpen} onHide={closeModal}>
-                  <Modal.Header style={{ color: "white" }}>
-                    Manifests for this truck
+                <Modal.Dialog dialogAs= "inventory-modal" style={{backgroundColor: "white", flexDirection: "column" }}>
+                  <Modal.Header style={{ color: "black" }}>
+                    <h1 style={{textShadow: "0px 4px 4px rgba(164, 188, 236, 0.45)"}}>Manifest List</h1>
                   </Modal.Header>
-                  <Modal.Body>
+                  <Modal.Body style={{  color: "white", borderTop: "1px black solid"}}>
                     {/*//^ Map method to get list of files for each truck inside modal */}
                     {truckFile.map((manifest) => {
                       const { truckManifest, truckManifestName } = manifest;
@@ -112,12 +113,13 @@ const InventoryAllTrucks = () => {
                               window.location.assign(truckManifest)
                             }
                           >
-                            {truckManifestName}
+                            <p style={{cursor: "pointer"}}>{truckManifestName}</p>
                           </li>
                         </ul>
                       );
                     })}
                   </Modal.Body>
+                  </Modal.Dialog>
                 </Modal>
               </div>
             );

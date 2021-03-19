@@ -109,56 +109,73 @@ const LoginModal = () => {
         isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
       }`}
     >
-      <Modal show={isModalOpen} onHide={closeModal} className="form-in-modal" style={{backgroundColor: "transparent"}}>
-        <Form onSubmit={handleSubmit}>
-          <Modal.Header>
-            <h1 className="modal-header">Login</h1>
-            <button onClick={closeModal} className="close-trucks-modal ml-auto">
-              X
-            </button>
-          </Modal.Header>
-          <Modal.Body>
-            <Form.Group className="center-form-group">
-              <Form.Label style={{color:"white"}}>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                placeholder="First Name"
-              />
-              <Form.Label style={{color:"white"}}>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                placeholder="Last Name"
-              />
-              <Form.Label style={{color:"white"}}>Email</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-              />
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <a href="/Signup">
-              <div>Don't have an account?</div>
-            </a>
-            <Button
-              type="submit"
-              onClick={closeModal}
-              className="boot-button ml-5 mr-4"
+      <Modal
+        show={isModalOpen}
+        onHide={closeModal}
+      >
+        {/* <Modal.Dialog
+          dialogAs="home-modal"
+          style={{ backgroundColor: "transparent" }}
+        > */}
+          <Form onSubmit={handleSubmit}>
+            <Modal.Header>
+              <h1 className="modal-header">Login</h1>
+              <button
+                onClick={closeModal}
+                className="close-trucks-modal ml-auto"
+              >
+                X
+              </button>
+            </Modal.Header>
+            <Modal.Body
+              style={{
+                backgroundColor: "transparent",
+                flexDirection: "row",
+                border: "none",
+              }}
             >
-              Login
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
+              <Form.Group className="center-form-group">
+                <Form.Label style={{ color: "white" }}>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="First Name"
+                />
+                <Form.Label style={{ color: "white" }}>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Last Name"
+                />
+                <Form.Label style={{ color: "white" }}>Email</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                />
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <a href="/Signup">
+                <div>Don't have an account?</div>
+              </a>
+              <Button
+                type="submit"
+                onClick={closeModal}
+                className="boot-button ml-5 mr-4"
+              >
+                Login
+              </Button>
+            </Modal.Footer>
+          </Form>
+        {/* </Modal.Dialog> */}
+        </Modal>
     </div>
   );
 };
