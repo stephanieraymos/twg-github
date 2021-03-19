@@ -98,7 +98,7 @@ const InventoryAllTrucks = () => {
                 </button>
 
                 <Modal show={isModalOpen} onHide={closeModal}>
-                  <Modal.Header style={{ color: "black" }}>
+                  <Modal.Header style={{ color: "white" }}>
                     Manifests for this truck
                   </Modal.Header>
                   <Modal.Body>
