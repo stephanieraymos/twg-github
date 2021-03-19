@@ -10,6 +10,7 @@ const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [truckManifestId, setTruckManifestId] = useState("");
   // const [truckFile, setTruckFile] = useState([]);
 
   const openModal = (truckManifest) => {
@@ -22,10 +23,10 @@ const InventoryAllTrucks = () => {
     setIsModalOpen(false);
   };
 
-  const { trucks, truckManifest } = useTruckContext();
+  const { trucks } = useTruckContext();
 
   //^ GET MANIFEST REQUEST //
-  const getManifest = async () => {
+  const getManifest = async (truckManifest) => {
     try {
       const response = await fetch(
         "http://143.110.225.28/api/v1/inventory/manifest/",
@@ -34,7 +35,9 @@ const InventoryAllTrucks = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            truckManifestId: truckManifest[0],
+            // truckManifestId: truckManifest[0],
+            // truckManifest: truckManifestId,
+            truckManifestId: truckManifestId,
           }),
         }
       );
@@ -85,6 +88,7 @@ const InventoryAllTrucks = () => {
                 <p className="items all-trucks-price">${truckPrice}</p>
                 <p className="items all-trucks-contents">{truckContents}</p>
                 <button onClick={(() => getManifest(truckManifest), openModal)}>
+                {/* <button onClick={openModal}> */}
                   <p className="items all-trucks-manifest">
                     <img src={download} alt="download icon" />
                   </p>
@@ -96,8 +100,8 @@ const InventoryAllTrucks = () => {
                   </Modal.Header>
                   <Modal.Body>
                     {/*//^ Map method to get list of files for each truck inside modal */}
-                    {truckManifest.map((manifest, id) => {
-                      const { truckManifestName, truckManifest, ...trucks } = manifest;
+                    {trucks.map((manifest) => {
+                      const { truckManifestName, truckManifest, id } = manifest;
                       // console.log("truckManifestName", truckManifestName);
                       return (
                         <ul>
