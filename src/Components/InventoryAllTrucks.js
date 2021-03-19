@@ -83,7 +83,7 @@ const InventoryAllTrucks = () => {
                   }}
                 >
                   <p className="items all-trucks-manifest">
-                    <img src={folder} alt="download icon"/>
+                    <img src={folder} alt="download icon" />
                   </p>
                 </button>
 
@@ -92,15 +92,18 @@ const InventoryAllTrucks = () => {
                     style={{
                       backgroundColor: "white",
                       flexDirection: "column",
+                      minWidth:"20rem",
+                      minHeight:"20rem",
+                      textAlign: "center"
                     }}
                   >
-                    <Modal.Header style={{ color: "black" }}>
+                    <Modal.Header style={{ color: "black", display: "block" }}>
                       <h1
                         style={{
                           textShadow: "0px 4px 4px rgba(164, 188, 236, 0.45)",
                         }}
                       >
-                        Manifest List
+                        File List
                       </h1>
                     </Modal.Header>
                     <Modal.Body
@@ -108,7 +111,11 @@ const InventoryAllTrucks = () => {
                     >
                       {/*//^ Map method to get list of files for each truck inside modal */}
                       {truckFile.map((manifest) => {
-                        const { truckManifest, truckManifestName, truckManifestId } = manifest;
+                        const {
+                          truckManifest,
+                          truckManifestName,
+                          truckManifestId,
+                        } = manifest;
                         return (
                           <ul>
                             <li
@@ -119,7 +126,7 @@ const InventoryAllTrucks = () => {
                                   window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
                               }
                             >
-                              <p style={{ cursor: "pointer" }}>
+                              <p style={{ cursor: "pointer", color:"black" }}>
                                 {truckManifestName}
                               </p>
                             </li>
