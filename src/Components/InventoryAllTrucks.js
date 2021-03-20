@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
-import { useTruckContext } from "../truckContext";
+import { useTruck } from "../truckContext";
 import folder from "../img/folder.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
@@ -20,7 +20,11 @@ const InventoryAllTrucks = () => {
     setIsModalOpen(false);
   };
 
-  const { trucks } = useTruckContext();
+  const [trucks, loading, errorMessage] = useTruck()
+
+  useEffect(() => {
+    console.log("All trucks", trucks)
+  },[trucks])
 
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
