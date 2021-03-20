@@ -136,6 +136,7 @@ const InventoryAllTrucks = () => {
                   </p>
                 </button>
 
+<<<<<<< HEAD
                 <Modal show={isModalOpen} onHide={closeModal}>
 <<<<<<< HEAD
                   <Modal.Header style={{ color: "white" }}>
@@ -158,13 +159,16 @@ const InventoryAllTrucks = () => {
                     })}
                   </Modal.Body>
 =======
+=======
+                <Modal
+                  show={isModalOpen}
+                  onHide={closeModal}
+                  dialogClassName="files-modal"
+                >
+>>>>>>> stephanie
                   <Modal.Dialog
                     style={{
-                      backgroundColor: "white",
-                      flexDirection: "column",
-                      minWidth:"20rem",
-                      minHeight:"20rem",
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     <Modal.Header style={{ color: "black", display: "block" }}>
@@ -196,7 +200,7 @@ const InventoryAllTrucks = () => {
                                   window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
                               }
                             >
-                              <p style={{ cursor: "pointer", color:"black" }}>
+                              <p style={{ cursor: "pointer", color: "black" }}>
                                 {truckManifestName}
                               </p>
                             </li>

@@ -240,6 +240,11 @@ main {
   border-top: none !important;
 }
 
+.files-modal {
+  border-radius: 4%;
+  background-color: white;
+  text-align: "center";
+}
 /*=============================================
 =                   SIDEBAR            =
 =============================================*/
