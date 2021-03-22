@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { FaAngleDoubleLeft } from "react-icons/fa";
 import Navigation from "./Navigation";
 // import { useTruck } from "../truckContext";
 import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading";
+import logo from "../img/logo-blue.svg"
 
 const url = "http://143.110.225.28/api/v1/inventory/?id=";
 
@@ -32,7 +34,7 @@ const TruckDetails = () => {
         body: data,
       })
         .then((response) => response.json())
-        .then((manifest) => setTruckFile(manifest))
+        .then((manifest) => setTruckFile(manifest));
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +51,7 @@ const TruckDetails = () => {
             truckName: truckName,
             truckPrice: truckPrice,
             truckContents: truckContents,
-            truckManifestId: truckManifestId
+            truckManifestId: truckManifestId,
           } = data[0];
 
           getManifest(truckManifestId);
@@ -86,37 +88,38 @@ const TruckDetails = () => {
       <div>
         <Navigation />
       </div>
-
-      <section>
-        <Link to="/InventoryAllTrucks" className="boot-button">
+      <div className="back-to-link-container">
+        <FaAngleDoubleLeft />
+        <Link to="/InventoryAllTrucks" className="back-to-link">
           Back to inventory
         </Link>
-        <h2>{truckName}</h2>
-        <div>
-          <div>
+      </div>
+
+      <section className="truck-section">
+        <h2 className="truck-details-header">{truckName}</h2>
+        <div className="truck">
+          <img src={logo} alt={truckName} />
+          <div className="truck-info">
             <p>
-              <span>Name: </span>
+              <span className="truck-data">Name: </span>
               {truckName}
             </p>
             <p>
-              <span>Price: </span>
+              <span className="truck-data">Price: </span>
               {truckPrice}
             </p>
 
             <p>
-              <span>Contents: </span>
+              <span className="truck-data">Contents: </span>
               {truckContents.map((truck, index) => {
                 return truck ? <span key={index}>{truck},</span> : null;
               })}
             </p>
 
             <p>
-              <span>Files: </span>
+              <span className="truck-data">Files: </span>
               {truckFile.map((manifest, index) => {
-                const {
-                  truckManifest,
-                  truckManifestName
-                } = manifest;
+                const { truckManifest, truckManifestName } = manifest;
 
                 return (
                   <ul>
@@ -139,21 +142,6 @@ const TruckDetails = () => {
           </div>
         </div>
       </section>
-
-      {/* <h1>Truck Details</h1>
-      {trucks.map((truck) => {
-        return (
-          <>
-            <div>
-              <h3>{truckName}</h3>
-              <p>{truckPrice}</p>
-              <p>{truckContents}</p>
-              <p>{truckManifest}</p>
-              <p>{truckId}</p>
-            </div>
-          </>
-        );
-      })} */}
     </>
   );
 };

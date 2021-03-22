@@ -188,3 +188,66 @@ p.all-trucks-table-header-manifest {
 .all-trucks-manifest {
   width: 10%;
 }
+
+/*=============================================
+=               TRUCK DETAILS               =
+=============================================*/
+
+.back-to-link-container {
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+.back-to-link {
+  padding-left: .5rem;
+  color: black;
+}
+.truck-section {
+  text-align: center;
+  padding: 5rem 0;
+}
+.truck-details-header {
+  font-size: 2rem;
+  text-transform: capitalize;
+  letter-spacing: var(--mainSpacing);
+  text-align: center;
+  margin-bottom: 3.5rem;
+  margin-top: 1rem;
+}
+
+.truck {
+  width: var(--smallWidth);
+  max-width: var(--fullWidth);
+  margin: 0 auto;
+  text-align: left;
+}
+.truck img {
+  border-radius: var(--radius);
+}
+.truck p {
+  font-weight: bold;
+  text-transform: capitalize;
+  line-height: 1.8;
+}
+.truck span {
+  margin-right: 0.5rem;
+}
+.truck-data {
+  background: var(--text);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  color: var(--sections);
+}
+.truck-info {
+  padding-top: 2rem;
+}
+@media screen and (min-width: 992px) {
+  .truck {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .truck-info {
+    padding-top: 0;
+  }
+}
