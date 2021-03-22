@@ -5,6 +5,7 @@ import folder from "../img/folder.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container, Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -71,9 +72,13 @@ const InventoryAllTrucks = () => {
 
             return (
               <div className="truckLoad" key={id}>
-                <p className="items all-trucks-name text-truncate">
+                <Link
+                  to={`/TruckDetails/${id}`}
+                  className="items all-trucks-name text-truncate"
+                >
                   {truckName}
-                </p>
+                </Link>
+
                 <p className="items all-trucks-price text-truncate">
                   ${truckPrice}
                 </p>
@@ -90,6 +95,7 @@ const InventoryAllTrucks = () => {
                     <img src={folder} alt="download icon" />
                   </p>
                 </button>
+
                 <Modal
                   show={isModalOpen}
                   onHide={closeModal}
