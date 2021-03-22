@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../context";
-import { useTruckContext } from "../truckContext";
+import { useTruckContext, useTruck } from "../truckContext";
 import dashboard from "../css/dashboard.css";
 import OrderDetails from "./OrderDetails";
 
 const Dashboard = () => {
   document.title = "Dashboard";
   const { openSidebar, isSidebarOpen } = useGlobalContext();
-  const { trucks } = useTruckContext();
+  // const { getData } = useTruckContext();
+  const [trucks, loading, errorMessage] = useTruck()
 
   const handleViewDetails = () => {
     return <OrderDetails />;
   };
-  console.log(trucks)
+
+  if(loading){
+    return <div>Loading...</div>
+  }
 
   return (
     <>

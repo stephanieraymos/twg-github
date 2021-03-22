@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import { useTruckContext } from "../truckContext";
+import { useTruckContext, useTruck } from "../truckContext";
 import { useGlobalContext } from "../context";
 import Alert from "./Alert";
 import inventory from "../css/inventory.css";
@@ -15,8 +15,6 @@ const AddInventory = () => {
   const {
     truckLoad,
     setTruckLoad,
-    trucks,
-    setTrucks,
     id,
     truckName,
     setTruckName,
@@ -29,6 +27,8 @@ const AddInventory = () => {
 
     showAlert,
   } = useTruckContext();
+
+  const addTruck = useTruck()[3]
 
   const { userId, setUserId } = useGlobalContext();
 
@@ -65,27 +65,6 @@ const AddInventory = () => {
     }
   };
 
-  //Fetching the trucks db from the API link above //^----GET----
-  const fetchTrucks = async () => {
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const newTrucks = await response.json(); //returns a promise
-      setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
-  useEffect(() => {
-    fetchTrucks();
-    console.log("Trucks fetched successfully inside the useEffect");
-  }, []);
-  // End of useEffect for fetch
-
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
     setUserId("d73897ef-9b70-463f-8dc1-bdafbe8891ff");
@@ -96,7 +75,9 @@ const AddInventory = () => {
         body: data,
       });
       console.log(response);
-      return response.json();
+      const newData = await response.json();
+      addTruck(newData);
+      console.log(newData);
     } catch (error) {
       console.log(error);
     }

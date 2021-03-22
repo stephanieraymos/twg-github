@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
-import { useTruckContext } from "../truckContext";
+import { useTruck } from "../truckContext";
 import folder from "../img/folder.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
@@ -13,11 +13,6 @@ const InventoryAllTrucks = () => {
   const [truckFile, setTruckFile] = useState([]);
 
   const openModal = () => {
-<<<<<<< HEAD
-    // e.preventDefault()
-    //getManifest(truckManifest);
-=======
->>>>>>> stephanie
     setIsModalOpen(true);
   };
 
@@ -25,42 +20,13 @@ const InventoryAllTrucks = () => {
     setIsModalOpen(false);
   };
 
-  const { trucks } = useTruckContext();
+  const [trucks, loading, errorMessage] = useTruck();
+
+  useEffect(() => {
+    console.log("All trucks", trucks);
+  }, [trucks]);
 
   //^ GET MANIFEST REQUEST //
-<<<<<<< HEAD
-  // useEffect(() => {
-    const getManifest = (truckManifestId) => {
-      try {
-        const data = new FormData();
-        truckManifestId.map(id => data.append("truckManifestId", id))
-        fetch(
-          "http://143.110.225.28/api/v1/inventory/manifest/",
-          {
-            method: "POST",
-            body: data,
-          }
-        )
-        .then(response => response.json())
-        .then(manifest => setTruckFile(manifest))
-        .then(_ => openModal());
-
-        // console.log("log inside getManifest: (truckManifest)", truckManifestId);
-        // console.log("log inside getManifest: (response)", response);
-        // const json = await response.json();
-        // // console.log("log inside getManifest: (data)", data);
-        // console.log(json);
-        // return json;
-        // const file = await json["truckManifest"];
-        // console.log(file);
-        // window.location.assign([file]);
-        // console.log([truckManifestName])
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  // }, []);
-=======
   const getManifest = (truckManifestId) => {
     try {
       const data = new FormData();
@@ -76,7 +42,6 @@ const InventoryAllTrucks = () => {
       console.log(error);
     }
   };
->>>>>>> stephanie
 
   return (
     <>
@@ -106,15 +71,6 @@ const InventoryAllTrucks = () => {
 
             return (
               <div className="truckLoad" key={id}>
-<<<<<<< HEAD
-                <p className="items all-trucks-name">{truckName}</p>
-                <p className="items all-trucks-price">${truckPrice}</p>
-                <p className="items all-trucks-contents">{truckContents}</p>
-                <button onClick={() => {
-                  getManifest(truckManifestId)
-                }}>
-                  {/* <button onClick={openModal}> */}
-=======
                 <p className="items all-trucks-name text-truncate">
                   {truckName}
                 </p>
@@ -130,42 +86,15 @@ const InventoryAllTrucks = () => {
                     getManifest(truckManifestId);
                   }}
                 >
->>>>>>> stephanie
                   <p className="items all-trucks-manifest">
                     <img src={folder} alt="download icon" />
                   </p>
                 </button>
-
-<<<<<<< HEAD
-                <Modal show={isModalOpen} onHide={closeModal}>
-<<<<<<< HEAD
-                  <Modal.Header style={{ color: "white" }}>
-                    Manifests for this truck
-                  </Modal.Header>
-                  <Modal.Body>
-                    {/*//^ Map method to get list of files for each truck inside modal */}
-                    {truckFile.map((manifest) => {
-                      const { truckManifest, truckManifestName } = manifest;
-                      return (
-                        <ul>
-                          <li
-                            key={truckManifestName}
-                            onClick={() => window.location.assign(truckManifest)}
-                          >
-                            {truckManifestName}
-                          </li>
-                        </ul>
-                      );
-                    })}
-                  </Modal.Body>
-=======
-=======
                 <Modal
                   show={isModalOpen}
                   onHide={closeModal}
                   dialogClassName="files-modal"
                 >
->>>>>>> stephanie
                   <Modal.Dialog
                     style={{
                       textAlign: "center",
@@ -209,9 +138,7 @@ const InventoryAllTrucks = () => {
                       })}
                     </Modal.Body>
                   </Modal.Dialog>
->>>>>>> stephanie
                 </Modal>
-
               </div>
             );
           })}

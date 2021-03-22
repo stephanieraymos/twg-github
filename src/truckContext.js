@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
-import InventoryAllTrucks from "./Components/InventoryAllTrucks"
-
+import React, { useState, useEffect, useReducer, useContext, createContext } from "react";
+import InventoryAllTrucks from "./Components/InventoryAllTrucks";
 
 // Generating context
-const TruckContext = createContext(null)
+const TruckContext = createContext();
 
 //Generating provider
 const TruckProvider = ({ children }) => {
@@ -17,7 +16,6 @@ const TruckProvider = ({ children }) => {
   const [truckContents, setTruckContents] = useState([]);
   const [truckManifest, setTruckManifest] = useState([]);
   const [id, setId] = useState("");
-  const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
 
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -28,7 +26,6 @@ const TruckProvider = ({ children }) => {
   }
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
-
 
   //showAlert function, when called the values for each param are passed in as arguments
   const showAlert = (show = false, type = "", msg = "") => {
@@ -59,8 +56,6 @@ const TruckProvider = ({ children }) => {
     setTruckManifest(specificItem.truckManifest);
   };
 
- 
-
   //////////////////////// &&--FETCH--&& ///////////////////////////////
 
   // // New delete request //^----DELETE----
@@ -86,12 +81,10 @@ const TruckProvider = ({ children }) => {
   // }, [truckLoad]);
   // // End of useEffect for fetch
 
-
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
     <TruckContext.Provider
       value={{
-
         truckName,
         setTruckName,
         truckPrice,
@@ -102,8 +95,8 @@ const TruckProvider = ({ children }) => {
         setTruckManifest,
         truckLoad,
         setTruckLoad,
-        trucks,
-        setTrucks,
+        // trucks,
+        // setTrucks,
         id,
         setId,
 
@@ -112,12 +105,13 @@ const TruckProvider = ({ children }) => {
         editItem,
         removeItem,
 
+        // getData,
         alert,
         isEditing,
         editId,
         setAlert,
         setIsEditing,
-        setEditId
+        setEditId,
       }}
     >
       {children}
@@ -128,6 +122,47 @@ const TruckProvider = ({ children }) => {
 //! Custom hook for using context within app
 const useTruckContext = () => {
   return useContext(TruckContext);
+};
+
+export const useTruck = () => {
+  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  // const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
+
+  const [trucks, setTrucks] = useReducer((state, value) => ([...value]), [] )
+
+  const addTruck = (truck) => {
+    setTrucks(trucks.concat(truck))
+    console.log("Hey", truck)
+  }
+
+  useEffect(() => {
+    setLoading(true);
+
+    const fetchTrucks = async () => {
+      try {
+        const response = await fetch(
+          "http://143.110.225.28/api/v1/inventory/",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        const newTrucks = await response.json(); //returns a promise
+        setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
+        console.log(newTrucks)
+        setLoading(false);
+        setErrorMessage("");
+      } catch (error) {
+        console.log(error);
+        setErrorMessage(error);
+      }
+    };
+    fetchTrucks();
+    console.log("Anything");
+  }, []);
+  
+  return [trucks, loading, errorMessage, addTruck];
 };
 
 export { TruckProvider, useTruckContext };
