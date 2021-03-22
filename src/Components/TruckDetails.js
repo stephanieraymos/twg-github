@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
+import {
+  FaAngleDoubleLeft,
+  FaTimes,
+  FaEdit,
+  FaAngleDoubleDown,
+} from "react-icons/fa";
 import Navigation from "./Navigation";
 // import { useTruck } from "../truckContext";
 import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading";
 import logo from "../img/logo-blue.svg";
+import { Card, Accordion } from "react-bootstrap";
 
 const url = "http://143.110.225.28/api/v1/inventory/?id=";
 
@@ -116,36 +122,42 @@ const TruckDetails = () => {
               })}
             </p>
 
-            {truckFile.map((manifest, index) => {
-              const { truckManifest, truckManifestName } = manifest;
-              return (
-                <ul>
-                  <li
-                    key={truckManifestId[index]}
-                    onClick={
-                      () =>
-                        window.open(truckManifest, "_blank") ||
-                        window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
-                    }
-                  >
-                    <p className="data-wrapper">
-                      {index == 0 && (
-                        <span className="truck-data-title">Files: </span>
-                      )}
-                      {/* {index != 0 && (
-                        <span
-                          style={{ paddingLeft: "3.7rem" }}
-                        ></span> //Putting padding to left of child files
-                      )} */}
-                      {index != 0 && <p style={{ margin: "-20rem" }}></p>}
-                      <span style={{ cursor: "pointer", color: "black" }}>
-                        {truckManifestName}
-                      </span>
-                    </p>
-                  </li>
-                </ul>
-              );
-            })}
+            <Accordion>
+              <Card style={{ border: "none"}}>
+                <Accordion.Toggle as={Card.Header} eventKey="0" style={{padding: 0, marginBottom: "1rem", borderBottom: "none", borderRadius: ".4rem"}}>
+                  <p className="data-wrapper">
+                    <span className="truck-data-title">Files: </span>
+                    <span className="truck-data-title">
+                      <FaAngleDoubleDown />
+                    </span>
+                  </p>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+                    {" "}
+                    {truckFile.map((manifest, index) => {
+                      const { truckManifest, truckManifestName } = manifest;
+                      return (
+                        <ul>
+                          <li
+                            key={truckManifestId[index]}
+                            onClick={
+                              () =>
+                                window.open(truckManifest, "_blank") ||
+                                window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                            }
+                          >
+                            <span style={{ cursor: "pointer", color: "black" }}>
+                              {truckManifestName}
+                            </span>
+                          </li>
+                        </ul>
+                      );
+                    })}
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
 
             <p className="data-wrapper">
               <span className="truck-data-delete">Delete: </span>
