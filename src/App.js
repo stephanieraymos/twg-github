@@ -50,7 +50,7 @@ const App = () => {
           <Route path="/OrderDetails" exact component={OrderDetails} />
           <Route path="/Orders" exact component={Orders} />
           <Route path="*" exact component={Error} />
-          <Route path="TruckDetails" exact component={TruckDetails} />
+          <Route path="TruckDetails/:id" exact component={TruckDetails} />
           <Redirect to="/" />
         </Switch>
       </Router>
