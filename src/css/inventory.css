@@ -251,3 +251,29 @@ p.all-trucks-table-header-manifest {
     padding-top: 0;
   }
 }
+.delete-truck-btn {
+  background: transparent;
+  border-color: transparent;
+  color: var(--sections); /* root styles */
+  transition: var(--transition); /* root styles */
+  cursor: pointer;
+  color: rgb(114, 3, 3);
+  margin-top: 0.2rem;
+  outline: none;
+}
+.delete-truck-btn:hover {
+  color: rgb(241, 129, 129);
+}
+.edit-truck-btn {
+  background: transparent;
+  border-color: transparent;
+  color: var(--sections); /* root styles */
+  transition: var(--transition); /* root styles */
+  cursor: pointer;
+  color: rgb(4, 102, 37);
+  margin-top: 0.2rem;
+  outline: none;
+}
+.edit-truck-btn:hover {
+  color: rgba(9, 167, 48, 0.507);
+}

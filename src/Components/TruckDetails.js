@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { FaAngleDoubleLeft } from "react-icons/fa";
+import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
 import Navigation from "./Navigation";
 // import { useTruck } from "../truckContext";
 import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading";
-import logo from "../img/logo-blue.svg"
+import logo from "../img/logo-blue.svg";
 
 const url = "http://143.110.225.28/api/v1/inventory/?id=";
 
@@ -116,29 +116,36 @@ const TruckDetails = () => {
               })}
             </p>
 
-            <p>
-              <span className="truck-data">Files: </span>
-              {truckFile.map((manifest, index) => {
-                const { truckManifest, truckManifestName } = manifest;
-
-                return (
-                  <ul>
-                    <li
-                      key={truckManifestId[index]}
-                      onClick={
-                        () =>
-                          window.open(truckManifest, "_blank") ||
-                          window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
-                      }
-                    >
-                      <p style={{ cursor: "pointer", color: "black" }}>
+            {truckFile.map((manifest, index) => {
+              const { truckManifest, truckManifestName } = manifest;
+              return (
+                <ul>
+                  <li
+                    key={truckManifestId[index]}
+                    onClick={
+                      () =>
+                        window.open(truckManifest, "_blank") ||
+                        window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                    }
+                  >
+                    <p>
+                      {index == 0 && <span className="truck-data">Files: </span>}
+                      {index != 0 && <span style={{padding: "1.85rem"}}></span>}
+                      <span style={{ cursor: "pointer", color: "black" }}>
                         {truckManifestName}
-                      </p>
-                    </li>
-                  </ul>
-                );
-              })}
-            </p>
+                      </span>
+                    </p>
+                  </li>
+                </ul>
+              );
+            })}
+
+            <button className="delete-truck-btn">
+              <FaTimes /> Delete this truck
+            </button>
+            <button className="edit-truck-btn">
+              <FaEdit /> Edit this truck
+            </button>
           </div>
         </div>
       </section>
