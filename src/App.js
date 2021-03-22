@@ -16,7 +16,7 @@ import Navigation from "./Components/Navigation";
 import Dashboard from "./Components/Dashboard";
 import Settings from "./Components/Settings";
 import Statements from "./Components/Statements";
-import Modal from "./Components/Modal";
+import Login from "./Components/Login";
 import Sidebar from "./Components/Sidebar";
 import Signup from "./Components/Signup";
 import CustomerDb from "./Components/CustomerDb";
@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <>
-      <Modal />
+      <Login />
       <Sidebar />
 
       
