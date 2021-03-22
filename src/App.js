@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
+  useLocation 
 } from "react-router-dom";
 import { AppProvider, useGlobalContext } from "./context";
 
@@ -21,41 +22,48 @@ import Signup from "./Components/Signup";
 import CustomerDb from "./Components/CustomerDb";
 import OrderDetails from "./Components/OrderDetails";
 import Orders from "./Components/Orders";
+import TruckDetails from "./Components/TruckDetails";
 import Error from "./Pages/Error";
-import TruckDetails from "./Components/TruckDetails"
 
 const App = () => {
+  // const { pathname } = useLocation();
+
   return (
     <>
       <Modal />
       <Sidebar />
+
+      
       <Router>
+      {/* { pathname !== '/Home' && <Navigation /> } */}
+
+            <Navigation />
         <Switch>
-          <Route exact path="/">
-            <Redirect to="/Home" />
-          </Route>
+            <Route exact path="/">
+              <Redirect to="/Home" />
+            </Route>
           <Route path="/Home" exact component={Home} />
-          <Route path="/Dashboard" exact component={Dashboard} />
-          <Route path="/AddInventory" exact component={AddInventory} />
-          <Route
-            path="/InventoryAllTrucks"
-            exact
-            component={InventoryAllTrucks}
-          />
-          <Route path="/Settings" exact component={Settings} />
-          <Route path="/Statements" exact component={Statements} />
-          <Route path="/Contact" exact component={Contact} />
-          <Route path="/Signup" exact component={Signup} />
-          <Route path="/CustomerDb" exact component={CustomerDb} />
-          <Route path="/OrderDetails" exact component={OrderDetails} />
-          <Route path="/Orders" exact component={Orders} />
-          <Route path="*" exact component={Error} />
-          <Route path="TruckDetails/:id" exact component={TruckDetails} />
-          <Redirect to="/" />
+            <Route path="/Dashboard" exact component={Dashboard} />
+            <Route path="/AddInventory" exact component={AddInventory} />
+            <Route
+              path="/InventoryAllTrucks"
+              exact
+              component={InventoryAllTrucks}
+            />
+            <Route path="/Settings" exact component={Settings} />
+            <Route path="/Statements" exact component={Statements} />
+            <Route path="/Contact" exact component={Contact} />
+            <Route path="/Signup" exact component={Signup} />
+            <Route path="/CustomerDb" exact component={CustomerDb} />
+            <Route path="/OrderDetails" exact component={OrderDetails} />
+            <Route path="/Orders" exact component={Orders} />
+            <Route path="/TruckDetails/:id" exact component={TruckDetails} />
+            <Route path="*" exact component={Error} />
+            <Redirect to="/" />
         </Switch>
       </Router>
     </>
   );
-}
+};
 
 export default App;

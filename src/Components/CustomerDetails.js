@@ -7,9 +7,6 @@ const CustomerDetails = ({ name, orders, cost }) => {
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <article className="customer-details">
         <header>
           <h4>

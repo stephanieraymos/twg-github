@@ -45,9 +45,6 @@ const Inventory = () => {
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <section className="section">
         <div className="title">
           <h2>Trucks</h2>

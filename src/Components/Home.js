@@ -10,7 +10,8 @@ const Home = () => {
 
   return (
     <>
-      <div className="home-container">
+    {/* {<Navigation /> && style={{display: "none"}}} */}
+      <div className="home-container" id="home-content">
         {window.innerWidth >= 900 ? (
           <video className="bg-video" autoPlay loop muted>
             <source src={video} type="video/mp4" />

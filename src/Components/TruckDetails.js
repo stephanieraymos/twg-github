@@ -64,6 +64,7 @@ const TruckDetails = () => {
     }
     getTruck();
   }, [id]);
+  // },);
   if (loading) {
     return <Loading />;
   }
@@ -74,9 +75,6 @@ const TruckDetails = () => {
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
 
       <section>
         <Link to="/InventoryAllTrucks" className="boot-button">

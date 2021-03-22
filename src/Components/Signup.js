@@ -92,9 +92,6 @@ const Signup = () => {
   return (
     <>
       <div>
-        <Navigation />
-      </div>
-      <div>
         <h1 className="form-header">Sign up</h1>
         <Form onSubmit={handleSignupSubmit} style={{width: "25%", margin: "0 auto"}}>
             <Form.Group className="center-form-group">

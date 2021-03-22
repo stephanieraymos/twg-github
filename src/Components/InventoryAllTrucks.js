@@ -46,9 +46,6 @@ const InventoryAllTrucks = () => {
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <Container fluid>
         <AddInventory />
       </Container>
