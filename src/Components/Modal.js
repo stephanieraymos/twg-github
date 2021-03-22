@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import { FaTimes } from "react-icons/fa";
 import { Button, Modal, Form } from "react-bootstrap";
 import { useGlobalContext } from "../context";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom"
+import Alert from "./Alert";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 const getLocalStorage = () => {
@@ -108,68 +110,74 @@ const LoginModal = () => {
         isModalOpen ? "modal-overlay show-modal" : "modal-overlay"
       }`}
     >
-      <Modal show={isModalOpen} onHide={closeModal}>
+      <Modal
+        show={isModalOpen}
+        onHide={closeModal}
+      >
         {/* <Modal.Dialog
           dialogAs="home-modal"
           style={{ backgroundColor: "transparent" }}
         > */}
-        <Form onSubmit={handleSubmit}>
-          <Modal.Header>
-            <h1 className="modal-header">Login</h1>
-            <button onClick={closeModal} className="close-trucks-modal ml-auto">
-              X
-            </button>
-          </Modal.Header>
-          <Modal.Body
-            style={{
-              backgroundColor: "transparent",
-              flexDirection: "row",
-              border: "none",
-            }}
-          >
-            <Form.Group className="center-form-group">
-              <Form.Label style={{ color: "white" }}>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                placeholder="First Name"
-              />
-              <Form.Label style={{ color: "white" }}>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                placeholder="Last Name"
-              />
-              <Form.Label style={{ color: "white" }}>Email</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-              />
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer
-            style={{ justifyContent: "space-between", marginLeft: "4rem" }}
-          >
-            <Link to="/Signup">Don't have an account?</Link>
-            <Button
-              type="submit"
-              onClick={closeModal}
-              className="boot-button"
-              style={{ textAlign: "center" }}
+          <Form onSubmit={handleSubmit}>
+            <Modal.Header>
+              <h1 className="modal-header">Login</h1>
+              <button
+                onClick={closeModal}
+                className="close-trucks-modal ml-auto"
+              >
+                X
+              </button>
+            </Modal.Header>
+            <Modal.Body
+              style={{
+                backgroundColor: "transparent",
+                flexDirection: "row",
+                border: "none",
+              }}
             >
-              Login
-            </Button>
-          </Modal.Footer>
-        </Form>
+              <Form.Group className="center-form-group">
+                <Form.Label style={{ color: "white" }}>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="First Name"
+                />
+                <Form.Label style={{ color: "white" }}>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Last Name"
+                />
+                <Form.Label style={{ color: "white" }}>Email</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                />
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer style={{justifyContent: "space-between", marginLeft: "4rem"}}>
+              <a href="/Signup">
+                <div>Don't have an account?</div>
+              </a>
+              <Button
+                type="submit"
+                onClick={closeModal}
+                className="boot-button"
+                style={{textAlign: "center"}}
+              >
+                Login
+              </Button>
+            </Modal.Footer>
+          </Form>
         {/* </Modal.Dialog> */}
-      </Modal>
+        </Modal>
     </div>
   );
 };
