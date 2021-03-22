@@ -1,9 +1,10 @@
 import React from "react";
 import Navigation from "./Navigation";
-import { useTruck } from "../context/truckContext";
+import { useTruck } from "../truckContext";
 
-const ItemDetails = () => {
+const TruckDetails = () => {
   const {
+    trucks,
     truckName,
     truckPrice,
     truckContents,
@@ -35,6 +36,6 @@ const ItemDetails = () => {
   );
 };
 
-export default ItemDetails;
+export default TruckDetails;
 
 // TP-52

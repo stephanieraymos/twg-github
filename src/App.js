@@ -22,6 +22,7 @@ import CustomerDb from "./Components/CustomerDb";
 import OrderDetails from "./Components/OrderDetails";
 import Orders from "./Components/Orders";
 import Error from "./Pages/Error";
+import TruckDetails from "./Components/TruckDetails"
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/OrderDetails" exact component={OrderDetails} />
           <Route path="/Orders" exact component={Orders} />
           <Route path="*" exact component={Error} />
+          <Route path="TruckDetails" exact component={TruckDetails} />
           <Redirect to="/" />
         </Switch>
       </Router>
