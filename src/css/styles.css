@@ -52,7 +52,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--dark-gray);
-  color: var(--white);
 }
 
 h1,
@@ -107,6 +106,7 @@ input {
   border-radius: 4px;
   padding: 0.5rem 1rem;
   font-size: clamp(1rem, -0.875rem + 8.333vw, 2rem);
+  color: black;
 }
 
 input:hover {

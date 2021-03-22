@@ -245,6 +245,10 @@ main {
   background-color: white;
   text-align: "center";
 }
+
+.btn {
+  padding: 1rem .8rem;
+}
 /*=============================================
 =                   SIDEBAR            =
 =============================================*/

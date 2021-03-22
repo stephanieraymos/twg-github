@@ -142,7 +142,7 @@ const AddInventory = () => {
                 value={truckManifest}
                 onChange={(e) => setTruckManifest(e.target.value)}
                 name="truckManifest"
-                style={{ fontSize: "1rem" }}
+                style={{ fontSize: "1rem", color: "black"}}
               />
 
               <Form.Label style={{ color: "black" }}>User ID</Form.Label>
