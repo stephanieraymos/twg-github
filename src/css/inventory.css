@@ -202,7 +202,7 @@ p.all-trucks-table-header-manifest {
   color: black;
 }
 .truck-section {
-  text-align: center;
+  /* text-align: center; */
   padding: 5rem 0;
 }
 .truck-details-header {
@@ -219,6 +219,8 @@ p.all-trucks-table-header-manifest {
   max-width: var(--fullWidth);
   margin: 0 auto;
   text-align: left;
+  /* text-align: space-between;
+  justify-content: space-between; */
 }
 .truck img {
   border-radius: var(--radius);
@@ -231,15 +233,42 @@ p.all-trucks-table-header-manifest {
 .truck span {
   margin-right: 0.5rem;
 }
-.truck-data {
+.truck-data-title {
   background: var(--text);
   padding: 0.25rem 0.5rem;
   border-radius: var(--radius);
   color: var(--sections);
 }
+.truck-data-edit {
+  background: rgba(0, 128, 0, 0.096);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  color: green;
+}
+.truck-data-delete {
+  background: rgba(255, 0, 0, 0.068);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  color: red;
+}
+.truck-data {
+  align-self: right;
+}
 .truck-info {
   padding-top: 2rem;
 }
+
+ul, li {
+  padding: 0;
+  margin: 0;
+  justify-content: space-between;
+}
+
+.data-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media screen and (min-width: 992px) {
   .truck {
     display: grid;

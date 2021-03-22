@@ -100,17 +100,17 @@ const TruckDetails = () => {
         <div className="truck">
           <img src={logo} alt={truckName} />
           <div className="truck-info">
-            <p>
-              <span className="truck-data">Name: </span>
+            <p className="data-wrapper">
+              <span className="truck-data-title">Name: </span>
               {truckName}
             </p>
-            <p>
-              <span className="truck-data">Price: </span>
-              {truckPrice}
+            <p className="data-wrapper">
+              <span className="truck-data-title">Price: </span>
+              <span className="truck-data">{truckPrice}</span>
             </p>
 
-            <p>
-              <span className="truck-data">Contents: </span>
+            <p className="data-wrapper">
+              <span className="truck-data-title">Contents: </span>
               {truckContents.map((truck, index) => {
                 return truck ? <span key={index}>{truck},</span> : null;
               })}
@@ -128,9 +128,16 @@ const TruckDetails = () => {
                         window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
                     }
                   >
-                    <p>
-                      {index == 0 && <span className="truck-data">Files: </span>}
-                      {index != 0 && <span style={{padding: "1.85rem"}}></span>}
+                    <p className="data-wrapper">
+                      {index == 0 && (
+                        <span className="truck-data-title">Files: </span>
+                      )}
+                      {/* {index != 0 && (
+                        <span
+                          style={{ paddingLeft: "3.7rem" }}
+                        ></span> //Putting padding to left of child files
+                      )} */}
+                      {index != 0 && <p style={{ margin: "-20rem" }}></p>}
                       <span style={{ cursor: "pointer", color: "black" }}>
                         {truckManifestName}
                       </span>
@@ -140,12 +147,18 @@ const TruckDetails = () => {
               );
             })}
 
-            <button className="delete-truck-btn">
-              <FaTimes /> Delete this truck
-            </button>
-            <button className="edit-truck-btn">
-              <FaEdit /> Edit this truck
-            </button>
+            <p className="data-wrapper">
+              <span className="truck-data-delete">Delete: </span>
+              <button className="delete-truck-btn">
+                <FaTimes /> Delete this truck
+              </button>
+            </p>
+            <p className="data-wrapper">
+              <span className="truck-data-edit">Edit: </span>
+              <button className="edit-truck-btn">
+                <FaEdit /> Edit this truck
+              </button>
+            </p>
           </div>
         </div>
       </section>
