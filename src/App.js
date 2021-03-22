@@ -43,6 +43,7 @@ const App = () => {
               <Redirect to="/Home" />
             </Route>
           <Route path="/Home" exact component={Home} />
+            <Route path="/Signup" exact component={Signup} />
             <Route path="/Dashboard" exact component={Dashboard} />
             <Route path="/AddInventory" exact component={AddInventory} />
             <Route
@@ -53,7 +54,6 @@ const App = () => {
             <Route path="/Settings" exact component={Settings} />
             <Route path="/Statements" exact component={Statements} />
             <Route path="/Contact" exact component={Contact} />
-            <Route path="/Signup" exact component={Signup} />
             <Route path="/CustomerDb" exact component={CustomerDb} />
             <Route path="/OrderDetails" exact component={OrderDetails} />
             <Route path="/Orders" exact component={Orders} />

@@ -9,7 +9,7 @@ import Navigation from "./Navigation";
 // import { useTruck } from "../truckContext";
 import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading";
-import logo from "../img/logo-blue.svg";
+import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 
 const url = "http://143.110.225.28/api/v1/inventory/?id=";
@@ -104,7 +104,7 @@ const TruckDetails = () => {
       <section className="truck-section">
         <h2 className="truck-details-header">{truckName}</h2>
         <div className="truck">
-          <img src={logo} alt={truckName} />
+          <img src={logo} alt={truckName} style={{size: "10rem"}} />
           <div className="truck-info">
             //^ TRUCK NAME CARD
             <Card style={{ border: "none"}}>

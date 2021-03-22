@@ -6,6 +6,9 @@ const Statements = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1 className="black-header">Statements Page</h1>
     </>
   );

@@ -7,6 +7,9 @@ const Contact = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <div className="about">
         <p>
           Founded in 2009 by Ryan Babineau and Larry Morgan, RL Liquidators has

@@ -6,6 +6,9 @@ const Settings = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1 className="black-header">Settings Page</h1>
     </>
   );
