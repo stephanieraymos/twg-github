@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 // import { useTruck } from "../truckContext";
 import { useParams, Link } from "react-router-dom";
-import Loading from "./Loading"
+import Loading from "./Loading";
 
 const url = "http://143.110.225.28/api/v1/inventory/?id=";
 
@@ -22,12 +22,12 @@ const TruckDetails = () => {
   document.title = "Truck Details";
 
   useEffect(() => {
-    console.log("hi")
+    console.log("hi");
     setLoading(true);
     async function getTruck() {
       try {
         const response = await fetch(`${url}${id}`);
-        console.log(`${url}${id}`)
+        console.log(`${url}${id}`);
         const data = await response.json();
         if (data) {
           const {
@@ -64,7 +64,6 @@ const TruckDetails = () => {
     }
     getTruck();
   }, [id]);
-  // },);
   if (loading) {
     return <Loading />;
   }
@@ -75,6 +74,9 @@ const TruckDetails = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
 
       <section>
         <Link to="/InventoryAllTrucks" className="boot-button">
