@@ -106,25 +106,80 @@ const TruckDetails = () => {
         <div className="truck">
           <img src={logo} alt={truckName} />
           <div className="truck-info">
-            <p className="data-wrapper">
-              <span className="truck-data-title">Name: </span>
-              {truckName}
-            </p>
-            <p className="data-wrapper">
-              <span className="truck-data-title">Price: </span>
-              <span className="truck-data">{truckPrice}</span>
-            </p>
-
-            <p className="data-wrapper">
-              <span className="truck-data-title">Contents: </span>
-              {truckContents.map((truck, index) => {
-                return truck ? <span key={index}>{truck},</span> : null;
-              })}
-            </p>
-
+            //^ TRUCK NAME CARD
+            <Card style={{ border: "none"}}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Name: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {truckName}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            //^ TRUCK PRICE CARD
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Price: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {truckPrice}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            //^ TRUCK CONTENTS ACCORDION
             <Accordion>
-              <Card style={{ border: "none"}}>
-                <Accordion.Toggle as={Card.Header} eventKey="0" style={{padding: 0, marginBottom: "1rem", borderBottom: "none", borderRadius: ".4rem"}}>
+              <Card style={{ border: "none" }}>
+                <Accordion.Toggle
+                  as={Card.Header}
+                  eventKey="0"
+                  style={{
+                    padding: 0,
+                    borderBottom: "none",
+                    borderRadius: ".4rem",
+                  }}
+                >
+                  <p className="data-wrapper">
+                    <span className="truck-data-title">Contents: </span>
+                    <span className="truck-data-title">
+                      <FaAngleDoubleDown />
+                    </span>
+                  </p>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body style={{ color: "black" }}>
+                    {truckContents.map((truck, index) => {
+                      return truck ? <span key={index}>{truck},</span> : null;
+                    })}
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
+            //^ TRUCK FILES ACCORDION
+            <Accordion>
+              <Card style={{ border: "none" }}>
+                <Accordion.Toggle
+                  as={Card.Header}
+                  eventKey="0"
+                  style={{
+                    padding: 0,
+                    borderBottom: "none",
+                    borderRadius: ".4rem",
+                  }}
+                >
                   <p className="data-wrapper">
                     <span className="truck-data-title">Files: </span>
                     <span className="truck-data-title">
@@ -134,7 +189,6 @@ const TruckDetails = () => {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body>
-                    {" "}
                     {truckFile.map((manifest, index) => {
                       const { truckManifest, truckManifestName } = manifest;
                       return (
@@ -158,19 +212,39 @@ const TruckDetails = () => {
                 </Accordion.Collapse>
               </Card>
             </Accordion>
-
-            <p className="data-wrapper">
-              <span className="truck-data-delete">Delete: </span>
-              <button className="delete-truck-btn">
-                <FaTimes /> Delete this truck
-              </button>
-            </p>
-            <p className="data-wrapper">
-              <span className="truck-data-edit">Edit: </span>
-              <button className="edit-truck-btn">
-                <FaEdit /> Edit this truck
-              </button>
-            </p>
+            //^ TRUCK MODIFY ACCORDION
+            <Accordion>
+              <Card style={{ border: "none" }}>
+                <Accordion.Toggle
+                  as={Card.Header}
+                  eventKey="0"
+                  style={{
+                    padding: 0,
+                    borderBottom: "none",
+                    borderRadius: ".4rem",
+                  }}
+                >
+                  <p className="data-wrapper">
+                    <span className="truck-data-title">Modify </span>
+                    <span className="truck-data-title">
+                      <FaAngleDoubleDown />
+                    </span>
+                  </p>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+                    <p className="data-wrapper">
+                      <button className="delete-truck-btn">
+                        <FaTimes /> Delete this truck
+                      </button>
+                      <button className="edit-truck-btn">
+                        <FaEdit /> Edit this truck
+                      </button>
+                    </p>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
           </div>
         </div>
       </section>
