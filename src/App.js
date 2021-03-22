@@ -49,8 +49,8 @@ const App = () => {
           <Route path="/CustomerDb" exact component={CustomerDb} />
           <Route path="/OrderDetails" exact component={OrderDetails} />
           <Route path="/Orders" exact component={Orders} />
+          <Route path="/TruckDetails/:id" exact component={TruckDetails} />
           <Route path="*" exact component={Error} />
-          <Route path="TruckDetails/:id" exact component={TruckDetails} />
           <Redirect to="/" />
         </Switch>
       </Router>
