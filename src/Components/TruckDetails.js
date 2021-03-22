@@ -10,6 +10,7 @@ const TruckDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [truck, setTruck] = useState(null);
+  const [truckFile, setTruckFile] = useState([]);
 
   // const {
   //   trucks,
@@ -21,35 +22,43 @@ const TruckDetails = () => {
   // } = useTruck();
   document.title = "Truck Details";
 
+  //^ GET MANIFEST REQUEST //
+  const getManifest = (truckManifestId) => {
+    try {
+      const data = new FormData();
+      truckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch("http://143.110.225.28/api/v1/inventory/manifest/", {
+        method: "POST",
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((manifest) => setTruckFile(manifest))
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    console.log("hi");
     setLoading(true);
     async function getTruck() {
       try {
         const response = await fetch(`${url}${id}`);
-        console.log(`${url}${id}`);
         const data = await response.json();
         if (data) {
           const {
             truckName: truckName,
             truckPrice: truckPrice,
             truckContents: truckContents,
+            truckManifestId: truckManifestId
           } = data[0];
-          // } = data;
 
-          const truckManifest = [
-            truckManifest[0],
-            truckManifest[1],
-            truckManifest[2],
-            truckManifest[3],
-            truckManifest[4],
-          ];
+          getManifest(truckManifestId);
 
           const newTruck = {
             truckName,
             truckPrice,
             truckContents,
-            truckManifest,
+            truckManifestId,
           };
           setTruck(newTruck);
         } else {
@@ -70,7 +79,7 @@ const TruckDetails = () => {
   if (!truck) {
     return <h2>No truck to display</h2>;
   }
-  const { truckName, truckPrice, truckContents, truckManifest } = truck;
+  const { truckName, truckPrice, truckContents, truckManifestId } = truck;
 
   return (
     <>
@@ -103,8 +112,28 @@ const TruckDetails = () => {
 
             <p>
               <span>Files: </span>
-              {truckManifest.map((file, index) => {
-                return file ? <span key={index}>{file},</span> : null;
+              {truckFile.map((manifest, index) => {
+                const {
+                  truckManifest,
+                  truckManifestName
+                } = manifest;
+
+                return (
+                  <ul>
+                    <li
+                      key={truckManifestId[index]}
+                      onClick={
+                        () =>
+                          window.open(truckManifest, "_blank") ||
+                          window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                      }
+                    >
+                      <p style={{ cursor: "pointer", color: "black" }}>
+                        {truckManifestName}
+                      </p>
+                    </li>
+                  </ul>
+                );
               })}
             </p>
           </div>

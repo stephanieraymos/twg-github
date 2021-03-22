@@ -37,7 +37,7 @@ const App = () => {
       <Router>
       {/* { pathname !== '/Home' && <Navigation /> } */}
 
-            <Navigation />
+            {/* <Navigation /> */}
         <Switch>
             <Route exact path="/">
               <Redirect to="/Home" />
