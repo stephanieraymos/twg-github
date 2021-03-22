@@ -161,14 +161,14 @@ const LoginModal = () => {
                 />
               </Form.Group>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer style={{justifyContent: "space-between", marginLeft: "4rem"}}>
               <a href="/Signup">
                 <div>Don't have an account?</div>
               </a>
               <Button
                 type="submit"
                 onClick={closeModal}
-                className="boot-button ml-5 mr-4"
+                className="boot-button text-center"
               >
                 Login
               </Button>

@@ -28,7 +28,7 @@ const AddInventory = () => {
     showAlert,
   } = useTruckContext();
 
-  const addTruck = useTruck()[3]
+  const addTruck = useTruck()[3];
 
   const { userId, setUserId } = useGlobalContext();
 
@@ -105,7 +105,7 @@ const AddInventory = () => {
           </Modal.Header>
           <Modal.Body style={{ backgroundColor: "white" }}>
             <Form.Group className="center-form-group">
-              <Form.Label>Truck Name</Form.Label>
+              <Form.Label style={{ color: "black" }}>Truck Name</Form.Label>
               <Form.Control
                 type="text"
                 required
@@ -114,7 +114,7 @@ const AddInventory = () => {
                 name="truckName"
               />
 
-              <Form.Label>Truck Price</Form.Label>
+              <Form.Label style={{ color: "black" }}>Truck Price</Form.Label>
               <Form.Control
                 type="textarea"
                 required
@@ -123,7 +123,7 @@ const AddInventory = () => {
                 name="truckPrice"
               />
 
-              <Form.Label>Truck Contents</Form.Label>
+              <Form.Label style={{ color: "black" }}>Truck Contents</Form.Label>
               <Form.Control
                 type="text"
                 required
@@ -134,7 +134,7 @@ const AddInventory = () => {
                 rows={3}
               />
 
-              <Form.Label>Truck Manifest</Form.Label>
+              <Form.Label style={{ color: "black" }}>Truck Manifest</Form.Label>
               <Form.Control
                 type="file"
                 multiple
@@ -142,9 +142,10 @@ const AddInventory = () => {
                 value={truckManifest}
                 onChange={(e) => setTruckManifest(e.target.value)}
                 name="truckManifest"
+                style={{ fontSize: "1rem" }}
               />
 
-              <Form.Label>User ID</Form.Label>
+              <Form.Label style={{ color: "black" }}>User ID</Form.Label>
               <Form.Control
                 type="text"
                 defaultValue={userId}

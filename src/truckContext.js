@@ -124,6 +124,8 @@ const useTruckContext = () => {
   return useContext(TruckContext);
 };
 
+//^ useTruck custom hook //
+
 export const useTruck = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
