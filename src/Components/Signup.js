@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
 import { Button, Modal, Form } from "react-bootstrap";
+
+const url = "http://143.110.225.28/v1/account/register/"
 
 const Signup = () => {
   document.title = "Sign up";
@@ -14,16 +16,15 @@ const Signup = () => {
     setLastName,
     email,
     setEmail,
-    password,
-    setPassword,
-    confirmPassword,
-    setConfirmPassword,
     error,
     setError,
     setUserId,
     postToDb,
     closeModal
   } = useGlobalContext();
+
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
 
   const {
     showAlert
@@ -56,26 +57,26 @@ const Signup = () => {
 }
 
   //* useEffect for user post request
-  useEffect(() => {
-    fetch(
-      " http://143.110.225.28/register/",
+  const signUp = () => {
+    console.log("signup is running")
+    fetch(url,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          password: password,
-          confirm_password: confirmPassword,
+            email : email,
+            password : password,
+            confirm_password : confirmPassword,
+            first_name : firstName,
+            last_name : lastName
         }),
       }
     )
       .then((response) => {
         if (response.ok) {
           setError(false);
-          console.log("SUCCESSFULLY ADDED USER TO DATABASE");
-          return response.json();
+          console.log(response)
+          return response;
         } else if (response.status >= 408) {
           console.log(
             error,
@@ -87,7 +88,7 @@ const Signup = () => {
         return response.json();
       })
       .then((user) => setUserId(user.id));
-  }, [postToDb]);
+  };
 
   return (
     <>
@@ -100,47 +101,47 @@ const Signup = () => {
             <Form.Group className="center-form-group">
               <Form.Label>First Name</Form.Label>
               <Form.Control
-              type="text"
-              required
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder="First Name"
+                type="text"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="First Name"
               />
               <Form.Label>Last Name</Form.Label>
               <Form.Control
-              type="text"
-              required
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              placeholder="Last Name"
+                type="text"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Last Name"
               />
               <Form.Label>Email</Form.Label>
               <Form.Control
-              type="text"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
+                type="text"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
               />
               <Form.Label>Password</Form.Label>
               <Form.Control
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
               />
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
-              type="text"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+                type="password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Password"
               />
             </Form.Group>
 
-              <Button type="submit" onClick={closeModal} className="boot-button" block style={{width: "10rem", margin: "2rem auto"}}>
+              <Button type="submit" onClick={signUp} className="boot-button" block style={{width: "10rem", margin: "2rem auto"}}>
                 Sign up
               </Button>
         </Form>
