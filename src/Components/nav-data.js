@@ -41,12 +41,6 @@ export const links = [
     text: "Contact",
     icon: <FaUserFriends />,
   },
-  {
-    id: 6,
-    url: "/CustomerDb",
-    text: "Users",
-    icon: <FaUserFriends />,
-  },
 ];
 
 export const social = [

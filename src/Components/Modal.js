@@ -169,7 +169,7 @@ const LoginModal = () => {
                 type="submit"
                 onClick={closeModal}
                 className="boot-button"
-                style={{margin: "0 auto"}}
+                style={{textAlign: "center"}}
               >
                 Login
               </Button>
