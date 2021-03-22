@@ -4,7 +4,7 @@ import Navigation from "./Navigation";
 import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading"
 
-const url = "http://143.110.225.28/api/v1/inventory/";
+const url = "http://143.110.225.28/api/v1/inventory/?id=";
 
 const TruckDetails = () => {
   const { id } = useParams();
@@ -22,17 +22,20 @@ const TruckDetails = () => {
   document.title = "Truck Details";
 
   useEffect(() => {
+    console.log("hi")
     setLoading(true);
     async function getTruck() {
       try {
         const response = await fetch(`${url}${id}`);
+        console.log(`${url}${id}`)
         const data = await response.json();
-        if (truck) {
+        if (data) {
           const {
             truckName: truckName,
             truckPrice: truckPrice,
             truckContents: truckContents,
-          } = truck[0];
+          } = data[0];
+          // } = data;
 
           const truckManifest = [
             truckManifest[0],
@@ -76,8 +79,8 @@ const TruckDetails = () => {
       </div>
 
       <section>
-        <Link to="/" className="boot-button">
-          Back Home
+        <Link to="/InventoryAllTrucks" className="boot-button">
+          Back to inventory
         </Link>
         <h2>{truckName}</h2>
         <div>
