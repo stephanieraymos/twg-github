@@ -129,7 +129,7 @@ main {
 }
 .modal-btn:hover {
   transition: var(--transition);
-  background: transparent;
+  background-color: var(--sections-hover);
 }
 
 
@@ -217,7 +217,7 @@ main {
 }
 
 .submit-modal-btn:hover {
-  background-color: transparent;
+  background-color: var(--sections-hover);
 }
 
 

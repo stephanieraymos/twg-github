@@ -59,7 +59,7 @@ const TruckDetails = () => {
         // newTruckManifest.map((file) => data.append("truckManifest", file));
         // oldTruckManifestId.map((id) => data.append("truckManifestId", id));
         fetch(inventoryURL, {
-          method: "POST",
+          method: "PUT",
           body: data,
         }).then((response) => {
           console.log(response);
