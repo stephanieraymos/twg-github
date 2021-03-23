@@ -12,8 +12,9 @@ import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 
-const url = "http://143.110.225.28/api/v1/inventory/?id=";
-const inventoryURL = "http://143.110.225.28/api/v1/inventory/";
+const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
+const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/";
+const manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
 
 const TruckDetails = () => {
   const { id } = useParams();
@@ -30,7 +31,7 @@ const TruckDetails = () => {
     try {
       const data = new FormData();
       truckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch("https://api.thewholesalegroup.com/api/v1/inventory/manifest/", {
+      fetch(manifestURL, {
         method: "POST",
         body: data,
       })
@@ -42,12 +43,12 @@ const TruckDetails = () => {
   };
 
   // Return true or false to indicate if fetch was successful
-  const updateTruck = () => {
+  const updateTruck = (id, truckName, truckPrice, truckContents) => {
     try {
       const data = new FormData();
       data.append("id", id)
-      data.append("truckName", id)
-      data.append("truckPrice", id)
+      data.append("truckName", truckName)
+      data.append("truckPrice", truckPrice)
       truckContents.map((data) => data.append("truckContents", data));
       newTruckManifest.map((id) => data.append("truckManifest", id));
       oldTruckManifestId.map((id) => data.append("truckManifestId", id));
@@ -66,7 +67,7 @@ const TruckDetails = () => {
     }
   }
 
-  const deleteTruck = () => {
+  const deleteTruck = (id, truckManifestId) => {
     try {
       const data = new FormData();
       data.append("id", id)
@@ -274,10 +275,10 @@ const TruckDetails = () => {
                 <Accordion.Collapse eventKey="0">
                   <Card.Body>
                     <p className="data-wrapper">
-                      <button className="delete-truck-btn">
+                      <button onClick={deleteTruck(id, truckManifestId)} className="delete-truck-btn">
                         <FaTimes /> Delete this truck
                       </button>
-                      <button className="edit-truck-btn">
+                      <button onClick={updateTruck(id, truckName, truckPrice, truckContents)} className="edit-truck-btn">
                         <FaEdit /> Edit this truck
                       </button>
                     </p>

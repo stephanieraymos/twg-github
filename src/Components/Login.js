@@ -15,7 +15,7 @@ const getLocalStorage = () => {
 };
 
 const LoginModal = () => {
-  const url = "https://api.thewholesalegroup.com/api/v1/account/login/";
+  const url = "https://api.thewholesalegroup.com/v1/account/login/";
 
   const { isModalOpen, closeModal } = useGlobalContext();
 
