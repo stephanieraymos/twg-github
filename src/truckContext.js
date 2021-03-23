@@ -162,6 +162,8 @@ export const useTruck = () => {
     fetchTrucks();
     console.log("Anything");
   }, []);
+
+  // @todo Try moving fetch trucks out of truckContext and passing postTrucks as the parameter
   
   return [trucks, loading, errorMessage, addTruck];
 };
