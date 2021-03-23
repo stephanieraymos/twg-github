@@ -10,7 +10,7 @@ const Dashboard = () => {
   document.title = "Dashboard";
   const { openSidebar, isSidebarOpen } = useGlobalContext();
   // const { getData } = useTruckContext();
-  const [trucks, loading, errorMessage] = useTruck();
+  const [trucks, loading] = useTruck();
 
   const handleViewDetails = () => {
     return <OrderDetails />;

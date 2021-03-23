@@ -6,7 +6,6 @@ const TruckContext = createContext();
 
 //Generating provider
 const TruckProvider = ({ children }) => {
-  const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
   //////////////////////// &&--STATE--&& /////////////////////////////
 
@@ -61,7 +60,7 @@ const TruckProvider = ({ children }) => {
   // // New delete request //^----DELETE----
   // const deleteTrucks = async () => {
   //   try {
-  //     const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+  //     const response = await fetch("api.thewholesalegroup.com/api/v1/inventory/", {
   //       method: "DELETE",
   //       headers: { "Content-Type": "application/json" },
   //       body: JSON.stringify({
@@ -144,7 +143,7 @@ export const useTruck = () => {
     const fetchTrucks = async () => {
       try {
         const response = await fetch(
-          "http://143.110.225.28/api/v1/inventory/",
+          "https://api.thewholesalegroup.com/api/v1/inventory/",
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },

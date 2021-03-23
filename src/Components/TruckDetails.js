@@ -12,7 +12,7 @@ import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 
-const url = "http://143.110.225.28/api/v1/inventory/?id=";
+const url = "https://api.thewholesalegroup.com/api/v1/inventory/?id=";
 
 const TruckDetails = () => {
   const { id } = useParams();
@@ -35,7 +35,7 @@ const TruckDetails = () => {
     try {
       const data = new FormData();
       truckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch("http://143.110.225.28/api/v1/inventory/manifest/", {
+      fetch("https://api.thewholesalegroup.com/api/v1/inventory/manifest/", {
         method: "POST",
         body: data,
       })

@@ -5,7 +5,7 @@ import { useTruckContext } from "../truckContext";
 import { Button, Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
-const url = "http://143.110.225.28/v1/account/register/";
+const url = "https://api.thewholesalegroup.com/api/v1/account/register/";
 const id = uuidv4();
 
 const Signup = () => {
