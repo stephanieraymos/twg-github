@@ -50,7 +50,7 @@ const TruckDetails = () => {
     const updateTruck = (id, truckName, truckPrice, truckContents) => {
       try {
         console.log("truckContents", truckContents);
-        console.log(Array.isArray(truckContents));
+        console.log("isArray truckContents", Array.isArray(truckContents));
         const data = new FormData();
         data.append("id", id);
         data.append("truckName", truckName);

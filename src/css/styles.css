@@ -285,7 +285,7 @@ input:hover {
 }
 
 .button:hover {
-  background-color: transparent;
+  background-color: var(--sections-hover);
 }
 
 .center-btn {
