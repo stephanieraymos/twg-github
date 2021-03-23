@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 
 const url = "http://143.110.225.28/v1/account/register/";
+const id = uuidv4();
 
 const Signup = () => {
   document.title = "Sign up";
@@ -16,9 +18,6 @@ const Signup = () => {
     setLastName,
     email,
     setEmail,
-    error,
-    setError,
-    setUserId,
   } = useGlobalContext();
 
   const [password, setPassword] = useState("");
@@ -36,7 +35,7 @@ const Signup = () => {
 
       //* Creating new user
       const newUser = {
-        id: new Date().getTime().toString(),
+        id: id,
         firstName,
         lastName,
         email,
@@ -67,20 +66,16 @@ const Signup = () => {
     })
       .then((response) => {
         if (response.ok) {
-          setError(false);
-          console.log(response);
-          return response;
-        } else if (response.status >= 408) {
-          console.log(
-            error,
-            "There is an unknown error preventing the user from being added to the database"
+          // redirect to the email verification page basically telling them to check their email and click on the link
+        } else if (response.status == 400) {
+          throw new Error(
+            "One or more of the data types are wrong or one or more of the required keys are missing."
           );
-          setError(true);
         }
-        console.log(response);
-        return response.json();
       })
-      .then((user) => setUserId(user.id));
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
