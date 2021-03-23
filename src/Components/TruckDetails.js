@@ -11,6 +11,7 @@ import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
+import InventoryAllTrucks from "./InventoryAllTrucks";
 
 const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/";
@@ -21,8 +22,8 @@ const TruckDetails = () => {
   const [loading, setLoading] = useState(false);
   const [truck, setTruck] = useState(null);
   const [truckFile, setTruckFile] = useState([]);
-  const [newTruckManifest, setNewTruckManifest] = useState(null);         // files to be added
-  const [oldTruckManifestId, setOldTruckManifestId] = useState(null);     // files to be deleted
+  const [newTruckManifest, setNewTruckManifest] = useState(null); // files to be added
+  const [oldTruckManifestId, setOldTruckManifestId] = useState(null); // files to be deleted
 
   document.title = "Truck Details";
 
@@ -46,46 +47,45 @@ const TruckDetails = () => {
   const updateTruck = (id, truckName, truckPrice, truckContents) => {
     try {
       const data = new FormData();
-      data.append("id", id)
-      data.append("truckName", truckName)
-      data.append("truckPrice", truckPrice)
+      data.append("id", id);
+      data.append("truckName", truckName);
+      data.append("truckPrice", truckPrice);
       truckContents.map((data) => data.append("truckContents", data));
       newTruckManifest.map((id) => data.append("truckManifest", id));
       oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "POST",
         body: data,
-      })
-        .then((response) => {
-          if (response.ok)
-            return true
-          else
-            return false
-        })
+      }).then((response) => {
+        if (response.ok) return true;
+        else return false;
+      });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const deleteTruck = (id, truckManifestId) => {
     try {
       const data = new FormData();
-      data.append("id", id)
+      data.append("id", id);
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
-        method: "POST",
+        method: "DELETE",
         body: data,
       })
         .then((response) => {
-          if (response.ok)
-            return true
-          else
-            return false
+          if (response.ok) {
+            return true;
+          } else {
+            return <Link to="/InventoryAllTrucks" />
+
+          }
         })
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -145,10 +145,10 @@ const TruckDetails = () => {
       <section className="truck-section">
         <h2 className="truck-details-header">{truckName}</h2>
         <div className="truck">
-          <img src={logo} alt={truckName} style={{size: "10rem"}} />
+          <img src={logo} alt={truckName} style={{ size: "10rem" }} />
           <div className="truck-info">
             {/* //^ TRUCK NAME CARD */}
-            <Card style={{ border: "none"}}>
+            <Card style={{ border: "none" }}>
               <Card.Header
                 style={{
                   padding: 0,
@@ -191,6 +191,7 @@ const TruckDetails = () => {
                     padding: 0,
                     borderBottom: "none",
                     borderRadius: ".4rem",
+                    backgroundColor: "transparent"
                   }}
                 >
                   <p className="data-wrapper">
@@ -219,6 +220,7 @@ const TruckDetails = () => {
                     padding: 0,
                     borderBottom: "none",
                     borderRadius: ".4rem",
+                    backgroundColor: "transparent"
                   }}
                 >
                   <p className="data-wrapper">
@@ -263,6 +265,7 @@ const TruckDetails = () => {
                     padding: 0,
                     borderBottom: "none",
                     borderRadius: ".4rem",
+                    backgroundColor: "transparent"
                   }}
                 >
                   <p className="data-wrapper">
@@ -275,10 +278,21 @@ const TruckDetails = () => {
                 <Accordion.Collapse eventKey="0">
                   <Card.Body>
                     <p className="data-wrapper">
-                      <button onClick={deleteTruck(id, truckManifestId)} className="delete-truck-btn">
+                      <button
+                        onClick={deleteTruck(id, truckManifestId)}
+                        className="delete-truck-btn"
+                      >
                         <FaTimes /> Delete this truck
                       </button>
-                      <button onClick={updateTruck(id, truckName, truckPrice, truckContents)} className="edit-truck-btn">
+                      <button
+                        onClick={updateTruck(
+                          id,
+                          truckName,
+                          truckPrice,
+                          truckContents
+                        )}
+                        className="edit-truck-btn"
+                      >
                         <FaEdit /> Edit this truck
                       </button>
                     </p>
