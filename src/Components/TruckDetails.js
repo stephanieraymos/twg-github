@@ -22,9 +22,10 @@ const TruckDetails = () => {
   const [loading, setLoading] = useState(false);
   const [truck, setTruck] = useState(null);
   const [truckFile, setTruckFile] = useState([]);
-  const [newTruckManifest, setNewTruckManifest] = useState(null); // files to be added
-  const [oldTruckManifestId, setOldTruckManifestId] = useState(null); // files to be deleted
+  const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
+  const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
   const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
+  const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
 
   document.title = "Truck Details";
 
@@ -45,29 +46,34 @@ const TruckDetails = () => {
   };
 
   // Return true or false to indicate if fetch was successful
-  const updateTruck = () => {
-    console.log("hello")
-    const { truckName, truckPrice, truckContents, truckManifestId } = truck;
-    console.log(truckContents)
-    try {
-      const data = new FormData();
-      data.append("id", id);
-      data.append("truckName", truckName);
-      data.append("truckPrice", truckPrice);
-      truckContents.map((content) => data.append("truckContents", content));
-      newTruckManifest.map((file) => data.append("truckManifest", file));
-      oldTruckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch(inventoryURL, {
-        method: "POST",
-        body: data,
-      }).then((response) => {
-        if (response.ok) return true;
-        else return false;
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    const updateTruck = (id, truckName, truckPrice, truckContents) => {
+      try {
+        console.log("truckContents", truckContents);
+        console.log(Array.isArray(truckContents));
+        const data = new FormData();
+        data.append("id", id);
+        data.append("truckName", truckName);
+        data.append("truckPrice", (truckPrice = ""));
+        truckContents.map((content) => data.append("truckContents", content));
+        // newTruckManifest.map((file) => data.append("truckManifest", file));
+        // oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+        fetch(inventoryURL, {
+          method: "POST",
+          body: data,
+        }).then((response) => {
+          console.log(response);
+          console.log(id, truckName, truckPrice);
+          console.log(typeof truckPrice);
+          if (response.ok) return true;
+          else return false;
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    updateTruck();
+  }, [isTruckUpdated]);
 
   useEffect(() => {
     const deleteTruck = (id, truckManifestId) => {
@@ -80,17 +86,17 @@ const TruckDetails = () => {
           body: data,
         }).then((response) => {
           if (response.ok) {
-            return setIsTruckDeleted(true)
+            return setIsTruckDeleted(true);
           } else {
-            return
+            return;
           }
         });
       } catch (error) {
         console.log(error);
       }
     };
-  }, [isTruckDeleted])
-
+    deleteTruck();
+  }, [isTruckDeleted]);
 
   useEffect(() => {
     setLoading(true);
@@ -119,7 +125,7 @@ const TruckDetails = () => {
           setTruck(null);
         }
         setLoading(false);
-        console.log(data);
+        console.log("data", data);
       } catch (err) {
         console.log(err);
         setLoading(false);
@@ -236,9 +242,7 @@ const TruckDetails = () => {
                   </p>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
-                  <Card.Body
-                    style={{ backgroundColor: "transparent" }}
-                  >
+                  <Card.Body style={{ backgroundColor: "transparent" }}>
                     {truckFile.map((manifest, index) => {
                       const { truckManifest, truckManifestName } = manifest;
                       return (
@@ -291,12 +295,7 @@ const TruckDetails = () => {
                         <FaTimes /> Delete this truck
                       </button>
                       <button
-                        onClick={updateTruck(
-                          id,
-                          truckName,
-                          truckPrice,
-                          truckContents
-                        )}
+                        onClick={() => setIsTruckUpdated(true)}
                         className="edit-truck-btn"
                       >
                         <FaEdit /> Edit this truck
