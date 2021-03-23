@@ -106,7 +106,7 @@ const TruckDetails = () => {
         <div className="truck">
           <img src={logo} alt={truckName} style={{size: "10rem"}} />
           <div className="truck-info">
-            //^ TRUCK NAME CARD
+            {/* //^ TRUCK NAME CARD */}
             <Card style={{ border: "none"}}>
               <Card.Header
                 style={{
@@ -123,7 +123,7 @@ const TruckDetails = () => {
                 </p>
               </Card.Header>
             </Card>
-            //^ TRUCK PRICE CARD
+            {/* //^ TRUCK PRICE CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
                 style={{
@@ -140,7 +140,7 @@ const TruckDetails = () => {
                 </p>
               </Card.Header>
             </Card>
-            //^ TRUCK CONTENTS ACCORDION
+            {/* //^ TRUCK CONTENTS ACCORDION */}
             <Accordion>
               <Card style={{ border: "none" }}>
                 <Accordion.Toggle
@@ -168,7 +168,7 @@ const TruckDetails = () => {
                 </Accordion.Collapse>
               </Card>
             </Accordion>
-            //^ TRUCK FILES ACCORDION
+            {/* //^ TRUCK FILES ACCORDION */}
             <Accordion>
               <Card style={{ border: "none" }}>
                 <Accordion.Toggle
@@ -212,7 +212,7 @@ const TruckDetails = () => {
                 </Accordion.Collapse>
               </Card>
             </Accordion>
-            //^ TRUCK MODIFY ACCORDION
+            {/* //^ TRUCK MODIFY ACCORDION */}
             <Accordion>
               <Card style={{ border: "none" }}>
                 <Accordion.Toggle
