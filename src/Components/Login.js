@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaTimes } from "react-icons/fa";
 import { Button, Modal, Form } from "react-bootstrap";
 import { useGlobalContext } from "../context";
-import Alert from "./Alert";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 const getLocalStorage = () => {
