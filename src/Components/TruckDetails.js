@@ -46,36 +46,6 @@ const TruckDetails = () => {
   };
 
   // Return true or false to indicate if fetch was successful
-<<<<<<< HEAD
-  useEffect(() => {
-    const updateTruck = (id, truckName, truckPrice, truckContents) => {
-      try {
-        console.log("truckContents", truckContents);
-        console.log("isArray truckContents", Array.isArray(truckContents));
-        const data = new FormData();
-        data.append("id", id);
-        data.append("truckName", truckName);
-        data.append("truckPrice", (truckPrice = ""));
-        truckContents.map((content) => data.append("truckContents", content));
-        // newTruckManifest.map((file) => data.append("truckManifest", file));
-        // oldTruckManifestId.map((id) => data.append("truckManifestId", id));
-        fetch(inventoryURL, {
-          method: "PUT",
-          body: data,
-        }).then((response) => {
-          console.log(response);
-          console.log(id, truckName, truckPrice);
-          console.log(typeof truckPrice);
-          if (response.ok) return true;
-          else return false;
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    updateTruck();
-  }, [isTruckUpdated]);
-=======
   const updateTruck = (id, truckName, truckPrice, truckContents) => {
     console.log("update truck running")
     try {
@@ -102,7 +72,6 @@ const TruckDetails = () => {
       console.log(error);
     }
   };
->>>>>>> 3165c8f8e3f38ee1b69ca3b0e7230960d492b12c
 
   const deleteTruck = (id, truckManifestId) => {
     console.log("delete truck running")

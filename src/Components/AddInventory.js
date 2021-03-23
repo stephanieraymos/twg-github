@@ -28,6 +28,7 @@ const AddInventory = () => {
   } = useTruckContext();
 
   const addTruck = useTruck()[3];
+  const { setTrucks } = useTruck();
 
   const { userId, setUserId } = useGlobalContext();
 
@@ -69,14 +70,18 @@ const AddInventory = () => {
     setUserId("d73897ef-9b70-463f-8dc1-bdafbe8891ff");
     const data = new FormData(form.current);
     try {
-      const response = await fetch("https://api.thewholesalegroup.com/api/v1/inventory/", {
-        method: "POST",
-        body: data,
-      });
+      const response = await fetch(
+        "https://api.thewholesalegroup.com/api/v1/inventory/",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
       console.log(response);
       const newData = await response.json();
       addTruck(newData);
       console.log(newData);
+      setTrucks(newData);
     } catch (error) {
       console.log(error);
     }
@@ -141,7 +146,7 @@ const AddInventory = () => {
                 value={truckManifest}
                 onChange={(e) => setTruckManifest(e.target.value)}
                 name="truckManifest"
-                style={{ fontSize: "1rem", color: "black"}}
+                style={{ fontSize: "1rem", color: "black" }}
               />
 
               <Form.Label style={{ color: "black" }}>User ID</Form.Label>
