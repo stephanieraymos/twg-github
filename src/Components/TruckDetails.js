@@ -73,15 +73,13 @@ const TruckDetails = () => {
       fetch(inventoryURL, {
         method: "DELETE",
         body: data,
-      })
-        .then((response) => {
-          if (response.ok) {
-            return true;
-          } else {
-            return <Link to="/InventoryAllTrucks" />
-
-          }
-        })
+      }).then((response) => {
+        if (response.ok) {
+          return true;
+        } else {
+          return <Link to="/InventoryAllTrucks" />;
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -191,7 +189,6 @@ const TruckDetails = () => {
                     padding: 0,
                     borderBottom: "none",
                     borderRadius: ".4rem",
-                    backgroundColor: "transparent"
                   }}
                 >
                   <p className="data-wrapper">
@@ -202,7 +199,9 @@ const TruckDetails = () => {
                   </p>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
-                  <Card.Body style={{ color: "black" }}>
+                  <Card.Body
+                    style={{ color: "black", backgroundColor: "transparent" }}
+                  >
                     {truckContents.map((truck, index) => {
                       return truck ? <span key={index}>{truck},</span> : null;
                     })}
@@ -220,7 +219,6 @@ const TruckDetails = () => {
                     padding: 0,
                     borderBottom: "none",
                     borderRadius: ".4rem",
-                    backgroundColor: "transparent"
                   }}
                 >
                   <p className="data-wrapper">
@@ -231,7 +229,9 @@ const TruckDetails = () => {
                   </p>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
-                  <Card.Body>
+                  <Card.Body
+                    style={{ backgroundColor: "transparent" }}
+                  >
                     {truckFile.map((manifest, index) => {
                       const { truckManifest, truckManifestName } = manifest;
                       return (
@@ -265,7 +265,6 @@ const TruckDetails = () => {
                     padding: 0,
                     borderBottom: "none",
                     borderRadius: ".4rem",
-                    backgroundColor: "transparent"
                   }}
                 >
                   <p className="data-wrapper">
@@ -276,7 +275,7 @@ const TruckDetails = () => {
                   </p>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
-                  <Card.Body>
+                  <Card.Body style={{ backgroundColor: "transparent" }}>
                     <p className="data-wrapper">
                       <button
                         onClick={deleteTruck(id, truckManifestId)}
