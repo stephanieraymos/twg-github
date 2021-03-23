@@ -46,6 +46,7 @@ const TruckDetails = () => {
   };
 
   // Return true or false to indicate if fetch was successful
+<<<<<<< HEAD
   useEffect(() => {
     const updateTruck = (id, truckName, truckPrice, truckContents) => {
       try {
@@ -74,29 +75,55 @@ const TruckDetails = () => {
     };
     updateTruck();
   }, [isTruckUpdated]);
+=======
+  const updateTruck = (id, truckName, truckPrice, truckContents) => {
+    console.log("update truck running")
+    try {
+      console.log("truckContents", truckContents);
+      console.log(Array.isArray(truckContents));
+      const data = new FormData();
+      data.append("id", id);
+      data.append("truckName", truckName);
+      data.append("truckPrice", String(truckPrice));
+      truckContents.map((content) => data.append("truckContents", content));
+      newTruckManifest.map((file) => data.append("truckManifest", file));
+      oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch(inventoryURL, {
+        method: "PUT",
+        body: data,
+      }).then((response) => {
+        console.log(response);
+        if (response.ok)
+          return true;
+        else 
+          return false;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+>>>>>>> 3165c8f8e3f38ee1b69ca3b0e7230960d492b12c
 
-  useEffect(() => {
-    const deleteTruck = (id, truckManifestId) => {
-      try {
-        const data = new FormData();
-        data.append("id", id);
-        truckManifestId.map((id) => data.append("truckManifestId", id));
-        fetch(inventoryURL, {
-          method: "DELETE",
-          body: data,
-        }).then((response) => {
-          if (response.ok) {
-            return setIsTruckDeleted(true);
-          } else {
-            return;
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    deleteTruck();
-  }, [isTruckDeleted]);
+  const deleteTruck = (id, truckManifestId) => {
+    console.log("delete truck running")
+    try {
+      const data = new FormData();
+      data.append("id", id);
+      truckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch(inventoryURL, {
+        method: "DELETE",
+        body: data,
+      }).then((response) => {
+        if (response.ok) {
+          return setIsTruckDeleted(true);
+        } else {
+          return;
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -289,13 +316,19 @@ const TruckDetails = () => {
                   <Card.Body style={{ backgroundColor: "transparent" }}>
                     <p className="data-wrapper">
                       <button
-                        onClick={() => setIsTruckDeleted(true)}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          deleteTruck(id, truckManifestId)
+                        }}
                         className="delete-truck-btn"
                       >
                         <FaTimes /> Delete this truck
                       </button>
                       <button
-                        onClick={() => setIsTruckUpdated(true)}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          updateTruck(id, truckName, truckPrice, truckContents)
+                        }}
                         className="edit-truck-btn"
                       >
                         <FaEdit /> Edit this truck
