@@ -147,8 +147,7 @@ const LoginModal = () => {
             <Button
               type="submit"
               onClick={login}
-              className="boot-button"
-              style={{ textAlign: "center" }}
+              style={{ textAlign: "center", backgroundColor: "#1f85b4", borderColor: "transparent" }}
             >
               Login
             </Button>
