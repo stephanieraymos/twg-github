@@ -6,9 +6,6 @@ const CustomerCreation = () => {
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <h1>Client Creation</h1>
     </>
   );

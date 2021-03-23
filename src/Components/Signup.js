@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
+
+const url = "https://api.thewholesalegroup.com/api/v1/account/register/";
+const id = uuidv4();
 
 const url = "http://143.110.225.28/v1/account/register/"
 
@@ -33,28 +37,27 @@ const Signup = () => {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     if (!firstName || lastName || !email) {
-        showAlert(true, "danger", "Please enter value");
-      } else {
+      showAlert(true, "danger", "Please enter value");
+    } else {
+      //* Show alert and add user to inventory only if name is true and not editing
+      showAlert(true, "success", "Truck Added");
 
-        //* Show alert and add user to inventory only if name is true and not editing
-        showAlert(true, "success", "Truck Added");
+      //* Creating new user
+      const newUser = {
+        id: id,
+        firstName,
+        lastName,
+        email,
+      };
 
-        //* Creating new user
-        const newUser = {
-          id: new Date().getTime().toString(),
-          firstName,
-          lastName,
-          email,
-        };
-
-    console.log("Sign up successful");
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
+      console.log("Sign up successful");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    }
   };
-}
 
   //* useEffect for user post request
   const signUp = () => {

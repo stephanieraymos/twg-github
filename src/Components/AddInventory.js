@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 
 const AddInventory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const url = "http://143.110.225.28/api/v1/inventory/"; //API LINK
 
   document.title = "Add Inventory";
   const {
@@ -70,7 +69,7 @@ const AddInventory = () => {
     setUserId("d73897ef-9b70-463f-8dc1-bdafbe8891ff");
     const data = new FormData(form.current);
     try {
-      const response = await fetch("http://143.110.225.28/api/v1/inventory/", {
+      const response = await fetch("https://api.thewholesalegroup.com/api/v1/inventory/", {
         method: "POST",
         body: data,
       });

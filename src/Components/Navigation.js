@@ -9,6 +9,9 @@ const Navigation = () => {
   const linksContainerRef = useRef(null); //For DIV
   const linksRef = useRef(null); //For UL
 
+  // {params != Home ? <Navigation /> : null}
+
+
   useEffect(() => {
     const linksHeight = linksRef.current.getBoundingClientRect().height; //* Returning size values for links
     if (showLinks) {

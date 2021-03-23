@@ -22,6 +22,10 @@
   --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   --font-fam: "Montserrat", source-code-pro, Menlo, Monaco, Consolas,
     "Courier New", monospace;
+
+    --smallWidth: 85vw;
+    --maxWidth: 40rem;
+    --fullWidth: 1170px;
 }
 
 ::after,

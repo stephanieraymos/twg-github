@@ -6,9 +6,6 @@ const OrderDetails = () => {
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <h1 className="black-header">Order Details</h1>
     </>
   );

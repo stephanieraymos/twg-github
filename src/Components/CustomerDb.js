@@ -40,9 +40,6 @@ function CustomerDb() {
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <div className="table-wrapper">
         <div className="header-items">
           <p className="all-trucks-table-header-name truck">FIRST NAME</p>

@@ -7,7 +7,7 @@ import Navigation from "./Navigation";
 //! THIS COMPONENT IN NOT BEING USED!!
 //* KEEP JUST IN CASE
 
-const url = "http://143.110.225.28/api/v1/inventory/data/"; //API LINK
+const url = "https://api.thewholesalegroup.com/api/v1/inventory/data/"; //API LINK
 
 const Inventory = () => {
   //Setting state values, params are default values
@@ -45,9 +45,6 @@ const Inventory = () => {
 
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <section className="section">
         <div className="title">
           <h2>Trucks</h2>

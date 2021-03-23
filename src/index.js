@@ -4,13 +4,13 @@ import "./css/styles.css";
 import { AppProvider } from "./context";
 import App from "./App";
 import { TruckProvider } from "./truckContext";
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
     <AppProvider>
       <TruckProvider>
-        <App />
+          <App />
       </TruckProvider>
     </AppProvider>
   </React.StrictMode>,

@@ -4,19 +4,20 @@ import { useGlobalContext } from "../context";
 import { useTruckContext, useTruck } from "../truckContext";
 import dashboard from "../css/dashboard.css";
 import OrderDetails from "./OrderDetails";
+import Loading from "./Loading";
 
 const Dashboard = () => {
   document.title = "Dashboard";
   const { openSidebar, isSidebarOpen } = useGlobalContext();
   // const { getData } = useTruckContext();
-  const [trucks, loading, errorMessage] = useTruck()
+  const [trucks, loading] = useTruck();
 
   const handleViewDetails = () => {
     return <OrderDetails />;
   };
 
-  if(loading){
-    return <div>Loading...</div>
+  if (loading) {
+    return <Loading />;
   }
 
   return (
