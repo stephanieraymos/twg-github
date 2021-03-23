@@ -20,9 +20,10 @@ const AppProvider = ({ children }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [userId, setUserId] = useState("d73897ef-9b70-463f-8dc1-bdafbe8891ff");
+  const [company, setCompany] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [billingAddress, setBillingAddress] = useState("");
 
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
@@ -74,12 +75,14 @@ const AppProvider = ({ children }) => {
         setLastName,
         email,
         setEmail,
-        password,
-        setPassword,
-        confirmPassword,
-        setConfirmPassword,
         userId,
         setUserId,
+        company,
+        setCompany,
+        phoneNumber,
+        setPhoneNumber,
+        billingAddress,
+        setBillingAddress
       }}
     >
       {children}

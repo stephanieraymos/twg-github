@@ -15,58 +15,39 @@ const getLocalStorage = () => {
 };
 
 const LoginModal = () => {
+  const url = "http://143.110.225.28/v1/account/login/"
+
   const { isModalOpen, closeModal } = useGlobalContext();
 
-  const [person, setPerson] = useState(getLocalStorage());
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
-  const [editId, setEditId] = useState(null);
+  const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  const {
+    userId,
+    setUserId,
+    email,
+    setEmail,
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    company,
+    setCompany,
+    phoneNumber,
+    setPhoneNumber,
+    billingAddress,
+    setBillingAddress,
+  } = useGlobalContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!firstName || !lastName || !email) {
+    if (!email || !password) {
       showAlert(true, "danger", "Please enter value");
-    } else if (firstName && isEditing) {
-      // deal with edit if something is in value and user is editing
-      setFirstName(
-        person.map((person) => {
-          if (person.id === editId) {
-            return {
-              ...person,
-              firstName,
-              lastName,
-              email,
-            };
-          }
-          return person;
-        })
-      );
-      setFirstName(""); //Reseting input boxes to empty string
-      setLastName("");
-      setEmail("");
-      setEditId(null); //Reseting editId
-      setIsEditing(false); //Reseting isEditing to false
-      showAlert(true, "success", "Person Details Updated"); //Showing alert after edit is submitted
     } else {
       // Show alert and add person to person list only if name is true and not editing
       showAlert(true, "success", "Person Added");
-      //Creating new person
-      const newPerson = {
-        id: new Date().getTime().toString(),
-        firstName,
-        lastName,
-        email,
-      };
 
-      //Spreading out current person list and adding newPerson to the list
-      setPerson([...person, newPerson]);
-      setFirstName(""); //Reseting input boxes to empty string
-      setLastName("");
       setEmail("");
-      console.log(newPerson); //Logging new person for testing purposes
+      setPassword("")
     }
   };
 
@@ -75,33 +56,43 @@ const LoginModal = () => {
     setAlert({ show, type, msg });
   };
 
-  //clearList function. Once list is cleared an alert confirms this to the user + person list is set back to empty array
-  const clearList = () => {
-    showAlert(true, "danger", "People cleared successfully");
-    setPerson([]);
+  //* useEffect for user post request
+  const login = () => {
+    console.log("login is running")
+    fetch(url,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            email : email,
+            password : password
+        }),
+      }
+    )
+    .then((response) => {
+      console.log(response)
+      if (response.ok) {
+        return response.json();
+      } else if (response.status == 400){
+        throw new Error("One or more of the required keys are missing.");
+      } else if (response.status == 404){
+        throw new Error("The user does not exist or email/password is incorrect.");
+      }
+    })
+    .then(user => {
+      closeModal();
+      setUserId(user['id'])
+      setEmail(user['email'])
+      setFirstName(user['first_name'])
+      setLastName(user['last_name'])
+      setCompany(user['company'])
+      setPhoneNumber(user['phone_number'])
+      setBillingAddress(user['billing_address'])
+    })
+    .catch((error) => {
+      console.log(error)
+    });
   };
-
-  //removeItem grabs the id of the person to be removed, shows an alert to the user confirming
-  //deletion + filters through the person list to keep only the people whose id doesn't match the removed person
-  const removeItem = (id) => {
-    showAlert(true, "danger", "Person Removed");
-    setPerson(person.filter((person) => person.id !== id)); //If person id does not match then it will be added to new array, if it does match; it won't get returned + won't be displayed
-  };
-
-  //editItem grabs the id of the person to be edited, sets the person and sets all required values
-  const editItem = (id) => {
-    const specificPerson = person.find((person) => person.id === id);
-    setIsEditing(true);
-    setEditId(id);
-    setFirstName(specificPerson.firstName);
-    setLastName(specificPerson.lastName);
-    setEmail(specificPerson.email);
-  };
-
-  //useEffect happens only when person array changes. The person gets saved to localStorage
-  useEffect(() => {
-    localStorage.setItem("Person", JSON.stringify(person));
-  }, [person]);
 
   return (
     <div
@@ -135,29 +126,21 @@ const LoginModal = () => {
               }}
             >
               <Form.Group className="center-form-group">
-                <Form.Label style={{ color: "white" }}>First Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="First Name"
-                />
-                <Form.Label style={{ color: "white" }}>Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Last Name"
-                />
                 <Form.Label style={{ color: "white" }}>Email</Form.Label>
                 <Form.Control
                   type="text"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
+                  placeholder="Email Address"
+                />
+                <Form.Label style={{ color: "white" }}>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
                 />
               </Form.Group>
             </Modal.Body>
@@ -167,7 +150,7 @@ const LoginModal = () => {
               </a>
               <Button
                 type="submit"
-                onClick={closeModal}
+                onClick={login}
                 className="boot-button"
                 style={{textAlign: "center"}}
               >

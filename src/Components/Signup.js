@@ -72,22 +72,16 @@ const Signup = () => {
         }),
       }
     )
-      .then((response) => {
-        if (response.ok) {
-          setError(false);
-          console.log(response)
-          return response;
-        } else if (response.status >= 408) {
-          console.log(
-            error,
-            "There is an unknown error preventing the user from being added to the database"
-          );
-          setError(true);
-        }
-        console.log(response);
-        return response.json();
-      })
-      .then((user) => setUserId(user.id));
+    .then((response) => {
+      if (response.ok) {
+        // redirect to the email verification page basically telling them to check their email and click on the link
+      } else if (response.status == 400){
+        throw new Error("One or more of the data types are wrong or one or more of the required keys are missing.");
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    });
   };
 
   return (
