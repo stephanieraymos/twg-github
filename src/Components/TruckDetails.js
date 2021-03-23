@@ -5,21 +5,16 @@ import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading"
 
 const url = "http://143.110.225.28/api/v1/inventory/?id=";
+const inventoryURL = "http://143.110.225.28/api/v1/inventory/";
 
 const TruckDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [truck, setTruck] = useState(null);
   const [truckFile, setTruckFile] = useState([]);
+  const [newTruckManifest, setNewTruckManifest] = useState(null);         // files to be added
+  const [oldTruckManifestId, setOldTruckManifestId] = useState(null);     // files to be deleted
 
-  // const {
-  //   trucks,
-  //   truckName,
-  //   truckPrice,
-  //   truckContents,
-  //   truckManifest,
-  //   truckId,
-  // } = useTruck();
   document.title = "Truck Details";
 
   //^ GET MANIFEST REQUEST //
@@ -37,6 +32,51 @@ const TruckDetails = () => {
       console.log(error);
     }
   };
+
+  // Return true or false to indicate if fetch was successful
+  const updateTruck = () => {
+    try {
+      const data = new FormData();
+      data.append("id", id)
+      data.append("truckName", id)
+      data.append("truckPrice", id)
+      truckContents.map((data) => data.append("truckContents", data));
+      newTruckManifest.map((id) => data.append("truckManifest", id));
+      oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch(inventoryURL, {
+        method: "POST",
+        body: data,
+      })
+        .then((response) => {
+          if (response.ok)
+            return true
+          else
+            return false
+        })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const deleteTruck = () => {
+    try {
+      const data = new FormData();
+      data.append("id", id)
+      truckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch(inventoryURL, {
+        method: "POST",
+        body: data,
+      })
+        .then((response) => {
+          if (response.ok)
+            return true
+          else
+            return false
+        })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     setLoading(true);
