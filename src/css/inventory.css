@@ -308,12 +308,15 @@ ul, li {
   color: rgba(9, 167, 48, 0.507);
 }
 
+/*=============================================
+=            UPDATE TRUCK DETAILS             =
+=============================================*/
 
 .update-truck-form-container {
   display: flex;
 }
 .update-truck-form {
-  margin: 15% auto;
+  margin: 2rem auto;
   width: 40%;
 }
 

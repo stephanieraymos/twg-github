@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { useTruckContext } from "../truckContext";
-import { FaEdit } from "react-icons/fa";
+import Navigation from "./Navigation";
 
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
 
@@ -80,6 +80,9 @@ const UpdateTruckDetails = () => {
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <h1 className="update-truck-header">Edit truck details</h1>
 
       <div className="update-truck-form-container">
@@ -90,27 +93,30 @@ const UpdateTruckDetails = () => {
           className="update-truck-form"
         >
           <Form.Group className="center-form-group">
-            <Form.Label style={{ color: "black" }}>Truck Name</Form.Label>
+            <Form.Label htmlFor="truckName" style={{ color: "black" }}>Truck Name</Form.Label>
             <Form.Control
               type="text"
+              id="truckName"
               required
               value={truckName}
               onChange={(e) => setTruckName(e.target.value)}
               name="truckName"
             />
 
-            <Form.Label style={{ color: "black" }}>Truck Price</Form.Label>
+            <Form.Label htmlFor="truckPrice" style={{ color: "black" }}>Truck Price</Form.Label>
             <Form.Control
               type="textarea"
+              id="truckPrice"
               required
               value={truckPrice}
               onChange={(e) => setTruckPrice(e.target.value)}
               name="truckPrice"
             />
 
-            <Form.Label style={{ color: "black" }}>Truck Contents</Form.Label>
+            <Form.Label htmlFor="truckContents" style={{ color: "black" }}>Truck Contents</Form.Label>
             <Form.Control
               type="text"
+              id="truckContents"
               required
               value={truckContents}
               onChange={(e) => setTruckContents(e.target.value)}
@@ -123,6 +129,7 @@ const UpdateTruckDetails = () => {
             onClick={(e) => {
               e.preventDefault();
               updateTruck(id, truckName, truckPrice, truckContents);
+              console.log("Submit changes button pressed")
             }}
             className="edit-truck-btn"
           >
