@@ -109,6 +109,7 @@ export const useTruck = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   // const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
+  const [postRefresh, setPostRefresh] = useState(false)
 
   const [trucks, setTrucks] = useReducer((state, value) => [...value], []);
 
@@ -140,13 +141,11 @@ export const useTruck = () => {
       }
     };
     fetchTrucks();
-    console.log("Anything");
-  }, []);
-
+  }, [postRefresh]);
 
   // @todo If anything is added as parameter to fetch trucks it causes an endless loop
 
-  return [trucks, loading, errorMessage, addTruck];
+  return [trucks, loading, errorMessage, addTruck, setPostRefresh];
 };
 
 export { TruckProvider, useTruckContext };

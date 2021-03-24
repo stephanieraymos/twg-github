@@ -27,8 +27,8 @@ const AddInventory = () => {
     showAlert,
   } = useTruckContext();
 
+  const { setTrucks, setPostRefresh } = useTruck();
   const addTruck = useTruck()[3];
-  const { setTrucks } = useTruck();
 
   const { userId, setUserId } = useGlobalContext();
 
@@ -81,6 +81,7 @@ const AddInventory = () => {
       const newData = await response.json();
       addTruck(newData);
       console.log(newData);
+      setPostRefresh(true)
       setTrucks(newData);
     } catch (error) {
       console.log(error);
