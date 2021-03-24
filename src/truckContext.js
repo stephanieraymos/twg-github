@@ -141,10 +141,10 @@ export const useTruck = () => {
     };
     fetchTrucks();
     console.log("Anything");
-  }, [trucks]);
+  }, []);
 
 
-  // @todo Try moving fetch trucks out of truckContext and passing postTrucks as the parameter
+  // @todo If anything is added as parameter to fetch trucks it causes an endless loop
 
   return [trucks, loading, errorMessage, addTruck];
 };
