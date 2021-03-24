@@ -2,19 +2,23 @@ import React, { useState, useRef, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { useTruckContext } from "../truckContext";
 import Navigation from "./Navigation";
+import { useHistory, useParams } from "react-router-dom";
 
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
 
 const UpdateTruckDetails = () => {
+  const { id } = useParams();
+
   const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
   const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
+
+  let history = useHistory();
 
   document.title = "Add Inventory";
   const {
     truckLoad,
     setTruckLoad,
-    id,
     truckName,
     setTruckName,
     truckPrice,
@@ -28,6 +32,10 @@ const UpdateTruckDetails = () => {
   } = useTruckContext();
 
   const form = useRef(null);
+
+  const redirect = () => {
+    history.push(`/TruckDetails/${id}`);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -93,7 +101,9 @@ const UpdateTruckDetails = () => {
           className="update-truck-form"
         >
           <Form.Group className="center-form-group">
-            <Form.Label htmlFor="truckName" style={{ color: "black" }}>Truck Name</Form.Label>
+            <Form.Label htmlFor="truckName" style={{ color: "black" }}>
+              Truck Name
+            </Form.Label>
             <Form.Control
               type="text"
               id="truckName"
@@ -103,7 +113,9 @@ const UpdateTruckDetails = () => {
               name="truckName"
             />
 
-            <Form.Label htmlFor="truckPrice" style={{ color: "black" }}>Truck Price</Form.Label>
+            <Form.Label htmlFor="truckPrice" style={{ color: "black" }}>
+              Truck Price
+            </Form.Label>
             <Form.Control
               type="textarea"
               id="truckPrice"
@@ -113,7 +125,9 @@ const UpdateTruckDetails = () => {
               name="truckPrice"
             />
 
-            <Form.Label htmlFor="truckContents" style={{ color: "black" }}>Truck Contents</Form.Label>
+            <Form.Label htmlFor="truckContents" style={{ color: "black" }}>
+              Truck Contents
+            </Form.Label>
             <Form.Control
               type="text"
               id="truckContents"
@@ -129,7 +143,8 @@ const UpdateTruckDetails = () => {
             onClick={(e) => {
               e.preventDefault();
               updateTruck(id, truckName, truckPrice, truckContents);
-              console.log("Submit changes button pressed")
+              console.log("Submit changes button pressed");
+              redirect();
             }}
             className="edit-truck-btn"
           >

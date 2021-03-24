@@ -11,8 +11,6 @@ import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
-import InventoryAllTrucks from "./InventoryAllTrucks";
-import UpdateTruckDetails from "./UpdateTruckDetails";
 
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
