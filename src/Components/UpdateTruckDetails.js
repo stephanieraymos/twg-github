@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { useTruckContext } from "../truckContext";
 import Navigation from "./Navigation";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
 
@@ -139,7 +139,8 @@ const UpdateTruckDetails = () => {
               rows={3}
             />
           </Form.Group>
-          <button
+          <Link
+            to={history}
             onClick={(e) => {
               e.preventDefault();
               updateTruck(id, truckName, truckPrice, truckContents);
@@ -149,7 +150,7 @@ const UpdateTruckDetails = () => {
             className="edit-truck-btn"
           >
             Submit changes
-          </button>
+          </Link>
         </Form>
       </div>
     </>
