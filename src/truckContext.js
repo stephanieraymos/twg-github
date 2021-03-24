@@ -109,7 +109,7 @@ export const useTruck = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   // const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
-  const [postRefresh, setPostRefresh] = useState(false)
+  const [postRefresh, setPostRefresh] = useState(false);
 
   const [trucks, setTrucks] = useReducer((state, value) => [...value], []);
 
@@ -119,6 +119,8 @@ export const useTruck = () => {
   };
 
   useEffect(() => {
+    const abortCont = new AbortController();
+
     setLoading(true);
 
     const fetchTrucks = async () => {
@@ -128,6 +130,9 @@ export const useTruck = () => {
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
+          },
+          {
+            signal: abortCont.signal,
           }
         );
         const newTrucks = await response.json(); //returns a promise
@@ -136,12 +141,23 @@ export const useTruck = () => {
         setLoading(false);
         setErrorMessage("");
       } catch (error) {
-        console.log(error);
-        setErrorMessage(error);
+        if (error.name === "AbortError") {
+          console.log("fetch aborted");
+        } else {
+          console.log(error);
+          setErrorMessage(error);
+        }
       }
     };
     fetchTrucks();
+    return () => {
+      abortCont.abort();
+      console.log("cleanup")
+    };
   }, [postRefresh]);
+
+  // setPostRefresh is not a function error message inside postTruck function (in addInventory) after posting truck
+  //Trying to make data available without having to refresh
 
   // @todo If anything is added as parameter to fetch trucks it causes an endless loop
 

@@ -23,9 +23,9 @@ const InventoryAllTrucks = () => {
 
   const [trucks, loading, errorMessage] = useTruck();
 
-  useEffect(() => {
-    console.log("All trucks", trucks);
-  }, [trucks]);
+  // useEffect(() => {
+  //   console.log("All trucks", trucks);
+  // }, [trucks]);
 
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
