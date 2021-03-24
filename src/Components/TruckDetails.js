@@ -210,9 +210,8 @@ const TruckDetails = () => {
                     {truckFile.map((manifest, index) => {
                       const { truckManifest, truckManifestName } = manifest;
                       return (
-                        <ul>
+                        <ul key={truckManifestId[index]}>
                           <li
-                            key={truckManifestId[index]}
                             onClick={
                               () =>
                                 window.open(truckManifest, "_blank") ||

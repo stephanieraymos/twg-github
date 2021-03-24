@@ -61,7 +61,7 @@ const UpdateTruckDetails = () => {
   };
 
   // Return true or false to indicate if fetch was successful
-  const updateTruck = (id, truckName, truckPrice, truckContents) => {
+  const updateTruck = () => {
     console.log("update truck running");
     try {
       console.log("truckContents", truckContents);
