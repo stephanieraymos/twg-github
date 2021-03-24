@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useReducer, useContext, createContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useContext,
+  createContext,
+} from "react";
 import InventoryAllTrucks from "./Components/InventoryAllTrucks";
 
 // Generating context
@@ -6,7 +12,6 @@ const TruckContext = createContext();
 
 //Generating provider
 const TruckProvider = ({ children }) => {
-
   //////////////////////// &&--STATE--&& /////////////////////////////
 
   const [truckLoad, setTruckLoad] = useState([]); //INVENTORY LIST ON ADD TRUCKLOAD PAGE
@@ -54,31 +59,6 @@ const TruckProvider = ({ children }) => {
     setTruckContents(specificItem.truckContents);
     setTruckManifest(specificItem.truckManifest);
   };
-
-  //////////////////////// &&--FETCH--&& ///////////////////////////////
-
-  // // New delete request //^----DELETE----
-  // const deleteTrucks = async () => {
-  //   try {
-  //     const response = await fetch("api.thewholesalegroup.com/api/v1/inventory/", {
-  //       method: "DELETE",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         id: "",
-  //       }),
-  //     });
-  //     return response.json();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // //useEffect fetches trucks only after initial render. This is accomplished by passing the empty array
-  // useEffect(() => {
-  //   deleteTrucks();
-  //   console.log("deleteTrucks useEffect ran successfully");
-  // }, [truckLoad]);
-  // // End of useEffect for fetch
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
@@ -130,12 +110,12 @@ export const useTruck = () => {
   const [errorMessage, setErrorMessage] = useState("");
   // const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
 
-  const [trucks, setTrucks] = useReducer((state, value) => ([...value]), [] )
+  const [trucks, setTrucks] = useReducer((state, value) => [...value], []);
 
   const addTruck = (truck) => {
-    setTrucks(trucks.concat(truck))
-    console.log("Hey", truck)
-  }
+    setTrucks(trucks.concat(truck));
+    console.log("Hey", truck);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -151,7 +131,7 @@ export const useTruck = () => {
         );
         const newTrucks = await response.json(); //returns a promise
         setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-        console.log(newTrucks)
+        console.log(newTrucks);
         setLoading(false);
         setErrorMessage("");
       } catch (error) {
@@ -161,10 +141,11 @@ export const useTruck = () => {
     };
     fetchTrucks();
     console.log("Anything");
-  }, []);
+  }, [trucks]);
+
 
   // @todo Try moving fetch trucks out of truckContext and passing postTrucks as the parameter
-  
+
   return [trucks, loading, errorMessage, addTruck];
 };
 
