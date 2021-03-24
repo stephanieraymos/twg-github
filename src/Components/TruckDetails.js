@@ -12,6 +12,7 @@ import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import InventoryAllTrucks from "./InventoryAllTrucks";
+import UpdateTruckDetails from "./UpdateTruckDetails";
 
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
@@ -22,10 +23,7 @@ const TruckDetails = () => {
   const [loading, setLoading] = useState(false);
   const [truck, setTruck] = useState(null);
   const [truckFile, setTruckFile] = useState([]);
-  const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
-  const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
   const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
-  const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
 
   document.title = "Truck Details";
 
@@ -45,36 +43,8 @@ const TruckDetails = () => {
     }
   };
 
-  // Return true or false to indicate if fetch was successful
-  const updateTruck = (id, truckName, truckPrice, truckContents) => {
-    console.log("update truck running")
-    try {
-      console.log("truckContents", truckContents);
-      console.log(Array.isArray(truckContents));
-      const data = new FormData();
-      data.append("id", id);
-      data.append("truckName", truckName);
-      data.append("truckPrice", String(truckPrice));
-      truckContents.map((content) => data.append("truckContents", content));
-      newTruckManifest.map((file) => data.append("truckManifest", file));
-      oldTruckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch(inventoryURL, {
-        method: "PUT",
-        body: data,
-      }).then((response) => {
-        console.log(response);
-        if (response.ok)
-          return true;
-        else 
-          return false;
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const deleteTruck = (id, truckManifestId) => {
-    console.log("delete truck running")
+    console.log("delete truck running");
     try {
       const data = new FormData();
       data.append("id", id);
@@ -286,22 +256,16 @@ const TruckDetails = () => {
                     <p className="data-wrapper">
                       <button
                         onClick={(e) => {
-                          e.preventDefault()
-                          deleteTruck(id, truckManifestId)
+                          e.preventDefault();
+                          deleteTruck(id, truckManifestId);
                         }}
                         className="delete-truck-btn"
                       >
                         <FaTimes /> Delete this truck
                       </button>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault()
-                          updateTruck(id, truckName, truckPrice, truckContents)
-                        }}
-                        className="edit-truck-btn"
-                      >
+                      <Link className="edit-truck-btn" to={`/UpdateTruckDetails/${id}`}>
                         <FaEdit /> Edit this truck
-                      </button>
+                      </Link>
                     </p>
                   </Card.Body>
                 </Accordion.Collapse>

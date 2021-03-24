@@ -7,6 +7,7 @@ import {
   useLocation 
 } from "react-router-dom";
 import { AppProvider, useGlobalContext } from "./context";
+import "bootstrap/dist/css/bootstrap.min.css"
 
 import Contact from "./Components/Contact";
 import Home from "./Components/Home";
@@ -23,6 +24,7 @@ import CustomerDb from "./Components/CustomerDb";
 import OrderDetails from "./Components/OrderDetails";
 import Orders from "./Components/Orders";
 import TruckDetails from "./Components/TruckDetails";
+import UpdateTruckDetails from "./Components/UpdateTruckDetails";
 import Error from "./Pages/Error";
 
 const App = () => {
@@ -58,6 +60,7 @@ const App = () => {
             <Route path="/OrderDetails" exact component={OrderDetails} />
             <Route path="/Orders" exact component={Orders} />
             <Route path="/TruckDetails/:id" exact component={TruckDetails} />
+            <Route path="/UpdateTruckDetails/:id" exact component={UpdateTruckDetails} />
             <Route path="*" exact component={Error} />
             <Redirect to="/" />
         </Switch>

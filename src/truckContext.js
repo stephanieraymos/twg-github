@@ -113,13 +113,13 @@ export const useTruck = () => {
 
   // const [trucks, setTrucks] = useReducer((state, value) => [...value], []);
   const reducer = (state, action) => {
-    return state.concat(action.value)
-  }
+    return state.concat(action.value);
+  };
 
-  const [trucks, dispatch] = useReducer(reducer, [])
+  const [trucks, dispatch] = useReducer(reducer, []);
 
   const addTruck = (truck) => {
-    dispatch({value: truck})
+    dispatch({ value: truck });
   };
 
   useEffect(() => {
@@ -156,9 +156,10 @@ export const useTruck = () => {
     fetchTrucks();
     return () => {
       abortCont.abort();
-      console.log("cleanup")
+      console.log("cleanup");
     };
-  }, [postRefresh]);
+  }, []);
+  // }, [postRefresh]);
 
   // setPostRefresh is not a function error message inside postTruck function (in addInventory) after posting truck
   //Trying to make data available without having to refresh

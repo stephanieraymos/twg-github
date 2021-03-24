@@ -307,3 +307,19 @@ ul, li {
 .edit-truck-btn:hover {
   color: rgba(9, 167, 48, 0.507);
 }
+
+
+.update-truck-form-container {
+  display: flex;
+}
+.update-truck-form {
+  margin: 15% auto;
+  width: 40%;
+}
+
+.update-truck-header {
+  color: black;
+  font-family: var(--font-fam);
+  text-align: center;
+  margin-top: 2rem;
+}

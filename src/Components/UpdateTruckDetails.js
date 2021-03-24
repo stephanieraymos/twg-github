@@ -1,0 +1,138 @@
+import React, { useState, useRef, useEffect } from "react";
+import { Form } from "react-bootstrap";
+import { useTruckContext } from "../truckContext";
+import { FaEdit } from "react-icons/fa";
+
+const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
+
+const UpdateTruckDetails = () => {
+  const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
+  const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
+  const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
+
+  document.title = "Add Inventory";
+  const {
+    truckLoad,
+    setTruckLoad,
+    id,
+    truckName,
+    setTruckName,
+    truckPrice,
+    setTruckPrice,
+    truckContents,
+    setTruckContents,
+    truckManifest,
+    setTruckManifest,
+
+    showAlert,
+  } = useTruckContext();
+
+  const form = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (truckName) {
+      showAlert(true, "success", "Truck Details Updated");
+
+      let updatedTruck = [
+        id,
+        truckName,
+        truckPrice,
+        truckContents,
+        truckManifest,
+      ];
+      console.log("Truck Manifest", truckManifest);
+
+      setTruckLoad([...truckLoad, updatedTruck]);
+      setTruckName("");
+      setTruckPrice("");
+      setTruckContents([]);
+      setTruckManifest([]);
+      console.log("Updated Truck", updatedTruck);
+    }
+  };
+
+  // Return true or false to indicate if fetch was successful
+  const updateTruck = (id, truckName, truckPrice, truckContents) => {
+    console.log("update truck running");
+    try {
+      console.log("truckContents", truckContents);
+      console.log(Array.isArray(truckContents));
+      const data = new FormData();
+      data.append("id", id);
+      data.append("truckName", truckName);
+      data.append("truckPrice", String(truckPrice));
+      truckContents.map((content) => data.append("truckContents", content));
+      newTruckManifest.map((file) => data.append("truckManifest", file));
+      oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch(inventoryURL, {
+        method: "PUT",
+        body: data,
+      }).then((response) => {
+        console.log(response);
+        if (response.ok) return true;
+        else return false;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <>
+      <h1 className="update-truck-header">Edit truck details</h1>
+
+      <div className="update-truck-form-container">
+        <Form
+          ref={form}
+          onSubmit={handleSubmit}
+          method="post"
+          className="update-truck-form"
+        >
+          <Form.Group className="center-form-group">
+            <Form.Label style={{ color: "black" }}>Truck Name</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              value={truckName}
+              onChange={(e) => setTruckName(e.target.value)}
+              name="truckName"
+            />
+
+            <Form.Label style={{ color: "black" }}>Truck Price</Form.Label>
+            <Form.Control
+              type="textarea"
+              required
+              value={truckPrice}
+              onChange={(e) => setTruckPrice(e.target.value)}
+              name="truckPrice"
+            />
+
+            <Form.Label style={{ color: "black" }}>Truck Contents</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              value={truckContents}
+              onChange={(e) => setTruckContents(e.target.value)}
+              name="truckContents"
+              as="textarea"
+              rows={3}
+            />
+          </Form.Group>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              updateTruck(id, truckName, truckPrice, truckContents);
+            }}
+            className="edit-truck-btn"
+          >
+            Submit changes
+          </button>
+        </Form>
+      </div>
+    </>
+  );
+};
+// TP-51
+
+export default UpdateTruckDetails;
