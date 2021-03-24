@@ -111,11 +111,15 @@ export const useTruck = () => {
   // const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
   const [postRefresh, setPostRefresh] = useState(false);
 
-  const [trucks, setTrucks] = useReducer((state, value) => [...value], []);
+  // const [trucks, setTrucks] = useReducer((state, value) => [...value], []);
+  const reducer = (state, action) => {
+    return state.concat(action.value)
+  }
+
+  const [trucks, dispatch] = useReducer(reducer, [])
 
   const addTruck = (truck) => {
-    setTrucks(trucks.concat(truck));
-    console.log("Hey", truck);
+    dispatch({value: truck})
   };
 
   useEffect(() => {
@@ -136,7 +140,7 @@ export const useTruck = () => {
           }
         );
         const newTrucks = await response.json(); //returns a promise
-        setTrucks(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
+        addTruck(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
         console.log(newTrucks);
         setLoading(false);
         setErrorMessage("");
@@ -161,7 +165,7 @@ export const useTruck = () => {
 
   // @todo If anything is added as parameter to fetch trucks it causes an endless loop
 
-  return [trucks, loading, errorMessage, addTruck, setPostRefresh];
+  return [trucks, addTruck, loading, errorMessage];
 };
 
 export { TruckProvider, useTruckContext };

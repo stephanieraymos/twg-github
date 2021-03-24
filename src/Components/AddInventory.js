@@ -7,7 +7,7 @@ import inventory from "../css/inventory.css";
 import modalandsidebar from "../css/modalandsidebar.css";
 import { Link } from "react-router-dom";
 
-const AddInventory = () => {
+const AddInventory = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   document.title = "Add Inventory";
@@ -27,8 +27,9 @@ const AddInventory = () => {
     showAlert,
   } = useTruckContext();
 
-  const { setTrucks, setPostRefresh } = useTruck();
   const addTruck = useTruck()[3];
+  // const { setTrucks, setPostRefresh } = useTruck();
+  const { setTrucks } = useTruck();
 
   const { userId, setUserId } = useGlobalContext();
 
@@ -78,11 +79,8 @@ const AddInventory = () => {
         }
       );
       console.log(response);
-      const newData = await response.json();
-      addTruck(newData);
-      console.log(newData);
-      setPostRefresh(true)
-      setTrucks(newData);
+      const newTruck = await response.json();
+      props.addNewTrucks([newTruck])
     } catch (error) {
       console.log(error);
     }

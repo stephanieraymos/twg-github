@@ -21,11 +21,17 @@ const InventoryAllTrucks = () => {
     setIsModalOpen(false);
   };
 
-  const [trucks, loading, errorMessage] = useTruck();
+  const [trucks, addTruck, loading, errorMessage] = useTruck();
 
-  // useEffect(() => {
-  //   console.log("All trucks", trucks);
-  // }, [trucks]);
+  useEffect(() => {
+    console.log("All trucks", trucks);
+  }, [trucks]);
+
+  const addNewTrucks = (truck) => {
+    console.log("adding new trucks");
+    console.log(trucks);
+    addTruck(truck);
+  };
 
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
@@ -50,7 +56,7 @@ const InventoryAllTrucks = () => {
         <Navigation />
       </div>
       <Container fluid>
-        <AddInventory />
+        <AddInventory addNewTrucks={addNewTrucks} />
       </Container>
 
       <div className="table-wrapper">
