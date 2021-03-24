@@ -3,14 +3,15 @@ import { Form } from "react-bootstrap";
 import { useTruckContext } from "../truckContext";
 import Navigation from "./Navigation";
 import { useHistory, useParams, Link } from "react-router-dom";
-
+const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
 
-  const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
-  const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
+  const [truck, setTruck] = useState(null);
+  //   const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
+  //   const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
 
   let history = useHistory();
@@ -25,8 +26,6 @@ const UpdateTruckDetails = () => {
     setTruckPrice,
     truckContents,
     setTruckContents,
-    truckManifest,
-    setTruckManifest,
 
     showAlert,
   } = useTruckContext();
@@ -42,23 +41,44 @@ const UpdateTruckDetails = () => {
     if (truckName) {
       showAlert(true, "success", "Truck Details Updated");
 
-      let updatedTruck = [
-        id,
-        truckName,
-        truckPrice,
-        truckContents,
-        truckManifest,
-      ];
-      console.log("Truck Manifest", truckManifest);
+      let updatedTruck = [id, truckName, truckPrice, truckContents];
 
       setTruckLoad([...truckLoad, updatedTruck]);
       setTruckName("");
       setTruckPrice("");
       setTruckContents([]);
-      setTruckManifest([]);
       console.log("Updated Truck", updatedTruck);
     }
   };
+
+  useEffect(() => {
+    async function getTruck() {
+      try {
+        const response = await fetch(`${url}${id}`);
+        const data = await response.json();
+        if (data) {
+          const {
+            truckName: truckName,
+            truckPrice: truckPrice,
+            truckContents: truckContents,
+          } = data[0];
+
+          const newTruck = {
+            truckName,
+            truckPrice,
+            truckContents,
+          };
+          setTruck(newTruck);
+        } else {
+          setTruck(null);
+        }
+        console.log("data", data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getTruck();
+  }, [id]);
 
   // Return true or false to indicate if fetch was successful
   const updateTruck = () => {
@@ -71,8 +91,8 @@ const UpdateTruckDetails = () => {
       data.append("truckName", truckName);
       data.append("truckPrice", String(truckPrice));
       truckContents.map((content) => data.append("truckContents", content));
-      newTruckManifest.map((file) => data.append("truckManifest", file));
-      oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+      //   newTruckManifest.map((file) => data.append("truckManifest", file));
+      //   oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "PUT",
         body: data,
@@ -109,6 +129,7 @@ const UpdateTruckDetails = () => {
               id="truckName"
               required
               value={truckName}
+              //   value={truck.truckName}
               onChange={(e) => setTruckName(e.target.value)}
               name="truckName"
             />
@@ -121,6 +142,7 @@ const UpdateTruckDetails = () => {
               id="truckPrice"
               required
               value={truckPrice}
+              //   value={truck.truckPrice}
               onChange={(e) => setTruckPrice(e.target.value)}
               name="truckPrice"
             />
@@ -139,6 +161,7 @@ const UpdateTruckDetails = () => {
               rows={3}
             />
           </Form.Group>
+
           <Link
             to={history}
             onClick={(e) => {
@@ -156,6 +179,9 @@ const UpdateTruckDetails = () => {
     </>
   );
 };
+
+//@todo Adding truck. to the beginning of the values in the inputs updates the fields to have the data from the correct truck. But as soon as I refresh it says TypeError: Cannot read property 'truckPrice' of null. See getTruck function to see my logic.
+
 // TP-51
 
 export default UpdateTruckDetails;
