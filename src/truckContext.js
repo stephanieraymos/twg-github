@@ -126,7 +126,7 @@ export const useTruck = () => {
     const fetchTrucks = async () => {
       try {
         const response = await fetch(
-          "https://api.thewholesalegroup.com/api/v1/inventory/",
+          "https://api.thewholesalegroup.com/v1/trucks/",
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },

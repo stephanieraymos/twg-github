@@ -7,7 +7,7 @@ import Navigation from "./Navigation";
 //! THIS COMPONENT IN NOT BEING USED!!
 //* KEEP JUST IN CASE
 
-const url = "https://api.thewholesalegroup.com/api/v1/inventory/data/"; //API LINK
+const url = "https://api.thewholesalegroup.com/api/v1/trucks/data/"; //API LINK
 
 const Inventory = () => {
   //Setting state values, params are default values

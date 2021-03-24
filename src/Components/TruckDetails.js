@@ -13,9 +13,9 @@ import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import InventoryAllTrucks from "./InventoryAllTrucks";
 
-const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
-const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/";
-const manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
+const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
+const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
+const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
 
 const TruckDetails = () => {
   const { id } = useParams();

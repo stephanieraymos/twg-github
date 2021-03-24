@@ -71,7 +71,7 @@ const AddInventory = () => {
     const data = new FormData(form.current);
     try {
       const response = await fetch(
-        "https://api.thewholesalegroup.com/api/v1/inventory/",
+        "https://api.thewholesalegroup.com/v1/trucks/",
         {
           method: "POST",
           body: data,
