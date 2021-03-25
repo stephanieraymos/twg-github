@@ -180,7 +180,7 @@ const UpdateTruckDetails = () => {
   );
 };
 
-// @bug Adding truck. to the beginning of the values in the inputs updates the fields to have the data from the correct truck. But as soon as I refresh it says TypeError: Cannot read property 'truckPrice' of null. See getTruck function to see my logic.
+// @todo Adding truck. to the beginning of the values in the inputs updates the fields to have the data from the correct truck. But as soon as I refresh it says TypeError: Cannot read property 'truckPrice' of null. See getTruck function to see my logic.
 
 // TP-51
 
