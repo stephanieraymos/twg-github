@@ -187,7 +187,7 @@ const UpdateTruckDetails = () => {
   );
 };
 
-// @todo Adding truck. to the beginning of the values in the inputs updates the fields to have the data from the correct truck. But as soon as I refresh it says TypeError: Cannot read property 'truckPrice' of null. See getTruck function to see my logic.
+// @todo Update is not working. Error: PUT https://api.thewholesalegroup.com/v1/trucks/ 400 (Bad Request)
 
 // TP-51
 
