@@ -34,7 +34,6 @@ const App = () => {
 
   return (
     <>
-      <Login />
       <Sidebar />
 
       
@@ -47,7 +46,7 @@ const App = () => {
               <Redirect to="/Home" />
             </Route>
           <Route path="/Home" exact component={Home} />
-            <Route path="/Signup" exact component={Login2} />
+            <Route path="/login" exact component={Login2} />
             <Route path="/Dashboard" exact component={Dashboard} />
             <Route path="/AddInventory" exact component={AddInventory} />
             <Route
