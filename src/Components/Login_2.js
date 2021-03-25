@@ -7,11 +7,14 @@ import logo from "../img/w-logo.png";
 import { Link, useHistory } from "react-router-dom";
 import SignUp from "./Signup_2";
 import Signup2 from "./Signup_2";
+import { useCookies } from "react-cookie";
 
 const LoginModal = () => {
     const url = "https://api.thewholesalegroup.com/v1/account/login/";
 
     const [width, setWidth] = useState(window.innerWidth);
+    const [cookies, setCookie] = useCookies(["user-access-token", "user-refresh-token"]);
+
     let history = useHistory();
 
     const {
@@ -83,8 +86,18 @@ const LoginModal = () => {
                 setCompany(user["company"]);
                 setPhoneNumber(user["phone_number"]);
                 setBillingAddress(user["billing_address"]);
+                setCookie("user-access-token", user["token"]["access"], {
+                    path: "/",
+                    // secure: true,
+                    maxAge: 3600
+                });
+                setCookie("user-refresh-token", user["token"]["refresh"], {
+                    path: "/",
+                    // secure: true,
+                    maxAge: 604800
+                });
             })
-            .then(() => history.push("/Home"))
+            .then(() => history.push("/Dashboard"))
             .catch((error) => {
                 showAlert(true, "danger", error.message);
             });

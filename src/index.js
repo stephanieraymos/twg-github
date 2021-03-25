@@ -5,14 +5,17 @@ import { AppProvider } from "./context";
 import App from "./App";
 import { TruckProvider } from "./truckContext";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { CookiesProvider } from "react-cookie";
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProvider>
-      <TruckProvider>
-          <App />
-      </TruckProvider>
-    </AppProvider>
+    <CookiesProvider>
+      <AppProvider>
+        <TruckProvider>
+            <App />
+        </TruckProvider>
+      </AppProvider>
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

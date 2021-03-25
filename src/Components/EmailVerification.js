@@ -4,12 +4,14 @@ import Loading from "./Loading";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const EmailVerification = () => {
     const url = "https://api.thewholesalegroup.com/v1/account/register/verify/";
     const { id } = useParams();
     const { token } = useParams();
     let history = useHistory();
+    const [cookies, setCookie] = useCookies(["user-access-token", "user-refresh-token"]);
 
     const {
         setUserId,
@@ -47,8 +49,18 @@ const EmailVerification = () => {
                 setCompany(user["company"]);
                 setPhoneNumber(user["phone_number"]);
                 setBillingAddress(user["billing_address"]);
+                setCookie("user-access-token", user["token"]["access"], {
+                    path: "/",
+                    // secure: true,
+                    maxAge: 3600
+                });
+                setCookie("user-refresh-token", user["token"]["refresh"], {
+                    path: "/",
+                    // secure: true,
+                    maxAge: 604800
+                });
             })
-            .then(() => history.push("/Home"))
+            .then(() => history.push("/Dashboard"))
             .catch((error) => {
                 showAlert(true, "danger", error.message);
             });
