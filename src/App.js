@@ -21,6 +21,7 @@ import Login from "./Components/Login";
 import Sidebar from "./Components/Sidebar";
 import Signup from "./Components/Signup";
 import Signup2 from "./Components/Signup_2";
+import EmailVerification from "./Components/EmailVerification"
 import Login2 from "./Components/Login_2";
 import CustomerDb from "./Components/CustomerDb";
 import OrderDetails from "./Components/OrderDetails";
@@ -42,11 +43,12 @@ const App = () => {
 
             {/* <Navigation /> */}
         <Switch>
-            <Route exact path="/">
+            {/* <Route exact path="/">
               <Redirect to="/Home" />
-            </Route>
-          <Route path="/Home" exact component={Home} />
-            <Route path="/login" exact component={Login2} />
+            </Route> */}
+            <Route path="/" exact component={Login2} />
+            <Route path="/register/verify/:id/:token/" exact component={EmailVerification} />
+            <Route path="/Home" exact component={Home} />
             <Route path="/Dashboard" exact component={Dashboard} />
             <Route path="/AddInventory" exact component={AddInventory} />
             <Route

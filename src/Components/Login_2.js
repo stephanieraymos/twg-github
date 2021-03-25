@@ -4,7 +4,7 @@ import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 import logo from "../img/w-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import SignUp from "./Signup_2";
 import Signup2 from "./Signup_2";
 
@@ -12,11 +12,10 @@ const LoginModal = () => {
     const url = "https://api.thewholesalegroup.com/v1/account/login/";
 
     const [width, setWidth] = useState(window.innerWidth);
-    const [openSignUp, setOpenSignUp] = useState(false);
+    let history = useHistory();
 
     const {
         openModal, 
-        closeModal 
     } = useGlobalContext();
 
     const [password, setPassword] = useState("");
@@ -60,7 +59,6 @@ const LoginModal = () => {
 
     //* useEffect for user post request
     const login = () => {
-        console.log("login is running");
         fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -70,19 +68,14 @@ const LoginModal = () => {
             }),
         })
             .then((response) => {
-                console.log(response);
+                const res = response.json()
                 if (response.ok) {
-                    return response.json();
-                } else if (response.status == 400) {
-                    throw new Error("One or more of the required keys are missing.");
-                } else if (response.status == 404) {
-                    throw new Error(
-                        "The user does not exist or email/password is incorrect."
-                    );
+                    return res;
+                } else {
+                    throw new Error(res.message);
                 }
             })
             .then((user) => {
-                closeModal();
                 setUserId(user["id"]);
                 setEmail(user["email"]);
                 setFirstName(user["first_name"]);
@@ -91,8 +84,9 @@ const LoginModal = () => {
                 setPhoneNumber(user["phone_number"]);
                 setBillingAddress(user["billing_address"]);
             })
+            .then(() => history.push("/Home"))
             .catch((error) => {
-                console.log(error);
+                showAlert(true, "danger", error.message);
             });
     };
 

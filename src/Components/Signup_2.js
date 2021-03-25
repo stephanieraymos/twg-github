@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import Navigation from "./Navigation";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
 import { Button, Modal, Form } from "react-bootstrap";
 import cancel from "../img/cancel.svg";
 import mail from "../img/mail.svg";
-import { Link } from "react-router-dom";
 
 const url = "https://api.thewholesalegroup.com/v1/account/register/";
 
@@ -13,20 +11,15 @@ const Signup2 = () => {
     document.title = "Sign up";
 
     const {
-        firstName,
-        setFirstName,
-        lastName,
-        setLastName,
-        email,
-        setEmail,
         error,
         setError,
-        setUserId,
-        postToDb,
         isModalOpen,
         closeModal
     } = useGlobalContext();
 
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
@@ -50,7 +43,6 @@ const Signup2 = () => {
                 email,
             };
 
-            console.log("Sign up successful");
             setFirstName("");
             setLastName("");
             setEmail("");
@@ -61,7 +53,6 @@ const Signup2 = () => {
 
     //* useEffect for user post request
     const signUp = () => {
-        console.log("signup is running")
         fetch(url,
             {
                 method: "POST",
@@ -76,14 +67,15 @@ const Signup2 = () => {
             }
         )
             .then((response) => {
+                const res = response.json();
                 if (response.ok) {
-                    
-                } else if (response.status == 400) {
-                    throw new Error("One or more of the data types are wrong or one or more of the required keys are missing.");
+                    setIsSignUpSuccess(true);
+                } else {
+                    throw new Error(res.message);
                 }
             })
             .catch((error) => {
-                console.log(error)
+                showAlert(true, "danger", error.message);
             });
     };
 
