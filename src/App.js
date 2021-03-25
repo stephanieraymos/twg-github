@@ -19,6 +19,8 @@ import Statements from "./Components/Statements";
 import Login from "./Components/Login";
 import Sidebar from "./Components/Sidebar";
 import Signup from "./Components/Signup";
+import Signup2 from "./Components/Signup_2";
+import Login2 from "./Components/Login_2";
 import CustomerDb from "./Components/CustomerDb";
 import OrderDetails from "./Components/OrderDetails";
 import Orders from "./Components/Orders";
@@ -43,7 +45,7 @@ const App = () => {
               <Redirect to="/Home" />
             </Route>
           <Route path="/Home" exact component={Home} />
-            <Route path="/Signup" exact component={Signup} />
+            <Route path="/Signup" exact component={Login2} />
             <Route path="/Dashboard" exact component={Dashboard} />
             <Route path="/AddInventory" exact component={AddInventory} />
             <Route

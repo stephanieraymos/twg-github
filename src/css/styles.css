@@ -531,3 +531,61 @@ input:hover {
     height: 5em;
   }
 }
+
+/*=============================================
+=               Authentication                =
+=============================================*/
+.auth-container {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  background-color: #13131f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-logo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.auth-form-label {
+  font-family : "Montserrat";
+  color: black;
+}
+
+.auth-footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.auth-form-button {
+  font-family : "Montserrat";
+  border-color: transparent !important;
+  text-align: center;
+  text-justify: center;
+  height: 50px;
+  display: flex;
+  cursor: pointer;
+  align-self: center;
+  outline-style: none;
+  margin: 1.5rem auto;
+}
