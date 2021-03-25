@@ -9,7 +9,7 @@ const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
 const UpdateTruckDetails = () => {
   const { id } = useParams();
 
-  const [truck, setTruck] = useState(null);
+  const [truck, setTruck] = useState([]);
   //   const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
   //   const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
@@ -69,6 +69,7 @@ const UpdateTruckDetails = () => {
             truckContents,
           };
           setTruck(newTruck);
+          console.log("There is data")
         } else {
           setTruck(null);
         }
@@ -77,8 +78,8 @@ const UpdateTruckDetails = () => {
         console.log(err);
       }
     }
-    getTruck();
-  }, [id]);
+    return getTruck();
+  }, []);
 
   // Return true or false to indicate if fetch was successful
   const updateTruck = () => {
@@ -114,6 +115,10 @@ const UpdateTruckDetails = () => {
       <h1 className="update-truck-header">Edit truck details</h1>
 
       <div className="update-truck-form-container">
+        {/* {truck.map((truck) => {
+          const { truckName, truckPrice, truckContents } = truck;
+
+          return ( */}
         <Form
           ref={form}
           onSubmit={handleSubmit}
@@ -128,7 +133,7 @@ const UpdateTruckDetails = () => {
               type="text"
               id="truckName"
               required
-              value={truckName}
+              defaultValue={truck.truckName}
               //   value={truck.truckName}
               onChange={(e) => setTruckName(e.target.value)}
               name="truckName"
@@ -141,7 +146,7 @@ const UpdateTruckDetails = () => {
               type="textarea"
               id="truckPrice"
               required
-              value={truckPrice}
+              defaultValue={truck.truckPrice}
               //   value={truck.truckPrice}
               onChange={(e) => setTruckPrice(e.target.value)}
               name="truckPrice"
@@ -154,7 +159,7 @@ const UpdateTruckDetails = () => {
               type="text"
               id="truckContents"
               required
-              value={truckContents}
+              defaultValue={truck.truckContents}
               onChange={(e) => setTruckContents(e.target.value)}
               name="truckContents"
               as="textarea"
@@ -175,12 +180,14 @@ const UpdateTruckDetails = () => {
             Submit changes
           </Link>
         </Form>
+        {/* );
+        })} */}
       </div>
     </>
   );
 };
 
-// @todo Adding truck. to the beginning of the values in the inputs updates the fields to have the data from the correct truck. But as soon as I refresh it says TypeError: Cannot read property 'truckPrice' of null. See getTruck function to see my logic.
+// @todo Update is not working. Error: PUT https://api.thewholesalegroup.com/v1/trucks/ 400 (Bad Request)
 
 // TP-51
 
