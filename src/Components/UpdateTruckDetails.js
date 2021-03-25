@@ -69,7 +69,7 @@ const UpdateTruckDetails = () => {
             truckContents,
           };
           setTruck(newTruck);
-          console.log("There is data")
+          console.log("There is data");
         } else {
           setTruck(null);
         }
@@ -82,7 +82,7 @@ const UpdateTruckDetails = () => {
   }, []);
 
   // Return true or false to indicate if fetch was successful
-  const updateTruck = () => {
+  const updateTruck = (e) => {
     console.log("update truck running");
     try {
       console.log("truckContents", truckContents);
@@ -101,7 +101,10 @@ const UpdateTruckDetails = () => {
         console.log(response);
         if (response.ok) return true;
         else return false;
-      });
+      })
+      // .then((e) => {
+      //   setTruckName = e.target.value;
+      // })
     } catch (error) {
       console.log(error);
     }
@@ -134,7 +137,8 @@ const UpdateTruckDetails = () => {
               id="truckName"
               required
               defaultValue={truck.truckName}
-              //   value={truck.truckName}
+              // value={truck.truckName}
+              // ref={(input) => (truck.truckName = input)}
               onChange={(e) => setTruckName(e.target.value)}
               name="truckName"
             />
