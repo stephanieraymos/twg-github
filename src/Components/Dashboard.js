@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../context";
-import { useTruckContext, useTruck } from "../truckContext";
+import { useTruck } from "../truckContext";
 import dashboard from "../css/dashboard.css";
 import OrderDetails from "./OrderDetails";
 import Loading from "./Loading";
@@ -16,9 +16,9 @@ const Dashboard = () => {
     return <OrderDetails />;
   };
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
     <>
