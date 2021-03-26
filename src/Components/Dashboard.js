@@ -4,6 +4,7 @@ import { useGlobalContext } from "../context";
 import { useTruck } from "../truckContext";
 import dashboard from "../css/dashboard.css";
 import OrderDetails from "./OrderDetails";
+import D3 from "./D3";
 import Loading from "./Loading";
 
 const Dashboard = () => {
@@ -60,6 +61,7 @@ const Dashboard = () => {
             <p className="graph">GRAPH CONTENTS</p>
           </div>
         </div>
+        {/* <D3 /> */}
 
         <div className="bottom-content">
           <div className="new-leads-container bottom-content-items">

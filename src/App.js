@@ -49,12 +49,7 @@ const App = () => {
             </Route> */}
             <Route path="/" exact component={Login2} />
             <Route path="/register/verify/:id/:token/" exact component={EmailVerification} />
-<<<<<<< HEAD
             <Route path="/Home" exact component={Home} />
-=======
-            <Route path="/logout" exact component={Logout} />
-            {/* <Route path="/Home" exact component={Home} /> */}
->>>>>>> 500c11178277feb2f6ccc2a81f22abea48b0dfab
             <Route path="/Dashboard" exact component={Dashboard} />
             <Route path="/AddInventory" exact component={AddInventory} />
             <Route
