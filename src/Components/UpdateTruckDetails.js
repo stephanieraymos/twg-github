@@ -91,14 +91,10 @@ const UpdateTruckDetails = () => {
       data.append("id", id);
       data.append("truckName", truckName);
       data.append("truckPrice", String(truckPrice));
-      // truckContents.map((content) => {
-      // const [ truckContents ] = content;
       data.append("truckContents", truckContents);
-      // });
-      //   newTruckManifest.map((file) => data.append("truckManifest", file));
-      //   oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+        // newTruckManifest.map((file) => data.append("truckManifest", file));
+        // oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
-        // header: {"Content-Type": "multipart/form-data"},
         method: "PUT",
         body: data,
       }).then((response) => {
@@ -121,10 +117,7 @@ const UpdateTruckDetails = () => {
       <h1 className="update-truck-header">Edit truck details</h1>
 
       <div className="update-truck-form-container">
-        {/* {truck.map((truck) => {
-          const { truckName, truckPrice, truckContents } = truck;
 
-          return ( */}
         <Form
           ref={form}
           onSubmit={handleSubmit}
@@ -183,14 +176,11 @@ const UpdateTruckDetails = () => {
             Submit changes
           </Link>
         </Form>
-        {/* );
-        })} */}
+
       </div>
     </>
   );
 };
-
-// @todo Update is not working. Error: PUT https://api.thewholesalegroup.com/v1/trucks/ 400 (Bad Request)
 
 // TP-51
 
