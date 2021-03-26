@@ -22,18 +22,13 @@ const AccountDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    
   });
 
   if (loading) {
     return <Loading />;
   }
 
-  return (
-    <>
-      
-    </>
-  );
+  return <></>;
 };
 
 export default AccountDetails;
