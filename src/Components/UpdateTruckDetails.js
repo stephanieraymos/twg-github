@@ -91,10 +91,14 @@ const UpdateTruckDetails = () => {
       data.append("id", id);
       data.append("truckName", truckName);
       data.append("truckPrice", String(truckPrice));
-      // truckContents.map((content) => data.append("truckContents", content));
+      truckContents.map((content) => {
+        // const [ truckContents ] = content;
+        return data.append("truckContents", content[0]);
+      });
       //   newTruckManifest.map((file) => data.append("truckManifest", file));
       //   oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
+        // header: {"Content-Type": "multipart/form-data"},
         method: "PUT",
         body: data,
       }).then((response) => {
@@ -105,6 +109,7 @@ const UpdateTruckDetails = () => {
       });
     } catch (error) {
       console.log(error);
+      // console.trace(updateTruck)
     }
   };
 
