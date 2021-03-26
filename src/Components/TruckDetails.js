@@ -27,19 +27,23 @@ const TruckDetails = () => {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
-    try {
-      const data = new FormData();
-      truckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch(manifestURL, {
-        method: "POST",
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((manifest) => setTruckFile(manifest));
-    } catch (error) {
-      console.log(error);
+    if (truck > truckManifestId) {
+      try {
+        const data = new FormData();
+        truckManifestId.map((id) => data.append("truckManifestId", id));
+        fetch(manifestURL, {
+          method: "POST",
+          body: data,
+        })
+          .then((response) => response.json())
+          .then((manifest) => setTruckFile(manifest));
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
+
+  // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
 
   const deleteTruck = (id, truckManifestId) => {
     console.log("delete truck running");
