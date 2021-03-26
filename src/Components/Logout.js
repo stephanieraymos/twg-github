@@ -6,7 +6,7 @@ import { useGlobalContext } from "../context";
 
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 
-const AccountDetails = () => {
+const Logout = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
 
@@ -63,6 +63,6 @@ const AccountDetails = () => {
   );
 };
 
-export default AccountDetails;
+export default Logout;
 
 // TP-52
