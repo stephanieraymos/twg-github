@@ -69,7 +69,7 @@ const UpdateTruckDetails = () => {
             truckContents,
           };
           setTruck(newTruck);
-          console.log("There is data")
+          console.log("There is data");
         } else {
           setTruck(null);
         }
@@ -91,19 +91,25 @@ const UpdateTruckDetails = () => {
       data.append("id", id);
       data.append("truckName", truckName);
       data.append("truckPrice", String(truckPrice));
-      truckContents.map((content) => data.append("truckContents", content));
+      // truckContents.map((content) => {
+      // const [ truckContents ] = content;
+      data.append("truckContents", truckContents);
+      // });
       //   newTruckManifest.map((file) => data.append("truckManifest", file));
       //   oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
+        // header: {"Content-Type": "multipart/form-data"},
         method: "PUT",
         body: data,
       }).then((response) => {
         console.log(response);
-        if (response.ok) return true;
-        else return false;
+        if (response.ok) {
+          return true;
+        } else return false;
       });
     } catch (error) {
       console.log(error);
+      // console.trace(updateTruck)
     }
   };
 
@@ -132,10 +138,10 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               id="truckName"
-              required
               defaultValue={truck.truckName}
               //   value={truck.truckName}
               onChange={(e) => setTruckName(e.target.value)}
+              // onChange={() => updateTruck()}
               name="truckName"
             />
 
@@ -145,7 +151,6 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="textarea"
               id="truckPrice"
-              required
               defaultValue={truck.truckPrice}
               //   value={truck.truckPrice}
               onChange={(e) => setTruckPrice(e.target.value)}
@@ -158,7 +163,6 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               id="truckContents"
-              required
               defaultValue={truck.truckContents}
               onChange={(e) => setTruckContents(e.target.value)}
               name="truckContents"
@@ -166,7 +170,6 @@ const UpdateTruckDetails = () => {
               rows={3}
             />
           </Form.Group>
-
           <Link
             to={history}
             onClick={(e) => {

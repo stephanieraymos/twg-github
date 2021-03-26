@@ -179,8 +179,8 @@ const TruckDetails = () => {
                   <Card.Body
                     style={{ color: "black", backgroundColor: "transparent" }}
                   >
-                    {truckContents.map((truck, index) => {
-                      return truck ? <span key={index}>{truck},</span> : null;
+                    {truckContents.map((content, index) => {
+                      return truck ? <span key={index}>{content}</span> : null;
                     })}
                   </Card.Body>
                 </Accordion.Collapse>
@@ -260,7 +260,10 @@ const TruckDetails = () => {
                       >
                         <FaTimes /> Delete this truck
                       </button>
-                      <Link className="edit-truck-btn" to={`/UpdateTruckDetails/${id}`}>
+                      <Link
+                        className="edit-truck-btn"
+                        to={`/UpdateTruckDetails/${id}`}
+                      >
                         <FaEdit /> Edit this truck
                       </Link>
                     </p>
