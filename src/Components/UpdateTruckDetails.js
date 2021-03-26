@@ -91,10 +91,10 @@ const UpdateTruckDetails = () => {
       data.append("id", id);
       data.append("truckName", truckName);
       data.append("truckPrice", String(truckPrice));
-      truckContents.map((content) => {
-        // const [ truckContents ] = content;
-        return data.append("truckContents", content[0]);
-      });
+      // truckContents.map((content) => {
+      // const [ truckContents ] = content;
+      data.append("truckContents", truckContents);
+      // });
       //   newTruckManifest.map((file) => data.append("truckManifest", file));
       //   oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
@@ -138,7 +138,6 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               id="truckName"
-              required
               defaultValue={truck.truckName}
               //   value={truck.truckName}
               onChange={(e) => setTruckName(e.target.value)}
@@ -152,7 +151,6 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="textarea"
               id="truckPrice"
-              required
               defaultValue={truck.truckPrice}
               //   value={truck.truckPrice}
               onChange={(e) => setTruckPrice(e.target.value)}
@@ -165,7 +163,6 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               id="truckContents"
-              required
               defaultValue={truck.truckContents}
               onChange={(e) => setTruckContents(e.target.value)}
               name="truckContents"
