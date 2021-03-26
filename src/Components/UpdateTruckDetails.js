@@ -69,7 +69,7 @@ const UpdateTruckDetails = () => {
             truckContents,
           };
           setTruck(newTruck);
-          console.log("There is data")
+          console.log("There is data");
         } else {
           setTruck(null);
         }
@@ -91,7 +91,7 @@ const UpdateTruckDetails = () => {
       data.append("id", id);
       data.append("truckName", truckName);
       data.append("truckPrice", String(truckPrice));
-      truckContents.map((content) => data.append("truckContents", content));
+      // truckContents.map((content) => data.append("truckContents", content));
       //   newTruckManifest.map((file) => data.append("truckManifest", file));
       //   oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
@@ -99,8 +99,9 @@ const UpdateTruckDetails = () => {
         body: data,
       }).then((response) => {
         console.log(response);
-        if (response.ok) return true;
-        else return false;
+        if (response.ok) {
+          return true;
+        } else return false;
       });
     } catch (error) {
       console.log(error);
@@ -136,6 +137,7 @@ const UpdateTruckDetails = () => {
               defaultValue={truck.truckName}
               //   value={truck.truckName}
               onChange={(e) => setTruckName(e.target.value)}
+              // onChange={() => updateTruck()}
               name="truckName"
             />
 
@@ -166,7 +168,6 @@ const UpdateTruckDetails = () => {
               rows={3}
             />
           </Form.Group>
-
           <Link
             to={history}
             onClick={(e) => {
