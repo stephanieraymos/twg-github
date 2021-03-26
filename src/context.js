@@ -19,7 +19,7 @@ const AppProvider = ({ children }) => {
   const [company, setCompany] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
-  const [cookies, setCookie] = useCookies(["user-access-token", "user-refresh-token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["user-access-token", "user-refresh-token"]);
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -69,7 +69,8 @@ const AppProvider = ({ children }) => {
         billingAddress,
         setBillingAddress,
         cookies,
-        setCookie
+        setCookie,
+        removeCookie
       }}
     >
       {children}

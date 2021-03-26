@@ -23,6 +23,7 @@ import Signup from "./Components/Signup";
 import Signup2 from "./Components/Signup_2";
 import EmailVerification from "./Components/EmailVerification"
 import Login2 from "./Components/Login_2";
+import Logout from "./Components/Logout";
 import CustomerDb from "./Components/CustomerDb";
 import OrderDetails from "./Components/OrderDetails";
 import Orders from "./Components/Orders";
@@ -48,6 +49,7 @@ const App = () => {
             </Route> */}
             <Route path="/" exact component={Login2} />
             <Route path="/register/verify/:id/:token/" exact component={EmailVerification} />
+            <Route path="/logout" exact component={Logout} />
             {/* <Route path="/Home" exact component={Home} /> */}
             <Route path="/Dashboard" exact component={Dashboard} />
             <Route path="/AddInventory" exact component={AddInventory} />
