@@ -164,7 +164,7 @@ export const useTruck = () => {
   // setPostRefresh is not a function error message inside postTruck function (in addInventory) after posting truck
   //Trying to make data available without having to refresh
 
-  // @todo If anything is added as parameter to fetch trucks it causes an endless loop
+  // @todo If anything is added as parameter to useEffect surrounding fetch trucks it causes an endless loop
 
   return [trucks, addTruck, loading, errorMessage];
 };
