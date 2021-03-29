@@ -95,7 +95,6 @@ const TruckDetails = () => {
           setTruck(null);
         }
         setLoading(false);
-        console.log("data", data);
       } catch (err) {
         console.log(err);
         setLoading(false);
@@ -185,8 +184,6 @@ const TruckDetails = () => {
                   <Card.Body
                     style={{ color: "black", backgroundColor: "transparent" }}
                   >
-                    {console.log(Array.isArray(truckContents))}
-                    {console.log(truckContents)}
                     {truckContents.map((content, index) => {
                       return truck ? <span key={index}>{content}</span> : null;
                     })}

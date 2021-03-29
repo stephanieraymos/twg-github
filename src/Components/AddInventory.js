@@ -11,6 +11,7 @@ import cancel from "../img/cancel.svg";
 const AddInventory = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [truckManifestCount, setTruckManifestCount] = useState(0)
 
   document.title = "Add Inventory";
   // const {
@@ -37,14 +38,13 @@ const AddInventory = (props) => {
 
   const { userId, setUserId } = useGlobalContext();
 
-  const [truckManifestCount, setTruckManifestCount] = useState(0)
+  
 
   const openModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setTruckManifestCount(0)
     setIsModalOpen(false);
   };
 
@@ -73,16 +73,17 @@ const AddInventory = (props) => {
     event.preventDefault();
     event.stopPropagation();
     if (form.checkValidity() === true) {
+      setValidated(false);
+      setTruckManifestCount(0)
       closeModal();
       postTrucks();
     }
 
-    setValidated("true");
+    setValidated(true);
   };
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
-    setUserId("d73897ef-9b70-463f-8dc1-bdafbe8891ff");
     const data = new FormData(form.current);
     data.append("userId", userId);
     const truckContents = data.get("truckContents").split(",");
@@ -197,7 +198,7 @@ const AddInventory = (props) => {
                 <Form.Control.Feedback type="invalid">
                   Please specify the contents inside the truck.
                 </Form.Control.Feedback>
-                <Form.Text id="passwordHelpInline" muted>
+                <Form.Text muted>
                   Separate each content with a comma, e.g., clothes,toys
                 </Form.Text>
               </Form.Group>
@@ -216,7 +217,7 @@ const AddInventory = (props) => {
                     <Form.Control.Feedback type="invalid">
                       Please add a file. 
                     </Form.Control.Feedback>
-                    <Form.Text id="passwordHelpInline" muted>
+                    <Form.Text muted>
                       Select multiple files by holding down the SHIFT key
                     </Form.Text>
                   </>
