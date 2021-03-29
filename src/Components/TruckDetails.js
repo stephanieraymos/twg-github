@@ -27,7 +27,7 @@ const TruckDetails = () => {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
-    if (truck > truckManifestId) {
+    // if (truckManifestId) {
       try {
         const data = new FormData();
         truckManifestId.map((id) => data.append("truckManifestId", id));
@@ -40,7 +40,7 @@ const TruckDetails = () => {
       } catch (error) {
         console.log(error);
       }
-    }
+    // }
   };
 
   // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
