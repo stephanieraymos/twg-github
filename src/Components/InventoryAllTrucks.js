@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import { useTruck } from "../truckContext";
 import folder from "../img/folder.svg";
-import no from "../img/no.svg";
 import noSign from "../img/no-sign.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
