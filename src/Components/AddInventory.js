@@ -13,21 +13,21 @@ const AddInventory = (props) => {
   const [validated, setValidated] = useState(false);
 
   document.title = "Add Inventory";
-  const {
-    truckLoad,
-    setTruckLoad,
-    id,
-    truckName,
-    setTruckName,
-    truckPrice,
-    setTruckPrice,
-    truckContents,
-    setTruckContents,
-    truckManifest,
-    setTruckManifest,
+  // const {
+  //   truckLoad,
+  //   setTruckLoad,
+  //   id,
+  //   truckName,
+  //   setTruckName,
+  //   truckPrice,
+  //   setTruckPrice,
+  //   truckContents,
+  //   setTruckContents,
+  //   truckManifest,
+  //   setTruckManifest,
 
-    showAlert,
-  } = useTruckContext();
+  //   showAlert,
+  // } = useTruckContext();
 
   const form = useRef(null);
 
@@ -37,11 +37,14 @@ const AddInventory = (props) => {
 
   const { userId, setUserId } = useGlobalContext();
 
+  const [truckManifestCount, setTruckManifestCount] = useState(0)
+
   const openModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
+    setTruckManifestCount(0)
     setIsModalOpen(false);
   };
 
@@ -69,11 +72,8 @@ const AddInventory = (props) => {
     const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
-      console.log("false")
-    } else {
-      console.log("true")
+    if (form.checkValidity() === true) {
+      closeModal();
       postTrucks();
     }
 
@@ -84,7 +84,10 @@ const AddInventory = (props) => {
   const postTrucks = async () => {
     setUserId("d73897ef-9b70-463f-8dc1-bdafbe8891ff");
     const data = new FormData(form.current);
-    data.append("userId", userId)
+    data.append("userId", userId);
+    const truckContents = data.get("truckContents").split(",");
+    data.delete("truckContents");
+    truckContents.map(item => data.append("truckContents", item))
     try {
       const response = await fetch(
         "https://api.thewholesalegroup.com/v1/trucks/",
@@ -112,7 +115,6 @@ const AddInventory = (props) => {
         >
           Add Truck
         </Button>
-
       </div>
 
       <Modal show={isModalOpen} onHide={closeModal} centered>
@@ -202,12 +204,42 @@ const AddInventory = (props) => {
 
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Manifest</Form.Label>
-                <Form.Control
-                  type="file"
-                  multiple
-                  name="truckManifest"
-                  style={{ fontSize: "1rem", color: "black" }}
-                />
+                {Array(truckManifestCount).fill(
+                  <>
+                    <Form.Control
+                      type="file"
+                      multiple
+                      required
+                      name="truckManifest"
+                      style={{ fontSize: "1rem", color: "black" }}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please add a file. 
+                    </Form.Control.Feedback>
+                    <Form.Text id="passwordHelpInline" muted>
+                      Select multiple files by holding down the SHIFT key
+                    </Form.Text>
+                  </>
+                )}
+                {truckManifestCount == 0 ?
+                  <Button
+                    onClick={() => setTruckManifestCount(truckManifestCount + 1)}
+                    className="form-button"
+                    block
+                    style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: "0rem" }}
+                  >
+                    Add Files
+                  </Button>
+                  :
+                  <Button
+                    onClick={() => setTruckManifestCount(truckManifestCount - 1)}
+                    className="form-button"
+                    block
+                    style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: ".75rem 0rem" }}
+                  >
+                    Remove Files
+                  </Button>
+                }
               </Form.Group>
 
               <div className="form-footer-container">
