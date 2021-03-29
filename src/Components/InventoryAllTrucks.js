@@ -13,9 +13,11 @@ const InventoryAllTrucks = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
 
+
   const openModal = () => {
     setIsModalOpen(true);
   };
+  
 
   const closeModal = () => {
     setIsModalOpen(false);

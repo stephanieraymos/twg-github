@@ -141,7 +141,6 @@ const AddInventory = (props) => {
               <Form.Control
                 type="file"
                 multiple
-                required
                 value={truckManifest}
                 onChange={(e) => setTruckManifest(e.target.value)}
                 name="truckManifest"
