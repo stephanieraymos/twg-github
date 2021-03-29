@@ -1,34 +1,45 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 import { useTruckContext } from "../truckContext";
 import Navigation from "./Navigation";
 import { useHistory, useParams, Link } from "react-router-dom";
+import cancel from "../img/cancel.svg";
+import undo from "../img/undo.svg";
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
+const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
 
-  const [truck, setTruck] = useState([]);
   //   const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
   //   const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
+  const [fileUserId, setFileUserId] = useState("");
+  const [truckName, setTruckName] = useState("");
+  const [truckPrice, setTruckPrice] = useState("");
+  const [truckContents, setTruckContents] = useState([]);
+  const [truckManifestId, setTruckManifestId] = useState([]);
+  const [truckFile, setTruckFile] = useState([]);
+  const [oldTruckManifestId, setOldTruckManifestId] = useState([]);
+  const [validated, setValidated] = useState(false);
+  const [truckManifestCount, setTruckManifestCount] = useState(0)
 
   let history = useHistory();
 
   document.title = "Add Inventory";
-  const {
-    truckLoad,
-    setTruckLoad,
-    truckName,
-    setTruckName,
-    truckPrice,
-    setTruckPrice,
-    truckContents,
-    setTruckContents,
+  // const {
+  //   truckLoad,
+  //   setTruckLoad,
+  //   truckName,
+  //   setTruckName,
+  //   truckPrice,
+  //   setTruckPrice,
+  //   truckContents,
+  //   setTruckContents,
 
-    showAlert,
-  } = useTruckContext();
+  //   showAlert,
+  // } = useTruckContext();
 
   const form = useRef(null);
 
@@ -36,61 +47,95 @@ const UpdateTruckDetails = () => {
     history.push(`/TruckDetails/${id}`);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (truckName) {
-      showAlert(true, "success", "Truck Details Updated");
-
-      let updatedTruck = [id, truckName, truckPrice, truckContents];
-
-      setTruckLoad([...truckLoad, updatedTruck]);
-      setTruckName("");
-      setTruckPrice("");
-      setTruckContents([]);
-      console.log("Updated Truck", updatedTruck);
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+    if (form.checkValidity() === true) {
+      setValidated(false);
+      updateTruck();
+      redirect();
     }
+
+    setValidated(true);
+    // if (truckName) {
+    //   showAlert(true, "success", "Truck Details Updated");
+
+    //   let updatedTruck = [id, truckName, truckPrice, truckContents];
+
+    //   //setTruckLoad([...truckLoad, updatedTruck]);
+    //   setTruckName("");
+    //   setTruckPrice("");
+    //   setTruckContents([]);
+    //   console.log("Updated Truck", updatedTruck);
+    // }
   };
 
-  useEffect(async () => {
+  const getManifest = (truckManifestId) => {
+    // if (truckManifestId) {
+      try {
+        const data = new FormData();
+        truckManifestId.map((id) => data.append("truckManifestId", id));
+        fetch(manifestURL, {
+          method: "POST",
+          body: data,
+        })
+          .then((response) => response.json())
+          .then((manifest) => setTruckFile(manifest));
+      } catch (error) {
+        console.log(error);
+      }
+    // }
+  };
+
+  const getTruckData = async () => {
     try {
       const response = await fetch(`${url}${id}`);
       const data = await response.json();
       if (data) {
-        const {
-          truckName: truckName,
-          truckPrice: truckPrice,
-          truckContents: truckContents,
-        } = data[0];
+        // const {
+        //   truckName: truckName,
+        //   truckPrice: truckPrice,
+        //   truckContents: truckContents,
+        // } = data[0];
 
-        const newTruck = {
-          truckName,
-          truckPrice,
-          truckContents,
-        };
-        setTruck(newTruck);
-        console.log("There is data");
+        const {userId, truckName, truckPrice, truckContents, truckManifestId} = data[0]
+
+        setFileUserId(userId);
+        setTruckName(truckName);
+        setTruckPrice(truckPrice);
+        setTruckContents(truckContents);
+        setTruckManifestId(truckManifestId);
+
+        if(truckManifestId.length) {
+          getManifest(truckManifestId);
+        }
+        console.log("There is data", truckContents);
       } else {
-        setTruck(null);
+        throw new Error("Truck does not exist.");
       }
-      console.log("data", data);
     } catch (err) {
       console.log(err);
     }
-  });
+  }
+
+  useEffect(() => {
+    getTruckData();
+  }, []);
 
   // Return true or false to indicate if fetch was successful
   const updateTruck = () => {
     console.log("update truck running");
     try {
-      console.log("truckContents", truckContents);
-      console.log(Array.isArray(truckContents));
-      const data = new FormData();
+      const data = new FormData(form.current);
       data.append("id", id);
-      data.append("truckName", truckName);
-      data.append("truckPrice", String(truckPrice));
-      data.append("truckContents", truckContents);
-        // newTruckManifest.map((file) => data.append("truckManifest", file));
-        // oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+
+      // turn string to array and insert to truck contents
+      const tempTruckContents = data.get("truckContents").split(",");
+      data.delete("truckContents");
+      tempTruckContents.map(item => data.append("truckContents", item))
+
+      oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "PUT",
         body: data,
@@ -117,50 +162,164 @@ const UpdateTruckDetails = () => {
 
         <Form
           ref={form}
+          noValidate 
+          validated={validated}
           onSubmit={handleSubmit}
-          method="post"
           className="update-truck-form"
         >
           <Form.Group className="center-form-group">
-            <Form.Label htmlFor="truckName" style={{ color: "black" }}>
-              Truck Name
-            </Form.Label>
+            <Form.Label className="form-label">Name</Form.Label>
             <Form.Control
               type="text"
-              id="truckName"
-              defaultValue={truck.truckName}
-              //   value={truck.truckName}
-              onChange={(e) => setTruckName(e.target.value)}
-              // onChange={() => updateTruck()}
+              required
+              defaultValue={truckName}
               name="truckName"
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a truck name.
+            </Form.Control.Feedback>
+          </Form.Group>
 
-            <Form.Label htmlFor="truckPrice" style={{ color: "black" }}>
-              Truck Price
-            </Form.Label>
-            <Form.Control
-              type="textarea"
-              id="truckPrice"
-              defaultValue={truck.truckPrice}
-              //   value={truck.truckPrice}
-              onChange={(e) => setTruckPrice(e.target.value)}
-              name="truckPrice"
-            />
-
-            <Form.Label htmlFor="truckContents" style={{ color: "black" }}>
-              Truck Contents
-            </Form.Label>
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Price</Form.Label>
             <Form.Control
               type="text"
-              id="truckContents"
-              defaultValue={truck.truckContents}
-              onChange={(e) => setTruckContents(e.target.value)}
-              name="truckContents"
-              as="textarea"
-              rows={3}
+              required
+              defaultValue={truckPrice}
+              name="truckPrice"
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a truck price.
+            </Form.Control.Feedback>
           </Form.Group>
-          <Link
+
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Contents</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={truckContents}
+              name="truckContents"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please specify the contents inside the truck.
+            </Form.Control.Feedback>
+            <Form.Text muted>
+              Separate each content with a comma, e.g., clothes,toys
+            </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Manifest</Form.Label>
+            {Array(truckManifestCount).fill(
+              <>
+                <Form.Control
+                  type="file"
+                  multiple
+                  required
+                  name="truckManifest"
+                  style={{ fontSize: "1rem", color: "black" }}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please add a file. 
+                </Form.Control.Feedback>
+                <Form.Text muted>
+                  Select multiple files by holding down the SHIFT key
+                </Form.Text>
+              </>
+            )}
+            {truckManifestCount == 0 ?
+              <Button
+                onClick={() => setTruckManifestCount(truckManifestCount + 1)}
+                className="form-button"
+                block
+                style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: "0rem" }}
+              >
+                Add Files
+              </Button>
+              :
+              <Button
+                onClick={() => setTruckManifestCount(truckManifestCount - 1)}
+                className="form-button"
+                block
+                style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: ".75rem 0rem" }}
+              >
+                Remove Files
+              </Button>
+            }
+          </Form.Group>
+
+          {truckFile.map((manifest, index) => {
+            const id = truckManifestId[index];
+            const { truckManifest, truckManifestName } = manifest;
+            return (
+              <>
+                <Form.Row key={id}>
+                  <Col sm={11}>
+                    <Form.Control
+                      defaultValue={truckManifestName} 
+                      readOnly
+                      style={{cursor: "pointer"}}
+                      onClick={ () =>
+                        window.open(truckManifest, "_blank") ||
+                        window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                      } />
+                  </Col>
+                  <Col sm={1}>
+                    <button
+                        type="button"
+                        style={{
+                          background: "transparent",
+                          borderColor: "transparent",
+                          height: "100%"
+                        }}
+                      >
+                        {oldTruckManifestId.includes(id) ?
+                          <img 
+                            src={undo} 
+                            alt="undo" 
+                            onClick={() =>{
+                              console.log("id to be added back", id);
+                              setOldTruckManifestId(oldTruckManifestId.filter(item => item !== id))
+                              console.log("old manifest id", oldTruckManifestId);
+                            }}
+                          />
+                          :
+                          <img 
+                            src={cancel} 
+                            alt="remove" 
+                            onClick={() =>{
+                              console.log("id to be deleted", id);
+                              setOldTruckManifestId([...oldTruckManifestId, id])
+                              console.log("old manifest id", oldTruckManifestId);
+                            }}
+                          />
+                        }
+                        
+                    </button>
+                  </Col>
+                </Form.Row>
+                {oldTruckManifestId.includes(id) &&
+                  <Form.Text style={{color: "red"}}>
+                    Marked for deletion
+                  </Form.Text>
+                }
+              </>
+            );
+          })}
+
+          <div className="form-footer-container">
+            <Button
+              type="submit"
+              className="form-button"
+              block
+              style={{ width: "100%", backgroundColor: "#f47c20", margin: "1.5rem 0rem 0rem" }}
+            >
+              Update Truck
+            </Button>
+          </div>
+
+          {/* <Link
             to={history}
             onClick={(e) => {
               e.preventDefault();
@@ -171,7 +330,7 @@ const UpdateTruckDetails = () => {
             className="edit-truck-btn"
           >
             Submit changes
-          </Link>
+          </Link> */}
         </Form>
 
       </div>
