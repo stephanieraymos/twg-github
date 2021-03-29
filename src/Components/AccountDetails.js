@@ -68,7 +68,7 @@ const AccountDetails = () => {
       ) : (
         <div>
           <div
-            className="auth-form-label"
+            className="form-label"
             style={{ width: "85%", color: "black", fontSize: "36px", margin: "24px auto" }}
           >
             Account
@@ -79,7 +79,7 @@ const AccountDetails = () => {
             style={{ width: "85%", margin: "24px auto" }}
           >
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">Email</Form.Label>
+              <Form.Label column sm={4} className="form-label">Email</Form.Label>
               <Col sm={8}>
                 {
                   isEditing ? (
@@ -102,7 +102,7 @@ const AccountDetails = () => {
             </Form.Group>
 
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">First Name</Form.Label>
+              <Form.Label column sm={4} className="form-label">First Name</Form.Label>
               <Col sm={8}>
                 {
                   isEditing ? (
@@ -125,7 +125,7 @@ const AccountDetails = () => {
             </Form.Group>
 
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">Last Name</Form.Label>
+              <Form.Label column sm={4} className="form-label">Last Name</Form.Label>
               <Col sm={8}>
                 {
                   isEditing ? (
@@ -148,7 +148,7 @@ const AccountDetails = () => {
             </Form.Group>
 
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">Company</Form.Label>
+              <Form.Label column sm={4} className="form-label">Company</Form.Label>
               <Col sm={8}>
                 {
                   isEditing ? (
@@ -171,7 +171,7 @@ const AccountDetails = () => {
             </Form.Group>
 
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">Phone Number</Form.Label>
+              <Form.Label column sm={4} className="form-label">Phone Number</Form.Label>
               <Col sm={8}>
                 {
                   isEditing ? (
@@ -194,7 +194,7 @@ const AccountDetails = () => {
             </Form.Group>
 
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">Billing Address</Form.Label>
+              <Form.Label column sm={4} className="form-label">Billing Address</Form.Label>
               <Col sm={8}>
                 {
                   isEditing ? (
@@ -216,11 +216,11 @@ const AccountDetails = () => {
 
             </Form.Group>
 
-            <div className="auth-footer-container">
+            <div className="form-footer-container">
               <Button
                 type="submit"
                 onClick={null}
-                className="auth-form-button"
+                className="form-button"
                 block
                 style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
               >
@@ -243,7 +243,7 @@ const AccountDetails = () => {
             style={{ width: "85%", margin: "24px auto" }}
           >
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">Current Password</Form.Label>
+              <Form.Label column sm={4} className="form-label">Current Password</Form.Label>
               <Col sm={8}>
                 <Form.Control
                   type="password"
@@ -255,7 +255,7 @@ const AccountDetails = () => {
             </Form.Group>
 
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">New Password</Form.Label>
+              <Form.Label column sm={4} className="form-label">New Password</Form.Label>
               <Col sm={8}>
                 <Form.Control
                   type="password"
@@ -267,7 +267,7 @@ const AccountDetails = () => {
             </Form.Group>
 
             <Form.Group as={Row} className="center-form-group">
-              <Form.Label column sm={4} className="auth-form-label">Confirm New Password</Form.Label>
+              <Form.Label column sm={4} className="form-label">Confirm New Password</Form.Label>
               <Col sm={8}>
                 <Form.Control
                   type="password"
@@ -278,11 +278,11 @@ const AccountDetails = () => {
 
             </Form.Group>
 
-            <div className="auth-footer-container">
+            <div className="form-footer-container">
               <Button
                 type="submit"
                 onClick={null}
-                className="auth-form-button"
+                className="form-button"
                 block
                 style={{ width: "200px", backgroundColor: "#1f85b4", alignSelf: "start", margin: "1rem 0rem" }}
               >

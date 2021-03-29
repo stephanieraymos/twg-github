@@ -80,11 +80,11 @@ const Signup2 = () => {
           centered
         >
           <div
-            className="auth-form-container"
+            className="form-body-container"
             style={{ width: "90%", alignSelf: "center" }}
           >
             <div
-              className="auth-logo-container"
+              className="form-header-container"
               style={{
                 width: "85%",
                 flexDirection: "row",
@@ -113,7 +113,7 @@ const Signup2 = () => {
 
             <img src={mail} alt="logo image" style={{ width: "100px" }} />
             <div
-              className="auth-form-label"
+              className="form-label"
               style={{
                 color: "black",
                 fontSize: "24px",
@@ -134,11 +134,11 @@ const Signup2 = () => {
           centered
         >
           <div
-            className="auth-form-container"
+            className="form-body-container"
             style={{ width: "90%", alignSelf: "center" }}
           >
             <div
-              className="auth-logo-container"
+              className="form-header-container"
               style={{
                 width: "85%",
                 flexDirection: "row",
@@ -147,7 +147,7 @@ const Signup2 = () => {
               }}
             >
               <div
-                className="auth-form-label"
+                className="form-label"
                 style={{ color: "black", fontSize: "36px" }}
               >
                 Sign Up
@@ -176,7 +176,7 @@ const Signup2 = () => {
               style={{ width: "85%", margin: "0% 5% 5%" }}
             >
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">Email</Form.Label>
+                <Form.Label className="form-label">Email</Form.Label>
                 <Form.Control
                   type="email"
                   required
@@ -186,7 +186,7 @@ const Signup2 = () => {
               </Form.Group>
 
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">First Name</Form.Label>
+                <Form.Label className="form-label">First Name</Form.Label>
                 <Form.Control
                   type="text"
                   required
@@ -196,7 +196,7 @@ const Signup2 = () => {
               </Form.Group>
 
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">Last Name</Form.Label>
+                <Form.Label className="form-label">Last Name</Form.Label>
                 <Form.Control
                   type="text"
                   required
@@ -206,7 +206,7 @@ const Signup2 = () => {
               </Form.Group>
 
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">Password</Form.Label>
+                <Form.Label className="form-label">Password</Form.Label>
                 <Form.Control
                   type="password"
                   required
@@ -216,7 +216,7 @@ const Signup2 = () => {
               </Form.Group>
 
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">
+                <Form.Label className="form-label">
                   Confirm Password
                 </Form.Label>
                 <Form.Control
@@ -227,11 +227,11 @@ const Signup2 = () => {
                 />
               </Form.Group>
 
-              <div className="auth-footer-container">
+              <div className="form-footer-container">
                 <Button
                   type="submit"
                   onClick={signUp}
-                  className="auth-form-button"
+                  className="form-button"
                   block
                   style={{ width: "100%", backgroundColor: "#f47c20" }}
                 >
