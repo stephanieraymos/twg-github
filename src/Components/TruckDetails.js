@@ -183,6 +183,8 @@ const TruckDetails = () => {
                   <Card.Body
                     style={{ color: "black", backgroundColor: "transparent" }}
                   >
+                    {console.log(Array.isArray(truckContents))}
+                    {console.log(truckContents)}
                     {truckContents.map((content, index) => {
                       return truck ? <span key={index}>{content}</span> : null;
                     })}
