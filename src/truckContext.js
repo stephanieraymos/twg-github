@@ -5,7 +5,6 @@ import React, {
   useContext,
   createContext,
 } from "react";
-import InventoryAllTrucks from "./Components/InventoryAllTrucks";
 
 // Generating context
 const TruckContext = createContext();
@@ -109,7 +108,7 @@ export const useTruck = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   // const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
-  const [postRefresh, setPostRefresh] = useState(false);
+  // const [postRefresh, setPostRefresh] = useState(false);
 
   // const [trucks, setTrucks] = useReducer((state, value) => [...value], []);
   const reducer = (state, action) => {
@@ -123,6 +122,7 @@ export const useTruck = () => {
   };
 
   useEffect(() => {
+
     const abortCont = new AbortController();
 
     setLoading(true);
