@@ -40,7 +40,7 @@ const InventoryAllTrucks = () => {
     try {
       const data = new FormData();
       truckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch("https://api.thewholesalegroup.com/api/v1/trucks/manifest/", {
+      fetch("https://api.thewholesalegroup.com/v1/trucks/manifest/", {
         method: "POST",
         body: data,
       })

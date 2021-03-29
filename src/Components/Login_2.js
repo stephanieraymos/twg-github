@@ -148,7 +148,7 @@ const LoginModal = () => {
     <>
       <Signup2 />
       {width < 1000 ? (
-        <div className="auth-container">
+        <div className="form-container">
           <img
             src={logo}
             alt="logo image"
@@ -167,13 +167,13 @@ const LoginModal = () => {
             The Wholesale Group
           </h1>
 
-          <div className="auth-form-container">
+          <div className="form-body-container">
             <Form
               onSubmit={handleSubmit}
               style={{ width: "85%", margin: "5%" }}
             >
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">Email</Form.Label>
+                <Form.Label className="form-label">Email</Form.Label>
                 <Form.Control
                   type="email"
                   required
@@ -183,7 +183,7 @@ const LoginModal = () => {
               </Form.Group>
 
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">Password</Form.Label>
+                <Form.Label className="form-label">Password</Form.Label>
                 <Form.Control
                   type="password"
                   required
@@ -192,11 +192,11 @@ const LoginModal = () => {
                 />
               </Form.Group>
 
-              <div className="auth-footer-container">
+              <div className="form-footer-container">
                 <Button
                   type="submit"
                   onClick={login}
-                  className="auth-form-button"
+                  className="form-button"
                   block
                   style={{ width: "100%", backgroundColor: "#f47c20" }}
                 >
@@ -205,7 +205,7 @@ const LoginModal = () => {
 
                 <Link
                   to={`/Login`}
-                  className="auth-form-label"
+                  className="form-label"
                   style={{ color: "#f47c20" }}
                 >
                   Forgot Password?
@@ -223,7 +223,7 @@ const LoginModal = () => {
                 <Button
                   type="submit"
                   onClick={openModal}
-                  className="auth-form-button"
+                  className="form-button"
                   block
                   style={{
                     width: "200px",
@@ -238,8 +238,8 @@ const LoginModal = () => {
           </div>
         </div>
       ) : (
-        <div className="auth-container" style={{ flexDirection: "row" }}>
-          <div className="auth-logo-container">
+        <div className="form-container" style={{ flexDirection: "row" }}>
+          <div className="form-header-container">
             <img
               src={logo}
               alt="logo image"
@@ -258,13 +258,13 @@ const LoginModal = () => {
               The Wholesale Group
             </h1>
           </div>
-          <div className="auth-form-container">
+          <div className="form-body-container">
             <Form
               onSubmit={handleSubmit}
               style={{ width: "85%", margin: "5%" }}
             >
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">Email</Form.Label>
+                <Form.Label className="form-label">Email</Form.Label>
                 <Form.Control
                   type="email"
                   required
@@ -274,7 +274,7 @@ const LoginModal = () => {
               </Form.Group>
 
               <Form.Group className="center-form-group">
-                <Form.Label className="auth-form-label">Password</Form.Label>
+                <Form.Label className="form-label">Password</Form.Label>
                 <Form.Control
                   type="password"
                   required
@@ -283,11 +283,11 @@ const LoginModal = () => {
                 />
               </Form.Group>
 
-              <div className="auth-footer-container">
+              <div className="form-footer-container">
                 <Button
                   type="submit"
                   onClick={login}
-                  className="auth-form-button"
+                  className="form-button"
                   block
                   style={{ width: "100%", backgroundColor: "#f47c20" }}
                 >
@@ -296,7 +296,7 @@ const LoginModal = () => {
 
                 <Link
                   to={`/Login`}
-                  className="auth-form-label"
+                  className="form-label"
                   style={{ color: "#f47c20" }}
                 >
                   Forgot Password?
@@ -314,7 +314,7 @@ const LoginModal = () => {
                 <Button
                   type="submit"
                   onClick={openModal}
-                  className="auth-form-button"
+                  className="form-button"
                   block
                   style={{
                     width: "200px",

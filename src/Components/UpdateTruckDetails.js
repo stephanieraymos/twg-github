@@ -51,35 +51,32 @@ const UpdateTruckDetails = () => {
     }
   };
 
-  useEffect(() => {
-    async function getTruck() {
-      try {
-        const response = await fetch(`${url}${id}`);
-        const data = await response.json();
-        if (data) {
-          const {
-            truckName: truckName,
-            truckPrice: truckPrice,
-            truckContents: truckContents,
-          } = data[0];
+  useEffect(async () => {
+    try {
+      const response = await fetch(`${url}${id}`);
+      const data = await response.json();
+      if (data) {
+        const {
+          truckName: truckName,
+          truckPrice: truckPrice,
+          truckContents: truckContents,
+        } = data[0];
 
-          const newTruck = {
-            truckName,
-            truckPrice,
-            truckContents,
-          };
-          setTruck(newTruck);
-          console.log("There is data");
-        } else {
-          setTruck(null);
-        }
-        console.log("data", data);
-      } catch (err) {
-        console.log(err);
+        const newTruck = {
+          truckName,
+          truckPrice,
+          truckContents,
+        };
+        setTruck(newTruck);
+        console.log("There is data");
+      } else {
+        setTruck(null);
       }
+      console.log("data", data);
+    } catch (err) {
+      console.log(err);
     }
-    return getTruck();
-  }, []);
+  });
 
   // Return true or false to indicate if fetch was successful
   const updateTruck = () => {
