@@ -5,7 +5,6 @@ import React, {
   useContext,
   createContext,
 } from "react";
-import InventoryAllTrucks from "./Components/InventoryAllTrucks";
 
 // Generating context
 const TruckContext = createContext();
@@ -109,7 +108,7 @@ export const useTruck = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   // const [trucks, setTrucks] = useState([]); //LIST OF TRUCKS FROM API
-  const [postRefresh, setPostRefresh] = useState(false);
+  // const [postRefresh, setPostRefresh] = useState(false);
 
   // const [trucks, setTrucks] = useReducer((state, value) => [...value], []);
   const reducer = (state, action) => {
@@ -123,6 +122,7 @@ export const useTruck = () => {
   };
 
   useEffect(() => {
+
     const abortCont = new AbortController();
 
     setLoading(true);
@@ -164,7 +164,7 @@ export const useTruck = () => {
   // setPostRefresh is not a function error message inside postTruck function (in addInventory) after posting truck
   //Trying to make data available without having to refresh
 
-  // @todo If anything is added as parameter to fetch trucks it causes an endless loop
+  // @todo If anything is added as parameter to useEffect surrounding fetch trucks it causes an endless loop
 
   return [trucks, addTruck, loading, errorMessage];
 };

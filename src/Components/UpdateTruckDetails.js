@@ -51,35 +51,32 @@ const UpdateTruckDetails = () => {
     }
   };
 
-  useEffect(() => {
-    async function getTruck() {
-      try {
-        const response = await fetch(`${url}${id}`);
-        const data = await response.json();
-        if (data) {
-          const {
-            truckName: truckName,
-            truckPrice: truckPrice,
-            truckContents: truckContents,
-          } = data[0];
+  useEffect(async () => {
+    try {
+      const response = await fetch(`${url}${id}`);
+      const data = await response.json();
+      if (data) {
+        const {
+          truckName: truckName,
+          truckPrice: truckPrice,
+          truckContents: truckContents,
+        } = data[0];
 
-          const newTruck = {
-            truckName,
-            truckPrice,
-            truckContents,
-          };
-          setTruck(newTruck);
-          console.log("There is data");
-        } else {
-          setTruck(null);
-        }
-        console.log("data", data);
-      } catch (err) {
-        console.log(err);
+        const newTruck = {
+          truckName,
+          truckPrice,
+          truckContents,
+        };
+        setTruck(newTruck);
+        console.log("There is data");
+      } else {
+        setTruck(null);
       }
+      console.log("data", data);
+    } catch (err) {
+      console.log(err);
     }
-    return getTruck();
-  }, []);
+  });
 
   // Return true or false to indicate if fetch was successful
   const updateTruck = (e) => {
@@ -91,22 +88,21 @@ const UpdateTruckDetails = () => {
       data.append("id", id);
       data.append("truckName", truckName);
       data.append("truckPrice", String(truckPrice));
-      truckContents.map((content) => data.append("truckContents", content));
-      //   newTruckManifest.map((file) => data.append("truckManifest", file));
-      //   oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+      data.append("truckContents", truckContents);
+        // newTruckManifest.map((file) => data.append("truckManifest", file));
+        // oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "PUT",
         body: data,
       }).then((response) => {
         console.log(response);
-        if (response.ok) return true;
-        else return false;
-      })
-      // .then((e) => {
-      //   setTruckName = e.target.value;
-      // })
+        if (response.ok) {
+          return true;
+        } else return false;
+      });
     } catch (error) {
       console.log(error);
+      // console.trace(updateTruck)
     }
   };
 
@@ -118,10 +114,7 @@ const UpdateTruckDetails = () => {
       <h1 className="update-truck-header">Edit truck details</h1>
 
       <div className="update-truck-form-container">
-        {/* {truck.map((truck) => {
-          const { truckName, truckPrice, truckContents } = truck;
 
-          return ( */}
         <Form
           ref={form}
           onSubmit={handleSubmit}
@@ -135,11 +128,11 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               id="truckName"
-              required
               defaultValue={truck.truckName}
               // value={truck.truckName}
               // ref={(input) => (truck.truckName = input)}
               onChange={(e) => setTruckName(e.target.value)}
+              // onChange={() => updateTruck()}
               name="truckName"
             />
 
@@ -149,7 +142,6 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="textarea"
               id="truckPrice"
-              required
               defaultValue={truck.truckPrice}
               //   value={truck.truckPrice}
               onChange={(e) => setTruckPrice(e.target.value)}
@@ -162,7 +154,6 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               id="truckContents"
-              required
               defaultValue={truck.truckContents}
               onChange={(e) => setTruckContents(e.target.value)}
               name="truckContents"
@@ -170,7 +161,6 @@ const UpdateTruckDetails = () => {
               rows={3}
             />
           </Form.Group>
-
           <Link
             to={history}
             onClick={(e) => {
@@ -184,14 +174,11 @@ const UpdateTruckDetails = () => {
             Submit changes
           </Link>
         </Form>
-        {/* );
-        })} */}
+
       </div>
     </>
   );
 };
-
-// @todo Update is not working. Error: PUT https://api.thewholesalegroup.com/v1/trucks/ 400 (Bad Request)
 
 // TP-51
 

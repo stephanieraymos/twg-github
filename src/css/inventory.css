@@ -161,16 +161,18 @@ input:hover::placeholder {
   padding: 2rem;
 }
 
-.all-trucks-table-header-name {
+span.all-trucks-table-header-name {
   width: 39%;
+  align-self: center;
 }
-p.all-trucks-table-header-price {
+span.all-trucks-table-header-price {
   width: 20%;
+  align-self: center;
 }
-p.all-trucks-table-header-contents {
+span.all-trucks-table-header-contents {
   width: 42%;
 }
-p.all-trucks-table-header-manifest {
+span.all-trucks-table-header-manifest {
   width: 10%;
   text-align: right;
   padding-right: .2rem;
@@ -187,6 +189,11 @@ p.all-trucks-table-header-manifest {
 }
 .all-trucks-manifest {
   width: 10%;
+}
+
+.no-icon {
+  align-self: center;
+  text-justify: center
 }
 
 /*=============================================

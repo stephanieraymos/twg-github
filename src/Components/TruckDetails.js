@@ -27,19 +27,23 @@ const TruckDetails = () => {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
-    try {
-      const data = new FormData();
-      truckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch(manifestURL, {
-        method: "POST",
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((manifest) => setTruckFile(manifest));
-    } catch (error) {
-      console.log(error);
-    }
+    // if (truckManifestId) {
+      try {
+        const data = new FormData();
+        truckManifestId.map((id) => data.append("truckManifestId", id));
+        fetch(manifestURL, {
+          method: "POST",
+          body: data,
+        })
+          .then((response) => response.json())
+          .then((manifest) => setTruckFile(manifest));
+      } catch (error) {
+        console.log(error);
+      }
+    // }
   };
+
+  // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
 
   const deleteTruck = (id, truckManifestId) => {
     console.log("delete truck running");
@@ -76,7 +80,9 @@ const TruckDetails = () => {
             truckManifestId: truckManifestId,
           } = data[0];
 
-          getManifest(truckManifestId);
+          if(truckManifestId.length) {
+            getManifest(truckManifestId);
+          }
 
           const newTruck = {
             truckName,
@@ -179,8 +185,10 @@ const TruckDetails = () => {
                   <Card.Body
                     style={{ color: "black", backgroundColor: "transparent" }}
                   >
-                    {truckContents.map((truck, index) => {
-                      return truck ? <span key={index}>{truck},</span> : null;
+                    {console.log(Array.isArray(truckContents))}
+                    {console.log(truckContents)}
+                    {truckContents.map((content, index) => {
+                      return truck ? <span key={index}>{content}</span> : null;
                     })}
                   </Card.Body>
                 </Accordion.Collapse>
@@ -260,7 +268,10 @@ const TruckDetails = () => {
                       >
                         <FaTimes /> Delete this truck
                       </button>
-                      <Link className="edit-truck-btn" to={`/UpdateTruckDetails/${id}`}>
+                      <Link
+                        className="edit-truck-btn"
+                        to={`/UpdateTruckDetails/${id}`}
+                      >
                         <FaEdit /> Edit this truck
                       </Link>
                     </p>

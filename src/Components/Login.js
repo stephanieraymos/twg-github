@@ -145,7 +145,11 @@ const LoginModal = () => {
             <Button
               type="submit"
               onClick={login}
-              style={{ textAlign: "center", backgroundColor: "#1f85b4", borderColor: "transparent" }}
+              style={{
+                textAlign: "center",
+                backgroundColor: "#1f85b4",
+                borderColor: "transparent",
+              }}
             >
               Login
             </Button>

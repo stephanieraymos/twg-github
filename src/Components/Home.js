@@ -3,10 +3,36 @@ import warehouse from "../img/warehouse-sm.jpg";
 import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
+import React, { useState, useEffect } from "react";
+
+const url = "https://api.thewholesalegroup.com/v1/account/user/"
 
 const Home = () => {
   document.title = "Home";
   const { openModal, isModalOpen } = useGlobalContext();
+  // const [cookies, setCookie] = useCookies(["user-access-token", "user-refresh-token"]);
+
+  // useEffect(() => {
+  //   fetch(url, {
+  //     method: "GET",
+  //     headers: { 
+  //       "Authorization": "Bearer " + cookies["user-access-token"],
+  //     },
+  // })
+  //     .then((response) => {
+  //         const res = response.json()
+  //         if (response.ok) {
+  //             console.log(res)
+  //         } else {
+  //             throw new Error(res.message);
+  //         }
+  //     })
+  //     .catch((error) => {
+  //         console.log(error.message);
+  //     });
+  // });
 
   return (
     <>
