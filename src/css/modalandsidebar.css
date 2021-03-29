@@ -356,7 +356,6 @@ main {
   min-width: 6rem;
   min-height: 2rem;
   background: var(--sections);
-  display: flex;
   border-radius: 10px;
   cursor: pointer;
   align-self: center;

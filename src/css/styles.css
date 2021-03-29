@@ -583,7 +583,6 @@ input:hover {
   text-align: center;
   text-justify: center;
   height: 50px;
-  display: flex;
   cursor: pointer;
   align-self: center;
   outline-style: none;
