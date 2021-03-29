@@ -106,7 +106,7 @@ const InventoryAllTrucks = () => {
                     </p>
                   </button>
                 )) || (
-                  <p className="items all-trucks-manifest">
+                  <p className="items all-trucks-manifest" onClick={() => alert("This truck has no files")}>
                     <img className="no-icon" src={noSign} alt="No file for this truck" />
                   </p>
                 )}
