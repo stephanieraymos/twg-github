@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import { useTruck } from "../truckContext";
 import folder from "../img/folder.svg";
+import no from "../img/no.svg";
+import noSign from "../img/no-sign.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container, Modal } from "react-bootstrap";
@@ -13,11 +15,9 @@ const InventoryAllTrucks = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
 
-
   const openModal = () => {
     setIsModalOpen(true);
   };
-  
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -94,7 +94,7 @@ const InventoryAllTrucks = () => {
                   {truckContents}
                 </p>
 
-                {truckManifestId.length &&
+                {(truckManifestId.length && (
                   <button
                     className="folder-icon"
                     onClick={() => {
@@ -105,8 +105,11 @@ const InventoryAllTrucks = () => {
                       <img src={folder} alt="download icon" />
                     </p>
                   </button>
-                }
-                
+                )) || (
+                  <p className="items all-trucks-manifest">
+                    <img className="no-icon" src={noSign} alt="No file for this truck" />
+                  </p>
+                )}
 
                 <Modal
                   show={isModalOpen}
