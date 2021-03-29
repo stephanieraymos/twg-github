@@ -93,16 +93,20 @@ const InventoryAllTrucks = () => {
                 <p className="items all-trucks-contents text-truncate">
                   {truckContents}
                 </p>
-                <button
-                  className="folder-icon"
-                  onClick={() => {
-                    getManifest(truckManifestId);
-                  }}
-                >
-                  <p className="items all-trucks-manifest">
-                    <img src={folder} alt="download icon" />
-                  </p>
-                </button>
+
+                {truckManifestId.length &&
+                  <button
+                    className="folder-icon"
+                    onClick={() => {
+                      getManifest(truckManifestId);
+                    }}
+                  >
+                    <p className="items all-trucks-manifest">
+                      <img src={folder} alt="download icon" />
+                    </p>
+                  </button>
+                }
+                
 
                 <Modal
                   show={isModalOpen}

@@ -49,9 +49,7 @@ const TruckDetails = () => {
     console.log("delete truck running");
     try {
       const data = new FormData();
-      console.log("id", id)
       data.append("id", id);
-      console.log("truckManifesId", truckManifestId)
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "DELETE",
@@ -82,7 +80,9 @@ const TruckDetails = () => {
             truckManifestId: truckManifestId,
           } = data[0];
 
-          getManifest(truckManifestId);
+          if(truckManifestId.length) {
+            getManifest(truckManifestId);
+          }
 
           const newTruck = {
             truckName,
