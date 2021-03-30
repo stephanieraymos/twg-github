@@ -69,7 +69,7 @@ const InventoryAllTrucks = () => {
         <AddInventory addNewTrucks={addNewTrucks} />
       </Container>
 
-      <div className="table-container">
+      {/* <div className="table-container">
         <Table borderless>
           <thead>
             <tr>
@@ -105,9 +105,9 @@ const InventoryAllTrucks = () => {
             })}
           </tbody>
         </Table>
-      </div>
+      </div> */}
 
-      {/* <div className="table-wrapper">
+      <div className="table-wrapper">
         <div className="header-items">
           <p className="all-trucks-table-header-name truck">TRUCK NAME</p>
           <p className="all-trucks-table-header-price price">PRICE</p>
@@ -207,7 +207,7 @@ const InventoryAllTrucks = () => {
             );
           })}
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
