@@ -40,7 +40,9 @@ const AccountDetails = () => {
     })
       .then((response) => {
         const res = response.json()
+        console.log(res)
         if (response.ok) {
+          console.log("ok")
           setUserId(res["id"]);
           setEmail(res["email"]);
           setFirstName(res["first_name"]);
@@ -59,7 +61,7 @@ const AccountDetails = () => {
 
   useEffect(() => {
     getUserDetails();
-  });
+  }, []);
 
   return (
     <>

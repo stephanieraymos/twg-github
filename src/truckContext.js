@@ -6,6 +6,7 @@ import React, {
   createContext,
 } from "react";
 import InventoryAllTrucks from "./Components/InventoryAllTrucks";
+import { useGlobalContext } from "./context";
 
 // Generating context
 const TruckContext = createContext();
@@ -116,6 +117,10 @@ export const useTruck = () => {
     return state.concat(action.value);
   };
 
+  const {
+    cookies,
+  } = useGlobalContext();
+
   const [trucks, dispatch] = useReducer(reducer, []);
 
   const addTruck = (truck) => {
@@ -133,7 +138,9 @@ export const useTruck = () => {
           "https://api.thewholesalegroup.com/v1/trucks/",
           {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + cookies["user-access-token"], },
           },
           {
             signal: abortCont.signal,

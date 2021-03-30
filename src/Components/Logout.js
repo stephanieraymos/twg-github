@@ -33,7 +33,10 @@ const Logout = () => {
     // user might have a refresh token that have not expired yet
     fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + cookies["user-access-token"],
+        },
         body: JSON.stringify({
             refresh: cookies["user-refresh-token"]
         }),

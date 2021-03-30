@@ -5,6 +5,8 @@ import Navigation from "./Navigation";
 import { useHistory, useParams, Link } from "react-router-dom";
 import cancel from "../img/cancel.svg";
 import undo from "../img/undo.svg";
+import { useGlobalContext } from "../context";
+
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
 const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
@@ -24,6 +26,9 @@ const UpdateTruckDetails = () => {
   const [oldTruckManifestId, setOldTruckManifestId] = useState([]);
   const [validated, setValidated] = useState(false);
   const [truckManifestCount, setTruckManifestCount] = useState(0)
+  const {
+    cookies,
+  } = useGlobalContext();
 
   let history = useHistory();
 
@@ -78,6 +83,9 @@ const UpdateTruckDetails = () => {
         truckManifestId.map((id) => data.append("truckManifestId", id));
         fetch(manifestURL, {
           method: "POST",
+          header: {
+            "Authorization": "Bearer " + cookies["user-access-token"],
+          },
           body: data,
         })
           .then((response) => response.json())
@@ -90,7 +98,12 @@ const UpdateTruckDetails = () => {
 
   const getTruckData = async () => {
     try {
-      const response = await fetch(`${url}${id}`);
+      const response = await fetch(`${url}${id}`, {
+        method: "GET",
+        header: {
+          "Authorization": "Bearer " + cookies["user-access-token"],
+        }
+      });
       const data = await response.json();
       if (data) {
         // const {
@@ -138,6 +151,9 @@ const UpdateTruckDetails = () => {
       oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "PUT",
+        header: {
+          "Authorization": "Bearer " + cookies["user-access-token"],
+        },
         body: data,
       }).then((response) => {
         console.log(response);

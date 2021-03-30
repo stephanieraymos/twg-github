@@ -4,15 +4,16 @@ import { useTruck } from "../truckContext";
 import folder from "../img/folder.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
-import { Container, Modal } from "react-bootstrap";
+import { Container, Modal, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../context";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
-
+  const keys = []
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -24,6 +25,10 @@ const InventoryAllTrucks = () => {
   };
 
   const [trucks, addTruck, loading, errorMessage] = useTruck();
+
+  const {
+    cookies,
+  } = useGlobalContext();
 
   useEffect(() => {
     console.log("All trucks", trucks);
@@ -42,6 +47,9 @@ const InventoryAllTrucks = () => {
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch("https://api.thewholesalegroup.com/v1/trucks/manifest/", {
         method: "POST",
+        header: {
+          "Authorization": "Bearer " + cookies["user-access-token"],
+        },
         body: data,
       })
         .then((response) => response.json())
@@ -61,7 +69,45 @@ const InventoryAllTrucks = () => {
         <AddInventory addNewTrucks={addNewTrucks} />
       </Container>
 
-      <div className="table-wrapper">
+      <div className="table-container">
+        <Table borderless>
+          <thead>
+            <tr>
+              <th>Truckload</th>
+              <th>Company</th>
+              <th>Price</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {trucks.map((truck, index) => {
+              let {
+                id,
+                truckName,
+                truckPrice,
+                truckContents,
+                truckManifestId,
+                dateTimeUploaded,
+                company,
+                status
+              } = truck;
+              return (
+                <tr>
+                  <td>{truckName}</td>
+                  <td>{company}</td>
+                  <td>{truckPrice}</td>
+                  <td>{dateTimeUploaded.match(/\d\d\d\d-\d\d-\d\d/)}</td>
+                  <td>{status ? "Available" : "Sold"}</td>
+                </tr>
+              );
+
+            })}
+          </tbody>
+        </Table>
+      </div>
+
+      {/* <div className="table-wrapper">
         <div className="header-items">
           <p className="all-trucks-table-header-name truck">TRUCK NAME</p>
           <p className="all-trucks-table-header-price price">PRICE</p>
@@ -130,8 +176,8 @@ const InventoryAllTrucks = () => {
                     <Modal.Body
                       style={{ color: "white", borderTop: "1px black solid" }}
                     >
-                      {/*//^ Map method to get list of files for each truck inside modal */}
                       {truckFile.map((manifest) => {
+                        // Map method to get list of files for each truck inside modal
                         const {
                           truckManifest,
                           truckManifestName,
@@ -161,7 +207,7 @@ const InventoryAllTrucks = () => {
             );
           })}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

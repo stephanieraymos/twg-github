@@ -11,6 +11,7 @@ import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
+import { useGlobalContext } from "../context";
 
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
@@ -22,6 +23,9 @@ const TruckDetails = () => {
   const [truck, setTruck] = useState(null);
   const [truckFile, setTruckFile] = useState([]);
   const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
+  const {
+    cookies,
+  } = useGlobalContext();
 
   document.title = "Truck Details";
 
@@ -33,6 +37,9 @@ const TruckDetails = () => {
         truckManifestId.map((id) => data.append("truckManifestId", id));
         fetch(manifestURL, {
           method: "POST",
+          header: {
+            "Authorization": "Bearer " + cookies["user-access-token"],
+          },
           body: data,
         })
           .then((response) => response.json())
@@ -53,6 +60,9 @@ const TruckDetails = () => {
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "DELETE",
+        header: {
+          "Authorization": "Bearer " + cookies["user-access-token"],
+        },
         body: data,
       }).then((response) => {
         if (response.ok) {
@@ -70,7 +80,12 @@ const TruckDetails = () => {
     setLoading(true);
     async function getTruck() {
       try {
-        const response = await fetch(`${url}${id}`);
+        const response = await fetch(`${url}${id}`, {
+          method: "GET",
+          header: {
+            "Authorization": "Bearer " + cookies["user-access-token"],
+          }
+        });
         const data = await response.json();
         if (data) {
           const {
