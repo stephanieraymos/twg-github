@@ -59,47 +59,49 @@ const LoginModal = () => {
   });
 
   useEffect(() => {
-    const tokenVerifyURL =
-      "https://api.thewholesalegroup.com/v1/account/token/verify/";
-    fetch(tokenVerifyURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        token: cookies["user-access-token"],
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          // user has already logged in
-          history.push("/Dashboard");
-        } else {
-          const tokenRefreshURL =
-            "https://api.thewholesalegroup.com/v1/account/token/refresh/";
-          // user might have a refresh token that have not expired yet
-          fetch(tokenRefreshURL, {
+    const tokenVerifyURL = "https://api.thewholesalegroup.com/v1/account/token/verify/";
+    if (cookies["user-access-token"]) {
+        fetch(tokenVerifyURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              refresh: cookies["user-refresh-token"],
+                token: cookies["user-access-token"],
             }),
-          }).then((response) => {
+        })
+        .then((response) => {
             if (response.ok) {
-              // user is logged in again
-              const user = response.json();
-              setCookie("user-access-token", user["access"], {
-                path: "/",
-                // secure: true,
-                maxAge: 3600, // 1 hour
-              });
-              history.push("/Dashboard");
+                // user has already logged in
+                history.push("/Dashboard");
+            } else if (cookies["user-refresh-token"]) {
+                const tokenRefreshURL = "https://api.thewholesalegroup.com/v1/account/token/refresh/";
+                // user might have a refresh token that have not expired yet
+                fetch(tokenRefreshURL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        refresh: cookies["user-refresh-token"],
+                    }),
+                })
+                .then((response) => {
+                if (response.ok) {
+                    // user is logged in again
+                    const user = response.json();
+                    setCookie("user-access-token", user["access"], {
+                    path: "/",
+                    // secure: true,
+                    maxAge: 3600, // 1 hour
+                    });
+                    history.push("/Dashboard");
+                }
+                });
             }
-          });
-        }
-      })
-      .catch((error) => {
-        showAlert(true, "danger", error.message);
-      });
-  });
+        })
+        .catch((error) => {
+            showAlert(true, "danger", error.message);
+        });
+    }
+    
+  }, []);
 
   //* useEffect for user post request
   const login = () => {

@@ -36,9 +36,7 @@ const AddInventory = (props) => {
   // const { setTrucks, setPostRefresh } = useTruck();
   const { setTrucks } = useTruck();
 
-  const { userId, setUserId } = useGlobalContext();
-
-  
+  const { userId, setUserId, cookies } = useGlobalContext();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -94,6 +92,9 @@ const AddInventory = (props) => {
         "https://api.thewholesalegroup.com/v1/trucks/",
         {
           method: "POST",
+          header: {
+            "Authorization": "Bearer " + cookies["user-access-token"],
+          },
           body: data,
         }
       );

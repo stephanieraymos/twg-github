@@ -532,6 +532,12 @@ input:hover {
   }
 }
 
+.no-icon {
+  width: 22px;
+  height: auto;
+  float: right;
+}
+
 /*=============================================
 =               Authentication                =
 =============================================*/
@@ -588,8 +594,20 @@ input:hover {
   outline-style: none;
   margin: 1rem 1.5rem;
 }
-.no-icon {
-  width: 22px;
-  height: auto;
-  float: right;
+
+/*=============================================
+=                    Table                    =
+=============================================*/
+.table-container {
+  position: relative;
+  overflow: hidden;
+  width: 90%;
+  height: 90%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  margin: 2rem auto;
 }
