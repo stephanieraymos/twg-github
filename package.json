@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI= react-scripts build",
+    "build": "react-scripts build",
+    "deploy-production": "react-scripts build && scp -r ./build/* stephanie@143.198.77.200:/var/www/app.thewholesalegroup.com/html",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },

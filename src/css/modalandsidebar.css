@@ -350,7 +350,6 @@ main {
   background-color: var(--sections) !important;
   text-align: center;
   text-justify: center;
-  display: flex;
   font-size: 1.5rem !important;
   width: clamp(10rem, -0.875rem + 8.333vw, 10rem);
   height: clamp(3rem, -0.875rem + 8.333vw, 4.5rem);

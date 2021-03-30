@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import { useTruck } from "../truckContext";
 import folder from "../img/folder.svg";
+import noSign from "../img/no-sign.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container, Modal, Table } from "react-bootstrap";
@@ -18,7 +19,6 @@ const InventoryAllTrucks = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -109,10 +109,10 @@ const InventoryAllTrucks = () => {
 
       <div className="table-wrapper">
         <div className="header-items">
-          <p className="all-trucks-table-header-name truck">TRUCK NAME</p>
-          <p className="all-trucks-table-header-price price">PRICE</p>
-          <p className="all-trucks-table-header-contents contents">CONTENTS</p>
-          <p className="all-trucks-table-header-manifest manifest">FILES</p>
+          <span className="all-trucks-table-header-name truck">TRUCK NAME</span>
+          <span className="all-trucks-table-header-price price">PRICE</span>
+          <span className="all-trucks-table-header-contents contents">CONTENTS</span>
+          <span className="all-trucks-table-header-manifest manifest">FILES</span>
         </div>
         <div className="truckLoad-list">
           {trucks.map((truck) => {
@@ -140,7 +140,7 @@ const InventoryAllTrucks = () => {
                   {truckContents}
                 </p>
 
-                {truckManifestId.length &&
+                {(truckManifestId.length && (
                   <button
                     className="folder-icon"
                     onClick={() => {
@@ -151,8 +151,11 @@ const InventoryAllTrucks = () => {
                       <img src={folder} alt="download icon" />
                     </p>
                   </button>
-                }
-                
+                )) || (
+                  <p className="items" onClick={() => alert("This truck has no files")}>
+                    <img className="no-icon" src={noSign} alt="No file for this truck" />
+                  </p>
+                )}
 
                 <Modal
                   show={isModalOpen}
