@@ -21,6 +21,8 @@ const UpdateTruckDetails = () => {
   const [fileUserId, setFileUserId] = useState("");
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
+  const [company, setCompany] = useState("");
+  const [status, setStatus] = useState(0);
   const [truckContents, setTruckContents] = useState([]);
   const [truckManifestId, setTruckManifestId] = useState([]);
   const [truckFile, setTruckFile] = useState([]);
@@ -96,13 +98,15 @@ const UpdateTruckDetails = () => {
       });
       const data = await response.json();
       if (data) {
-        const {userId, truckName, truckPrice, truckContents, truckManifestId} = data[0]
+        const {userId, truckName, truckPrice, truckContents, truckManifestId, company, status} = data[0]
 
         setFileUserId(userId);
         setTruckName(truckName);
         setTruckPrice(truckPrice);
         setTruckContents(truckContents);
         setTruckManifestId(truckManifestId);
+        setCompany(company);
+        setStatus(status);
 
         if(truckManifestId.length) {
           getManifest(truckManifestId);
@@ -132,6 +136,7 @@ const UpdateTruckDetails = () => {
     try {
       const data = new FormData(form.current);
       data.append("id", id);
+      data.set("status", status);
 
       // turn string to array and insert to truck contents
       const tempTruckContents = data.get("truckContents").split(",");
@@ -200,6 +205,19 @@ const UpdateTruckDetails = () => {
           </Form.Group>
 
           <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Company</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={company}
+              name="company"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a company name.
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group className="center-form-group">
             <Form.Label className="form-label">Contents</Form.Label>
             <Form.Control
               type="text"
@@ -213,6 +231,19 @@ const UpdateTruckDetails = () => {
             <Form.Text muted>
               Separate each content with a comma (no space character), e.g., clothes,toys
             </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Status</Form.Label>
+            <Form.Check 
+              style={{color: "black"}}
+              type="switch"
+              id="custom-switch"
+              name="status"
+              checked={status}
+              label="Available"
+              onChange={() => setStatus(status ? 0 : 1)}
+            />
           </Form.Group>
 
           <Form.Group className="center-form-group">
@@ -322,6 +353,18 @@ const UpdateTruckDetails = () => {
               style={{ width: "100%", backgroundColor: "#f47c20", margin: "1.5rem 0rem 0rem" }}
             >
               Update Truck
+            </Button>
+
+            <Button
+              type="button"
+              onClick={() => {
+                redirect();
+              }}
+              className="form-button"
+              block
+              style={{ width: "100%", backgroundColor: "#000", margin: ".5rem 0rem 0rem" }}
+            >
+              Cancel
             </Button>
           </div>
 

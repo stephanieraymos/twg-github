@@ -23,6 +23,8 @@ const TruckDetails = () => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [company, setCompany] = useState("");
+  const [status, setStatus] = useState(1);
   const [contents, setContents] = useState("");
   const [manifestId, setManifestId] = useState([]);
   const [files, setFiles] = useState([]);
@@ -100,6 +102,8 @@ const TruckDetails = () => {
           truckPrice,
           truckContents,
           truckManifestId,
+          company,
+          status
         } = data[0];
 
         if(truckManifestId.length) {
@@ -110,6 +114,8 @@ const TruckDetails = () => {
         setPrice(truckPrice);
         setContents(truckContents.join(', '));
         setManifestId(truckManifestId);
+        setCompany(company);
+        setStatus(status);
       }
       setLoading(false);
     })
@@ -186,6 +192,40 @@ const TruckDetails = () => {
                   <span className="truck-data-title">Price: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {price}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ COMPANY CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Company: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {company}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ STATUS CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">status: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {status ? "Available" : "Sold"}
                   </span>
                 </p>
               </Card.Header>
