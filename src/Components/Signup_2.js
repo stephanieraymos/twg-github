@@ -50,7 +50,7 @@ const Signup2 = () => {
     if (password === confirmPassword && form.checkValidity() === true) {
       setValidated(false);
       signUp()
-    } else {
+    } else if (password === confirmPassword) {
       setValidated(true);
     }
   };
