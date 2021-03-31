@@ -152,7 +152,6 @@ export const useTruck = () => {
         );
         const newTrucks = await response.json(); //returns a promise
         addTruck(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-        console.log(newTrucks);
         setLoading(false);
         setErrorMessage("");
       } catch (error) {

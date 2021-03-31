@@ -57,7 +57,7 @@ const InventoryAllTrucks = () => {
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch("https://api.thewholesalegroup.com/v1/trucks/manifest/", {
         method: "POST",
-        header: {
+        headers: {
           "Authorization": "Bearer " + accessToken,
         },
         body: data,

@@ -7,6 +7,7 @@ import inventory from "../css/inventory.css";
 import modalandsidebar from "../css/modalandsidebar.css";
 import { Link } from "react-router-dom";
 import cancel from "../img/cancel.svg";
+import { useAuthContext } from "../auth";
 
 const AddInventory = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,7 +37,11 @@ const AddInventory = (props) => {
   // const { setTrucks, setPostRefresh } = useTruck();
   const { setTrucks } = useTruck();
 
-  const { userId, setUserId, cookies } = useGlobalContext();
+  const { userId, setUserId } = useGlobalContext();
+
+  const {
+    accessToken: [accessToken, setAccessToken],
+  } = useAuthContext();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -92,8 +97,8 @@ const AddInventory = (props) => {
         "https://api.thewholesalegroup.com/v1/trucks/",
         {
           method: "POST",
-          header: {
-            "Authorization": "Bearer " + cookies["user-access-token"],
+          headers: {
+            "Authorization": "Bearer " + accessToken,
           },
           body: data,
         }
