@@ -6,15 +6,18 @@ import App from "./App";
 import { TruckProvider } from "./truckContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CookiesProvider } from "react-cookie";
+import { AuthProvider } from "./auth"
 
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
-      <AppProvider>
-        <TruckProvider>
-            <App />
-        </TruckProvider>
-      </AppProvider>
+      <AuthProvider>
+        <AppProvider>
+          <TruckProvider>
+              <App />
+          </TruckProvider>
+        </AppProvider>
+      </AuthProvider>
     </CookiesProvider>
   </React.StrictMode>,
   document.getElementById("root")

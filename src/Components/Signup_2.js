@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
 import { Button, Modal, Form } from "react-bootstrap";
@@ -11,51 +11,59 @@ const Signup2 = () => {
   document.title = "Sign up";
 
   const { error, setError, isModalOpen, closeModal } = useGlobalContext();
+  const [validated, setValidated] = useState(false);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSamePassword, setIsSamePassword] = useState(false);
   const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
 
   const { showAlert } = useTruckContext();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!firstName || lastName || !email) {
-      showAlert(true, "danger", "Please enter value");
+  const form = useRef(null);
+
+  const handleSubmit = (event) => {
+    // e.preventDefault();
+    // if (!firstName || lastName || !email) {
+    //   showAlert(true, "danger", "Please enter value");
+    // } else {
+    //   //* Show alert and add user to inventory only if name is true and not editing
+    //   showAlert(true, "success", "Truck Added");
+
+    //   //* Creating new user
+    //   const newUser = {
+    //     firstName,
+    //     lastName,
+    //     email,
+    //   };
+
+    //   setFirstName("");
+    //   setLastName("");
+    //   setEmail("");
+    //   setPassword("");
+    //   setConfirmPassword("");
+    // }
+
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+    if (password === confirmPassword && form.checkValidity() === true) {
+      setValidated(false);
+      signUp()
     } else {
-      //* Show alert and add user to inventory only if name is true and not editing
-      showAlert(true, "success", "Truck Added");
-
-      //* Creating new user
-      const newUser = {
-        firstName,
-        lastName,
-        email,
-      };
-
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
+      setValidated(true);
     }
   };
 
   //* useEffect for user post request
   const signUp = () => {
+    const data = new FormData(form.current);
+    var object = {};
+    data.forEach((value, key) => object[key] = value);
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        confirm_password: confirmPassword,
-        first_name: firstName,
-        last_name: lastName,
-      }),
+      body: JSON.stringify(object),
     })
       .then((response) => {
         const res = response.json();
@@ -98,7 +106,10 @@ const Signup2 = () => {
                   borderColor: "transparent",
                 }}
               >
-                <img src={cancel} alt="cancel" onClick={closeModal} />
+                <img src={cancel} alt="cancel" onClick={() => {
+                  setIsSignUpSuccess(false);
+                  closeModal();
+                }} />
               </button>
             </div>
 
@@ -172,6 +183,9 @@ const Signup2 = () => {
             />
 
             <Form
+              ref={form}
+              noValidate 
+              validated={validated}
               onSubmit={handleSubmit}
               style={{ width: "85%", margin: "0% 5% 5%" }}
             >
@@ -180,9 +194,11 @@ const Signup2 = () => {
                 <Form.Control
                   type="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter an email address.
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="center-form-group">
@@ -190,9 +206,11 @@ const Signup2 = () => {
                 <Form.Control
                   type="text"
                   required
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  name="first_name"
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter your first name.
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="center-form-group">
@@ -200,9 +218,11 @@ const Signup2 = () => {
                 <Form.Control
                   type="text"
                   required
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  name="last_name"
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter your last name.
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="center-form-group">
@@ -210,9 +230,12 @@ const Signup2 = () => {
                 <Form.Control
                   type="password"
                   required
-                  value={password}
+                  name="password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a password.
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="center-form-group">
@@ -222,15 +245,18 @@ const Signup2 = () => {
                 <Form.Control
                   type="password"
                   required
-                  value={confirmPassword}
+                  name="confirm_password"
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  isInvalid={password !== confirmPassword}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Your confirm password doesn't match your password.
+                </Form.Control.Feedback>
               </Form.Group>
 
               <div className="form-footer-container">
                 <Button
                   type="submit"
-                  onClick={signUp}
                   className="form-button"
                   block
                   style={{ width: "100%", backgroundColor: "#f47c20" }}

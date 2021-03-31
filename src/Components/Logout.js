@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { useGlobalContext } from "../context";
+
+import { useAuthContext } from "../auth";
 
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 
@@ -16,7 +18,11 @@ const Logout = () => {
   const {
     cookies,
     removeCookie
-} = useGlobalContext();
+  } = useGlobalContext();
+
+  const {
+    removeToken
+  } = useAuthContext();
 
   useEffect(() => {
     setLoading(true);
@@ -26,7 +32,7 @@ const Logout = () => {
   //showAlert function, when called the values for each param are passed in as arguments
   const showAlert = (show = false, type = "", msg = "") => {
     setAlert({ show, type, msg });
-};
+  };
 
   const logout = () => {
     const url = "https://api.thewholesalegroup.com/v1/account/logout/";
@@ -42,8 +48,7 @@ const Logout = () => {
         }),
     })
     .then(() => {
-        removeCookie("user-access-token");
-        removeCookie("user-refresh-token");
+        removeToken();
         history.push("/")
     })
     .catch((error) => {
@@ -53,17 +58,9 @@ const Logout = () => {
 
   useEffect(() => {
       logout();
-  })
+  }, [])
 
-  return (
-    <>
-        {loading ? (
-            <Loading />
-        ) : (
-            <Loading />
-        )}
-    </>
-  );
+  return <Loading />
 };
 
 export default Logout;

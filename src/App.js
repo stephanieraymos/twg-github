@@ -52,11 +52,11 @@ const App = () => {
             <Route path="/register/verify/:id/:token/" exact component={EmailVerification} />
             <Route path="/logout" exact component={Logout} />
             <Route path="/account" exact component={AccountDetails} />
-            <Route path="/Home" exact component={Home} />
-            <Route path="/Dashboard" exact component={Dashboard} />
-            <Route path="/AddInventory" exact component={AddInventory} />
+            <Route path="/home" exact component={Home} />
+            <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/trucks/add" exact component={AddInventory} />
             <Route
-              path="/InventoryAllTrucks"
+              path="/trucks"
               exact
               component={InventoryAllTrucks}
             />
