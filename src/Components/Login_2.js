@@ -19,6 +19,7 @@ const LoginModal = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [validated, setValidated] = useState(false);
   const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(false);
+  const [isLoginIncorrect, setIsLoginIncorrect] = useState(false)
 
   const form = useRef(null);
 
@@ -46,10 +47,10 @@ const LoginModal = () => {
   } = useAuthContext();
 
   const reset = () => {
-    console.log("Hello")
     setPassword("");
     setTogglePasswordVisibility(false);
     setValidated(false);
+    setIsLoginIncorrect(false);
   }
 
   const handleSubmit = (event) => {
@@ -118,8 +119,8 @@ const LoginModal = () => {
         history.push("/dashboard");
       })
       .catch((error) => {
-        showAlert(true, "danger", error.message);
-        cleanUp();
+        setIsLoginIncorrect(true);
+        setValidated(false);
       });
   };
 
@@ -163,17 +164,20 @@ const LoginModal = () => {
               onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
           </InputGroup.Append>
           <Form.Control.Feedback type="invalid">
-            Please eneter your password.
+            Please enter your password.
           </Form.Control.Feedback>
         </InputGroup>
       </Form.Group>
 
-      <Form.Group className="center-form-group">
-        <Form.Text style={{color: "red"}}>
-          Marked for deletion
-        </Form.Text>
-      </Form.Group>
-
+      {
+        isLoginIncorrect && 
+        <Form.Group className="center-form-group">
+          <Form.Text className="form-label" style={{color: "red", textAlign: "center"}}>
+            Your email or password is incorrect.
+          </Form.Text>
+        </Form.Group>
+      }
+      
       <div className="form-footer-container">
         <Button
           type="submit"

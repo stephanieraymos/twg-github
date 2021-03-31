@@ -13,13 +13,13 @@ import {
 export const links = [
   {
     id: 1,
-    url: "/Dashboard",
+    url: "/dashboard",
     text: "Dashboard",
     icon: <FaUserCircle />
   },
   {
     id: 2,
-    url: "/InventoryAllTrucks",
+    url: "/trucks",
     text: "Inventory",
     icon: <FaTruckMoving />
   },
@@ -59,6 +59,6 @@ export const social = [
 export const logoLink = [
   {
     id: 1,
-    url: "/Home",
+    url: "/home",
   },
 ];
