@@ -8,13 +8,25 @@ import AddInventory from "./AddInventory";
 import { Container, Modal, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
+import { useAuthContext } from "../auth";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
+  const {
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
+    authenticate,
+    removeToken,
+  } = useAuthContext();
+
+  useEffect(() => {
+    authenticate();
+  });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
-  const keys = []
+  const keys = [];
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -26,9 +38,7 @@ const InventoryAllTrucks = () => {
 
   const [trucks, addTruck, loading, errorMessage] = useTruck();
 
-  const {
-    cookies,
-  } = useGlobalContext();
+  const { cookies } = useGlobalContext();
 
   useEffect(() => {
     console.log("All trucks", trucks);
@@ -48,7 +58,7 @@ const InventoryAllTrucks = () => {
       fetch("https://api.thewholesalegroup.com/v1/trucks/manifest/", {
         method: "POST",
         header: {
-          "Authorization": "Bearer " + cookies["user-access-token"],
+          Authorization: "Bearer " + cookies["user-access-token"],
         },
         body: data,
       })
@@ -111,8 +121,12 @@ const InventoryAllTrucks = () => {
         <div className="header-items">
           <span className="all-trucks-table-header-name truck">TRUCK NAME</span>
           <span className="all-trucks-table-header-price price">PRICE</span>
-          <span className="all-trucks-table-header-contents contents">CONTENTS</span>
-          <span className="all-trucks-table-header-manifest manifest">FILES</span>
+          <span className="all-trucks-table-header-contents contents">
+            CONTENTS
+          </span>
+          <span className="all-trucks-table-header-manifest manifest">
+            FILES
+          </span>
         </div>
         <div className="truckLoad-list">
           {trucks.map((truck) => {
@@ -152,8 +166,15 @@ const InventoryAllTrucks = () => {
                     </p>
                   </button>
                 )) || (
-                  <p className="items" onClick={() => alert("This truck has no files")}>
-                    <img className="no-icon" src={noSign} alt="No file for this truck" />
+                  <p
+                    className="items"
+                    onClick={() => alert("This truck has no files")}
+                  >
+                    <img
+                      className="no-icon"
+                      src={noSign}
+                      alt="No file for this truck"
+                    />
                   </p>
                 )}
 

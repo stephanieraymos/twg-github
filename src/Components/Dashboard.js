@@ -54,6 +54,7 @@ const Dashboard = () => {
           </div>
         </div>
 
+
         <div className="sales-graph-container">
           <div className="sales-graph">
             <p className="sales-graph-heading">Sales</p>
