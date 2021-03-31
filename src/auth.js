@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useCookies } from "react-cookie";
-import { useHistory } from "react-router-dom";
 
 const AuthContext = React.createContext(null)
 
@@ -12,8 +11,6 @@ const AuthProvider = ({ children }) => {
     // keys for the cookies
     const accessTokenKey = "user-access-token";
     const refreshTokenKey = "user-refresh-token";
-
-    let history = useHistory();
 
     const [cookies, setCookie, removeCookie] = useCookies([accessTokenKey, refreshTokenKey]);
     
@@ -42,9 +39,7 @@ const AuthProvider = ({ children }) => {
 
     const refreshToken = () => cookies[refreshTokenKey];
 
-    const authenticate = (success=() => {}, failure=() => {
-        history.push("/");
-    }) => {
+    const authenticate = (success=() => {}, failure=() => {}) => {
         // check whether there's cookies to check
         if (cookies["user-access-token"]) {
             success();
