@@ -191,7 +191,7 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               id="truckName"
-              defaultValue={truck.truckName}
+              defaultValue={truckName}
               // value={truck.truckName}
               // ref={(input) => (truck.truckName = input)}
               onChange={(e) => setTruckName(e.target.value)}

@@ -22,7 +22,8 @@ const LoginModal = () => {
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
   // const [emailInput, setEmailInput] = useState("");
   // const [passwordInput, setPasswordInput] = useState("");
-
+  const passwordInput = useRef("");
+  const emailInput = useRef("");
   const {
     setUserId,
     email,
@@ -62,9 +63,12 @@ const LoginModal = () => {
     //     "The email address you entered does not match our records"
     //   );
     // }
+    if(email != emailInput.value) {
+      console.log("Wrong Email")
+    }
     else {
       // Show alert and add person to person list only if name is true and not editing
-      showAlert(true, "success", "Person Added");
+      showAlert(true, "success", "Login Successful");
 
       setPassword("");
     }
@@ -154,6 +158,7 @@ const LoginModal = () => {
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Email</Form.Label>
                 <Form.Control
+                  ref={emailInput}
                   type="email"
                   required
                   value={email}

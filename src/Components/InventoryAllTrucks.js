@@ -33,7 +33,9 @@ const InventoryAllTrucks = () => {
     authenticate();
   }, []);
 
-  {!accessToken && <NotAuthed />}
+  {
+    !accessToken && <NotAuthed />;
+  }
 
   useEffect(() => {
     console.log("All trucks", trucks);
