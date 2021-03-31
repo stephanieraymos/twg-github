@@ -25,6 +25,13 @@ const Signup2 = () => {
 
   const form = useRef(null);
 
+  const reset = () => {
+    setPassword("");
+    setConfirmPassword("");
+    setTogglePasswordVisibility(false);
+    setValidated(false);
+  }
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -56,7 +63,7 @@ const Signup2 = () => {
     } else if (form.checkValidity() === true) {
       // no errors
       setValidated(true);
-      signUp()
+      signUp(reset)
     } else {
       // no password or confirm password errors but errors in other fields
       setValidated(true);
@@ -64,7 +71,7 @@ const Signup2 = () => {
   };
 
   //* useEffect for user post request
-  const signUp = () => {
+  const signUp = (cleanup=() => {}) => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => object[key] = value);
@@ -80,9 +87,11 @@ const Signup2 = () => {
         } else {
           throw new Error(res.message);
         }
+        cleanup();
       })
       .catch((error) => {
         showAlert(true, "danger", error.message);
+        cleanup();
       });
   };
 
@@ -245,7 +254,7 @@ const Signup2 = () => {
                   />
                   <InputGroup.Append>
                     <Image 
-                      src={togglePasswordVisibility ? visibleOn : visibleOff} 
+                      src={togglePasswordVisibility ? visibleOn : visibleOff}
                       thumbnail 
                       style={{cursor: "pointer"}}
                       onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
