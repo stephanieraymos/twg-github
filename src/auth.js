@@ -34,15 +34,37 @@ const AuthProvider = ({ children }) => {
 
   const accessToken = () => cookies[accessTokenKey];
 
-  const setRefreshToken = (token) => {
-    setCookie(refreshTokenKey, token, {
-      path: "/",
-      // secure: true,
-      maxAge: 604800, // 7 days
-    });
-  };
+    const accessToken = cookies[accessTokenKey];
+    
+    const setRefreshToken = (token) => {
+        setCookie(refreshTokenKey, token, {
+            path: "/",
+            // secure: true,
+            maxAge: 604800, // 7 days
+        });
+    };
 
-  const refreshToken = () => cookies[refreshTokenKey];
+    const refreshToken = cookies[refreshTokenKey];
+
+    const isAccessTokenValid = () => {
+        if (cookies["user-access-token"]) {
+            fetch(tokenVerifyURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    token: cookies["user-access-token"],
+                }),
+            })
+            .then((response) => {
+                if (response.ok) {
+                    // token is valid
+                    return true;
+                }
+            })
+        }
+
+        return false;
+    }
 
   const authenticate = (success = () => {}, failure = () => {}) => {
     // check whether there's cookies to check
@@ -73,12 +95,13 @@ const AuthProvider = ({ children }) => {
     failure();
   };
 
-  const data = {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    authenticate,
-    removeToken,
-  };
+    const data = {
+        accessToken: [accessToken, setAccessToken],
+        refreshToken: [refreshToken, setRefreshToken],
+        authenticate,
+        removeToken,
+        isAccessTokenValid,
+    }
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 };

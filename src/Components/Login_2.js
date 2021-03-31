@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Modal, Form, InputGroup, Image } from "react-bootstrap";
 import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
@@ -8,11 +8,21 @@ import { Link, useHistory } from "react-router-dom";
 import Signup2 from "./Signup_2";
 
 import { useAuthContext } from "../auth";
+import visibleOn from "../img/visibility-on.svg";
+import visibleOff from "../img/visibility-off.svg";
+import { cleanup } from "@testing-library/react";
 
 const LoginModal = () => {
   const url = "https://api.thewholesalegroup.com/v1/account/login/";
 
   const [width, setWidth] = useState(window.innerWidth);
+  const [validated, setValidated] = useState(false);
+  const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(
+    false
+  );
+  const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
+
+  const form = useRef(null);
 
   let history = useHistory();
 
@@ -22,8 +32,7 @@ const LoginModal = () => {
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
   // const [emailInput, setEmailInput] = useState("");
   // const [passwordInput, setPasswordInput] = useState("");
-  const passwordInput = useRef("");
-  const emailInput = useRef("");
+
   const {
     setUserId,
     email,
@@ -33,44 +42,31 @@ const LoginModal = () => {
     setCompany,
     setPhoneNumber,
     setBillingAddress,
-    cookies,
-    setCookie,
   } = useGlobalContext();
 
   const {
     accessToken: [accessToken, setAccessToken],
     refreshToken: [refreshToken, setRefreshToken],
     authenticate,
-    removeToken,
   } = useAuthContext();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      showAlert(true, "danger", "Please enter value");
-    }
-    // if (password != passwordInput) {
-    //   showAlert(
-    //     true,
-    //     "danger",
-    //     "The password you entered does not match the password on file"
-    //   );
-    // }
-    // if (email != emailInput) {
-    //   showAlert(
-    //     true,
-    //     "danger",
-    //     "The email address you entered does not match our records"
-    //   );
-    // }
-    if(email != emailInput.value) {
-      console.log("Wrong Email")
-    }
-    else {
-      // Show alert and add person to person list only if name is true and not editing
-      showAlert(true, "success", "Login Successful");
+  const reset = () => {
+    setPassword("");
+    setTogglePasswordVisibility(false);
+    setValidated(false);
+    setIsLoginIncorrect(false);
+  };
 
-      setPassword("");
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+
+    setValidated(true);
+
+    if (form.checkValidity() === true) {
+      // no errors
+      login(reset);
     }
   };
 
@@ -93,14 +89,14 @@ const LoginModal = () => {
   }, []);
 
   //* useEffect for user post request
-  const login = () => {
+  const login = (cleanUp = () => {}) => {
+    const data = new FormData(form.current);
+    var object = {};
+    data.forEach((value, key) => (object[key] = value));
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
+      body: JSON.stringify(object),
     })
       .then((response) => {
         const res = response.json();
@@ -121,11 +117,114 @@ const LoginModal = () => {
         setAccessToken(user["token"]["access"]);
         setRefreshToken(user["token"]["refresh"]);
       })
-      .then(() => history.push("/Dashboard"))
+      .then(() => {
+        cleanUp();
+        history.push("/dashboard");
+      })
       .catch((error) => {
-        showAlert(true, "danger", error.message);
+        setIsLoginIncorrect(true);
+        setValidated(false);
       });
   };
+
+  const LoginForm = (
+    <Form
+      ref={form}
+      noValidate
+      validated={validated}
+      onSubmit={handleSubmit}
+      style={{ width: "85%", margin: "5%" }}
+    >
+      <Form.Group className="center-form-group">
+        <Form.Label className="form-label">Email</Form.Label>
+        <Form.Control
+          type="email"
+          required
+          value={email}
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Form.Control.Feedback type="invalid">
+          Please enter a valid email address.
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="center-form-group">
+        <Form.Label className="form-label">Password</Form.Label>
+        <InputGroup hasValidation>
+          <Form.Control
+            type={togglePasswordVisibility ? "text" : "password"}
+            required
+            value={password}
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <InputGroup.Append>
+            <Image
+              src={togglePasswordVisibility ? visibleOn : visibleOff}
+              thumbnail
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                setTogglePasswordVisibility(!togglePasswordVisibility)
+              }
+            />
+          </InputGroup.Append>
+          <Form.Control.Feedback type="invalid">
+            Please enter your password.
+          </Form.Control.Feedback>
+        </InputGroup>
+      </Form.Group>
+
+      {isLoginIncorrect && (
+        <Form.Group className="center-form-group">
+          <Form.Text
+            className="form-label"
+            style={{ color: "red", textAlign: "center" }}
+          >
+            Your email or password is incorrect.
+          </Form.Text>
+        </Form.Group>
+      )}
+
+      <div className="form-footer-container">
+        <Button
+          type="submit"
+          className="form-button"
+          block
+          style={{ width: "100%", backgroundColor: "#f47c20" }}
+        >
+          Login
+        </Button>
+
+        <Link to={`/Login`} className="form-label" style={{ color: "#f47c20" }}>
+          Forgot Password?
+        </Link>
+
+        <hr
+          style={{
+            width: "100%",
+            height: "1px",
+            backgroundColor: "gray",
+            opacity: "25%",
+          }}
+        />
+
+        <Button
+          type="button"
+          onClick={openModal}
+          className="form-button"
+          block
+          style={{
+            width: "200px",
+            backgroundColor: "#1f85b4",
+            marginBottom: "0.5rem",
+          }}
+        >
+          Create an account
+        </Button>
+      </div>
+    </Form>
+  );
 
   return (
     <>
@@ -150,85 +249,7 @@ const LoginModal = () => {
             The Wholesale Group
           </h1>
 
-          <div className="form-body-container">
-            <Form
-              onSubmit={handleSubmit}
-              style={{ width: "85%", margin: "5%" }}
-            >
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control
-                  ref={emailInput}
-                  type="email"
-                  required
-                  value={email}
-                  // value={emailInput}
-                  onChange={(e) => setEmail(e.target.value)}
-                  // onChange={(e) => setEmailInput(e.target.value)}
-                />
-              </Form.Group>
-
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  value={password}
-                  // value={passwordInput}
-                  onChange={(e) => setPassword(e.target.value)}
-                  // onChange={(e) => setPasswordInput(e.target.value)}
-                />
-                <Form.Text id="passwordHelpBlock" muted>
-                  Your password must be 8-20 characters long, contain letters
-                  and numbers, and must not contain spaces, special characters,
-                  or emoji.
-                </Form.Text>
-              </Form.Group>
-
-              <div className="form-footer-container">
-                <Button
-                  type="submit"
-                  onClick={login}
-                  className="form-button"
-                  block
-                  style={{ width: "100%", backgroundColor: "#f47c20" }}
-                >
-                  Login
-                </Button>
-
-                <Link
-                  to={`/Login`}
-                  className="form-label"
-                  style={{ color: "#f47c20" }}
-                >
-                  Forgot Password?
-                </Link>
-
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "1px",
-                    backgroundColor: "gray",
-                    opacity: "25%",
-                  }}
-                />
-
-                <Button
-                  type="submit"
-                  onClick={openModal}
-                  className="form-button"
-                  block
-                  style={{
-                    width: "200px",
-                    backgroundColor: "#1f85b4",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  Create an account
-                </Button>
-              </div>
-            </Form>
-          </div>
+          <div className="form-body-container">{LoginForm}</div>
         </div>
       ) : (
         <div className="form-container" style={{ flexDirection: "row" }}>
@@ -251,75 +272,7 @@ const LoginModal = () => {
               The Wholesale Group
             </h1>
           </div>
-          <div className="form-body-container">
-            <Form
-              onSubmit={handleSubmit}
-              style={{ width: "85%", margin: "5%" }}
-            >
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Form.Group>
-
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Form.Group>
-
-              <div className="form-footer-container">
-                <Button
-                  type="submit"
-                  onClick={login}
-                  className="form-button"
-                  block
-                  style={{ width: "100%", backgroundColor: "#f47c20" }}
-                >
-                  Login
-                </Button>
-
-                <Link
-                  to={`/Login`}
-                  className="form-label"
-                  style={{ color: "#f47c20" }}
-                >
-                  Forgot Password?
-                </Link>
-
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "1px",
-                    backgroundColor: "gray",
-                    opacity: "25%",
-                  }}
-                />
-
-                <Button
-                  type="submit"
-                  onClick={openModal}
-                  className="form-button"
-                  block
-                  style={{
-                    width: "200px",
-                    backgroundColor: "#1f85b4",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  Create an account
-                </Button>
-              </div>
-            </Form>
-          </div>
+          <div className="form-body-container">{LoginForm}</div>
         </div>
       )}
     </>

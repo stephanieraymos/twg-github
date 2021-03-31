@@ -6,7 +6,8 @@ import React, {
   createContext,
 } from "react";
 import InventoryAllTrucks from "./Components/InventoryAllTrucks";
-import { useGlobalContext } from "./context";
+
+import { useAuthContext } from "./auth";
 
 // Generating context
 const TruckContext = createContext();
@@ -118,8 +119,9 @@ export const useTruck = () => {
   };
 
   const {
-    cookies,
-  } = useGlobalContext();
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
+  } = useAuthContext();
 
   const [trucks, dispatch] = useReducer(reducer, []);
 
@@ -141,7 +143,8 @@ export const useTruck = () => {
             method: "GET",
             headers: { 
               "Content-Type": "application/json",
-              "Authorization": "Bearer " + cookies["user-access-token"], },
+              "Authorization": "Bearer " + accessToken, 
+            },
           },
           {
             signal: abortCont.signal,
@@ -149,7 +152,6 @@ export const useTruck = () => {
         );
         const newTrucks = await response.json(); //returns a promise
         addTruck(newTrucks); //Making sure the trucks list is current using newTrucks which adds each new truck to the truckLoad
-        console.log(newTrucks);
         setLoading(false);
         setErrorMessage("");
       } catch (error) {

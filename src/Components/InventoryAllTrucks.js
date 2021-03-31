@@ -7,19 +7,14 @@ import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import NotAuthed from "../Pages/NotAuthed";
 import { Container, Modal, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { useAuthContext } from "../auth";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
-  const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    authenticate,
-    removeToken,
-  } = useAuthContext();
+  let history = useHistory();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
@@ -29,17 +24,21 @@ const InventoryAllTrucks = () => {
 
   const { cookies } = useGlobalContext();
 
+  const {
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
+    authenticate,
+  } = useAuthContext();
+
   useEffect(() => {
-    authenticate();
+    // send user back to login if they're not logged in
+    authenticate(
+      () => {},
+      () => {
+        history.push("/");
+      }
+    );
   }, []);
-
-  {
-    !accessToken && <NotAuthed />;
-  }
-
-  useEffect(() => {
-    console.log("All trucks", trucks);
-  }, [trucks]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -50,8 +49,6 @@ const InventoryAllTrucks = () => {
   };
 
   const addNewTrucks = (truck) => {
-    console.log("adding new trucks");
-    console.log(trucks);
     addTruck(truck);
   };
 
@@ -62,8 +59,8 @@ const InventoryAllTrucks = () => {
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch("https://api.thewholesalegroup.com/v1/trucks/manifest/", {
         method: "POST",
-        header: {
-          Authorization: "Bearer " + cookies["user-access-token"],
+        headers: {
+          Authorization: "Bearer " + accessToken,
         },
         body: data,
       })
