@@ -12,6 +12,7 @@ import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import { useGlobalContext } from "../context";
+import { useAuthContext } from "../auth";
 
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
@@ -23,34 +24,41 @@ const TruckDetails = () => {
   const [truck, setTruck] = useState(null);
   const [truckFile, setTruckFile] = useState([]);
   const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
-  const {
-    cookies,
-  } = useGlobalContext();
+  const { cookies } = useGlobalContext();
 
   document.title = "Truck Details";
 
+  const {
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
+    authenticate,
+    removeToken,
+  } = useAuthContext();
+
+  useEffect(() => {
+    authenticate();
+  });
+  
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
     // if (truckManifestId) {
-      try {
-        const data = new FormData();
-        truckManifestId.map((id) => data.append("truckManifestId", id));
-        fetch(manifestURL, {
-          method: "POST",
-          header: {
-            "Authorization": "Bearer " + cookies["user-access-token"],
-          },
-          body: data,
-        })
-          .then((response) => response.json())
-          .then((manifest) => setTruckFile(manifest));
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const data = new FormData();
+      truckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch(manifestURL, {
+        method: "POST",
+        header: {
+          Authorization: "Bearer " + cookies["user-access-token"],
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((manifest) => setTruckFile(manifest));
+    } catch (error) {
+      console.log(error);
+    }
     // }
   };
-
-  // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
 
   const deleteTruck = (id, truckManifestId) => {
     console.log("delete truck running");
@@ -61,7 +69,7 @@ const TruckDetails = () => {
       fetch(inventoryURL, {
         method: "DELETE",
         header: {
-          "Authorization": "Bearer " + cookies["user-access-token"],
+          Authorization: "Bearer " + cookies["user-access-token"],
         },
         body: data,
       }).then((response) => {
@@ -83,8 +91,8 @@ const TruckDetails = () => {
         const response = await fetch(`${url}${id}`, {
           method: "GET",
           header: {
-            "Authorization": "Bearer " + cookies["user-access-token"],
-          }
+            Authorization: "Bearer " + cookies["user-access-token"],
+          },
         });
         const data = await response.json();
         if (data) {
@@ -95,7 +103,7 @@ const TruckDetails = () => {
             truckManifestId: truckManifestId,
           } = data[0];
 
-          if(truckManifestId.length) {
+          if (truckManifestId.length) {
             getManifest(truckManifestId);
           }
 
