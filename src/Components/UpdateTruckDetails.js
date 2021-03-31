@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Col } from "react-bootstrap";
+import { useTruckContext } from "../truckContext";
 import Navigation from "./Navigation";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 import cancel from "../img/cancel.svg";
 import undo from "../img/undo.svg";
 import { useGlobalContext } from "../context";
@@ -13,9 +14,6 @@ const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
-
-  //   const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
-  //   const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
   const [fileUserId, setFileUserId] = useState("");
   const [truckName, setTruckName] = useState("");
@@ -109,7 +107,6 @@ const UpdateTruckDetails = () => {
 
         if(truckManifestId.length) {
           getManifest(truckManifestId);
-      
         }
       } else {
         throw new Error("Truck does not exist.");
@@ -152,12 +149,10 @@ const UpdateTruckDetails = () => {
         body: data,
       }).then((response) => {
         console.log(response);
-
         if (response.ok) {
           return true;
         } else return false;
       });
-
     } catch (error) {
       console.log(error);
       // console.trace(updateTruck)
@@ -184,12 +179,8 @@ const UpdateTruckDetails = () => {
             <Form.Label className="form-label">Name</Form.Label>
             <Form.Control
               type="text"
-              id="truckName"
+              required
               defaultValue={truckName}
-              // value={truck.truckName}
-              // ref={(input) => (truck.truckName = input)}
-              onChange={(e) => setTruckName(e.target.value)}
-              // onChange={() => updateTruck()}
               name="truckName"
             />
             <Form.Control.Feedback type="invalid">
