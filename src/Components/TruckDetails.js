@@ -7,25 +7,31 @@ import {
 } from "react-icons/fa";
 import Navigation from "./Navigation";
 // import { useTruck } from "../truckContext";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import { useGlobalContext } from "../context";
-
-const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
-const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
-const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
+import { useAuthContext } from "../auth";
 
 const TruckDetails = () => {
+  const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
+  const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
+  const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
+
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [truck, setTruck] = useState(null);
   const [truckFile, setTruckFile] = useState([]);
   const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
+
   const {
-    cookies,
-  } = useGlobalContext();
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
+    authenticate,
+  } = useAuthContext();
+
+  let history = useHistory();
 
   document.title = "Truck Details";
 
@@ -38,7 +44,7 @@ const TruckDetails = () => {
         fetch(manifestURL, {
           method: "POST",
           header: {
-            "Authorization": "Bearer " + cookies["user-access-token"],
+            "Authorization": "Bearer " + accessToken,
           },
           body: data,
         })
@@ -61,7 +67,7 @@ const TruckDetails = () => {
       fetch(inventoryURL, {
         method: "DELETE",
         header: {
-          "Authorization": "Bearer " + cookies["user-access-token"],
+          "Authorization": "Bearer " + accessToken,
         },
         body: data,
       }).then((response) => {
@@ -77,13 +83,23 @@ const TruckDetails = () => {
   };
 
   useEffect(() => {
+    // send user back to login if they're not logged in
+    authenticate(
+      () => {},
+      () => {
+        history.push("/");
+      },
+    );
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     async function getTruck() {
       try {
         const response = await fetch(`${url}${id}`, {
           method: "GET",
           header: {
-            "Authorization": "Bearer " + cookies["user-access-token"],
+            "Authorization": "Bearer " + accessToken,
           }
         });
         const data = await response.json();
@@ -117,6 +133,7 @@ const TruckDetails = () => {
     }
     getTruck();
   }, [id]);
+
   if (loading) {
     return <Loading />;
   }

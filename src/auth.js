@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const accessToken = () => cookies[accessTokenKey];
+    const accessToken = cookies[accessTokenKey];
     
     const setRefreshToken = (token) => {
         setCookie(refreshTokenKey, token, {
@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const refreshToken = () => cookies[refreshTokenKey];
+    const refreshToken = cookies[refreshTokenKey];
 
     const isAccessTokenValid = () => {
         if (cookies["user-access-token"]) {

@@ -6,11 +6,15 @@ import noSign from "../img/no-sign.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container, Modal, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useGlobalContext } from "../context";
+
+import { useAuthContext } from "../auth";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
+
+  let history = useHistory();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
@@ -27,16 +31,22 @@ const InventoryAllTrucks = () => {
   const [trucks, addTruck, loading, errorMessage] = useTruck();
 
   const {
-    cookies,
-  } = useGlobalContext();
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
+    authenticate,
+  } = useAuthContext();
 
   useEffect(() => {
-    console.log("All trucks", trucks);
-  }, [trucks]);
+    // send user back to login if they're not logged in
+    authenticate(
+      () => {},
+      () => {
+        history.push("/");
+      },
+    );
+  }, []);
 
   const addNewTrucks = (truck) => {
-    console.log("adding new trucks");
-    console.log(trucks);
     addTruck(truck);
   };
 
@@ -48,7 +58,7 @@ const InventoryAllTrucks = () => {
       fetch("https://api.thewholesalegroup.com/v1/trucks/manifest/", {
         method: "POST",
         header: {
-          "Authorization": "Bearer " + cookies["user-access-token"],
+          "Authorization": "Bearer " + accessToken,
         },
         body: data,
       })
