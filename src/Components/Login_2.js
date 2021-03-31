@@ -280,5 +280,3 @@ const LoginModal = () => {
 };
 
 export default LoginModal;
-
-// TP-42
