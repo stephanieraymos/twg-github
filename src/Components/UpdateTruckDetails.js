@@ -78,6 +78,7 @@ const UpdateTruckDetails = () => {
   const getManifest = (truckManifestId) => {
     // if (truckManifestId) {
       try {
+
         const data = new FormData();
         truckManifestId.map((id) => data.append("truckManifestId", id));
         fetch(manifestURL, {
@@ -121,6 +122,7 @@ const UpdateTruckDetails = () => {
 
         if(truckManifestId.length) {
           getManifest(truckManifestId);
+      
         }
         console.log("There is data", truckContents);
       } else {
@@ -156,10 +158,12 @@ const UpdateTruckDetails = () => {
         body: data,
       }).then((response) => {
         console.log(response);
+
         if (response.ok) {
           return true;
         } else return false;
       });
+
     } catch (error) {
       console.log(error);
       // console.trace(updateTruck)
