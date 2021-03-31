@@ -5,6 +5,7 @@ import folder from "../img/folder.svg";
 import noSign from "../img/no-sign.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
+import NotAuthed from "../Pages/NotAuthed";
 import { Container, Modal, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
@@ -20,13 +21,23 @@ const InventoryAllTrucks = () => {
     removeToken,
   } = useAuthContext();
 
-  useEffect(() => {
-    authenticate();
-  });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
   const keys = [];
+
+  const [trucks, addTruck, loading, errorMessage] = useTruck();
+
+  const { cookies } = useGlobalContext();
+
+  useEffect(() => {
+    authenticate();
+  }, []);
+
+  {!accessToken && <NotAuthed />}
+
+  useEffect(() => {
+    console.log("All trucks", trucks);
+  }, [trucks]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -35,14 +46,6 @@ const InventoryAllTrucks = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  const [trucks, addTruck, loading, errorMessage] = useTruck();
-
-  const { cookies } = useGlobalContext();
-
-  useEffect(() => {
-    console.log("All trucks", trucks);
-  }, [trucks]);
 
   const addNewTrucks = (truck) => {
     console.log("adding new trucks");

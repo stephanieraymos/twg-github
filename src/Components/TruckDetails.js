@@ -37,8 +37,8 @@ const TruckDetails = () => {
 
   useEffect(() => {
     authenticate();
-  });
-  
+  }, []);
+
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
     // if (truckManifestId) {

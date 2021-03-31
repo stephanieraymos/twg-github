@@ -78,7 +78,7 @@ const LoginModal = () => {
   useEffect(() => {
     authenticate(() => {
       history.push("/dashboard");
-    });
+    }, []);
 
     const handleResize = () => setWidth(window.innerWidth);
 
