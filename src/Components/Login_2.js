@@ -5,6 +5,7 @@ import modalandsidebar from "../css/modalandsidebar.css";
 
 import logo from "../img/w-logo.png";
 import { Link, useHistory } from "react-router-dom";
+import SignUp from "./Signup_2";
 import Signup2 from "./Signup_2";
 
 import { useAuthContext } from "../auth";
@@ -17,10 +18,8 @@ const LoginModal = () => {
 
   const [width, setWidth] = useState(window.innerWidth);
   const [validated, setValidated] = useState(false);
-  const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(
-    false
-  );
-  const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
+  const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(false);
+  const [isLoginIncorrect, setIsLoginIncorrect] = useState(false)
 
   const form = useRef(null);
 
@@ -30,9 +29,6 @@ const LoginModal = () => {
 
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
-  // const [emailInput, setEmailInput] = useState("");
-  // const [passwordInput, setPasswordInput] = useState("");
-
   const {
     setUserId,
     email,
@@ -55,7 +51,7 @@ const LoginModal = () => {
     setTogglePasswordVisibility(false);
     setValidated(false);
     setIsLoginIncorrect(false);
-  };
+  }
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -66,7 +62,7 @@ const LoginModal = () => {
 
     if (form.checkValidity() === true) {
       // no errors
-      login(reset);
+      login(reset)
     }
   };
 
@@ -76,9 +72,10 @@ const LoginModal = () => {
   };
 
   useEffect(() => {
+
     authenticate(() => {
       history.push("/dashboard");
-    }, []);
+    });
 
     const handleResize = () => setWidth(window.innerWidth);
 
@@ -89,10 +86,10 @@ const LoginModal = () => {
   }, []);
 
   //* useEffect for user post request
-  const login = (cleanUp = () => {}) => {
+  const login = (cleanUp=() => {}) => {
     const data = new FormData(form.current);
     var object = {};
-    data.forEach((value, key) => (object[key] = value));
+    data.forEach((value, key) => object[key] = value);
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -127,10 +124,10 @@ const LoginModal = () => {
       });
   };
 
-  const LoginForm = (
+  const LoginForm = 
     <Form
       ref={form}
-      noValidate
+      noValidate 
       validated={validated}
       onSubmit={handleSubmit}
       style={{ width: "85%", margin: "5%" }}
@@ -160,14 +157,11 @@ const LoginModal = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <InputGroup.Append>
-            <Image
+            <Image 
               src={togglePasswordVisibility ? visibleOn : visibleOff}
-              thumbnail
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                setTogglePasswordVisibility(!togglePasswordVisibility)
-              }
-            />
+              thumbnail 
+              style={{cursor: "pointer"}}
+              onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
           </InputGroup.Append>
           <Form.Control.Feedback type="invalid">
             Please enter your password.
@@ -175,17 +169,15 @@ const LoginModal = () => {
         </InputGroup>
       </Form.Group>
 
-      {isLoginIncorrect && (
+      {
+        isLoginIncorrect && 
         <Form.Group className="center-form-group">
-          <Form.Text
-            className="form-label"
-            style={{ color: "red", textAlign: "center" }}
-          >
+          <Form.Text className="form-label" style={{color: "red", textAlign: "center"}}>
             Your email or password is incorrect.
           </Form.Text>
         </Form.Group>
-      )}
-
+      }
+      
       <div className="form-footer-container">
         <Button
           type="submit"
@@ -196,7 +188,11 @@ const LoginModal = () => {
           Login
         </Button>
 
-        <Link to={`/Login`} className="form-label" style={{ color: "#f47c20" }}>
+        <Link
+          to={`/Login`}
+          className="form-label"
+          style={{ color: "#f47c20" }}
+        >
           Forgot Password?
         </Link>
 
@@ -223,8 +219,8 @@ const LoginModal = () => {
           Create an account
         </Button>
       </div>
-    </Form>
-  );
+    </Form>;
+    
 
   return (
     <>
@@ -249,7 +245,9 @@ const LoginModal = () => {
             The Wholesale Group
           </h1>
 
-          <div className="form-body-container">{LoginForm}</div>
+          <div className="form-body-container">
+            {LoginForm}
+          </div>
         </div>
       ) : (
         <div className="form-container" style={{ flexDirection: "row" }}>
@@ -272,7 +270,9 @@ const LoginModal = () => {
               The Wholesale Group
             </h1>
           </div>
-          <div className="form-body-container">{LoginForm}</div>
+          <div className="form-body-container">
+            {LoginForm}
+          </div>
         </div>
       )}
     </>
@@ -280,5 +280,3 @@ const LoginModal = () => {
 };
 
 export default LoginModal;
-
-// TP-42

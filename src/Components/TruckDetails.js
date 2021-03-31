@@ -354,5 +354,3 @@ const TruckDetails = () => {
 };
 
 export default TruckDetails;
-
-// TP-52
