@@ -1,14 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import React, { useState, useEffect, useRef } from "react";
+import { Button, Form } from "react-bootstrap";
 import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 import logo from "../img/w-logo.png";
 import { Link, useHistory } from "react-router-dom";
-import SignUp from "./Signup_2";
 import Signup2 from "./Signup_2";
-
-import { useAuthContext } from "../auth";
 
 const LoginModal = () => {
   const url = "https://api.thewholesalegroup.com/v1/account/login/";
@@ -34,13 +31,6 @@ const LoginModal = () => {
     setCookie,
   } = useGlobalContext();
 
-  const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    authenticate,
-    removeToken
-  } = useAuthContext();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -59,17 +49,57 @@ const LoginModal = () => {
   };
 
   useEffect(() => {
-
-    authenticate(() => {
-      history.push("/dashboard");
-    });
-
     const handleResize = () => setWidth(window.innerWidth);
 
     window.addEventListener("resize", handleResize);
 
     // clean up code
     return () => window.removeEventListener("resize", handleResize);
+  });
+
+  useEffect(() => {
+    const tokenVerifyURL = "https://api.thewholesalegroup.com/v1/account/token/verify/";
+    if (cookies["user-access-token"]) {
+        fetch(tokenVerifyURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                token: cookies["user-access-token"],
+            }),
+        })
+        .then((response) => {
+            if (response.ok) {
+                // user has already logged in
+                history.push("/Dashboard");
+            } else if (cookies["user-refresh-token"]) {
+                const tokenRefreshURL = "https://api.thewholesalegroup.com/v1/account/token/refresh/";
+                // user might have a refresh token that have not expired yet
+                fetch(tokenRefreshURL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        refresh: cookies["user-refresh-token"],
+                    }),
+                })
+                .then((response) => {
+                if (response.ok) {
+                    // user is logged in again
+                    const user = response.json();
+                    setCookie("user-access-token", user["access"], {
+                    path: "/",
+                    // secure: true,
+                    maxAge: 3600, // 1 hour
+                    });
+                    history.push("/Dashboard");
+                }
+                });
+            }
+        })
+        .catch((error) => {
+            showAlert(true, "danger", error.message);
+        });
+    }
+    
   }, []);
 
   //* useEffect for user post request
@@ -98,8 +128,16 @@ const LoginModal = () => {
         setCompany(user["company"]);
         setPhoneNumber(user["phone_number"]);
         setBillingAddress(user["billing_address"]);
-        setAccessToken(user["token"]["access"]);
-        setRefreshToken(user["token"]["refresh"]);
+        setCookie("user-access-token", user["token"]["access"], {
+          path: "/",
+          // secure: true,
+          maxAge: 3600, // 1 hour
+        });
+        setCookie("user-refresh-token", user["token"]["refresh"], {
+          path: "/",
+          // secure: true,
+          maxAge: 604800, // 7 days
+        });
       })
       .then(() => history.push("/Dashboard"))
       .catch((error) => {

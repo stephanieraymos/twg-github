@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Col } from "react-bootstrap";
-import { useTruckContext } from "../truckContext";
 import Navigation from "./Navigation";
-import { useHistory, useParams, Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import cancel from "../img/cancel.svg";
 import undo from "../img/undo.svg";
 import { useGlobalContext } from "../context";
