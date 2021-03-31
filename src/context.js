@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
-import { useCookies } from "react-cookie";
 // Generating context
 const AppContext = React.createContext(null);
 //Generating provider
@@ -19,7 +18,6 @@ const AppProvider = ({ children }) => {
   const [company, setCompany] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
-  const [cookies, setCookie, removeCookie] = useCookies(["user-access-token", "user-refresh-token"]);
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -68,9 +66,6 @@ const AppProvider = ({ children }) => {
         setPhoneNumber,
         billingAddress,
         setBillingAddress,
-        cookies,
-        setCookie,
-        removeCookie
       }}
     >
       {children}

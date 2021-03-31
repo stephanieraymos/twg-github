@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, InputGroup, Image } from "react-bootstrap";
 import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
@@ -9,11 +9,18 @@ import SignUp from "./Signup_2";
 import Signup2 from "./Signup_2";
 
 import { useAuthContext } from "../auth";
+import visibleOn from "../img/visibility-on.svg";
+import visibleOff from "../img/visibility-off.svg";
+import { cleanup } from "@testing-library/react";
 
 const LoginModal = () => {
   const url = "https://api.thewholesalegroup.com/v1/account/login/";
 
   const [width, setWidth] = useState(window.innerWidth);
+  const [validated, setValidated] = useState(false);
+  const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(false);
+
+  const form = useRef(null);
 
   let history = useHistory();
 
@@ -30,26 +37,30 @@ const LoginModal = () => {
     setCompany,
     setPhoneNumber,
     setBillingAddress,
-    cookies,
-    setCookie,
   } = useGlobalContext();
 
   const {
     accessToken: [accessToken, setAccessToken],
     refreshToken: [refreshToken, setRefreshToken],
     authenticate,
-    removeToken
   } = useAuthContext();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      showAlert(true, "danger", "Please enter value");
-    } else {
-      // Show alert and add person to person list only if name is true and not editing
-      showAlert(true, "success", "Person Added");
+  const reset = () => {
+    setPassword("");
+    setTogglePasswordVisibility(false);
+    setValidated(false);
+  }
 
-      setPassword("");
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+
+    setValidated(true);
+
+    if (form.checkValidity() === true) {
+      // no errors
+      login(reset)
     }
   };
 
@@ -73,14 +84,14 @@ const LoginModal = () => {
   }, []);
 
   //* useEffect for user post request
-  const login = () => {
+  const login = (cleanUp=() => {}) => {
+    const data = new FormData(form.current);
+    var object = {};
+    data.forEach((value, key) => object[key] = value);
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
+      body: JSON.stringify(object),
     })
       .then((response) => {
         const res = response.json();
@@ -101,9 +112,13 @@ const LoginModal = () => {
         setAccessToken(user["token"]["access"]);
         setRefreshToken(user["token"]["refresh"]);
       })
-      .then(() => history.push("/Dashboard"))
+      .then(() => {
+        cleanUp();
+        history.push("/dashboard");
+      })
       .catch((error) => {
         showAlert(true, "danger", error.message);
+        cleanUp();
       });
   };
 
@@ -132,6 +147,9 @@ const LoginModal = () => {
 
           <div className="form-body-container">
             <Form
+              ref={form}
+              noValidate 
+              validated={validated}
               onSubmit={handleSubmit}
               style={{ width: "85%", margin: "5%" }}
             >
@@ -140,25 +158,38 @@ const LoginModal = () => {
                 <Form.Control
                   type="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a valid email address.
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <InputGroup hasValidation>
+                  <Form.Control
+                    type={togglePasswordVisibility ? "text" : "password"}
+                    required
+                    name="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <InputGroup.Append>
+                    <Image 
+                      src={togglePasswordVisibility ? visibleOn : visibleOff}
+                      thumbnail 
+                      style={{cursor: "pointer"}}
+                      onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
+                  </InputGroup.Append>
+                  <Form.Control.Feedback type="invalid">
+                    Please eneter your password.
+                  </Form.Control.Feedback>
+                </InputGroup>
               </Form.Group>
 
               <div className="form-footer-container">
                 <Button
                   type="submit"
-                  onClick={login}
                   className="form-button"
                   block
                   style={{ width: "100%", backgroundColor: "#f47c20" }}
@@ -184,7 +215,7 @@ const LoginModal = () => {
                 />
 
                 <Button
-                  type="submit"
+                  type="button"
                   onClick={openModal}
                   className="form-button"
                   block
@@ -222,7 +253,10 @@ const LoginModal = () => {
             </h1>
           </div>
           <div className="form-body-container">
-            <Form
+          <Form
+              ref={form}
+              noValidate 
+              validated={validated}
               onSubmit={handleSubmit}
               style={{ width: "85%", margin: "5%" }}
             >
@@ -231,25 +265,38 @@ const LoginModal = () => {
                 <Form.Control
                   type="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a valid email address.
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <InputGroup hasValidation>
+                  <Form.Control
+                    type={togglePasswordVisibility ? "text" : "password"}
+                    required
+                    name="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <InputGroup.Append>
+                    <Image 
+                      src={togglePasswordVisibility ? visibleOn : visibleOff}
+                      thumbnail 
+                      style={{cursor: "pointer"}}
+                      onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
+                  </InputGroup.Append>
+                  <Form.Control.Feedback type="invalid">
+                    Please eneter your password.
+                  </Form.Control.Feedback>
+                </InputGroup>
               </Form.Group>
 
               <div className="form-footer-container">
                 <Button
                   type="submit"
-                  onClick={login}
                   className="form-button"
                   block
                   style={{ width: "100%", backgroundColor: "#f47c20" }}
@@ -275,7 +322,7 @@ const LoginModal = () => {
                 />
 
                 <Button
-                  type="submit"
+                  type="button"
                   onClick={openModal}
                   className="form-button"
                   block

@@ -39,6 +39,26 @@ const AuthProvider = ({ children }) => {
 
     const refreshToken = () => cookies[refreshTokenKey];
 
+    const isAccessTokenValid = () => {
+        if (cookies["user-access-token"]) {
+            fetch(tokenVerifyURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    token: cookies["user-access-token"],
+                }),
+            })
+            .then((response) => {
+                if (response.ok) {
+                    // token is valid
+                    return true;
+                }
+            })
+        }
+
+        return false;
+    }
+
     const authenticate = (success=() => {}, failure=() => {}) => {
         // check whether there's cookies to check
         if (cookies["user-access-token"]) {
@@ -74,7 +94,8 @@ const AuthProvider = ({ children }) => {
         accessToken: [accessToken, setAccessToken],
         refreshToken: [refreshToken, setRefreshToken],
         authenticate,
-        removeToken
+        removeToken,
+        isAccessTokenValid,
     }
 
     return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>

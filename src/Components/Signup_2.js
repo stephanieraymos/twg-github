@@ -71,7 +71,7 @@ const Signup2 = () => {
   };
 
   //* useEffect for user post request
-  const signUp = (cleanup=() => {}) => {
+  const signUp = (cleanUp=() => {}) => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => object[key] = value);
@@ -87,11 +87,11 @@ const Signup2 = () => {
         } else {
           throw new Error(res.message);
         }
-        cleanup();
+        cleanUp();
       })
       .catch((error) => {
         showAlert(true, "danger", error.message);
-        cleanup();
+        cleanUp();
       });
   };
 

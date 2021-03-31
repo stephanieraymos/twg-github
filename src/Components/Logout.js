@@ -16,11 +16,8 @@ const Logout = () => {
   let history = useHistory();
 
   const {
-    cookies,
-    removeCookie
-  } = useGlobalContext();
-
-  const {
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
     removeToken
   } = useAuthContext();
 
@@ -41,10 +38,10 @@ const Logout = () => {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + cookies["user-access-token"],
+            "Authorization": "Bearer " + accessToken,
         },
         body: JSON.stringify({
-            refresh: cookies["user-refresh-token"]
+            refresh: refreshToken
         }),
     })
     .then(() => {
@@ -53,11 +50,12 @@ const Logout = () => {
     })
     .catch((error) => {
         showAlert(true, "danger", error.message);
+        history.push("/home")
     });
   }
 
   useEffect(() => {
-      logout();
+    logout();
   }, [])
 
   return <Loading />
