@@ -46,6 +46,7 @@ const LoginModal = () => {
   } = useAuthContext();
 
   const reset = () => {
+    console.log("Hello")
     setPassword("");
     setTogglePasswordVisibility(false);
     setValidated(false);
@@ -122,6 +123,101 @@ const LoginModal = () => {
       });
   };
 
+  const LoginForm = 
+    <Form
+      ref={form}
+      noValidate 
+      validated={validated}
+      onSubmit={handleSubmit}
+      style={{ width: "85%", margin: "5%" }}
+    >
+      <Form.Group className="center-form-group">
+        <Form.Label className="form-label">Email</Form.Label>
+        <Form.Control
+          type="email"
+          required
+          value={email}
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Form.Control.Feedback type="invalid">
+          Please enter a valid email address.
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="center-form-group">
+        <Form.Label className="form-label">Password</Form.Label>
+        <InputGroup hasValidation>
+          <Form.Control
+            type={togglePasswordVisibility ? "text" : "password"}
+            required
+            value={password}
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <InputGroup.Append>
+            <Image 
+              src={togglePasswordVisibility ? visibleOn : visibleOff}
+              thumbnail 
+              style={{cursor: "pointer"}}
+              onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
+          </InputGroup.Append>
+          <Form.Control.Feedback type="invalid">
+            Please eneter your password.
+          </Form.Control.Feedback>
+        </InputGroup>
+      </Form.Group>
+
+      <Form.Group className="center-form-group">
+        <Form.Text style={{color: "red"}}>
+          Marked for deletion
+        </Form.Text>
+      </Form.Group>
+
+      <div className="form-footer-container">
+        <Button
+          type="submit"
+          className="form-button"
+          block
+          style={{ width: "100%", backgroundColor: "#f47c20" }}
+        >
+          Login
+        </Button>
+
+        <Link
+          to={`/Login`}
+          className="form-label"
+          style={{ color: "#f47c20" }}
+        >
+          Forgot Password?
+        </Link>
+
+        <hr
+          style={{
+            width: "100%",
+            height: "1px",
+            backgroundColor: "gray",
+            opacity: "25%",
+          }}
+        />
+
+        <Button
+          type="button"
+          onClick={openModal}
+          className="form-button"
+          block
+          style={{
+            width: "200px",
+            backgroundColor: "#1f85b4",
+            marginBottom: "0.5rem",
+          }}
+        >
+          Create an account
+        </Button>
+      </div>
+    </Form>;
+    
+
   return (
     <>
       <Signup2 />
@@ -146,89 +242,7 @@ const LoginModal = () => {
           </h1>
 
           <div className="form-body-container">
-            <Form
-              ref={form}
-              noValidate 
-              validated={validated}
-              onSubmit={handleSubmit}
-              style={{ width: "85%", margin: "5%" }}
-            >
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  required
-                  name="email"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a valid email address.
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Password</Form.Label>
-                <InputGroup hasValidation>
-                  <Form.Control
-                    type={togglePasswordVisibility ? "text" : "password"}
-                    required
-                    name="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <InputGroup.Append>
-                    <Image 
-                      src={togglePasswordVisibility ? visibleOn : visibleOff}
-                      thumbnail 
-                      style={{cursor: "pointer"}}
-                      onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
-                  </InputGroup.Append>
-                  <Form.Control.Feedback type="invalid">
-                    Please eneter your password.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-
-              <div className="form-footer-container">
-                <Button
-                  type="submit"
-                  className="form-button"
-                  block
-                  style={{ width: "100%", backgroundColor: "#f47c20" }}
-                >
-                  Login
-                </Button>
-
-                <Link
-                  to={`/Login`}
-                  className="form-label"
-                  style={{ color: "#f47c20" }}
-                >
-                  Forgot Password?
-                </Link>
-
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "1px",
-                    backgroundColor: "gray",
-                    opacity: "25%",
-                  }}
-                />
-
-                <Button
-                  type="button"
-                  onClick={openModal}
-                  className="form-button"
-                  block
-                  style={{
-                    width: "200px",
-                    backgroundColor: "#1f85b4",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  Create an account
-                </Button>
-              </div>
-            </Form>
+            {LoginForm}
           </div>
         </div>
       ) : (
@@ -253,89 +267,7 @@ const LoginModal = () => {
             </h1>
           </div>
           <div className="form-body-container">
-          <Form
-              ref={form}
-              noValidate 
-              validated={validated}
-              onSubmit={handleSubmit}
-              style={{ width: "85%", margin: "5%" }}
-            >
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  required
-                  name="email"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a valid email address.
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Password</Form.Label>
-                <InputGroup hasValidation>
-                  <Form.Control
-                    type={togglePasswordVisibility ? "text" : "password"}
-                    required
-                    name="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <InputGroup.Append>
-                    <Image 
-                      src={togglePasswordVisibility ? visibleOn : visibleOff}
-                      thumbnail 
-                      style={{cursor: "pointer"}}
-                      onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
-                  </InputGroup.Append>
-                  <Form.Control.Feedback type="invalid">
-                    Please eneter your password.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-
-              <div className="form-footer-container">
-                <Button
-                  type="submit"
-                  className="form-button"
-                  block
-                  style={{ width: "100%", backgroundColor: "#f47c20" }}
-                >
-                  Login
-                </Button>
-
-                <Link
-                  to={`/Login`}
-                  className="form-label"
-                  style={{ color: "#f47c20" }}
-                >
-                  Forgot Password?
-                </Link>
-
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "1px",
-                    backgroundColor: "gray",
-                    opacity: "25%",
-                  }}
-                />
-
-                <Button
-                  type="button"
-                  onClick={openModal}
-                  className="form-button"
-                  block
-                  style={{
-                    width: "200px",
-                    backgroundColor: "#1f85b4",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  Create an account
-                </Button>
-              </div>
-            </Form>
+            {LoginForm}
           </div>
         </div>
       )}
