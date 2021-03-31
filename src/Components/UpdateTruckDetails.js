@@ -14,9 +14,6 @@ const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
-
-  //   const [newTruckManifest, setNewTruckManifest] = useState([]); // files to be added
-  //   const [oldTruckManifestId, setOldTruckManifestId] = useState([]); // files to be deleted
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
   const [fileUserId, setFileUserId] = useState("");
   const [truckName, setTruckName] = useState("");
