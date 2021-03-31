@@ -80,9 +80,9 @@ const AddInventory = (props) => {
       setTruckManifestCount(0)
       closeModal();
       postTrucks();
+    } else {
+      setValidated(true);
     }
-
-    setValidated(true);
   };
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
@@ -191,6 +191,18 @@ const AddInventory = (props) => {
                 />
                 <Form.Control.Feedback type="invalid">
                   Please enter a truck price.
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="center-form-group">
+                <Form.Label className="form-label">Company</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  name="company"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a company name.
                 </Form.Control.Feedback>
               </Form.Group>
 
