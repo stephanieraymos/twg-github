@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 import logo from "../img/w-logo.png";
 import { Link, useHistory } from "react-router-dom";
-import SignUp from "./Signup_2";
 import Signup2 from "./Signup_2";
 
 import { useAuthContext } from "../auth";
@@ -21,6 +20,9 @@ const LoginModal = () => {
 
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  // const [emailInput, setEmailInput] = useState("");
+  // const [passwordInput, setPasswordInput] = useState("");
+
   const {
     setUserId,
     email,
@@ -45,7 +47,22 @@ const LoginModal = () => {
     e.preventDefault();
     if (!email || !password) {
       showAlert(true, "danger", "Please enter value");
-    } else {
+    }
+    // if (password != passwordInput) {
+    //   showAlert(
+    //     true,
+    //     "danger",
+    //     "The password you entered does not match the password on file"
+    //   );
+    // }
+    // if (email != emailInput) {
+    //   showAlert(
+    //     true,
+    //     "danger",
+    //     "The email address you entered does not match our records"
+    //   );
+    // }
+    else {
       // Show alert and add person to person list only if name is true and not editing
       showAlert(true, "success", "Person Added");
 
@@ -140,7 +157,9 @@ const LoginModal = () => {
                   type="email"
                   required
                   value={email}
+                  // value={emailInput}
                   onChange={(e) => setEmail(e.target.value)}
+                  // onChange={(e) => setEmailInput(e.target.value)}
                 />
               </Form.Group>
 
@@ -150,8 +169,15 @@ const LoginModal = () => {
                   type="password"
                   required
                   value={password}
+                  // value={passwordInput}
                   onChange={(e) => setPassword(e.target.value)}
+                  // onChange={(e) => setPasswordInput(e.target.value)}
                 />
+                <Form.Text id="passwordHelpBlock" muted>
+                  Your password must be 8-20 characters long, contain letters
+                  and numbers, and must not contain spaces, special characters,
+                  or emoji.
+                </Form.Text>
               </Form.Group>
 
               <div className="form-footer-container">
