@@ -5,6 +5,7 @@ import { useHistory, useParams } from "react-router-dom";
 import cancel from "../img/cancel.svg";
 import undo from "../img/undo.svg";
 import { useGlobalContext } from "../context";
+import { useAuthContext } from "../auth";
 
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
@@ -19,15 +20,19 @@ const UpdateTruckDetails = () => {
   const [fileUserId, setFileUserId] = useState("");
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
+  const [company, setCompany] = useState("");
+  const [status, setStatus] = useState(0);
   const [truckContents, setTruckContents] = useState([]);
   const [truckManifestId, setTruckManifestId] = useState([]);
   const [truckFile, setTruckFile] = useState([]);
   const [oldTruckManifestId, setOldTruckManifestId] = useState([]);
   const [validated, setValidated] = useState(false);
   const [truckManifestCount, setTruckManifestCount] = useState(0)
+  
   const {
-    cookies,
-  } = useGlobalContext();
+    accessToken: [accessToken, setAccessToken],
+    authenticate,
+  } = useAuthContext();
 
   let history = useHistory();
 
@@ -59,72 +64,53 @@ const UpdateTruckDetails = () => {
       setValidated(false);
       updateTruck();
       redirect();
+    } else {
+      setValidated(true);
     }
-
-    setValidated(true);
-    // if (truckName) {
-    //   showAlert(true, "success", "Truck Details Updated");
-
-    //   let updatedTruck = [id, truckName, truckPrice, truckContents];
-
-    //   //setTruckLoad([...truckLoad, updatedTruck]);
-    //   setTruckName("");
-    //   setTruckPrice("");
-    //   setTruckContents([]);
-    //   console.log("Updated Truck", updatedTruck);
-    // }
   };
 
   const getManifest = (truckManifestId) => {
-    // if (truckManifestId) {
-      try {
-
-        const data = new FormData();
-        truckManifestId.map((id) => data.append("truckManifestId", id));
-        fetch(manifestURL, {
-          method: "POST",
-          header: {
-            "Authorization": "Bearer " + cookies["user-access-token"],
-          },
-          body: data,
-        })
-          .then((response) => response.json())
-          .then((manifest) => setTruckFile(manifest));
-      } catch (error) {
-        console.log(error);
-      }
-    // }
+    try {
+      const data = new FormData();
+      truckManifestId.map((id) => data.append("truckManifestId", id));
+      fetch(manifestURL, {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + accessToken,
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((manifest) => setTruckFile(manifest));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getTruckData = async () => {
     try {
       const response = await fetch(`${url}${id}`, {
         method: "GET",
-        header: {
-          "Authorization": "Bearer " + cookies["user-access-token"],
+        headers: {
+          "Authorization": "Bearer " + accessToken,
         }
       });
       const data = await response.json();
       if (data) {
-        // const {
-        //   truckName: truckName,
-        //   truckPrice: truckPrice,
-        //   truckContents: truckContents,
-        // } = data[0];
-
-        const {userId, truckName, truckPrice, truckContents, truckManifestId} = data[0]
+        const {userId, truckName, truckPrice, truckContents, truckManifestId, company, status} = data[0]
 
         setFileUserId(userId);
         setTruckName(truckName);
         setTruckPrice(truckPrice);
         setTruckContents(truckContents);
         setTruckManifestId(truckManifestId);
+        setCompany(company);
+        setStatus(status);
 
         if(truckManifestId.length) {
           getManifest(truckManifestId);
       
         }
-        console.log("There is data", truckContents);
       } else {
         throw new Error("Truck does not exist.");
       }
@@ -134,15 +120,23 @@ const UpdateTruckDetails = () => {
   }
 
   useEffect(() => {
+    // send user back to login if they're not logged in
+    authenticate(
+      () => {},
+      () => {
+        history.push("/");
+      },
+    );
+
     getTruckData();
   }, []);
 
   // Return true or false to indicate if fetch was successful
-  const updateTruck = (e) => {
-    console.log("update truck running");
+  const updateTruck = () => {
     try {
       const data = new FormData(form.current);
       data.append("id", id);
+      data.set("status", status);
 
       // turn string to array and insert to truck contents
       const tempTruckContents = data.get("truckContents").split(",");
@@ -152,8 +146,8 @@ const UpdateTruckDetails = () => {
       oldTruckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "PUT",
-        header: {
-          "Authorization": "Bearer " + cookies["user-access-token"],
+        headers: {
+          "Authorization": "Bearer " + accessToken,
         },
         body: data,
       }).then((response) => {
@@ -217,6 +211,19 @@ const UpdateTruckDetails = () => {
           </Form.Group>
 
           <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Company</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={company}
+              name="company"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a company name.
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group className="center-form-group">
             <Form.Label className="form-label">Contents</Form.Label>
             <Form.Control
               type="text"
@@ -228,8 +235,21 @@ const UpdateTruckDetails = () => {
               Please specify the contents inside the truck.
             </Form.Control.Feedback>
             <Form.Text muted>
-              Separate each content with a comma, e.g., clothes,toys
+              Separate each content with a comma (no space character), e.g., clothes,toys
             </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Status</Form.Label>
+            <Form.Check 
+              style={{color: "black"}}
+              type="switch"
+              id="custom-switch"
+              name="status"
+              checked={status}
+              label="Available"
+              onChange={() => setStatus(status ? 0 : 1)}
+            />
           </Form.Group>
 
           <Form.Group className="center-form-group">
@@ -339,6 +359,18 @@ const UpdateTruckDetails = () => {
               style={{ width: "100%", backgroundColor: "#f47c20", margin: "1.5rem 0rem 0rem" }}
             >
               Update Truck
+            </Button>
+
+            <Button
+              type="button"
+              onClick={() => {
+                redirect();
+              }}
+              className="form-button"
+              block
+              style={{ width: "100%", backgroundColor: "#000", margin: ".5rem 0rem 0rem" }}
+            >
+              Cancel
             </Button>
           </div>
 

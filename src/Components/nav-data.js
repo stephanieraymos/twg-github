@@ -41,6 +41,13 @@ export const links = [
     text: "Contact",
     icon: <FaUserFriends />,
   },
+  ,
+  {
+    id: 6,
+    url: "/logout",
+    text: "Log Out",
+    icon: <FaUserFriends />,
+  },
 ];
 
 export const social = [
@@ -59,6 +66,6 @@ export const social = [
 export const logoLink = [
   {
     id: 1,
-    url: "/Home",
+    url: "/home",
   },
 ];

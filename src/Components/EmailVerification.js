@@ -4,6 +4,7 @@ import Loading from "./Loading";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
 import { useHistory } from "react-router-dom";
+import { useAuthContext } from "../auth";
 
 const EmailVerification = () => {
   const url = "https://api.thewholesalegroup.com/v1/account/register/verify/";
@@ -19,11 +20,14 @@ const EmailVerification = () => {
     setCompany,
     setPhoneNumber,
     setBillingAddress,
-    cookies,
-    setCookie,
     error,
     setError,
   } = useGlobalContext();
+
+  const {
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
+  } = useAuthContext();
 
   const { showAlert } = useTruckContext();
 
@@ -47,20 +51,12 @@ const EmailVerification = () => {
       setCompany(user["company"]);
       setPhoneNumber(user["phone_number"]);
       setBillingAddress(user["billing_address"]);
-      setCookie("user-access-token", user["token"]["access"], {
-        path: "/",
-        // secure: true,
-        maxAge: 3600, // 1 hour
-      });
-      setCookie("user-refresh-token", user["token"]["refresh"], {
-        path: "/",
-        // secure: true,
-        maxAge: 604800, // 7 days
-      });
+      setAccessToken(user["token"]["access"]);
+      setRefreshToken(user["token"]["refresh"]);
     })
-    .then(() => history.push("/Dashboard"))
+    .then(() => history.push("/dashboard"))
     .catch((error) => {
-      showAlert(true, "danger", error.message);
+      history.push("/")
     });
   }, []);
 

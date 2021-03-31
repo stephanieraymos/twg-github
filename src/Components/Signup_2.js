@@ -1,9 +1,11 @@
 import React, { useState, useRef } from "react";
 import { useGlobalContext } from "../context";
 import { useTruckContext } from "../truckContext";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, InputGroup, Image } from "react-bootstrap";
 import cancel from "../img/cancel.svg";
 import mail from "../img/mail.svg";
+import visibleOn from "../img/visibility-on.svg";
+import visibleOff from "../img/visibility-off.svg";
 
 const url = "https://api.thewholesalegroup.com/v1/account/register/";
 
@@ -15,48 +17,61 @@ const Signup2 = () => {
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isSamePassword, setIsSamePassword] = useState(false);
+  const [errors, setErrors] = useState({});
   const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
+  const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(false);
 
   const { showAlert } = useTruckContext();
 
   const form = useRef(null);
 
+  const reset = () => {
+    setPassword("");
+    setConfirmPassword("");
+    setTogglePasswordVisibility(false);
+    setValidated(false);
+  }
+
   const handleSubmit = (event) => {
-    // e.preventDefault();
-    // if (!firstName || lastName || !email) {
-    //   showAlert(true, "danger", "Please enter value");
-    // } else {
-    //   //* Show alert and add user to inventory only if name is true and not editing
-    //   showAlert(true, "success", "Truck Added");
-
-    //   //* Creating new user
-    //   const newUser = {
-    //     firstName,
-    //     lastName,
-    //     email,
-    //   };
-
-    //   setFirstName("");
-    //   setLastName("");
-    //   setEmail("");
-    //   setPassword("");
-    //   setConfirmPassword("");
-    // }
-
     const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
-    if (password === confirmPassword && form.checkValidity() === true) {
+
+    const allErrors = {};
+
+    /*
+    The password must be at least 8 characters and contains
+      - at least 1 lowercase character,
+      - at least 1 uppercase character, and
+      - at least 1 numeric character
+    */
+    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+
+    if (!strongRegex.test(password)) {
+      allErrors.password = true
+    }
+
+    if (password !== confirmPassword) {
+      allErrors.confirmPassword = true
+    }
+
+    setErrors(allErrors);
+
+    if (Object.keys(allErrors).length > 0) {
+      // there's errors
       setValidated(false);
-      signUp()
-    } else if (password === confirmPassword) {
+    } else if (form.checkValidity() === true) {
+      // no errors
+      setValidated(true);
+      signUp(reset)
+    } else {
+      // no password or confirm password errors but errors in other fields
       setValidated(true);
     }
   };
 
   //* useEffect for user post request
-  const signUp = () => {
+  const signUp = (cleanUp=() => {}) => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => object[key] = value);
@@ -72,9 +87,11 @@ const Signup2 = () => {
         } else {
           throw new Error(res.message);
         }
+        cleanUp();
       })
       .catch((error) => {
         showAlert(true, "danger", error.message);
+        cleanUp();
       });
   };
 
@@ -197,7 +214,7 @@ const Signup2 = () => {
                   name="email"
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter an email address.
+                  Please enter a valid email address.
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -227,15 +244,40 @@ const Signup2 = () => {
 
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  name="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a password.
-                </Form.Control.Feedback>
+                <InputGroup hasValidation>
+                  <Form.Control
+                    type={togglePasswordVisibility ? "text" : "password"}
+                    required
+                    name="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    isInvalid={!!errors.password}
+                  />
+                  <InputGroup.Append>
+                    <Image 
+                      src={togglePasswordVisibility ? visibleOn : visibleOff}
+                      thumbnail 
+                      style={{cursor: "pointer"}}
+                      onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
+                  </InputGroup.Append>
+                  <Form.Control.Feedback type="invalid">
+                    Your password does not meet the requirements.
+                  </Form.Control.Feedback>
+                </InputGroup>
+                <Form.Text muted>
+                    Password Requirements:
+                  </Form.Text>
+                  <Form.Text muted>
+                    * 8 characters or longer
+                  </Form.Text>
+                  <Form.Text muted>
+                    * 1 or more lowercase characters
+                  </Form.Text>
+                  <Form.Text muted>
+                    * 1 or more uppercase character
+                  </Form.Text>
+                  <Form.Text muted>
+                    * 1 or more numeric character
+                  </Form.Text>
               </Form.Group>
 
               <Form.Group className="center-form-group">
@@ -247,7 +289,7 @@ const Signup2 = () => {
                   required
                   name="confirm_password"
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  isInvalid={password !== confirmPassword}
+                  isInvalid={!!errors.confirmPassword}
                 />
                 <Form.Control.Feedback type="invalid">
                   Your confirm password doesn't match your password.

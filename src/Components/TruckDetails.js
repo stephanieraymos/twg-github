@@ -7,24 +7,35 @@ import {
 } from "react-icons/fa";
 import Navigation from "./Navigation";
 // import { useTruck } from "../truckContext";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import Loading from "./Loading";
 import logo from "../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import { useGlobalContext } from "../context";
 import { useAuthContext } from "../auth";
 
-const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
-const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
-const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
-
 const TruckDetails = () => {
+  const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
+  const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
+  const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
+
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  const [truck, setTruck] = useState(null);
-  const [truckFile, setTruckFile] = useState([]);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [company, setCompany] = useState("");
+  const [status, setStatus] = useState(1);
+  const [contents, setContents] = useState("");
+  const [manifestId, setManifestId] = useState([]);
+  const [files, setFiles] = useState([]);
   const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
-  const { cookies } = useGlobalContext();
+
+  const {
+    accessToken: [accessToken, setAccessToken],
+    authenticate,
+  } = useAuthContext();
+
+  let history = useHistory();
 
   document.title = "Truck Details";
 
@@ -41,40 +52,38 @@ const TruckDetails = () => {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
-    // if (truckManifestId) {
     try {
       const data = new FormData();
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(manifestURL, {
         method: "POST",
-        header: {
-          Authorization: "Bearer " + cookies["user-access-token"],
+        headers: {
+          "Authorization": "Bearer " + accessToken, 
         },
         body: data,
       })
         .then((response) => response.json())
-        .then((manifest) => setTruckFile(manifest));
+        .then((manifest) => setFiles(manifest));
     } catch (error) {
       console.log(error);
     }
-    // }
   };
 
   const deleteTruck = (id, truckManifestId) => {
-    console.log("delete truck running");
     try {
       const data = new FormData();
       data.append("id", id);
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "DELETE",
-        header: {
-          Authorization: "Bearer " + cookies["user-access-token"],
+        headers: {
+          "Authorization": "Bearer " + accessToken,
         },
         body: data,
       }).then((response) => {
         if (response.ok) {
-          return setIsTruckDeleted(true);
+          setIsTruckDeleted(true);
+          return;
         } else {
           return;
         }
@@ -84,54 +93,66 @@ const TruckDetails = () => {
     }
   };
 
-  useEffect(() => {
-    setLoading(true);
-    async function getTruck() {
-      try {
-        const response = await fetch(`${url}${id}`, {
-          method: "GET",
-          header: {
-            Authorization: "Bearer " + cookies["user-access-token"],
-          },
-        });
-        const data = await response.json();
-        if (data) {
-          const {
-            truckName: truckName,
-            truckPrice: truckPrice,
-            truckContents: truckContents,
-            truckManifestId: truckManifestId,
-          } = data[0];
+  const getTruck = () => {
+    fetch(`${url}${id}`, {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + accessToken, 
+      },
+    })
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      if (data) {
+        const {
+          truckName,
+          truckPrice,
+          truckContents,
+          truckManifestId,
+          company,
+          status
+        } = data[0];
 
-          if (truckManifestId.length) {
-            getManifest(truckManifestId);
-          }
-
-          const newTruck = {
-            truckName,
-            truckPrice,
-            truckContents,
-            truckManifestId,
-          };
-          setTruck(newTruck);
-        } else {
-          setTruck(null);
+        if(truckManifestId.length) {
+          getManifest(truckManifestId);
         }
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
+
+        setName(truckName);
+        setPrice(truckPrice);
+        setContents(truckContents.join(', '));
+        setManifestId(truckManifestId);
+        setCompany(company);
+        setStatus(status);
       }
-    }
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.log(error);
+      setLoading(false);
+    });
+  }
+
+  useEffect(() => {
+    // send user back to login if they're not logged in
+    authenticate(
+      () => {},
+      () => {
+        history.push("/");
+      },
+    );
+
+    setLoading(true);
     getTruck();
-  }, [id]);
-  if (loading) {
-    return <Loading />;
-  }
-  if (!truck) {
-    return <h2>No truck to display</h2>;
-  }
-  const { truckName, truckPrice, truckContents, truckManifestId } = truck;
+  }, []);
+
+  // if (loading) {
+  //   return <Loading />;
+  // }
+  // if (!truck) {
+  //   return <h2>No truck to display</h2>;
+  // }
 
   return (
     <>
@@ -140,15 +161,15 @@ const TruckDetails = () => {
       </div>
       <div className="back-to-link-container">
         <FaAngleDoubleLeft />
-        <Link to="/InventoryAllTrucks" className="back-to-link">
+        <Link to="/trucks" className="back-to-link">
           Back to inventory
         </Link>
       </div>
 
       <section className="truck-section">
-        <h2 className="truck-details-header">{truckName}</h2>
+        <h2 className="truck-details-header">{name}</h2>
         <div className="truck">
-          <img src={logo} alt={truckName} style={{ size: "10rem" }} />
+          <img src={logo} alt={name} style={{ size: "10rem" }} />
           <div className="truck-info">
             {/* //^ TRUCK NAME CARD */}
             <Card style={{ border: "none" }}>
@@ -162,7 +183,7 @@ const TruckDetails = () => {
                 <p className="data-wrapper">
                   <span className="truck-data-title">Name: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {truckName}
+                    {name}
                   </span>
                 </p>
               </Card.Header>
@@ -179,7 +200,41 @@ const TruckDetails = () => {
                 <p className="data-wrapper">
                   <span className="truck-data-title">Price: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {truckPrice}
+                    {price}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ COMPANY CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Company: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {company}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ STATUS CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">status: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {status ? "Available" : "Sold"}
                   </span>
                 </p>
               </Card.Header>
@@ -207,9 +262,7 @@ const TruckDetails = () => {
                   <Card.Body
                     style={{ color: "black", backgroundColor: "transparent" }}
                   >
-                    {truckContents.map((content, index) => {
-                      return truck ? <span key={index}>{content}</span> : null;
-                    })}
+                    <span>{contents}</span>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
@@ -235,10 +288,10 @@ const TruckDetails = () => {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body style={{ backgroundColor: "transparent" }}>
-                    {truckFile.map((manifest, index) => {
+                    {files && files.map((manifest, index) => {
                       const { truckManifest, truckManifestName } = manifest;
                       return (
-                        <ul key={truckManifestId[index]}>
+                        <ul key={manifestId[index]}>
                           <li
                             onClick={
                               () =>
@@ -282,7 +335,7 @@ const TruckDetails = () => {
                       <button
                         onClick={(e) => {
                           e.preventDefault();
-                          deleteTruck(id, truckManifestId);
+                          deleteTruck(id, manifestId);
                         }}
                         className="delete-truck-btn"
                       >
