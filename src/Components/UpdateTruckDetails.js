@@ -136,7 +136,7 @@ const UpdateTruckDetails = () => {
   }, []);
 
   // Return true or false to indicate if fetch was successful
-  const updateTruck = () => {
+  const updateTruck = (e) => {
     console.log("update truck running");
     try {
       const data = new FormData(form.current);
@@ -186,8 +186,12 @@ const UpdateTruckDetails = () => {
             <Form.Label className="form-label">Name</Form.Label>
             <Form.Control
               type="text"
-              required
-              defaultValue={truckName}
+              id="truckName"
+              defaultValue={truck.truckName}
+              // value={truck.truckName}
+              // ref={(input) => (truck.truckName = input)}
+              onChange={(e) => setTruckName(e.target.value)}
+              // onChange={() => updateTruck()}
               name="truckName"
             />
             <Form.Control.Feedback type="invalid">
