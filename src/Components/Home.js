@@ -57,7 +57,7 @@ const Home = () => {
             <div className="btn-container">
               <div className="center-btn">
                 <Link
-                  to="/InventoryAllTrucks"
+                  to="/trucks"
                   style={{ textDecoration: "none", color: "white" }}
                   className="button"
                 >
