@@ -39,17 +39,6 @@ const TruckDetails = () => {
 
   document.title = "Truck Details";
 
-  const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    authenticate,
-    removeToken,
-  } = useAuthContext();
-
-  useEffect(() => {
-    authenticate();
-  }, []);
-
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
     try {
@@ -57,8 +46,8 @@ const TruckDetails = () => {
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(manifestURL, {
         method: "POST",
-        headers: {
-          "Authorization": "Bearer " + accessToken, 
+        header: {
+          "Authorization": "Bearer " + accessToken,
         },
         body: data,
       })
@@ -69,6 +58,8 @@ const TruckDetails = () => {
     }
   };
 
+  // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
+
   const deleteTruck = (id, truckManifestId) => {
     try {
       const data = new FormData();
@@ -76,7 +67,7 @@ const TruckDetails = () => {
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(inventoryURL, {
         method: "DELETE",
-        headers: {
+        header: {
           "Authorization": "Bearer " + accessToken,
         },
         body: data,
@@ -96,43 +87,43 @@ const TruckDetails = () => {
   const getTruck = () => {
     fetch(`${url}${id}`, {
       method: "GET",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + accessToken, 
+        "Authorization": "Bearer " + accessToken,
       },
     })
-    .then((response) => {
-      return response.json()
-    })
-    .then((data) => {
-      if (data) {
-        const {
-          truckName,
-          truckPrice,
-          truckContents,
-          truckManifestId,
-          company,
-          status
-        } = data[0];
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          const {
+            truckName,
+            truckPrice,
+            truckContents,
+            truckManifestId,
+            company,
+            status,
+          } = data[0];
 
-        if(truckManifestId.length) {
-          getManifest(truckManifestId);
+          if (truckManifestId.length) {
+            getManifest(truckManifestId);
+          }
+
+          setName(truckName);
+          setPrice(truckPrice);
+          setContents(truckContents.join(", "));
+          setManifestId(truckManifestId);
+          setCompany(company);
+          setStatus(status);
         }
-
-        setName(truckName);
-        setPrice(truckPrice);
-        setContents(truckContents.join(', '));
-        setManifestId(truckManifestId);
-        setCompany(company);
-        setStatus(status);
-      }
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.log(error);
-      setLoading(false);
-    });
-  }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     // send user back to login if they're not logged in
@@ -140,7 +131,7 @@ const TruckDetails = () => {
       () => {},
       () => {
         history.push("/");
-      },
+      }
     );
 
     setLoading(true);
@@ -288,24 +279,27 @@ const TruckDetails = () => {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body style={{ backgroundColor: "transparent" }}>
-                    {files && files.map((manifest, index) => {
-                      const { truckManifest, truckManifestName } = manifest;
-                      return (
-                        <ul key={manifestId[index]}>
-                          <li
-                            onClick={
-                              () =>
-                                window.open(truckManifest, "_blank") ||
-                                window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
-                            }
-                          >
-                            <span style={{ cursor: "pointer", color: "black" }}>
-                              {truckManifestName}
-                            </span>
-                          </li>
-                        </ul>
-                      );
-                    })}
+                    {files &&
+                      files.map((manifest, index) => {
+                        const { truckManifest, truckManifestName } = manifest;
+                        return (
+                          <ul key={manifestId[index]}>
+                            <li
+                              onClick={
+                                () =>
+                                  window.open(truckManifest, "_blank") ||
+                                  window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                              }
+                            >
+                              <span
+                                style={{ cursor: "pointer", color: "black" }}
+                              >
+                                {truckManifestName}
+                              </span>
+                            </li>
+                          </ul>
+                        );
+                      })}
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
