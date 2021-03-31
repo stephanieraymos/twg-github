@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Col } from "react-bootstrap";
-import { useTruckContext } from "../truckContext";
 import Navigation from "./Navigation";
-import { useHistory, useParams, Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import cancel from "../img/cancel.svg";
 import undo from "../img/undo.svg";
 import { useGlobalContext } from "../context";
@@ -110,6 +109,7 @@ const UpdateTruckDetails = () => {
 
         if(truckManifestId.length) {
           getManifest(truckManifestId);
+      
         }
       } else {
         throw new Error("Truck does not exist.");
@@ -152,10 +152,12 @@ const UpdateTruckDetails = () => {
         body: data,
       }).then((response) => {
         console.log(response);
+
         if (response.ok) {
           return true;
         } else return false;
       });
+
     } catch (error) {
       console.log(error);
       // console.trace(updateTruck)
@@ -182,8 +184,12 @@ const UpdateTruckDetails = () => {
             <Form.Label className="form-label">Name</Form.Label>
             <Form.Control
               type="text"
-              required
-              defaultValue={truckName}
+              id="truckName"
+              defaultValue={truck.truckName}
+              // value={truck.truckName}
+              // ref={(input) => (truck.truckName = input)}
+              onChange={(e) => setTruckName(e.target.value)}
+              // onChange={() => updateTruck()}
               name="truckName"
             />
             <Form.Control.Feedback type="invalid">

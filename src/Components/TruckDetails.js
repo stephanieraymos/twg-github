@@ -39,6 +39,17 @@ const TruckDetails = () => {
 
   document.title = "Truck Details";
 
+  const {
+    accessToken: [accessToken, setAccessToken],
+    refreshToken: [refreshToken, setRefreshToken],
+    authenticate,
+    removeToken,
+  } = useAuthContext();
+
+  useEffect(() => {
+    authenticate();
+  }, []);
+
   //^ GET MANIFEST REQUEST //
   const getManifest = (truckManifestId) => {
     try {
@@ -57,8 +68,6 @@ const TruckDetails = () => {
       console.log(error);
     }
   };
-
-  // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
 
   const deleteTruck = (id, truckManifestId) => {
     try {

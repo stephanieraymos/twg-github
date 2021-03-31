@@ -5,9 +5,11 @@ import folder from "../img/folder.svg";
 import noSign from "../img/no-sign.svg";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
+import NotAuthed from "../Pages/NotAuthed";
 import { Container, Modal, Table } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useGlobalContext } from "../context";
+import { useAuthContext } from "../auth";
 
 import { useAuthContext } from "../auth";
 
@@ -18,17 +20,15 @@ const InventoryAllTrucks = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckFile, setTruckFile] = useState([]);
-  const keys = []
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const keys = [];
 
   const [trucks, addTruck, loading, errorMessage] = useTruck();
+
+  const { cookies } = useGlobalContext();
+
+  useEffect(() => {
+    authenticate();
+  }, []);
 
   const {
     accessToken: [accessToken, setAccessToken],
@@ -45,6 +45,14 @@ const InventoryAllTrucks = () => {
       },
     );
   }, []);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const addNewTrucks = (truck) => {
     addTruck(truck);
@@ -121,8 +129,12 @@ const InventoryAllTrucks = () => {
         <div className="header-items">
           <span className="all-trucks-table-header-name truck">TRUCK NAME</span>
           <span className="all-trucks-table-header-price price">PRICE</span>
-          <span className="all-trucks-table-header-contents contents">CONTENTS</span>
-          <span className="all-trucks-table-header-manifest manifest">FILES</span>
+          <span className="all-trucks-table-header-contents contents">
+            CONTENTS
+          </span>
+          <span className="all-trucks-table-header-manifest manifest">
+            FILES
+          </span>
         </div>
         <div className="truckLoad-list">
           {trucks.map((truck) => {
@@ -162,8 +174,15 @@ const InventoryAllTrucks = () => {
                     </p>
                   </button>
                 )) || (
-                  <p className="items" onClick={() => alert("This truck has no files")}>
-                    <img className="no-icon" src={noSign} alt="No file for this truck" />
+                  <p
+                    className="items"
+                    onClick={() => alert("This truck has no files")}
+                  >
+                    <img
+                      className="no-icon"
+                      src={noSign}
+                      alt="No file for this truck"
+                    />
                   </p>
                 )}
 

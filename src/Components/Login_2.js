@@ -5,7 +5,6 @@ import modalandsidebar from "../css/modalandsidebar.css";
 
 import logo from "../img/w-logo.png";
 import { Link, useHistory } from "react-router-dom";
-import SignUp from "./Signup_2";
 import Signup2 from "./Signup_2";
 
 import { useAuthContext } from "../auth";
@@ -29,6 +28,9 @@ const LoginModal = () => {
 
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  // const [emailInput, setEmailInput] = useState("");
+  // const [passwordInput, setPasswordInput] = useState("");
+
   const {
     setUserId,
     email,
@@ -72,10 +74,9 @@ const LoginModal = () => {
   };
 
   useEffect(() => {
-
     authenticate(() => {
       history.push("/dashboard");
-    });
+    }, []);
 
     const handleResize = () => setWidth(window.innerWidth);
 
