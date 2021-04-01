@@ -16,9 +16,8 @@ const Logout = () => {
   let history = useHistory();
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    removeToken
+    fetchAccessToken,
+    removeTokens
   } = useAuthContext();
 
   useEffect(() => {

@@ -31,8 +31,9 @@ const TruckDetails = () => {
   const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    authenticate,
+    setAccessToken,
+    setRefreshToken,
+    fetchAccessToken,
   } = useAuthContext();
 
   let history = useHistory();

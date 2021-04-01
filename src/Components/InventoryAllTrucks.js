@@ -31,9 +31,9 @@ const InventoryAllTrucks = () => {
   const [trucks, addTruck, loading, errorMessage] = useTruck();
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    authenticate,
+    setAccessToken,
+    setRefreshToken,
+    fetchAccessToken,
   } = useAuthContext();
 
   useEffect(() => {

@@ -25,8 +25,8 @@ const EmailVerification = () => {
   } = useGlobalContext();
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
+    setAccessToken,
+    setRefreshToken,
   } = useAuthContext();
 
   const { showAlert } = useTruckContext();

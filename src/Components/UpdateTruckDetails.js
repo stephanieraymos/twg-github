@@ -28,8 +28,9 @@ const UpdateTruckDetails = () => {
   const [truckManifestCount, setTruckManifestCount] = useState(0)
   
   const {
-    accessToken: [accessToken, setAccessToken],
-    authenticate,
+    setAccessToken,
+    setRefreshToken,
+    fetchAccessToken,
   } = useAuthContext();
 
   let history = useHistory();

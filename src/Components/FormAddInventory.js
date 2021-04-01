@@ -19,6 +19,12 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
     }
   };
 
+  const {
+    setAccessToken,
+    setRefreshToken,
+    fetchAccessToken,
+  } = useAuthContext();
+
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
     const data = new FormData(form.current);

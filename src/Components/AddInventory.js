@@ -5,40 +5,14 @@ import FormAddInventory from "./FormAddInventory";
 import inventory from "../css/inventory.css";
 import modalandsidebar from "../css/modalandsidebar.css";
 import cancel from "../img/cancel.svg";
-import { useAuthContext } from "../auth";
 
 const AddInventory = ({ addNewTrucks }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckManifestCount, setTruckManifestCount] = useState(0);
 
   document.title = "Add Inventory";
-  // const {
-  //   truckLoad,
-  //   setTruckLoad,
-  //   id,
-  //   truckName,
-  //   setTruckName,
-  //   truckPrice,
-  //   setTruckPrice,
-  //   truckContents,
-  //   setTruckContents,
-  //   truckManifest,
-  //   setTruckManifest,
-
-  //   showAlert,
-  // } = useTruckContext();
-
-  // const form = useRef(null);
-
-  // const addTruck = useTruck()[3];
-  // // const { setTrucks, setPostRefresh } = useTruck();
-  // const { setTrucks } = useTruck();
 
   const { userId, setUserId } = useGlobalContext();
-
-  const {
-    accessToken: [accessToken, setAccessToken],
-  } = useAuthContext();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -102,7 +76,6 @@ const AddInventory = ({ addNewTrucks }) => {
             truckManifestCount={truckManifestCount}
             setTruckManifestCount={setTruckManifestCount}
             closeModal={closeModal}
-            accessToken={accessToken}
             userId={userId}
             addNewTrucks={addNewTrucks}
           />
