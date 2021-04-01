@@ -33,7 +33,6 @@ import UpdateTruckDetails from "./Components/UpdateTruckDetails";
 import Error from "./Pages/Error";
 
 const App = () => {
-  // const { pathname } = useLocation();
 
   return (
     <>
@@ -41,13 +40,7 @@ const App = () => {
 
       
       <Router>
-      {/* { pathname !== '/Home' && <Navigation /> } */}
-
-            {/* <Navigation /> */}
         <Switch>
-            {/* <Route exact path="/">
-              <Redirect to="/Home" />
-            </Route> */}
             <Route path="/" exact component={Login2} />
             <Route path="/register/verify/:id/:token/" exact component={EmailVerification} />
             <Route path="/logout" exact component={Logout} />

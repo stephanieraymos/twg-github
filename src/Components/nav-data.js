@@ -6,7 +6,6 @@ import {
   FaFolderOpen,
   FaWpforms,
   FaTruckMoving,
-  FaPlusSquare,
   FaUserCircle
 } from "react-icons/fa";
 
@@ -66,6 +65,6 @@ export const social = [
 export const logoLink = [
   {
     id: 1,
-    url: "/home",
+    url: "/",
   },
 ];
