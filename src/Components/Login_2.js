@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FormLogin from "./FormLogin";
 import modalandsidebar from "../css/modalandsidebar.css";
-import InventoryAllTrucks from "./InventoryAllTrucks";
+import TableInventory from "./TableInventory";
 import logo from "../img/w-logo.png";
 import Signup2 from "./Signup_2";
 import { useAuthContext } from "../auth";
@@ -54,23 +54,7 @@ const LoginModal = () => {
       ) : (
         <div className="form-container" style={{ flexDirection: "row" }}>
           <div className="form-header-container">
-            <img
-              src={logo}
-              alt="logo image"
-              style={{ width: "200px", backgroundColor: "#13131f" }}
-            />
-            <h1
-              className="form-header"
-              style={{
-                width: "90%",
-                color: "white",
-                textShadow: "none",
-                textAlign: "center",
-                fontSize: "48px",
-              }}
-            >
-              The Wholesale Group
-            </h1>
+          <TableInventory />
           </div>
           <div className="form-body-container">
             <FormLogin />
