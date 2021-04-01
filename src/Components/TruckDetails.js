@@ -40,23 +40,30 @@ const TruckDetails = () => {
   document.title = "Truck Details";
 
   //^ GET MANIFEST REQUEST //
-  const getManifest = (truckManifestId) => {
-    try {
-      const data = new FormData();
-      truckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch(manifestURL, {
-        method: "POST",
-        header: {
-          "Authorization": "Bearer " + accessToken,
-        },
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((manifest) => setFiles(manifest));
-    } catch (error) {
-      console.log(error);
+  const getManifest = () => {
+    if (manifestId.length > 0) {
+      try {
+        const data = new FormData();
+        manifestId.map((id) => data.append("truckManifestId", id));
+        fetch(manifestURL, {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + accessToken, 
+          },
+          body: data,
+        })
+          .then((response) => response.json())
+          .then((manifest) => setFiles(manifest));
+      } catch (error) {
+        console.log(error);
+      }
     }
+    
   };
+
+  useEffect(() => {
+    getManifest();
+  }, [manifestId])
 
   // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
 
@@ -106,24 +113,20 @@ const TruckDetails = () => {
             status,
           } = data[0];
 
-          if (truckManifestId.length) {
-            getManifest(truckManifestId);
-          }
-
-          setName(truckName);
-          setPrice(truckPrice);
-          setContents(truckContents.join(", "));
-          setManifestId(truckManifestId);
-          setCompany(company);
-          setStatus(status);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  };
+        setName(truckName);
+        setPrice(truckPrice);
+        setContents(truckContents.join(', '));
+        setManifestId(truckManifestId);
+        setCompany(company);
+        setStatus(status);
+      }
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.log(error);
+      setLoading(false);
+    });
+  }
 
   useEffect(() => {
     // send user back to login if they're not logged in
@@ -279,27 +282,24 @@ const TruckDetails = () => {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body style={{ backgroundColor: "transparent" }}>
-                    {files &&
-                      files.map((manifest, index) => {
-                        const { truckManifest, truckManifestName } = manifest;
-                        return (
-                          <ul key={manifestId[index]}>
-                            <li
-                              onClick={
-                                () =>
-                                  window.open(truckManifest, "_blank") ||
-                                  window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
-                              }
-                            >
-                              <span
-                                style={{ cursor: "pointer", color: "black" }}
-                              >
-                                {truckManifestName}
-                              </span>
-                            </li>
-                          </ul>
-                        );
-                      })}
+                    {files.map((manifest, index) => {
+                      const { truckManifest, truckManifestName } = manifest;
+                      return (
+                        <ul key={manifestId[index]}>
+                          <li
+                            onClick={
+                              () =>
+                                window.open(truckManifest, "_blank") ||
+                                window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                            }
+                          >
+                            <span style={{ cursor: "pointer", color: "black" }}>
+                              {truckManifestName}
+                            </span>
+                          </li>
+                        </ul>
+                      );
+                    })}
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
