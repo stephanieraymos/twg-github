@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import FormLogin from "./FormLogin";
 import modalandsidebar from "../css/modalandsidebar.css";
-
+import InventoryAllTrucks from "./InventoryAllTrucks"
 import logo from "../img/w-logo.png";
 import Signup2 from "./Signup_2";
 
@@ -61,7 +61,6 @@ const LoginModal = () => {
           </div>
         </div>
       )}
-      <FormLogin />
     </>
   );
 };
