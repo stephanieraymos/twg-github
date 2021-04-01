@@ -28,7 +28,7 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
     truckContents.map((item) => data.append("truckContents", item));
     try {
       const response = await fetch(
-        "https://api.thewholesalegroup.com/v1/trucks/",
+        "https://api.thewholesalegroup.com/v1/trucks/edit/",
         {
           method: "POST",
           headers: {
