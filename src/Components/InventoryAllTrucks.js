@@ -79,50 +79,13 @@ const InventoryAllTrucks = () => {
         <AddInventory addNewTrucks={addNewTrucks} />
       </Container>
 
-      {/* <div className="table-container">
-        <Table borderless>
-          <thead>
-            <tr>
-              <th>Truckload</th>
-              <th>Company</th>
-              <th>Price</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {trucks.map((truck, index) => {
-              let {
-                id,
-                truckName,
-                truckPrice,
-                truckContents,
-                truckManifestId,
-                dateTimeUploaded,
-                company,
-                status
-              } = truck;
-              return (
-                <tr>
-                  <td>{truckName}</td>
-                  <td>{company}</td>
-                  <td>{truckPrice}</td>
-                  <td>{dateTimeUploaded.match(/\d\d\d\d-\d\d-\d\d/)}</td>
-                  <td>{status ? "Available" : "Sold"}</td>
-                </tr>
-              );
-
-            })}
-          </tbody>
-        </Table>
-      </div> */}
-
       <div className="table-wrapper">
         <div className="header-items">
           <span className="all-trucks-table-header-name truck">TRUCK NAME</span>
           <span className="all-trucks-table-header-price price">PRICE</span>
           <span className="all-trucks-table-header-contents contents">CONTENTS</span>
           <span className="all-trucks-table-header-manifest manifest">FILES</span>
+          <span className="all-trucks-table-header-status status">STATUS</span>
         </div>
         <div className="truckLoad-list">
           {trucks.map((truck) => {
@@ -132,6 +95,7 @@ const InventoryAllTrucks = () => {
               truckPrice,
               truckContents,
               truckManifestId,
+              status
             } = truck;
 
             return (
@@ -166,7 +130,9 @@ const InventoryAllTrucks = () => {
                     <img className="no-icon" src={noSign} alt="No file for this truck" />
                   </p>
                 )}
-
+                <span className="items all-trucks-status text-truncate">
+                  {status >= 1 ? <p className="available-status">Available</p> : <p className="not-available-status">Not Available</p>}
+                </span>
                 <Modal
                   show={isModalOpen}
                   onHide={closeModal}

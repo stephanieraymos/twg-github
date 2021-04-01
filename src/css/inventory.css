@@ -30,7 +30,7 @@ input:hover::placeholder {
   justify-content: space-between;
   margin-bottom: 0.2rem;
   transition: var(--transition);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   text-transform: capitalize;
   background: white;
   padding-bottom: 6px;
@@ -67,7 +67,7 @@ input:hover::placeholder {
 }
 
 .truck {
-  width: 25%;
+  width: 30%;
   color: white;
 }
 .price {
@@ -86,7 +86,7 @@ input:hover::placeholder {
 .header-items {
   display: flex;
   justify-content: space-between;
-  padding: 0.75rem;
+  padding: 0.75rem 0.25rem;
   background: var(--sections);
 }
 
@@ -170,25 +170,56 @@ span.all-trucks-table-header-price {
   align-self: center;
 }
 span.all-trucks-table-header-contents {
-  width: 42%;
+  width: 41%;
 }
 span.all-trucks-table-header-manifest {
-  width: 10%;
+  width: 5%;
+  text-align: right;
+  padding-right: .2rem;
+}
+span.all-trucks-table-header-status {
+  width: 8%;
   text-align: right;
   padding-right: .2rem;
 }
 
 .all-trucks-name {
   width: 33%;
+  padding-left: .4rem;
 }
 .all-trucks-price {
-  width: 18%;
+  width: 16%;
 }
 .all-trucks-contents {
-  width: 42%;
+  width: 35%;
 }
 .all-trucks-manifest {
-  width: 10%;
+  width: 5%;
+}
+.all-trucks-status {
+  width: 7%;
+  text-align: center;
+}
+
+.available-status {
+  padding: .2rem;
+  margin: 0 1rem;
+  border: green 1px solid;
+  width: 75%;
+  color: white;
+  background-color:rgb(5, 153, 5);
+  border-radius: 100px;
+  font-size: .4rem;
+}
+.not-available-status {
+  padding: .2rem;
+  margin: 0 .1rem;
+  border: red 1px solid;
+  width: 100%;
+  color: white;
+  background-color:rgb(212, 7, 7);
+  border-radius: 100px;
+  font-size: .4rem;
 }
 
 .no-icon {
