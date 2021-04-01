@@ -1,18 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
-import { useTruckContext, useTruck } from "../truckContext";
+import { Button, Modal } from "react-bootstrap";
 import { useGlobalContext } from "../context";
-import Alert from "./Alert";
+import FormAddInventory from "./FormAddInventory";
 import inventory from "../css/inventory.css";
 import modalandsidebar from "../css/modalandsidebar.css";
-import { Link } from "react-router-dom";
 import cancel from "../img/cancel.svg";
 import { useAuthContext } from "../auth";
 
-const AddInventory = (props) => {
+const AddInventory = ({ addNewTrucks }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [validated, setValidated] = useState(false);
-  const [truckManifestCount, setTruckManifestCount] = useState(0)
+  const [truckManifestCount, setTruckManifestCount] = useState(0);
 
   document.title = "Add Inventory";
   // const {
@@ -31,11 +28,11 @@ const AddInventory = (props) => {
   //   showAlert,
   // } = useTruckContext();
 
-  const form = useRef(null);
+  // const form = useRef(null);
 
-  const addTruck = useTruck()[3];
-  // const { setTrucks, setPostRefresh } = useTruck();
-  const { setTrucks } = useTruck();
+  // const addTruck = useTruck()[3];
+  // // const { setTrucks, setPostRefresh } = useTruck();
+  // const { setTrucks } = useTruck();
 
   const { userId, setUserId } = useGlobalContext();
 
@@ -49,67 +46,6 @@ const AddInventory = (props) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-  };
-
-  const handleSubmit = (event) => {
-    // console.log(e.target);
-
-    // e.preventDefault();
-    // // setId(new Date().getTime().toString());
-    // if (truckName) {
-    //   // Show alert and add truck to inventory only if name is true and not editing
-    //   showAlert(true, "success", "Truck Added");
-    //   //Creating new truck
-    //   let newTruck = [id, truckName, truckPrice, truckContents, truckManifest];
-    //   console.log("Truck Manifest", truckManifest);
-
-    //   //Spreading out current truckLoad and adding newTruck to the list
-    //   setTruckLoad([...truckLoad, newTruck]);
-    //   setTruckName("");
-    //   setTruckPrice("");
-    //   setTruckContents([]);
-    //   setTruckManifest([]);
-    //   closeModal();
-    //   console.log("New Truck", newTruck); //Logging new truck for testing purposes
-    // }
-    const form = event.currentTarget;
-    event.preventDefault();
-    event.stopPropagation();
-    if (form.checkValidity() === true) {
-      setValidated(false);
-      setTruckManifestCount(0)
-      closeModal();
-      postTrucks();
-    } else {
-      setValidated(true);
-    }
-  };
-
-  //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
-  const postTrucks = async () => {
-    const data = new FormData(form.current);
-    data.append("userId", userId);
-    const truckContents = data.get("truckContents").split(",");
-    data.delete("truckContents");
-    truckContents.map(item => data.append("truckContents", item))
-    try {
-      const response = await fetch(
-        "https://api.thewholesalegroup.com/v1/trucks/",
-        {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer " + accessToken,
-          },
-          body: data,
-        }
-      );
-      console.log(response);
-      const newTruck = await response.json();
-      console.log(newTruck)
-      props.addNewTrucks([newTruck])
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -126,153 +62,51 @@ const AddInventory = (props) => {
 
       <Modal show={isModalOpen} onHide={closeModal} centered>
         <div
-            className="form-body-container"
-            style={{ width: "90%", alignSelf: "center" }}
+          className="form-body-container"
+          style={{ width: "90%", alignSelf: "center" }}
+        >
+          <div
+            className="form-header-container"
+            style={{
+              width: "85%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              margin: "1rem 1rem 0rem",
+            }}
           >
             <div
-              className="form-header-container"
-              style={{
-                width: "85%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                margin: "1rem 1rem 0rem",
-              }}
+              className="form-label"
+              style={{ color: "black", fontSize: "36px" }}
             >
-              <div
-                className="form-label"
-                style={{ color: "black", fontSize: "36px" }}
-              >
-                New Truck
-              </div>
-              <button
-                style={{
-                  background: "transparent",
-                  borderColor: "transparent",
-                }}
-              >
-                <img src={cancel} alt="cancel" onClick={closeModal} />
-              </button>
+              New Truck
             </div>
-
-            <hr
+            <button
               style={{
-                width: "100%",
-                height: "1px",
-                backgroundColor: "gray",
-                opacity: "25%",
+                background: "transparent",
+                borderColor: "transparent",
               }}
-            />
-
-            <Form
-              ref={form}
-              noValidate 
-              validated={validated}
-              onSubmit={handleSubmit}
-              style={{ width: "85%", margin: "0% 5% 5%" }}
             >
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="truckName"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a truck name.
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="truckPrice"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a truck price.
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Company</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="company"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a company name.
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Contents</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="truckContents"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please specify the contents inside the truck.
-                </Form.Control.Feedback>
-                <Form.Text muted>
-                  Separate each content with a comma, e.g., clothes,toys
-                </Form.Text>
-              </Form.Group>
-
-              <Form.Group className="center-form-group">
-                <Form.Label className="form-label">Manifest</Form.Label>
-                {Array(truckManifestCount).fill(
-                  <>
-                    <Form.Control
-                      type="file"
-                      multiple
-                      required
-                      name="truckManifest"
-                      style={{ fontSize: "1rem", color: "black" }}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please add a file. 
-                    </Form.Control.Feedback>
-                    <Form.Text muted>
-                      Select multiple files by holding down the SHIFT key
-                    </Form.Text>
-                  </>
-                )}
-                {truckManifestCount == 0 ?
-                  <Button
-                    onClick={() => setTruckManifestCount(truckManifestCount + 1)}
-                    className="form-button"
-                    block
-                    style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: "0rem" }}
-                  >
-                    Add Files
-                  </Button>
-                  :
-                  <Button
-                    onClick={() => setTruckManifestCount(truckManifestCount - 1)}
-                    className="form-button"
-                    block
-                    style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: ".75rem 0rem" }}
-                  >
-                    Remove Files
-                  </Button>
-                }
-              </Form.Group>
-
-              <div className="form-footer-container">
-                <Button
-                  type="submit"
-                  className="form-button"
-                  block
-                  style={{ width: "100%", backgroundColor: "#f47c20" }}
-                >
-                  Add Truck
-                </Button>
-              </div>
-            </Form>
+              <img src={cancel} alt="cancel" onClick={closeModal} />
+            </button>
           </div>
+
+          <hr
+            style={{
+              width: "100%",
+              height: "1px",
+              backgroundColor: "gray",
+              opacity: "25%",
+            }}
+          />
+          <FormAddInventory
+            truckManifestCount={truckManifestCount}
+            setTruckManifestCount={setTruckManifestCount}
+            closeModal={closeModal}
+            accessToken={accessToken}
+            userId={userId}
+            addNewTrucks={addNewTrucks}
+          />
+        </div>
         {/* <Form ref={form} onSubmit={handleSubmit} method="post">
           <Modal.Header>
             <h1 className="modal-header">Add Truck</h1>
