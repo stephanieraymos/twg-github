@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
         setCookie(accessTokenKey, token, {
           path: "/",
           // secure: true,
-          maxAge: 60, // 1 hour
+          maxAge: 3600, // 1 hour
         });
     };
     
@@ -103,8 +103,12 @@ const AuthProvider = ({ children }) => {
     //     }
     // }
 
+    const fetchRefreshToken = () => {
+        return cookies[refreshTokenKey];
+    }
+
     const fetchAccessToken = new Promise((resolve, reject) => {
-        const accessToken = cookies[refreshTokenKey];
+        const accessToken = cookies[accessTokenKey];
         if (accessToken) {
             fetch(tokenVerifyURL, {
                 method: "POST",
@@ -118,8 +122,7 @@ const AuthProvider = ({ children }) => {
                 if (response.ok) {
                     console.log("success");
                     // access token is valid
-                    //resolve(accessToken);
-                    reject("User is not logged in.")
+                    resolve(accessToken);
                 } else {
                     console.log("failure");
                     // access token is not valid
@@ -178,6 +181,7 @@ const AuthProvider = ({ children }) => {
         setRefreshToken,
         removeTokens,
         fetchAccessToken,
+        fetchRefreshToken,
     }
 
     //setInterval(() => console.log("running at interval"), 5000);

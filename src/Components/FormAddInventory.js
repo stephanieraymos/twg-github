@@ -1,9 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useAuthContext } from "../auth";
+import { useHistory } from "react-router-dom";
 
-const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModal, accessToken, userId, addNewTrucks }) => {
+const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModal, userId, addNewTrucks }) => {
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
+  let history = useHistory();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -20,10 +24,20 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
   };
 
   const {
-    setAccessToken,
-    setRefreshToken,
     fetchAccessToken,
   } = useAuthContext();
+
+  useEffect(() => {
+    // send user back to login if they're not logged in
+    fetchAccessToken
+      .then((token) => {
+        setAccessToken(token);
+        console.log("userId", userId);
+      })
+      .catch((error) => {
+        history.push("/");
+      });
+  }, []);
 
   //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
   const postTrucks = async () => {
@@ -32,6 +46,8 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
     const truckContents = data.get("truckContents").split(",");
     data.delete("truckContents");
     truckContents.map((item) => data.append("truckContents", item));
+
+    data.forEach((value, key) => console.log(key, value));
     try {
       const response = await fetch(
         "https://api.thewholesalegroup.com/v1/trucks/edit/",

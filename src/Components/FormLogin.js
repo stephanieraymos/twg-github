@@ -21,7 +21,6 @@ const FormLogin = () => {
   const {
     setAccessToken,
     setRefreshToken,
-    fetchAccessToken,
   } = useAuthContext();
 
   const {

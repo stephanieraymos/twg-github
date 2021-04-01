@@ -31,10 +31,10 @@ const TruckDetails = () => {
   const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
 
   const {
-    setAccessToken,
-    setRefreshToken,
     fetchAccessToken,
   } = useAuthContext();
+
+  const [accessToken, setAccessToken] = useState("");
 
   let history = useHistory();
 
@@ -62,21 +62,18 @@ const TruckDetails = () => {
     
   };
 
-  useEffect(() => {
-    getManifest();
-  }, [manifestId])
-
   // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
 
-  const deleteTruck = (id, truckManifestId) => {
+  const deleteTruck = () => {
     try {
       const data = new FormData();
       data.append("id", id);
-      truckManifestId.map((id) => data.append("truckManifestId", id));
+      manifestId.map((id) => data.append("truckManifestId", id));
+      data.forEach((value, key) => console.log(key, value));
       fetch(inventoryURL, {
         method: "DELETE",
         header: {
-          "Authorization": "Bearer " + accessToken,
+          "Authorization": `Bearer ${accessToken}`,
         },
         body: data,
       }).then((response) => {
@@ -97,7 +94,6 @@ const TruckDetails = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + accessToken,
       },
     })
       .then((response) => {
@@ -131,16 +127,25 @@ const TruckDetails = () => {
 
   useEffect(() => {
     // send user back to login if they're not logged in
-    authenticate(
-      () => {},
-      () => {
+
+    fetchAccessToken
+      .then((token) => {
+        setAccessToken(token);
+      })
+      .catch((error) => {
         history.push("/");
-      }
-    );
+      });
 
     setLoading(true);
-    getTruck();
   }, []);
+
+  useEffect(() => {
+    getTruck();
+  }, [accessToken]);
+
+  useEffect(() => {
+    getManifest();
+  }, [manifestId]);
 
   // if (loading) {
   //   return <Loading />;
@@ -330,7 +335,7 @@ const TruckDetails = () => {
                       <button
                         onClick={(e) => {
                           e.preventDefault();
-                          deleteTruck(id, manifestId);
+                          deleteTruck();
                         }}
                         className="delete-truck-btn"
                       >

@@ -28,10 +28,10 @@ const UpdateTruckDetails = () => {
   const [truckManifestCount, setTruckManifestCount] = useState(0)
   
   const {
-    setAccessToken,
-    setRefreshToken,
     fetchAccessToken,
   } = useAuthContext();
+
+  const [accessToken, setAccessToken] = useState("");
 
   let history = useHistory();
 
@@ -119,14 +119,14 @@ const UpdateTruckDetails = () => {
 
   useEffect(() => {
     // send user back to login if they're not logged in
-    authenticate(
-      () => {},
-      () => {
+    fetchAccessToken
+      .then((token) => {
+        setAccessToken(token);
+        getTruckData();
+      })
+      .catch((error) => {
         history.push("/");
-      },
-    );
-
-    getTruckData();
+      });
   }, []);
 
   // Return true or false to indicate if fetch was successful

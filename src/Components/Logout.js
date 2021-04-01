@@ -11,18 +11,26 @@ const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
 const Logout = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  const [accessToken, setAccessToken] = useState("");
 
   document.title = "Logout";
   let history = useHistory();
 
   const {
     fetchAccessToken,
-    removeTokens
+    fetchRefreshToken,
+    removeTokens,
   } = useAuthContext();
 
   useEffect(() => {
     setLoading(true);
-    
+    fetchAccessToken
+      .then((token) => {
+        setAccessToken(token);
+      })
+      .catch((error) => {
+        history.push("/");
+      });
   });
 
   //showAlert function, when called the values for each param are passed in as arguments
@@ -40,12 +48,12 @@ const Logout = () => {
             "Authorization": "Bearer " + accessToken,
         },
         body: JSON.stringify({
-            refresh: refreshToken
+            refresh: fetchRefreshToken()
         }),
     })
     .then(() => {
-        removeToken();
-        history.push("/")
+        removeTokens();
+        history.push("/");
     })
     .catch((error) => {
         showAlert(true, "danger", error.message);
