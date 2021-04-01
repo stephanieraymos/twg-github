@@ -9,7 +9,7 @@ import { useGlobalContext } from "../context";
 import { useAuthContext } from "../auth";
 
 const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
-const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/";
+const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/edit/";
 const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
 
 const UpdateTruckDetails = () => {
