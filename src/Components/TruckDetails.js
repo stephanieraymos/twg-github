@@ -28,7 +28,6 @@ const TruckDetails = () => {
   const [contents, setContents] = useState("");
   const [manifestId, setManifestId] = useState([]);
   const [files, setFiles] = useState([]);
-  const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
 
   const {
     fetchAccessToken,
@@ -73,12 +72,7 @@ const TruckDetails = () => {
       body: data,
     })
       .then((response) => {
-        if (response.ok) {
-          setIsTruckDeleted(true);
-          return;
-        } else {
-          return;
-        }
+        history.push("/trucks");
       });
   };
 
