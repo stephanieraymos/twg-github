@@ -7,7 +7,7 @@ import { cleanup } from "@testing-library/react";
 import { useGlobalContext } from "../context";
 import { useAuthContext } from "../auth";
 
-const FormLogin = ({ setWidth }) => {
+const FormLogin = () => {
   const url = "https://api.thewholesalegroup.com/v1/account/login/";
 
   const form = useRef(null);
@@ -21,7 +21,6 @@ const FormLogin = ({ setWidth }) => {
   const {
     accessToken: [accessToken, setAccessToken],
     refreshToken: [refreshToken, setRefreshToken],
-    authenticate,
   } = useAuthContext();
 
   const {
@@ -57,19 +56,6 @@ const FormLogin = ({ setWidth }) => {
       login(reset);
     }
   };
-
-  useEffect(() => {
-    authenticate(() => {
-      history.push("/dashboard");
-    });
-
-    const handleResize = () => setWidth(window.innerWidth);
-
-    window.addEventListener("resize", handleResize);
-
-    // clean up code
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   //* useEffect for user post request
   const login = (cleanUp = () => {}) => {
