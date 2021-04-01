@@ -7,7 +7,6 @@ import Signup2 from "./Signup_2";
 import { useAuthContext } from "../auth";
 import { useHistory } from "react-router-dom";
 
-
 const LoginModal = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const { fetchAccessToken } = useAuthContext();
@@ -27,7 +26,6 @@ const LoginModal = () => {
     // clean up code
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
 
   return (
     <>
@@ -65,6 +63,12 @@ const LoginModal = () => {
             <FormLogin />
           </div>
         </div>
+
+
+
+        // // <TableInventory>
+        //   <FormLogin />
+        // // </TableInventory>
       )}
     </>
   );

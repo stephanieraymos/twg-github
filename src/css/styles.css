@@ -594,3 +594,7 @@ input:hover {
   outline-style: none;
   margin: 1rem 1.5rem;
 }
+
+.full-view-height {
+  height: 100vh;
+}
