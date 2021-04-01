@@ -56,7 +56,7 @@ const Dashboard = () => {
         }
       })
       .then((user) => {
-        //if (userId === "") {
+        if (userId === "") {
           setUserId(user["id"]);
           setEmail(user["email"]);
           setFirstName(user["first_name"]);
@@ -64,8 +64,10 @@ const Dashboard = () => {
           setCompany(user["company"]);
           setPhoneNumber(user["phone_number"]);
           setBillingAddress(user["billing_address"]);
-        //}
-        
+          console.log("userId", user["id"]);
+        } else {
+          console.log("userId old", user["id"]);
+        }
       })
       .catch((error) => {
 

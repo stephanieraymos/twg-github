@@ -43,21 +43,18 @@ const TruckDetails = () => {
   //^ GET MANIFEST REQUEST //
   const getManifest = () => {
     if (manifestId.length > 0) {
-      try {
-        const data = new FormData();
-        manifestId.map((id) => data.append("truckManifestId", id));
-        fetch(manifestURL, {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer " + accessToken, 
-          },
-          body: data,
-        })
-          .then((response) => response.json())
-          .then((manifest) => setFiles(manifest));
-      } catch (error) {
-        console.log(error);
-      }
+      const data = new FormData();
+      manifestId.map((id) => data.append("truckManifestId", id));
+      fetch(manifestURL, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((manifest) => setFiles(manifest))
+        .catch((error) => {});
     }
     
   };
@@ -65,18 +62,17 @@ const TruckDetails = () => {
   // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
 
   const deleteTruck = () => {
-    try {
-      const data = new FormData();
-      data.append("id", id);
-      manifestId.map((id) => data.append("truckManifestId", id));
-      data.forEach((value, key) => console.log(key, value));
-      fetch(inventoryURL, {
-        method: "DELETE",
-        header: {
-          "Authorization": `Bearer ${accessToken}`,
-        },
-        body: data,
-      }).then((response) => {
+    const data = new FormData();
+    data.append("id", id);
+    manifestId.map((id) => data.append("truckManifestId", id));
+    fetch(inventoryURL, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+      },
+      body: data,
+    })
+      .then((response) => {
         if (response.ok) {
           setIsTruckDeleted(true);
           return;
@@ -84,9 +80,6 @@ const TruckDetails = () => {
           return;
         }
       });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const getTruck = () => {
@@ -127,10 +120,10 @@ const TruckDetails = () => {
 
   useEffect(() => {
     // send user back to login if they're not logged in
-
     fetchAccessToken
       .then((token) => {
         setAccessToken(token);
+        getTruck();
       })
       .catch((error) => {
         history.push("/");
@@ -138,10 +131,6 @@ const TruckDetails = () => {
 
     setLoading(true);
   }, []);
-
-  useEffect(() => {
-    getTruck();
-  }, [accessToken]);
 
   useEffect(() => {
     getManifest();

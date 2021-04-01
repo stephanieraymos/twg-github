@@ -5,6 +5,7 @@ import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container } from "react-bootstrap";
 import TableInventory from "./TableInventory";
+import { useGlobalContext } from "../context";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -14,8 +15,13 @@ const InventoryAllTrucks = () => {
   };
   const [addTruck] = useTruck();
 
+  const {
+    userId,
+  } = useGlobalContext();
+
   return (
     <>
+      {console.log("userId", userId)}
       <div>
         <Navigation />
       </div>
