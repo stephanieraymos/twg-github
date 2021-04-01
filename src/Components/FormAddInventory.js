@@ -38,7 +38,7 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
         {
           method: "POST",
           headers: {
-            Authorization: "Bearer " + accessToken,
+            "Authorization": "Bearer " + accessToken,
           },
           body: data,
         }
