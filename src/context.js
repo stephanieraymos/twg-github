@@ -14,7 +14,7 @@ const AppProvider = ({ children }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("d73897ef-9b70-463f-8dc1-bdafbe8891ff");
   const [company, setCompany] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
