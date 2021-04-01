@@ -19,9 +19,9 @@ const FormLogin = ({ setWidth }) => {
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    authenticate,
+    setAccessToken,
+    setRefreshToken,
+    fetchAccessToken,
   } = useAuthContext();
 
   const {
