@@ -13,6 +13,8 @@ import { Modal } from "react-bootstrap";
 const LoginModal = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const { fetchAccessToken } = useAuthContext();
+  const [trucks] = useTruck();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   let history = useHistory();
   useEffect(() => {
