@@ -115,7 +115,7 @@ const LoginModal = () => {
             })}
           </div>
 
-          <Modal show={isModalOpen} centered style={{left: 550}}>
+          <Modal show={isModalOpen} centered style={{left: "25%"}}>
             <div
               className="form-body-container"
               style={{ width: "90%", alignSelf: "center" }}
