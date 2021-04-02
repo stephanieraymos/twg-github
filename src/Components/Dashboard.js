@@ -56,18 +56,13 @@ const Dashboard = () => {
         }
       })
       .then((user) => {
-        if (userId == null) {
-          setUserId(user["id"]);
-          setEmail(user["email"]);
-          setFirstName(user["first_name"]);
-          setLastName(user["last_name"]);
-          setCompany(user["company"]);
-          setPhoneNumber(user["phone_number"]);
-          setBillingAddress(user["billing_address"]);
-          console.log("userId", user["id"]);
-        } else {
-          console.log("userId old", user["id"]);
-        }
+        setUserId(user["id"]);
+        setEmail(user["email"]);
+        setFirstName(user["first_name"]);
+        setLastName(user["last_name"]);
+        setCompany(user["company"]);
+        setPhoneNumber(user["phone_number"]);
+        setBillingAddress(user["billing_address"]);
       })
       .catch((error) => {
 
