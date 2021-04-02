@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useTruck } from "../truckContext";
 import folder from "../img/folder.svg";
@@ -24,19 +24,20 @@ const TableInventory = () => {
   const [trucks] = useTruck();
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    authenticate,
+    fetchAccessToken,
   } = useAuthContext();
+
+  const [accessToken, setAccessToken] = useState("");
 
   useEffect(() => {
     // send user back to login if they're not logged in
-    authenticate(
-      () => {},
-      () => {
+    fetchAccessToken
+      .then((token) => {
+        setAccessToken(token);
+      })
+      .catch((error) => {
         history.push("/");
-      }
-    );
+      });
   }, []);
 
 
@@ -112,17 +113,17 @@ const TableInventory = () => {
                     </p>
                   </button>
                 )) || (
-                  <p
-                    className="items"
-                    onClick={() => alert("This truck has no files")}
-                  >
-                    <img
-                      className="no-icon"
-                      src={noSign}
-                      alt="No file for this truck"
-                    />
-                  </p>
-                )}
+                    <p
+                      className="items"
+                      onClick={() => alert("This truck has no files")}
+                    >
+                      <img
+                        className="no-icon"
+                        src={noSign}
+                        alt="No file for this truck"
+                      />
+                    </p>
+                  )}
                 <span className="items all-trucks-status text-truncate">
                   {status >= 1 ? (
                     <p className="available-status">Available</p>

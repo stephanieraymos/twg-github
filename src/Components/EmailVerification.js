@@ -12,8 +12,9 @@ const EmailVerification = () => {
   const { token } = useParams();
   let history = useHistory();
 
+  const [userId, setUserId] = useState("");
+
   const {
-    setUserId,
     setFirstName,
     setLastName,
     setEmail,
@@ -25,8 +26,8 @@ const EmailVerification = () => {
   } = useGlobalContext();
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
+    setAccessToken,
+    setRefreshToken,
   } = useAuthContext();
 
   const { showAlert } = useTruckContext();

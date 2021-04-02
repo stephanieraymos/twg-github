@@ -17,15 +17,14 @@ const FormLogin = () => {
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
+  const [userId, setUserId] = useState("");
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
+    setAccessToken,
+    setRefreshToken,
   } = useAuthContext();
 
   const {
-    setUserId,
-    userId,
     email,
     setEmail,
     setFirstName,
@@ -38,7 +37,7 @@ const FormLogin = () => {
 
   let history = useHistory();
 
-  const reset = () => {
+  const resetValues = () => {
     setPassword("");
     setTogglePasswordVisibility(false);
     setValidated(false);
@@ -54,12 +53,12 @@ const FormLogin = () => {
 
     if (form.checkValidity() === true) {
       // no errors
-      login(reset);
+      login();
     }
   };
 
   //* useEffect for user post request
-  const login = (cleanUp = () => {}) => {
+  const login = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
@@ -93,7 +92,7 @@ const FormLogin = () => {
         setRefreshToken(user["token"]["refresh"]);
       })
       .then(() => {
-        cleanUp();
+        resetValues();
         history.push("/dashboard");
       })
       .catch((error) => {
@@ -104,6 +103,10 @@ const FormLogin = () => {
   useEffect(() => {
     login();
   }, [userId]);
+
+  useEffect(() => {
+    localStorage.setItem('userId', userId);
+  }, [userId])
 
   return (
     <>

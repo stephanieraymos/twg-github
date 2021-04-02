@@ -28,12 +28,12 @@ const TruckDetails = () => {
   const [contents, setContents] = useState("");
   const [manifestId, setManifestId] = useState([]);
   const [files, setFiles] = useState([]);
-  const [isTruckDeleted, setIsTruckDeleted] = useState(false); // checking if truck is deleted
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    authenticate,
+    fetchAccessToken,
   } = useAuthContext();
+
+  const [accessToken, setAccessToken] = useState("");
 
   let history = useHistory();
 
@@ -42,53 +42,38 @@ const TruckDetails = () => {
   //^ GET MANIFEST REQUEST //
   const getManifest = () => {
     if (manifestId.length > 0) {
-      try {
-        const data = new FormData();
-        manifestId.map((id) => data.append("truckManifestId", id));
-        fetch(manifestURL, {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer " + accessToken, 
-          },
-          body: data,
-        })
-          .then((response) => response.json())
-          .then((manifest) => setFiles(manifest));
-      } catch (error) {
-        console.log(error);
-      }
+      const data = new FormData();
+      manifestId.map((id) => data.append("truckManifestId", id));
+      fetch(manifestURL, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((manifest) => setFiles(manifest))
+        .catch((error) => {});
     }
     
   };
 
-  useEffect(() => {
-    getManifest();
-  }, [manifestId])
-
   // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
 
-  const deleteTruck = (id, truckManifestId) => {
-    try {
-      const data = new FormData();
-      data.append("id", id);
-      truckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch(inventoryURL, {
-        method: "DELETE",
-        header: {
-          "Authorization": "Bearer " + accessToken,
-        },
-        body: data,
-      }).then((response) => {
-        if (response.ok) {
-          setIsTruckDeleted(true);
-          return;
-        } else {
-          return;
-        }
+  const deleteTruck = () => {
+    const data = new FormData();
+    data.append("id", id);
+    manifestId.map((id) => data.append("truckManifestId", id));
+    fetch(inventoryURL, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+      },
+      body: data,
+    })
+      .then((response) => {
+        history.push("/trucks");
       });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const getTruck = () => {
@@ -96,7 +81,6 @@ const TruckDetails = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + accessToken,
       },
     })
       .then((response) => {
@@ -130,16 +114,21 @@ const TruckDetails = () => {
 
   useEffect(() => {
     // send user back to login if they're not logged in
-    authenticate(
-      () => {},
-      () => {
+    fetchAccessToken
+      .then((token) => {
+        setAccessToken(token);
+        getTruck();
+      })
+      .catch((error) => {
         history.push("/");
-      }
-    );
+      });
 
     setLoading(true);
-    getTruck();
   }, []);
+
+  useEffect(() => {
+    getManifest();
+  }, [manifestId]);
 
   // if (loading) {
   //   return <Loading />;
@@ -329,7 +318,7 @@ const TruckDetails = () => {
                       <button
                         onClick={(e) => {
                           e.preventDefault();
-                          deleteTruck(id, manifestId);
+                          deleteTruck();
                         }}
                         className="delete-truck-btn"
                       >

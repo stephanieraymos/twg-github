@@ -12,15 +12,20 @@ import { Modal } from "react-bootstrap";
 
 const LoginModal = () => {
   const [width, setWidth] = useState(window.innerWidth);
-  const { authenticate } = useAuthContext();
+  const { fetchAccessToken } = useAuthContext();
   const [trucks] = useTruck();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   let history = useHistory();
   useEffect(() => {
-    authenticate(() => {
-      history.push("/dashboard");
-    });
+    fetchAccessToken
+      .then((token) => {
+        history.push("/dashboard");
+      })
+      .catch((error) => {
+
+      });
+
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     // clean up code

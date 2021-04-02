@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../context";
 import { useTruck } from "../truckContext";
@@ -6,20 +6,87 @@ import dashboard from "../css/dashboard.css";
 import OrderDetails from "./OrderDetails";
 import D3 from "./D3";
 import Loading from "./Loading";
+import { useAuthContext } from "../auth";
+import { useHistory } from "react-router-dom";
 
 const Dashboard = () => {
   document.title = "Dashboard";
+
+  const userDetailsUrl = "https://api.thewholesalegroup.com/v1/account/user/"
+
   const { openSidebar, isSidebarOpen } = useGlobalContext();
   // const { getData } = useTruckContext();
   const [trucks, loading] = useTruck();
+
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+
+  let history = useHistory();
+
+  const {
+    setEmail,
+    setFirstName,
+    setLastName,
+    setCompany,
+    setPhoneNumber,
+    setBillingAddress,
+  } = useGlobalContext();
+
+  const {
+    fetchAccessToken,
+  } = useAuthContext();
 
   const handleViewDetails = () => {
     return <OrderDetails />;
   };
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  const getUserDetails = (accessToken) => {
+    fetch(userDetailsUrl, {
+      method: "GET",
+      headers: { 
+        "Authorization": `Bearer ${accessToken}`
+      },
+    })
+      .then((response) => {
+        const res = response.json();
+        console.log(res)
+        if (response.ok) {
+          return res;
+        } else {
+          throw new Error(res.message);
+        }
+      })
+      .then((user) => {
+        if (userId == null) {
+          setUserId(user["id"]);
+          setEmail(user["email"]);
+          setFirstName(user["first_name"]);
+          setLastName(user["last_name"]);
+          setCompany(user["company"]);
+          setPhoneNumber(user["phone_number"]);
+          setBillingAddress(user["billing_address"]);
+          console.log("userId", user["id"]);
+        } else {
+          console.log("userId old", user["id"]);
+        }
+      })
+      .catch((error) => {
+
+      });
+  };
+
+  useEffect(() => {
+    localStorage.setItem('userId', userId);
+  }, [userId])
+
+  useEffect(() => {
+    fetchAccessToken
+      .then((token) => {
+        getUserDetails(token);
+      })
+      .catch((error) => {
+        history.push("/");
+      });
+  }, []);
 
   return (
     <>

@@ -7,8 +7,6 @@ import React, {
 } from "react";
 import InventoryAllTrucks from "./Components/InventoryAllTrucks";
 
-import { useAuthContext } from "./auth";
-
 // Generating context
 const TruckContext = createContext();
 
@@ -117,11 +115,6 @@ export const useTruck = () => {
   const reducer = (state, action) => {
     return state.concat(action.value);
   };
-
-  const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-  } = useAuthContext();
 
   const [trucks, dispatch] = useReducer(reducer, []);
 

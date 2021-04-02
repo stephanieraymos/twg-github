@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
 
     const [cookies, setCookie, removeCookie] = useCookies([accessTokenKey, refreshTokenKey]);
     
-    const removeToken = () => {
+    const removeTokens = () => {
         removeCookie(accessTokenKey);
         removeCookie(refreshTokenKey);
     }
@@ -26,8 +26,6 @@ const AuthProvider = ({ children }) => {
           maxAge: 3600, // 1 hour
         });
     };
-
-    const accessToken = cookies[accessTokenKey];
     
     const setRefreshToken = (token) => {
         setCookie(refreshTokenKey, token, {
@@ -37,65 +35,73 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const refreshToken = cookies[refreshTokenKey];
+    const fetchRefreshToken = () => {
+        return cookies[refreshTokenKey];
+    }
 
-    const isAccessTokenValid = () => {
-        if (cookies["user-access-token"]) {
+    const fetchAccessToken = new Promise((resolve, reject) => {
+        const accessToken = cookies[accessTokenKey];
+        if (accessToken) {
             fetch(tokenVerifyURL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    token: cookies["user-access-token"],
+                    token: accessToken,
                 }),
             })
             .then((response) => {
                 if (response.ok) {
-                    // token is valid
-                    return true;
-                }
-            })
-        }
-
-        return false;
-    }
-
-    const authenticate = (success=() => {}, failure=() => {}) => {
-        // check whether there's cookies to check
-        if (cookies["user-access-token"]) {
-            success();
-            return;
-        } else if (cookies["user-refresh-token"]) {
-            // user might have a refresh token that have not expired yet
-            fetch(tokenRefreshURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    refresh: cookies["user-refresh-token"],
-                }),
-            })
-            .then((response) => {
-                if (response.ok) {
-                    // user is logged in again
-                    const user = response.json();
-                    setAccessToken(user["access"]);
-                    success();
-                    return;
+                    // access token is valid
+                    resolve(accessToken);
+                } else {
+                    // access token is not valid
+                    // use refresh token to get a new access token
+                    const refreshToken = cookies[refreshTokenKey];
+                    if (refreshToken) {
+                        // user might have a refresh token that have not expired yet
+                        fetch(tokenRefreshURL, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                refresh: refreshToken,
+                            }),
+                        })
+                        .then((response) => {
+                            if (response.ok) {
+                                // user is logged in again
+                                return response.json();
+                            } else {
+                                reject("User is not logged in.")
+                            }
+                        })
+                        .then((token) => {
+                            if (token) {
+                                setAccessToken(token["access"]);
+                                resolve(token["access"]);
+                            }
+                        })
+                        .catch((error) => {
+                            reject("User is not logged in.")
+                        });
+                    } else {
+                        reject("User is not logged in.")
+                    }
                 }
             })
             .catch((error) => {
-                
-            });
+                reject("User is not logged in.")
+            })
+        } else {
+            reject("User is not logged in.")
         }
-
-        failure();
-    };
+    });
 
     const data = {
-        accessToken: [accessToken, setAccessToken],
-        refreshToken: [refreshToken, setRefreshToken],
-        authenticate,
-        removeToken,
-        isAccessTokenValid,
+        setAccessToken,
+        setRefreshToken,
+        removeTokens,
+        fetchAccessToken,
+        fetchRefreshToken,
     }
 
     return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>
