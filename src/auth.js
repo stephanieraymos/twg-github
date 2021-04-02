@@ -50,13 +50,10 @@ const AuthProvider = ({ children }) => {
                 }),
             })
             .then((response) => {
-                console.log("access", response);
                 if (response.ok) {
-                    console.log("success");
                     // access token is valid
                     resolve(accessToken);
                 } else {
-                    console.log("failure");
                     // access token is not valid
                     // use refresh token to get a new access token
                     const refreshToken = cookies[refreshTokenKey];
@@ -70,9 +67,7 @@ const AuthProvider = ({ children }) => {
                             }),
                         })
                         .then((response) => {
-                            console.log("refresh", response);
                             if (response.ok) {
-                                console.log("success");
                                 // user is logged in again
                                 return response.json();
                             } else {
@@ -81,7 +76,6 @@ const AuthProvider = ({ children }) => {
                         })
                         .then((token) => {
                             if (token) {
-                                console.log("refresh token", token["access"])
                                 setAccessToken(token["access"]);
                                 resolve(token["access"]);
                             }
@@ -102,12 +96,6 @@ const AuthProvider = ({ children }) => {
         }
     });
 
-    // const authenticate = (onSuccess=() => {}, onFailure=() => {}) => {
-    //     // check whether there's cookies to check
-    //     console.log("running authenticate");
-    //     checkAccessToken(onSuccess, () => checkRefreshToken(onSuccess, onFailure));
-    // };
-
     const data = {
         setAccessToken,
         setRefreshToken,
@@ -115,8 +103,6 @@ const AuthProvider = ({ children }) => {
         fetchAccessToken,
         fetchRefreshToken,
     }
-
-    //setInterval(() => console.log("running at interval"), 5000);
 
     return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>
 }
