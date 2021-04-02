@@ -163,10 +163,10 @@ input:hover::placeholder {
 
 /* //! TABLE HEADERS */
 span.all-trucks-table-header-load {
-  width: 5%;
+  width: 10%;
 }
 span.all-trucks-table-header-program {
-  width: 10%;
+  width: 15%;
   align-self: center;
 }
 span.all-trucks-table-header-category {
@@ -200,11 +200,11 @@ span.all-trucks-table-header-price {
 
 /* //! TABLE CONTENTS */
 .all-trucks-load {
-  width: 5%;
+  width: 10%;
   padding-left: .4rem;
 }
 .all-trucks-program {
-  width: 10%;
+  width: 15%;
 }
 .all-trucks-category {
   width: 10%;
