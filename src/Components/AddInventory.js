@@ -12,27 +12,6 @@ const AddInventory = ({ addNewTrucks }) => {
   const [truckManifestCount, setTruckManifestCount] = useState(0);
 
   document.title = "Add Inventory";
-  // const {
-  //   truckLoad,
-  //   setTruckLoad,
-  //   id,
-  //   truckName,
-  //   setTruckName,
-  //   truckPrice,
-  //   setTruckPrice,
-  //   truckContents,
-  //   setTruckContents,
-  //   truckManifest,
-  //   setTruckManifest,
-
-  //   showAlert,
-  // } = useTruckContext();
-
-  // const form = useRef(null);
-
-  // const addTruck = useTruck()[3];
-  // // const { setTrucks, setPostRefresh } = useTruck();
-  // const { setTrucks } = useTruck();
 
   const { userId, setUserId } = useGlobalContext();
 
