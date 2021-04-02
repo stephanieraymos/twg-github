@@ -72,19 +72,21 @@ const LoginModal = () => {
           </div>
         </div>
       ) : (
-        <div className="table-wrapper">
-          <div className="header-items">
-            <span className="all-trucks-table-header-name truck">
-              TRUCK NAME
-            </span>
-            <span className="all-trucks-table-header-price price">PRICE</span>
-            <span className="all-trucks-table-header-contents contents">
-              CONTENTS
-            </span>
-            <span className="all-trucks-table-header-status status">
-              STATUS
-            </span>
-          </div>
+         <div className="table-wrapper">
+        <div className="header-items">
+          <span className="all-trucks-table-header-load truck">LOAD</span>
+          <span className="all-trucks-table-header-program program">PROGRAM</span>
+          <span className="all-trucks-table-header-category category">
+            CATEGORY
+          </span>
+          <span className="all-trucks-table-header-units units">
+            UNITS
+          </span>
+          <span className="all-trucks-table-header-pallets pallets">PALLETS</span>
+          <span className="all-trucks-table-header-fob fob">FOB</span>
+          <span className="all-trucks-table-header-retail retail">RETAIL</span>
+          <span className="all-trucks-table-header-price price">PRICE</span>
+        </div>
           <div className="truckLoad-list">
             {trucks.map((truck) => {
               let {
@@ -98,22 +100,30 @@ const LoginModal = () => {
 
               return (
                 <div className="truckLoad" key={id}>
-                  <p className="items all-trucks-name text-truncate">
+                  <p className="items all-trucks-load text-truncate">
+                    {id}
+                  </p>
+                  <p className="items all-trucks-program text-truncate">
                     {truckName}
                   </p>
-                  <p className="items all-trucks-price text-truncate">
-                    ${truckPrice}
-                  </p>
-                  <p className="items all-trucks-contents text-truncate">
-                    {truckContents}
+                  <p className="items all-trucks-category text-truncate">
+                    {/* {category} */}
                   </p>
 
-                  <span className="items all-trucks-status text-truncate">
-                    {status >= 1 ? (
-                      <p className="available-status">Available</p>
-                    ) : (
-                      <p className="not-available-status">Not Available</p>
-                    )}
+                  <span className="items all-trucks-units text-truncate">
+                    {/* {units} */}
+                  </span>
+                  <span className="items all-trucks-pallets text-truncate">
+                    {/* {pallets} */}
+                  </span>
+                  <span className="items all-trucks-fob text-truncate">
+                    {/* {fob} */}
+                  </span>
+                  <span className="items all-trucks-retail text-truncate">
+                    {/* ${retail} */}
+                  </span>
+                  <span className="items all-trucks-price text-truncate">
+                    {truckPrice}
                   </span>
                 </div>
               );
