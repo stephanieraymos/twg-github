@@ -25,6 +25,7 @@ const FormLogin = () => {
 
   const {
     setUserId,
+    userId,
     email,
     setEmail,
     setFirstName,
@@ -70,6 +71,7 @@ const FormLogin = () => {
       .then((response) => {
         const res = response.json();
         if (response.ok) {
+          console.log("Fine");
           return res;
         } else {
           throw new Error(res.message);
@@ -77,6 +79,10 @@ const FormLogin = () => {
       })
       .then((user) => {
         setUserId(user["id"]);
+        console.log("user[]", user["id"]);
+        // console.log("Type of user[]", typeof(user["id"]))
+        // console.log("Type of userId", typeof(userId))
+        console.log("userId", userId);
         setEmail(user["email"]);
         setFirstName(user["first_name"]);
         setLastName(user["last_name"]);
@@ -95,6 +101,9 @@ const FormLogin = () => {
         setValidated(false);
       });
   };
+  useEffect(() => {
+    login();
+  }, [userId]);
 
   return (
     <>
