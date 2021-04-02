@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect} from "react";
 import Navigation from "./Navigation";
 import { useTruck } from "../truckContext";
 import inventory from "../css/inventory.css";
 import AddInventory from "./AddInventory";
 import { Container } from "react-bootstrap";
 import TableInventory from "./TableInventory";
-import { useGlobalContext } from "../context";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
-  const addNewTrucks = (truck) => {
+  const addNewTrucks = (truck, user) => {
     addTruck(truck);
   };
   const [addTruck] = useTruck();

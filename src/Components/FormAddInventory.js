@@ -2,11 +2,18 @@ import React, { useRef, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useAuthContext } from "../auth";
 import { useHistory } from "react-router-dom";
+import { useTruck } from "../truckContext";
 
-const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModal, userId, addNewTrucks }) => {
+const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModal, userId}) => {
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
   const [accessToken, setAccessToken] = useState("");
+  const [addTruck] = useTruck();
+
+  const addNewTrucks = (truck, user) => {
+    addTruck(truck);
+  };
+
   let history = useHistory();
 
   const handleSubmit = (event) => {
@@ -62,6 +69,7 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
       console.log(response);
       const newTruck = await response.json();
       console.log(newTruck);
+      history.push("/trucks");
       addNewTrucks([newTruck]);
     } catch (error) {
       console.log(error);
