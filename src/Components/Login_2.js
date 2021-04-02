@@ -15,6 +15,7 @@ const LoginModal = () => {
   const { fetchAccessToken } = useAuthContext();
   const [trucks] = useTruck();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
 
   let history = useHistory();
   useEffect(() => {
@@ -22,9 +23,7 @@ const LoginModal = () => {
       .then((token) => {
         history.push("/dashboard");
       })
-      .catch((error) => {
-
-      });
+      .catch((error) => {});
 
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -35,14 +34,21 @@ const LoginModal = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-
+  const openAlertModal = () => {
+    setIsAlertModalOpen(true);
+    console.log("It's working");
+    console.log(isAlertModalOpen);
+  };
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(true);
+  };
+  const closeAlertModal = () => {
+    setIsAlertModalOpen(false);
   };
 
   useEffect(() => {
     openModal();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -72,21 +78,25 @@ const LoginModal = () => {
           </div>
         </div>
       ) : (
-         <div className="table-wrapper">
-        <div className="header-items">
-          <span className="all-trucks-table-header-load truck">LOAD</span>
-          <span className="all-trucks-table-header-program program">PROGRAM</span>
-          <span className="all-trucks-table-header-category category">
-            CATEGORY
-          </span>
-          <span className="all-trucks-table-header-units units">
-            UNITS
-          </span>
-          <span className="all-trucks-table-header-pallets pallets">PALLETS</span>
-          <span className="all-trucks-table-header-fob fob">FOB</span>
-          <span className="all-trucks-table-header-retail retail">RETAIL</span>
-          <span className="all-trucks-table-header-price price">PRICE</span>
-        </div>
+        <div className="table-wrapper">
+          <div className="header-items">
+            <span className="all-trucks-table-header-load truck">LOAD</span>
+            <span className="all-trucks-table-header-program program">
+              PROGRAM
+            </span>
+            <span className="all-trucks-table-header-category category">
+              CATEGORY
+            </span>
+            <span className="all-trucks-table-header-units units">UNITS</span>
+            <span className="all-trucks-table-header-pallets pallets">
+              PALLETS
+            </span>
+            <span className="all-trucks-table-header-fob fob">FOB</span>
+            <span className="all-trucks-table-header-retail retail">
+              RETAIL
+            </span>
+            <span className="all-trucks-table-header-price price">PRICE</span>
+          </div>
           <div className="truckLoad-list">
             {trucks.map((truck) => {
               let {
@@ -100,9 +110,7 @@ const LoginModal = () => {
 
               return (
                 <div className="truckLoad" key={id}>
-                  <p className="items all-trucks-load text-truncate">
-                    {id}
-                  </p>
+                  <p className="items all-trucks-load text-truncate">{id}</p>
                   <p className="items all-trucks-program text-truncate">
                     {truckName}
                   </p>
@@ -130,7 +138,12 @@ const LoginModal = () => {
             })}
           </div>
 
-          <Modal show={isModalOpen} centered style={{left: "25%"}}>
+          <Modal
+            show={isModalOpen}
+            onHide={openAlertModal}
+            centered
+            style={{ left: "25%" }}
+          >
             <div
               className="form-body-container"
               style={{ width: "90%", alignSelf: "center" }}
@@ -163,9 +176,52 @@ const LoginModal = () => {
             </div>
           </Modal>
 
-          {/* <div className="form-body-container" style={{zIndex:1}}>
-            <FormLogin />
-          </div> */}
+          <Modal
+            id="modal"
+            show={isAlertModalOpen}
+            onHide={closeAlertModal}
+            centered
+            style={{ right: "25%" }}
+          >
+            <div
+              className="alert-modal-container"
+              style={{
+                width: "90%",
+                height: "10rem",
+                alignSelf: "center",
+              }}
+            >
+              <div
+                className="alert-modal-body-wrapper"
+                style={{
+                  width: "85%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <div
+                  className="form-label"
+                  style={{ color: "black", fontSize: "36px" }}
+                >
+                  Attention
+                </div>
+                <button
+                  style={{
+                    background: "transparent",
+                    borderColor: "transparent",
+                    display: "flex",
+                  }}
+                >
+                  <img src={cancel} alt="cancel" onClick={closeAlertModal} />
+                </button>
+              </div>
+              <h5 className="alert-modal-body">
+                Please login to interact with this table
+              </h5>
+            </div>
+          </Modal>
         </div>
 
         // // <TableInventory>

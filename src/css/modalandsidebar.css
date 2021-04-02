@@ -249,6 +249,40 @@ main {
 .btn {
   padding: 1rem .8rem;
 }
+
+.alert-modal-body-wrapper {
+  padding-top: .75rem;
+  height: 100%;
+}
+.alert-modal-body {
+  color: black;
+  padding-bottom: 1.5rem;
+}
+
+.alert-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+}
+
+#modal {
+  /*Position and width*/
+  position: fixed;
+  
+  top: 0;
+  left: 0;
+  right: 20%;
+  bottom: 54%;
+  
+  /*Centering horizintally*/
+  margin: auto;
+
+  /*Purely visual stuff*/
+  border-radius: 3px;
+  text-align:center;
+}
 /*=============================================
 =                   SIDEBAR            =
 =============================================*/
