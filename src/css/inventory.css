@@ -161,83 +161,74 @@ input:hover::placeholder {
   padding: 2rem;
 }
 
-span.all-trucks-table-header-name {
-  width: 33%;
+/* //! TABLE HEADERS */
+span.all-trucks-table-header-load {
+  width: 5%;
 }
-span.all-trucks-table-header-price {
-  width: 15%;
+span.all-trucks-table-header-program {
+  width: 10%;
   align-self: center;
 }
-span.all-trucks-table-header-contents {
-  width: 30%;
+span.all-trucks-table-header-category {
+  width: 10%;
 }
-span.all-trucks-table-header-manifest {
+span.all-trucks-table-header-units {
   width: 5%;
   text-align: right;
   padding-right: .2rem;
 }
-span.all-trucks-table-header-status {
-  width: 6%;
+span.all-trucks-table-header-pallets {
+  width: 5%;
   text-align: right;
   padding-right: 1.5rem;
 }
+span.all-trucks-table-header-fob {
+  width: 10%;
+  text-align: right;
+  padding-right: 1.5rem;
+}
+span.all-trucks-table-header-retail {
+  width: 5%;
+  text-align: right;
+  padding-right: 1.5rem;
+}
+span.all-trucks-table-header-price {
+  width: 10%;
+  text-align: right;
+  padding-right: 3%;
+}
 
-.all-trucks-name {
-  width: 33%;
+/* //! TABLE CONTENTS */
+.all-trucks-load {
+  width: 5%;
   padding-left: .4rem;
 }
-.all-trucks-price {
-  width: 16%;
+.all-trucks-program {
+  width: 10%;
 }
-.all-trucks-contents {
-  width: 35%;
+.all-trucks-category {
+  width: 10%;
 }
-.all-trucks-manifest {
+.all-trucks-units {
   width: 5%;
 }
-.all-trucks-status {
-  width: 8%;
+.all-trucks-pallets {
+  width: 5%;
+  text-align: center;
+}
+.all-trucks-fob {
+  width: 10%;
+  text-align: center;
+}
+.all-trucks-retail {
+  width: 5%;
+  text-align: center;
+}
+.all-trucks-price {
+  width: 10%;
   text-align: center;
 }
 
-.available-status {
-  padding: .2rem;
-  margin: 0 1rem;
-  border: green 1px solid;
-  width: 75%;
-  color: white;
-  background-color:rgb(5, 153, 5);
-  border-radius: 100px;
-  font-size: .4rem;
-}
-.not-available-status {
-  padding: .2rem .4rem .2rem .2rem;
-  margin: 0 1rem;
-  border: red 1px solid;
-  width: 90%;
-  color: white;
-  background-color:rgb(212, 7, 7);
-  border-radius: 100px;
-  font-size: .4rem;
-}
-
-@media only screen and (min-width: 768px) {
-  .not-available-status {
-    padding: .2rem .4rem .2rem .2rem;
-    margin: .25 .08rem;
-    border: red 1px solid;
-    width: 75%;
-    color: white;
-    background-color:rgb(212, 7, 7);
-    border-radius: 100px;
-    font-size: .4rem;
-  }
-}
-
-.no-icon {
-  align-self: center;
-  text-justify: center
-}
 
 /*=============================================
 =               TRUCK DETAILS               =

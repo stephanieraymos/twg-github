@@ -64,15 +64,18 @@ const TableInventory = () => {
     <>
       <div className="table-wrapper">
         <div className="header-items">
-          <span className="all-trucks-table-header-name truck">TRUCK NAME</span>
+          <span className="all-trucks-table-header-load truck">LOAD</span>
+          <span className="all-trucks-table-header-program program">PROGRAM</span>
+          <span className="all-trucks-table-header-category category">
+            CATEGORY
+          </span>
+          <span className="all-trucks-table-header-units units">
+            UNITS
+          </span>
+          <span className="all-trucks-table-header-pallets pallets">PALLETS</span>
+          <span className="all-trucks-table-header-fob fob">FOB</span>
+          <span className="all-trucks-table-header-retail retail">RETAIL</span>
           <span className="all-trucks-table-header-price price">PRICE</span>
-          <span className="all-trucks-table-header-contents contents">
-            CONTENTS
-          </span>
-          <span className="all-trucks-table-header-manifest manifest">
-            FILES
-          </span>
-          <span className="all-trucks-table-header-status status">STATUS</span>
         </div>
         <div className="truckLoad-list">
           {trucks.map((truck) => {
@@ -89,48 +92,35 @@ const TableInventory = () => {
               <div className="truckLoad" key={id}>
                 <Link
                   to={`/TruckDetails/${id}`}
-                  className="items all-trucks-name text-truncate"
+                  className="items all-trucks-load text-truncate"
                 >
-                  {truckName}
+                  {id}
                 </Link>
 
+                <p className="items all-trucks-program text-truncate">
+                  {truckName}
+                </p>
+                <p className="items all-trucks-category text-truncate">
+                  {/* {category} */}
+                </p>
+                <p className="items all-trucks-units text-truncate">
+                  {/* {units} */}
+                </p>
+                <p className="items all-trucks-pallets text-truncate">
+                  {/* {pallets} */}
+                </p>
+                <p className="items all-trucks-fob text-truncate">
+                  {/* {fob} */}
+                </p>
+                <p className="items all-trucks-retail text-truncate">
+                  {/* {retailPrice} */}
+                </p>
                 <p className="items all-trucks-price text-truncate">
                   ${truckPrice}
                 </p>
-                <p className="items all-trucks-contents text-truncate">
-                  {truckContents}
-                </p>
 
-                {(truckManifestId.length && (
-                  <button
-                    className="folder-icon"
-                    onClick={() => {
-                      getManifest(truckManifestId);
-                    }}
-                  >
-                    <p className="items all-trucks-manifest">
-                      <img src={folder} alt="download icon" />
-                    </p>
-                  </button>
-                )) || (
-                    <p
-                      className="items"
-                      onClick={() => alert("This truck has no files")}
-                    >
-                      <img
-                        className="no-icon"
-                        src={noSign}
-                        alt="No file for this truck"
-                      />
-                    </p>
-                  )}
-                <span className="items all-trucks-status text-truncate">
-                  {status >= 1 ? (
-                    <p className="available-status">Available</p>
-                  ) : (
-                    <p className="not-available-status">Not Available</p>
-                  )}
-                </span>
+
+
                 <Modal
                   show={isModalOpen}
                   onHide={closeModal}
