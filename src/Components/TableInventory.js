@@ -21,7 +21,7 @@ const TableInventory = () => {
     setIsModalOpen(false);
   };
 
-  const [trucks, addTruck, loading, errorMessage] = useTruck();
+  const [trucks] = useTruck();
 
   const {
     fetchAccessToken,
