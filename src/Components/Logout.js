@@ -16,47 +16,43 @@ const Logout = () => {
   let history = useHistory();
 
   const {
-    accessToken: [accessToken, setAccessToken],
-    refreshToken: [refreshToken, setRefreshToken],
-    removeToken
+    fetchAccessToken,
+    fetchRefreshToken,
+    removeTokens,
   } = useAuthContext();
 
   useEffect(() => {
     setLoading(true);
-    
-  });
+    fetchAccessToken
+      .then((token) => {
+        logout(token);
+      })
+      .catch((error) => {
+        history.push("/");
+      });
+  }, []);
 
-  //showAlert function, when called the values for each param are passed in as arguments
-  const showAlert = (show = false, type = "", msg = "") => {
-    setAlert({ show, type, msg });
-  };
-
-  const logout = () => {
+  const logout = (accessToken) => {
     const url = "https://api.thewholesalegroup.com/v1/account/logout/";
     // user might have a refresh token that have not expired yet
     fetch(url, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + accessToken,
+            "Authorization": `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-            refresh: refreshToken
+            refresh: fetchRefreshToken()
         }),
     })
-    .then(() => {
-        removeToken();
-        history.push("/")
+    .then((response) => {
+      removeTokens();
+      history.push("/");
     })
     .catch((error) => {
-        showAlert(true, "danger", error.message);
-        history.push("/home")
+      history.push("/")
     });
   }
-
-  useEffect(() => {
-    logout();
-  }, [])
 
   return <Loading />
 };

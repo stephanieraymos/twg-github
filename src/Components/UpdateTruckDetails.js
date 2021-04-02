@@ -15,7 +15,6 @@ const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
 const UpdateTruckDetails = () => {
   const { id } = useParams();
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
-  const [fileUserId, setFileUserId] = useState("");
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [company, setCompany] = useState("");
@@ -28,9 +27,10 @@ const UpdateTruckDetails = () => {
   const [truckManifestCount, setTruckManifestCount] = useState(0)
   
   const {
-    accessToken: [accessToken, setAccessToken],
-    authenticate,
+    fetchAccessToken,
   } = useAuthContext();
+
+  const [accessToken, setAccessToken] = useState("");
 
   let history = useHistory();
 
@@ -67,96 +67,93 @@ const UpdateTruckDetails = () => {
     }
   };
 
-  const getManifest = (truckManifestId) => {
-    try {
+  const getManifest = () => {
+    if (truckManifestId.length > 0) {
       const data = new FormData();
       truckManifestId.map((id) => data.append("truckManifestId", id));
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          "Authorization": "Bearer " + accessToken,
+          "Authorization": `Bearer ${accessToken}`,
         },
         body: data,
       })
         .then((response) => response.json())
-        .then((manifest) => setTruckFile(manifest));
-    } catch (error) {
-      console.log(error);
+        .then((manifest) => setTruckFile(manifest))
+        .catch((error) => {});
     }
   };
 
-  const getTruckData = async () => {
-    try {
-      const response = await fetch(`${url}${id}`, {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + accessToken,
+  const getTruck = () => {
+    fetch(`${url}${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          const {truckName, truckPrice, truckContents, truckManifestId, company, status} = data[0]
+  
+          setTruckName(truckName);
+          setTruckPrice(truckPrice);
+          setTruckContents(truckContents);
+          setTruckManifestId(truckManifestId);
+          setCompany(company);
+          setStatus(status);
+  
+        } else {
+          throw new Error("Truck does not exist.");
         }
-      });
-      const data = await response.json();
-      if (data) {
-        const {userId, truckName, truckPrice, truckContents, truckManifestId, company, status} = data[0]
-
-        setFileUserId(userId);
-        setTruckName(truckName);
-        setTruckPrice(truckPrice);
-        setTruckContents(truckContents);
-        setTruckManifestId(truckManifestId);
-        setCompany(company);
-        setStatus(status);
-
-        if(truckManifestId.length) {
-          getManifest(truckManifestId);
-        }
-      } else {
-        throw new Error("Truck does not exist.");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+      })
+      .catch((error) => {});
   }
 
   useEffect(() => {
     // send user back to login if they're not logged in
-    authenticate(
-      () => {},
-      () => {
+    fetchAccessToken
+      .then((token) => {
+        setAccessToken(token);
+        getTruck();
+      })
+      .catch((error) => {
         history.push("/");
-      },
-    );
-
-    getTruckData();
+      });
   }, []);
+
+  useEffect(() => {
+    getManifest();
+  }, [truckManifestId]);
 
   // Return true or false to indicate if fetch was successful
   const updateTruck = () => {
-    try {
-      const data = new FormData(form.current);
-      data.append("id", id);
-      data.set("status", status);
+    const data = new FormData(form.current);
+    data.append("id", id);
+    data.set("status", status);
 
-      // turn string to array and insert to truck contents
-      const tempTruckContents = data.get("truckContents").split(",");
-      data.delete("truckContents");
-      tempTruckContents.map(item => data.append("truckContents", item))
+    // turn string to array and insert to truck contents
+    const tempTruckContents = data.get("truckContents").split(",");
+    data.delete("truckContents");
+    tempTruckContents.map(item => data.append("truckContents", item))
 
-      oldTruckManifestId.map((id) => data.append("truckManifestId", id));
-      fetch(inventoryURL, {
-        method: "PUT",
-        headers: {
-          "Authorization": "Bearer " + accessToken,
-        },
-        body: data,
-      }).then((response) => {
+    oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+    fetch(inventoryURL, {
+      method: "PUT",
+      headers: {
+        "Authorization": "Bearer " + accessToken,
+      },
+      body: data,
+    })
+      .then((response) => {
         console.log(response);
         if (response.ok) {
           return true;
         } else return false;
-      });
-    } catch (error) {
-      console.log(error);
-      // console.trace(updateTruck)
-    }
+      })
+      .catch((error) => {});
   };
 
   return (
