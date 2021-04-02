@@ -12,7 +12,7 @@ const AddInventory = ({ addNewTrucks }) => {
 
   document.title = "Add Inventory";
 
-  const { userId, setUserId } = useGlobalContext();
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
 
   const openModal = () => {
     setIsModalOpen(true);

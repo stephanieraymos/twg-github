@@ -12,8 +12,9 @@ const EmailVerification = () => {
   const { token } = useParams();
   let history = useHistory();
 
+  const [userId, setUserId] = useState("");
+
   const {
-    setUserId,
     setFirstName,
     setLastName,
     setEmail,

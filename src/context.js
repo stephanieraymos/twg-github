@@ -14,7 +14,6 @@ const AppProvider = ({ children }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [userId, setUserId] = useState("");
   const [company, setCompany] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
@@ -58,8 +57,6 @@ const AppProvider = ({ children }) => {
         setLastName,
         email,
         setEmail,
-        userId,
-        setUserId,
         company,
         setCompany,
         phoneNumber,

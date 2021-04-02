@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 import { useTruck } from "../truckContext";
 import inventory from "../css/inventory.css";
@@ -15,13 +15,8 @@ const InventoryAllTrucks = () => {
   };
   const [addTruck] = useTruck();
 
-  const {
-    userId,
-  } = useGlobalContext();
-
   return (
     <>
-      {console.log("userId", userId)}
       <div>
         <Navigation />
       </div>

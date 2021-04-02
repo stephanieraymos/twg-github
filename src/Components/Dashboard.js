@@ -18,11 +18,11 @@ const Dashboard = () => {
   // const { getData } = useTruckContext();
   const [trucks, loading] = useTruck();
 
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+
   let history = useHistory();
 
   const {
-    userId,
-    setUserId,
     setEmail,
     setFirstName,
     setLastName,
@@ -56,7 +56,7 @@ const Dashboard = () => {
         }
       })
       .then((user) => {
-        if (userId === "") {
+        if (userId == null) {
           setUserId(user["id"]);
           setEmail(user["email"]);
           setFirstName(user["first_name"]);
@@ -73,6 +73,11 @@ const Dashboard = () => {
 
       });
   };
+
+  useEffect(() => {
+    localStorage.setItem('userId', userId);
+  }, [userId])
+
   useEffect(() => {
     fetchAccessToken
       .then((token) => {
