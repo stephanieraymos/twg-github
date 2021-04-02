@@ -163,14 +163,6 @@ const LoginModal = () => {
                 >
                   Login
                 </div>
-                <button
-                  style={{
-                    background: "transparent",
-                    borderColor: "transparent",
-                  }}
-                >
-                  <img src={cancel} alt="cancel" onClick={closeModal} />
-                </button>
               </div>
               <FormLogin />
             </div>
