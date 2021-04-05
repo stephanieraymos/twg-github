@@ -1,10 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { useAuthContext } from "../auth";
 import { useHistory } from "react-router-dom";
 import { useTruck } from "../truckContext";
 
-const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModal, userId}) => {
+const FormAddInventory = ({
+  truckManifestCount,
+  setTruckManifestCount,
+  closeModal,
+  userId,
+}) => {
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
   const [accessToken, setAccessToken] = useState("");
@@ -30,9 +35,7 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
     }
   };
 
-  const {
-    fetchAccessToken,
-  } = useAuthContext();
+  const { fetchAccessToken } = useAuthContext();
 
   useEffect(() => {
     // send user back to login if they're not logged in
@@ -61,7 +64,7 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
         {
           method: "POST",
           headers: {
-            "Authorization": "Bearer " + accessToken,
+            Authorization: "Bearer " + accessToken,
           },
           body: data,
         }
@@ -85,35 +88,36 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
         onSubmit={handleSubmit}
         style={{ width: "85%", margin: "0% 5% 5%" }}
       >
-{/* //^ ------------------- PROGRAM / SOURCE ---------------------- */}
-        <Form.Group className="center-form-group">
+        {/* //^ ------------------- PROGRAM / SOURCE ---------------------- */}
+        <Form.Group>
           <Form.Label className="form-label">Program</Form.Label>
           <Form.Control type="text" required name="source" />
           <Form.Control.Feedback type="invalid">
-            Please enter program (source).
+            Please enter program name (source).
           </Form.Control.Feedback>
         </Form.Group>
 
-{/* //^ --------------------- RETAIL PRICE ------------------------ */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Retail</Form.Label>
-          <Form.Control type="text" required name="retailPrice" />
-          <Form.Control.Feedback type="invalid">
-            Please enter the retail truck price.
-          </Form.Control.Feedback>
-        </Form.Group>
+        <Row>
+          {/* //^ ---------------------- RETAIL PRICE ------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Retail Price</Form.Label>
+            <Form.Control type="text" required name="retailPrice" />
+            <Form.Control.Feedback type="invalid">
+              Please enter retail price.
+            </Form.Control.Feedback>
+          </Col>
+          {/* //^ ---------------------- OUR PRICE------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Our Price</Form.Label>
+            <Form.Control type="text" required name="price" />
+            <Form.Control.Feedback type="invalid">
+              Please enter our price.
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
 
-{/* //^ ---------------------- OUR PRICE ------------------------- */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Our Price</Form.Label>
-          <Form.Control type="text" required name="price" />
-          <Form.Control.Feedback type="invalid">
-            Please enter our price.
-          </Form.Control.Feedback>
-        </Form.Group>
-
-{/* //^ -------------------------- FOB ----------------------------- */}
-        <Form.Group className="center-form-group">
+        {/* //^ -------------------------- FOB ----------------------------- */}
+        <Form.Group>
           <Form.Label className="form-label">FOB</Form.Label>
           <Form.Control type="text" required name="fob" />
           <Form.Control.Feedback type="invalid">
@@ -121,19 +125,19 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
           </Form.Control.Feedback>
         </Form.Group>
 
-{/* //^ ------------------------- CONTENTS ---------------------------- */}
-        <Form.Group className="center-form-group">
+        {/* //^ ------------------------- CONTENTS ---------------------------- */}
+        <Form.Group>
           <Form.Label className="form-label">Contents</Form.Label>
           <Form.Control type="text" required name="truckContents" />
-          <Form.Control.Feedback type="invalid">
-            Please specify the contents inside the truck.
-          </Form.Control.Feedback>
           <Form.Text muted>
             Separate each content with a comma, e.g., clothes,toys
           </Form.Text>
+          <Form.Control.Feedback type="invalid">
+            Please specify the contents inside the truck.
+          </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="center-form-group">
+        <Form.Group>
           <Form.Label className="form-label">Category</Form.Label>
           <Form.Control type="text" required name="category" />
           <Form.Control.Feedback type="invalid">
@@ -141,25 +145,29 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
           </Form.Control.Feedback>
         </Form.Group>
 
-{/* //^ ---------------------- PALLET COUNT ------------------------- */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Pallet</Form.Label>
-          <Form.Control type="text" required name="palletCount" />
-          <Form.Control.Feedback type="invalid">
-            Pallet Count
-          </Form.Control.Feedback>
-        </Form.Group>
+        <Row>
+          {/* //^ ---------------------- PALLET COUNT ------------------------- */}
+          <Col>
+            <Form.Label className="form-label">
+              Pallet
+            </Form.Label>
+            <Form.Control type="text" required name="palletCount" />
+            <Form.Control.Feedback type="invalid">
+            Please enter # of pallets on truck.
+            </Form.Control.Feedback>
+          </Col>
+          {/* //^ ---------------------- UNIT COUNT ------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Units</Form.Label>
+            <Form.Control type="text" required name="units" />
+            <Form.Control.Feedback type="invalid">
+              Please enter # of items in truck.
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
 
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Units</Form.Label>
-          <Form.Control type="text" required name="units" />
-          <Form.Control.Feedback type="invalid">
-            Please specify the # of items in the truck.
-          </Form.Control.Feedback>
-        </Form.Group>
-
-{/* //^ ------------------------- FILES ---------------------------- */}
-        <Form.Group className="center-form-group">
+        {/* //^ ------------------------- FILES ---------------------------- */}
+        <Form.Group>
           <Form.Label className="form-label">Manifest</Form.Label>
           {Array(truckManifestCount).fill(
             <>
@@ -184,9 +192,8 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
               className="form-button"
               block
               style={{
-                width: "150px",
+                width: "120px",
                 backgroundColor: "#000",
-                alignSelf: "start",
                 margin: "0rem",
               }}
             >
@@ -198,13 +205,12 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
               className="form-button"
               block
               style={{
-                width: "150px",
+                width: "120px",
                 backgroundColor: "#000",
-                alignSelf: "start",
                 margin: ".75rem 0rem",
               }}
             >
-              Remove Files
+              Cancel
             </Button>
           )}
         </Form.Group>

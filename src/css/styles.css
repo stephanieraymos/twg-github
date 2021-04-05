@@ -565,6 +565,7 @@ input:hover {
 .form-body-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
   justify-content: center;
   align-items: center;
   width: 400px;
@@ -575,6 +576,15 @@ input:hover {
 .form-label {
   font-family: "Montserrat";
   color: black;
+  width: auto;
+  margin-right: .2rem;
+}
+.form-label-our-price{
+  margin-left: .2rem;
+  width: 15rem;
+}
+.form-label-units{
+  margin-left: .2rem;
 }
 
 .form-footer-container {
