@@ -8,7 +8,7 @@ import cancel from "../img/cancel.svg";
 
 const AddInventory = ({ addNewTrucks }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [truckManifestCount, setTruckManifestCount] = useState(0);
+  const [manifestsCount, setManifestsCount] = useState(0);
 
   document.title = "Add Inventory";
 
@@ -73,8 +73,8 @@ const AddInventory = ({ addNewTrucks }) => {
             }}
           />
           <FormAddInventory
-            truckManifestCount={truckManifestCount}
-            setTruckManifestCount={setTruckManifestCount}
+            manifestsCount={manifestsCount}
+            setManifestsCount={setManifestsCount}
             closeModal={closeModal}
             userId={userId}
             addNewTrucks={addNewTrucks}

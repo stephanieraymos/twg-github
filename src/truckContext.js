@@ -18,7 +18,7 @@ const TruckProvider = ({ children }) => {
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
   const [contents, setContents] = useState([]);
-  const [truckManifest, setTruckManifest] = useState([]);
+  const [manifests, setManifests] = useState([]);
   const [id, setId] = useState("");
 
   const [isEditing, setIsEditing] = useState(false);
@@ -57,7 +57,7 @@ const TruckProvider = ({ children }) => {
     setTruckName(specificItem.truckName);
     setTruckPrice(specificItem.truckPrice);
     setContents(specificItem.contents);
-    setTruckManifest(specificItem.truckManifest);
+    setManifests(specificItem.manifests);
   };
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
@@ -70,8 +70,8 @@ const TruckProvider = ({ children }) => {
         setTruckPrice,
         contents,
         setContents,
-        truckManifest,
-        setTruckManifest,
+        manifests,
+        setManifests,
         truckLoad,
         setTruckLoad,
         // trucks,

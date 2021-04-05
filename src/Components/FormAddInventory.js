@@ -5,8 +5,8 @@ import { useHistory } from "react-router-dom";
 import { useTruck } from "../truckContext";
 
 const FormAddInventory = ({
-  truckManifestCount,
-  setTruckManifestCount,
+  manifestsCount,
+  setManifestsCount,
   closeModal,
   userId,
 }) => {
@@ -27,7 +27,7 @@ const FormAddInventory = ({
     event.stopPropagation();
     if (form.checkValidity() === true) {
       setValidated(false);
-      setTruckManifestCount(0);
+      setManifestsCount(0);
       closeModal();
       postTrucks();
     } else {
@@ -53,9 +53,9 @@ const FormAddInventory = ({
   const postTrucks = async () => {
     const data = new FormData(form.current);
     data.append("userId", userId);
-    const truckContents = data.get("truckContents").split(",");
-    data.delete("truckContents");
-    truckContents.map((item) => data.append("truckContents", item));
+    const contents = data.get("contents").split(",");
+    data.delete("contents");
+    contents.map((item) => data.append("contents", item));
 
     data.forEach((value, key) => console.log(key, value));
     try {
@@ -128,7 +128,7 @@ const FormAddInventory = ({
         {/* //^ ------------------------- CONTENTS ---------------------------- */}
         <Form.Group>
           <Form.Label className="form-label">Contents</Form.Label>
-          <Form.Control type="text" required name="truckContents" />
+          <Form.Control type="text" required name="contents" />
           <Form.Text muted>
             Separate each content with a comma, e.g., clothes,toys
           </Form.Text>
@@ -169,13 +169,13 @@ const FormAddInventory = ({
         {/* //^ ------------------------- FILES ---------------------------- */}
         <Form.Group>
           <Form.Label className="form-label">Manifest</Form.Label>
-          {Array(truckManifestCount).fill(
+          {Array(manifestsCount).fill(
             <>
               <Form.Control
                 type="file"
                 multiple
                 required
-                name="truckManifest"
+                name="manifests"
                 style={{ fontSize: "1rem", color: "black" }}
               />
               <Form.Control.Feedback type="invalid">
@@ -186,9 +186,9 @@ const FormAddInventory = ({
               </Form.Text>
             </>
           )}
-          {truckManifestCount == 0 ? (
+          {manifestsCount == 0 ? (
             <Button
-              onClick={() => setTruckManifestCount(truckManifestCount + 1)}
+              onClick={() => setManifestsCount(manifestsCount + 1)}
               className="form-button"
               block
               style={{
@@ -201,7 +201,7 @@ const FormAddInventory = ({
             </Button>
           ) : (
             <Button
-              onClick={() => setTruckManifestCount(truckManifestCount - 1)}
+              onClick={() => setManifestsCount(manifestsCount - 1)}
               className="form-button"
               block
               style={{

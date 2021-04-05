@@ -43,7 +43,7 @@ const TruckDetails = () => {
   const getManifest = () => {
     if (manifestId.length > 0) {
       const data = new FormData();
-      manifestId.map((id) => data.append("truckManifestId", id));
+      manifestId.map((id) => data.append("manifestIds", id));
       fetch(manifestURL, {
         method: "POST",
         headers: {
@@ -58,12 +58,12 @@ const TruckDetails = () => {
     
   };
 
-  // *@todo update only works if the truck has a file. If the truckManifest is empty. POST fails
+  // *@todo update only works if the truck has a file. If the manifests is empty. POST fails
 
   const deleteTruck = () => {
     const data = new FormData();
     data.append("id", id);
-    manifestId.map((id) => data.append("truckManifestId", id));
+    manifestId.map((id) => data.append("manifestIds", id));
     fetch(inventoryURL, {
       method: "DELETE",
       headers: {
@@ -91,16 +91,16 @@ const TruckDetails = () => {
           const {
             truckName,
             truckPrice,
-            truckContents,
-            truckManifestId,
+            contents,
+            manifestIds,
             company,
             status,
           } = data[0];
 
         setName(truckName);
         setPrice(truckPrice);
-        setContents(truckContents.join(', '));
-        setManifestId(truckManifestId);
+        setContents(contents.join(', '));
+        setManifestId(manifestIds);
         setCompany(company);
         setStatus(status);
       }
@@ -272,18 +272,18 @@ const TruckDetails = () => {
                 <Accordion.Collapse eventKey="0">
                   <Card.Body style={{ backgroundColor: "transparent" }}>
                     {files.map((manifest, index) => {
-                      const { truckManifest, truckManifestName } = manifest;
+                      const { manifests, manifestsName } = manifest;
                       return (
                         <ul key={manifestId[index]}>
                           <li
                             onClick={
                               () =>
-                                window.open(truckManifest, "_blank") ||
-                                window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                                window.open(manifests, "_blank") ||
+                                window.location.replace(manifests) //Opens in new tab || Opens in same tab if pop ups are blocked
                             }
                           >
                             <span style={{ cursor: "pointer", color: "black" }}>
-                              {truckManifestName}
+                              {manifestsName}
                             </span>
                           </li>
                         </ul>

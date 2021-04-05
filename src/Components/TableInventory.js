@@ -42,10 +42,10 @@ const TableInventory = () => {
 
 
   //^ GET MANIFEST REQUEST //
-  const getManifest = (truckManifestId) => {
+  const getManifest = (manifestIds) => {
     try {
       const data = new FormData();
-      truckManifestId.map((id) => data.append("truckManifestId", id));
+      manifestIds.map((id) => data.append("manifestIds", id));
       fetch("https://api.thewholesalegroup.com/v1/trucks/manifest/", {
         method: "POST",
         headers: {
@@ -83,8 +83,8 @@ const TableInventory = () => {
               id,
               truckName,
               truckPrice,
-              truckContents,
-              truckManifestId,
+              contents,
+              manifestIds,
               status,
             } = truck;
 
@@ -146,22 +146,22 @@ const TableInventory = () => {
                       {truckFile.map((manifest) => {
                         // Map method to get list of files for each truck inside modal
                         const {
-                          truckManifest,
-                          truckManifestName,
-                          truckManifestId,
+                          manifests,
+                          manifestsName,
+                          manifestIds,
                         } = manifest;
                         return (
                           <ul>
                             <li
-                              key={truckManifestId}
+                              key={manifestIds}
                               onClick={
                                 () =>
-                                  window.open(truckManifest, "_blank") ||
-                                  window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                                  window.open(manifests, "_blank") ||
+                                  window.location.replace(manifests) //Opens in new tab || Opens in same tab if pop ups are blocked
                               }
                             >
                               <p style={{ cursor: "pointer", color: "black" }}>
-                                {truckManifestName}
+                                {manifestsName}
                               </p>
                             </li>
                           </ul>

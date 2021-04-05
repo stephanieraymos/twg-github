@@ -19,12 +19,12 @@ const UpdateTruckDetails = () => {
   const [truckPrice, setTruckPrice] = useState("");
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState(0);
-  const [truckContents, setTruckContents] = useState([]);
-  const [truckManifestId, setTruckManifestId] = useState([]);
+  const [contents, setContents] = useState([]);
+  const [manifestIds, setManifestIds] = useState([]);
   const [truckFile, setTruckFile] = useState([]);
-  const [oldTruckManifestId, setOldTruckManifestId] = useState([]);
+  const [oldManifestIds, setOldManifestIds] = useState([]);
   const [validated, setValidated] = useState(false);
-  const [truckManifestCount, setTruckManifestCount] = useState(0)
+  const [manifestsCount, setManifestsCount] = useState(0)
   
   const {
     fetchAccessToken,
@@ -42,8 +42,8 @@ const UpdateTruckDetails = () => {
   //   setTruckName,
   //   truckPrice,
   //   setTruckPrice,
-  //   truckContents,
-  //   setTruckContents,
+  //   contents,
+  //   setContents,
 
   //   showAlert,
   // } = useTruckContext();
@@ -68,9 +68,9 @@ const UpdateTruckDetails = () => {
   };
 
   const getManifest = () => {
-    if (truckManifestId.length > 0) {
+    if (manifestIds.length > 0) {
       const data = new FormData();
-      truckManifestId.map((id) => data.append("truckManifestId", id));
+      manifestIds.map((id) => data.append("manifestIds", id));
       fetch(manifestURL, {
         method: "POST",
         headers: {
@@ -96,12 +96,12 @@ const UpdateTruckDetails = () => {
       })
       .then((data) => {
         if (data) {
-          const {truckName, truckPrice, truckContents, truckManifestId, company, status} = data[0]
+          const {truckName, truckPrice, contents, manifestIds, company, status} = data[0]
   
           setTruckName(truckName);
           setTruckPrice(truckPrice);
-          setTruckContents(truckContents);
-          setTruckManifestId(truckManifestId);
+          setContents(contents);
+          setManifestIds(manifestIds);
           setCompany(company);
           setStatus(status);
   
@@ -126,7 +126,7 @@ const UpdateTruckDetails = () => {
 
   useEffect(() => {
     getManifest();
-  }, [truckManifestId]);
+  }, [manifestIds]);
 
   // Return true or false to indicate if fetch was successful
   const updateTruck = () => {
@@ -135,11 +135,11 @@ const UpdateTruckDetails = () => {
     data.set("status", status);
 
     // turn string to array and insert to truck contents
-    const tempTruckContents = data.get("truckContents").split(",");
-    data.delete("truckContents");
-    tempTruckContents.map(item => data.append("truckContents", item))
+    const tempcontents = data.get("contents").split(",");
+    data.delete("contents");
+    tempcontents.map(item => data.append("contents", item))
 
-    oldTruckManifestId.map((id) => data.append("truckManifestId", id));
+    oldManifestIds.map((id) => data.append("manifestIds", id));
     fetch(inventoryURL, {
       method: "PUT",
       headers: {
@@ -216,8 +216,8 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               required
-              defaultValue={truckContents}
-              name="truckContents"
+              defaultValue={contents}
+              name="contents"
             />
             <Form.Control.Feedback type="invalid">
               Please specify the contents inside the truck.
@@ -242,13 +242,13 @@ const UpdateTruckDetails = () => {
 
           <Form.Group className="center-form-group">
             <Form.Label className="form-label">Manifest</Form.Label>
-            {Array(truckManifestCount).fill(
+            {Array(manifestsCount).fill(
               <>
                 <Form.Control
                   type="file"
                   multiple
                   required
-                  name="truckManifest"
+                  name="manifests"
                   style={{ fontSize: "1rem", color: "black" }}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -259,9 +259,9 @@ const UpdateTruckDetails = () => {
                 </Form.Text>
               </>
             )}
-            {truckManifestCount == 0 ?
+            {manifestsCount == 0 ?
               <Button
-                onClick={() => setTruckManifestCount(truckManifestCount + 1)}
+                onClick={() => setManifestsCount(manifestsCount + 1)}
                 className="form-button"
                 block
                 style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: "0rem" }}
@@ -270,7 +270,7 @@ const UpdateTruckDetails = () => {
               </Button>
               :
               <Button
-                onClick={() => setTruckManifestCount(truckManifestCount - 1)}
+                onClick={() => setManifestsCount(manifestsCount - 1)}
                 className="form-button"
                 block
                 style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: ".75rem 0rem" }}
@@ -281,19 +281,19 @@ const UpdateTruckDetails = () => {
           </Form.Group>
 
           {truckFile.map((manifest, index) => {
-            const id = truckManifestId[index];
-            const { truckManifest, truckManifestName } = manifest;
+            const id = manifestIds[index];
+            const { manifests, manifestsName } = manifest;
             return (
               <>
                 <Form.Row key={id}>
                   <Col sm={11}>
                     <Form.Control
-                      defaultValue={truckManifestName} 
+                      defaultValue={manifestsName} 
                       readOnly
                       style={{cursor: "pointer"}}
                       onClick={ () =>
-                        window.open(truckManifest, "_blank") ||
-                        window.location.replace(truckManifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                        window.open(manifests, "_blank") ||
+                        window.location.replace(manifests) //Opens in new tab || Opens in same tab if pop ups are blocked
                       } />
                   </Col>
                   <Col sm={1}>
@@ -305,14 +305,14 @@ const UpdateTruckDetails = () => {
                           height: "100%"
                         }}
                       >
-                        {oldTruckManifestId.includes(id) ?
+                        {oldManifestIds.includes(id) ?
                           <img 
                             src={undo} 
                             alt="undo" 
                             onClick={() =>{
                               console.log("id to be added back", id);
-                              setOldTruckManifestId(oldTruckManifestId.filter(item => item !== id))
-                              console.log("old manifest id", oldTruckManifestId);
+                              setOldManifestIds(oldManifestIds.filter(item => item !== id))
+                              console.log("old manifest id", oldManifestIds);
                             }}
                           />
                           :
@@ -321,8 +321,8 @@ const UpdateTruckDetails = () => {
                             alt="remove" 
                             onClick={() =>{
                               console.log("id to be deleted", id);
-                              setOldTruckManifestId([...oldTruckManifestId, id])
-                              console.log("old manifest id", oldTruckManifestId);
+                              setOldManifestIds([...oldManifestIds, id])
+                              console.log("old manifest id", oldManifestIds);
                             }}
                           />
                         }
@@ -330,7 +330,7 @@ const UpdateTruckDetails = () => {
                     </button>
                   </Col>
                 </Form.Row>
-                {oldTruckManifestId.includes(id) &&
+                {oldManifestIds.includes(id) &&
                   <Form.Text style={{color: "red"}}>
                     Marked for deletion
                   </Form.Text>
@@ -366,7 +366,7 @@ const UpdateTruckDetails = () => {
             to={history}
             onClick={(e) => {
               e.preventDefault();
-              updateTruck(id, truckName, truckPrice, truckContents);
+              updateTruck(id, truckName, truckPrice, contents);
               console.log("Submit changes button pressed");
               redirect();
             }}
