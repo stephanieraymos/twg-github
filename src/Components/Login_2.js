@@ -215,10 +215,6 @@ const LoginModal = () => {
             </div>
           </Modal>
         </div>
-
-        // // <TableInventory>
-        //   <FormLogin />
-        // // </TableInventory>
       )}
     </>
   );

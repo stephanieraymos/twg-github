@@ -85,30 +85,43 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
         onSubmit={handleSubmit}
         style={{ width: "85%", margin: "0% 5% 5%" }}
       >
+{/* //^ ------------------- PROGRAM / SOURCE ---------------------- */}
         <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Name</Form.Label>
-          <Form.Control type="text" required name="truckName" />
+          <Form.Label className="form-label">Program</Form.Label>
+          <Form.Control type="text" required name="source" />
           <Form.Control.Feedback type="invalid">
-            Please enter a truck name.
+            Please enter program (source).
           </Form.Control.Feedback>
         </Form.Group>
 
+{/* //^ --------------------- RETAIL PRICE ------------------------ */}
         <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Price</Form.Label>
-          <Form.Control type="text" required name="truckPrice" />
+          <Form.Label className="form-label">Retail</Form.Label>
+          <Form.Control type="text" required name="retailPrice" />
           <Form.Control.Feedback type="invalid">
-            Please enter a truck price.
+            Please enter the retail truck price.
           </Form.Control.Feedback>
         </Form.Group>
 
+{/* //^ ---------------------- OUR PRICE ------------------------- */}
         <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Company</Form.Label>
-          <Form.Control type="text" required name="company" />
+          <Form.Label className="form-label">Our Price</Form.Label>
+          <Form.Control type="text" required name="price" />
           <Form.Control.Feedback type="invalid">
-            Please enter a company name.
+            Please enter our price.
           </Form.Control.Feedback>
         </Form.Group>
 
+{/* //^ -------------------------- FOB ----------------------------- */}
+        <Form.Group className="center-form-group">
+          <Form.Label className="form-label">FOB</Form.Label>
+          <Form.Control type="text" required name="fob" />
+          <Form.Control.Feedback type="invalid">
+            Where is the truck now?
+          </Form.Control.Feedback>
+        </Form.Group>
+
+{/* //^ ------------------------- CONTENTS ---------------------------- */}
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Contents</Form.Label>
           <Form.Control type="text" required name="truckContents" />
@@ -120,6 +133,32 @@ const FormAddInventory = ({ truckManifestCount, setTruckManifestCount, closeModa
           </Form.Text>
         </Form.Group>
 
+        <Form.Group className="center-form-group">
+          <Form.Label className="form-label">Category</Form.Label>
+          <Form.Control type="text" required name="category" />
+          <Form.Control.Feedback type="invalid">
+            Please specify the category.
+          </Form.Control.Feedback>
+        </Form.Group>
+
+{/* //^ ---------------------- PALLET COUNT ------------------------- */}
+        <Form.Group className="center-form-group">
+          <Form.Label className="form-label">Pallet</Form.Label>
+          <Form.Control type="text" required name="palletCount" />
+          <Form.Control.Feedback type="invalid">
+            Pallet Count
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group className="center-form-group">
+          <Form.Label className="form-label">Units</Form.Label>
+          <Form.Control type="text" required name="units" />
+          <Form.Control.Feedback type="invalid">
+            Please specify the # of items in the truck.
+          </Form.Control.Feedback>
+        </Form.Group>
+
+{/* //^ ------------------------- FILES ---------------------------- */}
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Manifest</Form.Label>
           {Array(truckManifestCount).fill(
