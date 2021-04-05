@@ -17,7 +17,7 @@ const TruckProvider = ({ children }) => {
   const [truckLoad, setTruckLoad] = useState([]); //INVENTORY LIST ON ADD TRUCKLOAD PAGE
   const [truckName, setTruckName] = useState("");
   const [truckPrice, setTruckPrice] = useState("");
-  const [truckContents, setTruckContents] = useState([]);
+  const [contents, setContents] = useState([]);
   const [truckManifest, setTruckManifest] = useState([]);
   const [id, setId] = useState("");
 
@@ -56,7 +56,7 @@ const TruckProvider = ({ children }) => {
     setEditId(id);
     setTruckName(specificItem.truckName);
     setTruckPrice(specificItem.truckPrice);
-    setTruckContents(specificItem.truckContents);
+    setContents(specificItem.contents);
     setTruckManifest(specificItem.truckManifest);
   };
 
@@ -68,8 +68,8 @@ const TruckProvider = ({ children }) => {
         setTruckName,
         truckPrice,
         setTruckPrice,
-        truckContents,
-        setTruckContents,
+        contents,
+        setContents,
         truckManifest,
         setTruckManifest,
         truckLoad,
