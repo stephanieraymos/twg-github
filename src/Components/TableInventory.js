@@ -84,6 +84,10 @@ const TableInventory = () => {
               price,
               source,
               category,
+              units,
+              palletCount,
+              fob,
+              retailPrice,
               contents,
               manifestIds,
               status,
@@ -105,16 +109,16 @@ const TableInventory = () => {
                   {category}
                 </p>
                 <p className="items all-trucks-units text-truncate">
-                  {/* {units} */}
+                  {units}
                 </p>
                 <p className="items all-trucks-pallets text-truncate">
-                  {/* {pallets} */}
+                  {palletCount}
                 </p>
                 <p className="items all-trucks-fob text-truncate">
-                  {/* {fob} */}
+                  {fob}
                 </p>
                 <p className="items all-trucks-retail text-truncate">
-                  {/* {retailPrice} */}
+                  {retailPrice}
                 </p>
                 <p className="items all-trucks-price text-truncate">
                   ${price}
