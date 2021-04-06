@@ -253,6 +253,23 @@ const TruckDetails = () => {
                 </p>
               </Card.Header>
             </Card>
+            {/* //^ FOB CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">FOB: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {fob}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
             {/* //^ STATUS CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header

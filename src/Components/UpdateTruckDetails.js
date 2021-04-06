@@ -17,7 +17,11 @@ const UpdateTruckDetails = () => {
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
   const [source, setSource] = useState("");
   const [price, setPrice] = useState("");
-  const [company, setCompany] = useState("");
+  const [retailPrice, setRetailPrice] = useState("");
+  const [units, setUnits] = useState("");
+  const [palletCount, setPalletCount] = useState("");
+  const [fob, setFob] = useState("");
+  const [category, setCategory] = useState("");
   const [status, setStatus] = useState(0);
   const [contents, setContents] = useState([]);
   const [manifestIds, setManifestIds] = useState([]);
@@ -96,14 +100,18 @@ const UpdateTruckDetails = () => {
       })
       .then((data) => {
         if (data) {
-          const {source, price, contents, manifestIds, company, status} = data[0]
+          const {source, price, retailPrice, contents, manifestIds, category, units, palletCount, fob, status} = data[0]
   
           setSource(source);
           setPrice(price);
+          setRetailPrice(retailPrice);
+          setCategory(category);
+          setUnits(units);
+          setPalletCount(palletCount);
           setContents(contents);
           setManifestIds(manifestIds);
-          setCompany(company);
           setStatus(status);
+          setFob(fob);
   
         } else {
           throw new Error("Truck does not exist.");
@@ -120,6 +128,7 @@ const UpdateTruckDetails = () => {
         getTruck();
       })
       .catch((error) => {
+        console.log(error)
         history.push("/");
       });
   }, []);
@@ -153,7 +162,7 @@ const UpdateTruckDetails = () => {
           return true;
         } else return false;
       })
-      .catch((error) => {});
+      .catch((error) => {console.log(error)});
   };
 
   return (
@@ -172,8 +181,9 @@ const UpdateTruckDetails = () => {
           onSubmit={handleSubmit}
           className="update-truck-form"
         >
+          {/* //^ ------------PROGRAM------------ */}
           <Form.Group className="center-form-group">
-            <Form.Label className="form-label">Name</Form.Label>
+            <Form.Label className="form-label">Program</Form.Label>
             <Form.Control
               type="text"
               required
@@ -185,6 +195,7 @@ const UpdateTruckDetails = () => {
             </Form.Control.Feedback>
           </Form.Group>
 
+          {/* //^ ------------PRICE------------ */}
           <Form.Group className="center-form-group">
             <Form.Label className="form-label">Price</Form.Label>
             <Form.Control
@@ -198,19 +209,35 @@ const UpdateTruckDetails = () => {
             </Form.Control.Feedback>
           </Form.Group>
 
+          {/* //^ ----------RETAIL PRICE---------- */}
           <Form.Group className="center-form-group">
-            <Form.Label className="form-label">Company</Form.Label>
+            <Form.Label className="form-label">Price</Form.Label>
             <Form.Control
               type="text"
               required
-              defaultValue={company}
-              name="company"
+              defaultValue={retailPrice}
+              name="retailPrice"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a truck price.
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          {/* //^ ----------CATEGORY---------- */}
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Category</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={category}
+              name="category"
             />
             <Form.Control.Feedback type="invalid">
               Please enter a company name.
             </Form.Control.Feedback>
           </Form.Group>
 
+          {/* //^ ----------CONTENTS---------- */}
           <Form.Group className="center-form-group">
             <Form.Label className="form-label">Contents</Form.Label>
             <Form.Control
@@ -227,6 +254,49 @@ const UpdateTruckDetails = () => {
             </Form.Text>
           </Form.Group>
 
+          {/* //^ ----------UNITS---------- */}
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Units</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={units}
+              name="units"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please add the # of units in the truck.
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          {/* //^ ----------PALLETS---------- */}
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">Pallets</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={palletCount}
+              name="palletCount"
+            />
+            <Form.Control.Feedback type="invalid">
+            Please add the # of pallets in the truck.
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          {/* //^ ----------FOB---------- */}
+          <Form.Group className="center-form-group">
+            <Form.Label className="form-label">FOB</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={fob}
+              name="fob"
+            />
+            <Form.Control.Feedback type="invalid">
+            Please add the # of pallets in the truck.
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          {/* //^ ----------STATUS---------- */}
           <Form.Group className="center-form-group">
             <Form.Label className="form-label">Status</Form.Label>
             <Form.Check 
@@ -240,6 +310,7 @@ const UpdateTruckDetails = () => {
             />
           </Form.Group>
 
+          {/* //^ ----------FILES---------- */}
           <Form.Group className="center-form-group">
             <Form.Label className="form-label">Manifest</Form.Label>
             {Array(manifestsCount).fill(
