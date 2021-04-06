@@ -22,9 +22,8 @@ const TruckDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [source, setSource] = useState("");
-  const [Retailrice, setRetailPrice] = useState("");
+  const [retailPrice, setRetailPrice] = useState("");
   const [price, setPrice] = useState("");
-  const [company, setCompany] = useState("");
   const [status, setStatus] = useState(1);
   const [contents, setContents] = useState("");
   const [category, setCategory] = useState("")
@@ -198,6 +197,23 @@ const TruckDetails = () => {
                   <span className="truck-data-title">Price: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {price}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ TRUCK RETAIL PRICE CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Retail Price: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {retailPrice}
                   </span>
                 </p>
               </Card.Header>
