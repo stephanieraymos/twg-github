@@ -81,8 +81,9 @@ const TableInventory = () => {
           {trucks.map((truck) => {
             let {
               id,
-              truckName,
-              truckPrice,
+              price,
+              source,
+              category,
               contents,
               manifestIds,
               status,
@@ -98,10 +99,10 @@ const TableInventory = () => {
                 </Link>
 
                 <p className="items all-trucks-program text-truncate">
-                  {truckName}
+                  {source}
                 </p>
                 <p className="items all-trucks-category text-truncate">
-                  {/* {category} */}
+                  {category}
                 </p>
                 <p className="items all-trucks-units text-truncate">
                   {/* {units} */}
@@ -116,7 +117,7 @@ const TableInventory = () => {
                   {/* {retailPrice} */}
                 </p>
                 <p className="items all-trucks-price text-truncate">
-                  ${truckPrice}
+                  ${price}
                 </p>
 
 

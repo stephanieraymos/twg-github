@@ -4,7 +4,7 @@ import Loading from "./Loading";
 import { useGlobalContext } from "../context";
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 
-const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
+const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
 
 const AccountDetails = () => {
   const [loading, setLoading] = useState(false);

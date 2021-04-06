@@ -6,7 +6,7 @@ import { useGlobalContext } from "../context";
 
 import { useAuthContext } from "../auth";
 
-const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
+const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
 
 const Logout = () => {
   const [loading, setLoading] = useState(false);

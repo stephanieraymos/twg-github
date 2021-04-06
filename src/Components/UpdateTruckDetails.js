@@ -8,15 +8,15 @@ import undo from "../img/undo.svg";
 import { useGlobalContext } from "../context";
 import { useAuthContext } from "../auth";
 
-const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
-const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/edit/";
-const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
+const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
+const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/edit/";
+const manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
   const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
-  const [truckName, setTruckName] = useState("");
-  const [truckPrice, setTruckPrice] = useState("");
+  const [source, setSource] = useState("");
+  const [price, setPrice] = useState("");
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState(0);
   const [contents, setContents] = useState([]);
@@ -38,10 +38,10 @@ const UpdateTruckDetails = () => {
   // const {
   //   truckLoad,
   //   setTruckLoad,
-  //   truckName,
-  //   setTruckName,
-  //   truckPrice,
-  //   setTruckPrice,
+  //   source,
+  //   setsource,
+  //   price,
+  //   setprice,
   //   contents,
   //   setContents,
 
@@ -96,10 +96,10 @@ const UpdateTruckDetails = () => {
       })
       .then((data) => {
         if (data) {
-          const {truckName, truckPrice, contents, manifestIds, company, status} = data[0]
+          const {source, price, contents, manifestIds, company, status} = data[0]
   
-          setTruckName(truckName);
-          setTruckPrice(truckPrice);
+          setSource(source);
+          setPrice(price);
           setContents(contents);
           setManifestIds(manifestIds);
           setCompany(company);
@@ -177,8 +177,8 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               required
-              defaultValue={truckName}
-              name="truckName"
+              defaultValue={source}
+              name="source"
             />
             <Form.Control.Feedback type="invalid">
               Please enter a truck name.
@@ -190,8 +190,8 @@ const UpdateTruckDetails = () => {
             <Form.Control
               type="text"
               required
-              defaultValue={truckPrice}
-              name="truckPrice"
+              defaultValue={price}
+              name="price"
             />
             <Form.Control.Feedback type="invalid">
               Please enter a truck price.
@@ -366,7 +366,7 @@ const UpdateTruckDetails = () => {
             to={history}
             onClick={(e) => {
               e.preventDefault();
-              updateTruck(id, truckName, truckPrice, contents);
+              updateTruck(id, source, price, contents);
               console.log("Submit changes button pressed");
               redirect();
             }}

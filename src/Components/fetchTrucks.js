@@ -7,7 +7,7 @@ import Navigation from "./Navigation";
 //! THIS COMPONENT IN NOT BEING USED!!
 //* KEEP JUST IN CASE
 
-const url = "https://api.thewholesalegroup.com/api/v1/trucks/data/"; //API LINK
+const url = "https://api.thewholesalegroup.com/api/v1/inventory/data/"; //API LINK
 
 const Inventory = () => {
   //Setting state values, params are default values
@@ -41,7 +41,7 @@ const Inventory = () => {
     );
   }
   //Extracting props + binding them to trucks
-  const { truckName, truckPrice, truckContents, id } = trucks[value]; // trucks[value]
+  const { source, price, contents, id } = trucks[value]; // trucks[value]
 
   return (
     <>
@@ -61,17 +61,17 @@ const Inventory = () => {
                   // Setting class to trucks-btn by default, but to active-btn if index is equal to value
                   className={`trucks-btn ${index === value && "active-btn"}`}
                 >
-                  {truck.truckName}
+                  {truck.source}
                 </button>
               );
             })}
           </div>
           {/* Displaying truck information */}
           <article className="truck-info">
-            <h3>{truckName}</h3>
-            <h4>{truckPrice}</h4>
-            <p className="truck-contents">{truckContents}</p>
-            {truckContents.map((content, index) => {
+            <h3>{source}</h3>
+            <h4>{price}</h4>
+            <p className="truck-contents">{contents}</p>
+            {contents.map((content, index) => {
               return (
                 <div key={index} className="truck-contents">
                   <FaAngleDoubleRight className="truck-icon" />

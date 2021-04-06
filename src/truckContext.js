@@ -5,7 +5,6 @@ import React, {
   useContext,
   createContext,
 } from "react";
-import InventoryAllTrucks from "./Components/InventoryAllTrucks";
 
 // Generating context
 const TruckContext = createContext();
@@ -15,17 +14,24 @@ const TruckProvider = ({ children }) => {
   //////////////////////// &&--STATE--&& /////////////////////////////
 
   const [truckLoad, setTruckLoad] = useState([]); //INVENTORY LIST ON ADD TRUCKLOAD PAGE
-  const [truckName, setTruckName] = useState("");
-  const [truckPrice, setTruckPrice] = useState("");
+  const [source, setSource] = useState("");
+  const [price, setPrice] = useState("");
+  const [retailPrice, setRetailPrice] = useState("");
   const [contents, setContents] = useState([]);
   const [manifests, setManifests] = useState([]);
+  const [category, setCategory] = useState("");
+  const [units, setUnits] = useState("");
+  const [palletCount, setPalletCount] = useState("");
+  const [fob, setFob] = useState("");
+  const [status, setStatus] = useState("");
+
   const [id, setId] = useState("");
 
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
 
-  if (truckLoad.truckName === "") {
+  if (truckLoad.source === "") {
     console.log("The truck name is empty but printing");
   }
 
@@ -54,8 +60,8 @@ const TruckProvider = ({ children }) => {
     const specificItem = truckLoad.find((truck) => truck.id === id);
     setIsEditing(true);
     setEditId(id);
-    setTruckName(specificItem.truckName);
-    setTruckPrice(specificItem.truckPrice);
+    setSource(specificItem.source);
+    setPrice(specificItem.price);
     setContents(specificItem.contents);
     setManifests(specificItem.manifests);
   };
@@ -64,18 +70,28 @@ const TruckProvider = ({ children }) => {
   return (
     <TruckContext.Provider
       value={{
-        truckName,
-        setTruckName,
-        truckPrice,
-        setTruckPrice,
+        source,
+        setSource,
+        price,
+        setPrice,
         contents,
         setContents,
         manifests,
         setManifests,
         truckLoad,
         setTruckLoad,
-        // trucks,
-        // setTrucks,
+        retailPrice,
+        setRetailPrice,
+        category,
+        setCategory,
+        units,
+        setUnits,
+        palletCount,
+        setPalletCount,
+        fob,
+        setFob,
+        status,
+        setStatus,
         id,
         setId,
 
@@ -123,7 +139,6 @@ export const useTruck = () => {
   };
 
   useEffect(() => {
-
     const abortCont = new AbortController();
 
     setLoading(true);
@@ -131,10 +146,10 @@ export const useTruck = () => {
     const fetchTrucks = async () => {
       try {
         const response = await fetch(
-          "https://api.thewholesalegroup.com/v1/trucks/",
+          "https://api.thewholesalegroup.com/v1/inventory/",
           {
             method: "GET",
-            headers: { 
+            headers: {
               "Content-Type": "application/json",
             },
           },

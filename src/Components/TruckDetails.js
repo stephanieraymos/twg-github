@@ -15,9 +15,9 @@ import { useGlobalContext } from "../context";
 import { useAuthContext } from "../auth";
 
 const TruckDetails = () => {
-  const url = "https://api.thewholesalegroup.com/v1/trucks/?id=";
-  const inventoryURL = "https://api.thewholesalegroup.com/v1/trucks/edit/";
-  const manifestURL = "https://api.thewholesalegroup.com/v1/trucks/manifest/";
+  const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
+  const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/edit/";
+  const manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
 
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -89,16 +89,16 @@ const TruckDetails = () => {
       .then((data) => {
         if (data) {
           const {
-            truckName,
-            truckPrice,
+            source,
+            price,
             contents,
             manifestIds,
             company,
             status,
           } = data[0];
 
-        setName(truckName);
-        setPrice(truckPrice);
+        setName(source);
+        setPrice(price);
         setContents(contents.join(', '));
         setManifestId(manifestIds);
         setCompany(company);

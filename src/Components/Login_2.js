@@ -101,10 +101,10 @@ const LoginModal = () => {
             {trucks.map((truck) => {
               let {
                 id,
-                truckName,
-                truckPrice,
-                truckContents,
-                truckManifestId,
+                source,
+                price,
+                contents,
+                manifestIds,
                 status,
               } = truck;
 
@@ -112,7 +112,7 @@ const LoginModal = () => {
                 <div className="truckLoad" key={id}>
                   <p className="items all-trucks-load text-truncate">{id}</p>
                   <p className="items all-trucks-program text-truncate">
-                    {truckName}
+                    {source}
                   </p>
                   <p className="items all-trucks-category text-truncate">
                     {/* {category} */}
@@ -131,7 +131,7 @@ const LoginModal = () => {
                     {/* ${retail} */}
                   </span>
                   <span className="items all-trucks-price text-truncate">
-                    {truckPrice}
+                    {price}
                   </span>
                 </div>
               );

@@ -60,7 +60,7 @@ const FormAddInventory = ({
     data.forEach((value, key) => console.log(key, value));
     try {
       const response = await fetch(
-        "https://api.thewholesalegroup.com/v1/trucks/edit/",
+        "https://api.thewholesalegroup.com/v1/inventory/edit/",
         {
           method: "POST",
           headers: {
