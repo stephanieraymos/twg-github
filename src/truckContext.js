@@ -62,6 +62,12 @@ const TruckProvider = ({ children }) => {
     setEditId(id);
     setSource(specificItem.source);
     setPrice(specificItem.price);
+    setRetailPrice(specificItem.retailPrice);
+    setUnits(specificItem.units);
+    setPalletCount(specificItem.palletCount);
+    setCategory(specificItem.category);
+    setFob(specificItem.fob);
+    setStatus(specificItem.status);
     setContents(specificItem.contents);
     setManifests(specificItem.manifests);
   };

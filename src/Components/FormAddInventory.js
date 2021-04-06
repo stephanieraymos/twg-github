@@ -57,7 +57,7 @@ const FormAddInventory = ({
     data.delete("contents");
     contents.map((item) => data.append("contents", item));
 
-    data.forEach((value, key) => console.log(key, value));
+    data.forEach((value, key) => console.log("Key, Value", key, value));
     try {
       const response = await fetch(
         "https://api.thewholesalegroup.com/v1/inventory/edit/",
@@ -148,12 +148,10 @@ const FormAddInventory = ({
         <Row>
           {/* //^ ---------------------- PALLET COUNT ------------------------- */}
           <Col>
-            <Form.Label className="form-label">
-              Pallet
-            </Form.Label>
+            <Form.Label className="form-label">Pallets</Form.Label>
             <Form.Control type="text" required name="palletCount" />
             <Form.Control.Feedback type="invalid">
-            Please enter # of pallets on truck.
+              Please enter # of pallets on truck.
             </Form.Control.Feedback>
           </Col>
           {/* //^ ---------------------- UNIT COUNT ------------------------- */}
@@ -167,53 +165,65 @@ const FormAddInventory = ({
         </Row>
 
         {/* //^ ------------------------- FILES ---------------------------- */}
-        <Form.Group>
-          <Form.Label className="form-label">Manifest</Form.Label>
-          {Array(manifestsCount).fill(
-            <>
-              <Form.Control
-                type="file"
-                multiple
-                required
-                name="manifests"
-                style={{ fontSize: "1rem", color: "black" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please add a file.
-              </Form.Control.Feedback>
-              <Form.Text muted>
-                Select multiple files by holding down the SHIFT key
-              </Form.Text>
-            </>
-          )}
-          {manifestsCount == 0 ? (
-            <Button
-              onClick={() => setManifestsCount(manifestsCount + 1)}
-              className="form-button"
-              block
-              style={{
-                width: "120px",
-                backgroundColor: "#000",
-                margin: "0rem",
-              }}
-            >
-              Add Files
-            </Button>
-          ) : (
-            <Button
-              onClick={() => setManifestsCount(manifestsCount - 1)}
-              className="form-button"
-              block
-              style={{
-                width: "120px",
-                backgroundColor: "#000",
-                margin: ".75rem 0rem",
-              }}
-            >
-              Cancel
-            </Button>
-          )}
-        </Form.Group>
+        <Row>
+          <Col>
+            <Form.Label className="form-label">Manifest</Form.Label>
+            {Array(manifestsCount).fill(
+              <>
+                <Form.Control
+                  type="file"
+                  multiple
+                  required
+                  name="manifests"
+                  style={{ fontSize: "1rem", color: "black" }}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please add a file.
+                </Form.Control.Feedback>
+                <Form.Text muted>
+                  Select multiple files by holding down the SHIFT key
+                </Form.Text>
+              </>
+            )}
+            {manifestsCount == 0 ? (
+              <Button
+                onClick={() => setManifestsCount(manifestsCount + 1)}
+                className="form-button"
+                block
+                style={{
+                  width: "120px",
+                  backgroundColor: "#000",
+                  margin: "0rem",
+                }}
+              >
+                Add Files
+              </Button>
+            ) : (
+              <Button
+                onClick={() => setManifestsCount(manifestsCount - 1)}
+                className="form-button"
+                block
+                style={{
+                  width: "120px",
+                  backgroundColor: "#000",
+                  margin: ".75rem 0rem",
+                }}
+              >
+                Cancel
+              </Button>
+            )}
+          </Col>
+          <Col>
+            <Form.Label className="form-label">Status</Form.Label>
+            <Form.Control as="select" required name="status" custom>
+              <option value="1">Available</option>
+              <option value="0">Unavailable</option>
+            </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              Please specify the availability of the truck
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
 
         <div className="form-footer-container">
           <Button

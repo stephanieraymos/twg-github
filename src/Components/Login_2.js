@@ -23,7 +23,7 @@ const LoginModal = () => {
       .then((token) => {
         history.push("/dashboard");
       })
-      .catch((error) => {});
+      .catch((error) => {console.log(error)});
 
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);

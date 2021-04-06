@@ -3,7 +3,6 @@ import { Button, Form, InputGroup, Image } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import visibleOn from "../img/visibility-on.svg";
 import visibleOff from "../img/visibility-off.svg";
-import { cleanup } from "@testing-library/react";
 import { useGlobalContext } from "../context";
 import { useAuthContext } from "../auth";
 
@@ -70,7 +69,7 @@ const FormLogin = () => {
       .then((response) => {
         const res = response.json();
         if (response.ok) {
-          console.log("Fine");
+          console.log("Response is OK");
           return res;
         } else {
           throw new Error(res.message);
