@@ -21,6 +21,7 @@ const TruckDetails = () => {
 
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
+  const [loadId, setLoadId] = useState(""); 
   const [source, setSource] = useState("");
   const [retailPrice, setRetailPrice] = useState("");
   const [price, setPrice] = useState("");
@@ -93,6 +94,7 @@ const TruckDetails = () => {
       .then((data) => {
         if (data) {
           const {
+            loadId,
             source,
             price,
             retailPrice,
@@ -106,6 +108,7 @@ const TruckDetails = () => {
             status,
           } = data[0];
 
+        setLoadId(loadId);
         setSource(source);
         setPrice(price);
         setRetailPrice(retailPrice);
@@ -167,6 +170,23 @@ const TruckDetails = () => {
         <div className="truck">
           <img src={logo} alt={source} style={{ size: "10rem" }} />
           <div className="truck-info">
+            {/* //^ TRUCK ID CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">ID: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {loadId}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
             {/* //^ TRUCK NAME CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header

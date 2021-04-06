@@ -213,6 +213,8 @@ const FormAddInventory = ({
               </Button>
             )}
           </Col>
+          
+          {/* //^ ------------------------- STATUS ---------------------------- */}
           <Col>
             <Form.Label className="form-label">Status</Form.Label>
             <Form.Control as="select" required name="status" custom>

@@ -80,7 +80,7 @@ const LoginModal = () => {
       ) : (
         <div className="table-wrapper">
           <div className="header-items">
-            <span className="all-trucks-table-header-load truck">LOAD</span>
+            <span className="all-trucks-table-header-load truck">ID</span>
             <span className="all-trucks-table-header-program program">
               PROGRAM
             </span>
@@ -101,6 +101,7 @@ const LoginModal = () => {
             {trucks.map((truck) => {
               let {
                 id,
+                loadId,
                 source,
                 price,
                 category,
@@ -115,7 +116,7 @@ const LoginModal = () => {
 
               return (
                 <div className="truckLoad" key={id}>
-                  <p className="items all-trucks-load text-truncate">{id}</p>
+                  <p className="items all-trucks-load text-truncate">{loadId}</p>
                   <p className="items all-trucks-program text-truncate">
                     {source}
                   </p>

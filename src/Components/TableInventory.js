@@ -64,7 +64,7 @@ const TableInventory = () => {
     <>
       <div className="table-wrapper">
         <div className="header-items">
-          <span className="all-trucks-table-header-load truck">LOAD</span>
+          <span className="all-trucks-table-header-load truck">ID</span>
           <span className="all-trucks-table-header-program program">PROGRAM</span>
           <span className="all-trucks-table-header-category category">
             CATEGORY
@@ -81,6 +81,7 @@ const TableInventory = () => {
           {trucks.map((truck) => {
             let {
               id,
+              loadId,
               price,
               source,
               category,
@@ -88,9 +89,6 @@ const TableInventory = () => {
               palletCount,
               fob,
               retailPrice,
-              contents,
-              manifestIds,
-              status,
             } = truck;
 
             return (
@@ -99,7 +97,7 @@ const TableInventory = () => {
                   to={`/TruckDetails/${id}`}
                   className="items all-trucks-load text-truncate"
                 >
-                  {id}
+                  {loadId}
                 </Link>
 
                 <p className="items all-trucks-program text-truncate">
