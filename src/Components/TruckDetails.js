@@ -57,7 +57,7 @@ const TruckDetails = () => {
       })
         .then((response) => response.json())
         .then((manifest) => setFiles(manifest))
-        .catch((error) => {});
+        .catch((error) => {console.log(error)});
     }
     
   };
