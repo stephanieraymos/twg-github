@@ -136,7 +136,7 @@ const LoginModal = () => {
                     ${retailPrice}
                   </span>
                   <span className="items all-trucks-price text-truncate">
-                    {price}
+                    ${price}
                   </span>
                 </div>
               );

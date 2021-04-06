@@ -21,11 +21,16 @@ const TruckDetails = () => {
 
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
+  const [source, setSource] = useState("");
+  const [Retailrice, setRetailPrice] = useState("");
   const [price, setPrice] = useState("");
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState(1);
   const [contents, setContents] = useState("");
+  const [category, setCategory] = useState("")
+  const [units, setUnits] = useState("");
+  const [palletCount, setPalletCount] = useState("");
+  const [fob, setFob] = useState("");
   const [manifestId, setManifestId] = useState([]);
   const [files, setFiles] = useState([]);
 
@@ -91,17 +96,26 @@ const TruckDetails = () => {
           const {
             source,
             price,
+            retailPrice,
+            category,
+            fob,
+            units,
+            palletCount,
             contents,
             manifestIds,
             company,
             status,
           } = data[0];
 
-        setName(source);
+        setSource(source);
         setPrice(price);
+        setRetailPrice(retailPrice);
         setContents(contents.join(', '));
         setManifestId(manifestIds);
-        setCompany(company);
+        setCategory(category);
+        setUnits(units);
+        setPalletCount(palletCount);
+        setFob(fob);
         setStatus(status);
       }
       setLoading(false);
@@ -150,9 +164,9 @@ const TruckDetails = () => {
       </div>
 
       <section className="truck-section">
-        <h2 className="truck-details-header">{name}</h2>
+        <h2 className="truck-details-header">{source}</h2>
         <div className="truck">
-          <img src={logo} alt={name} style={{ size: "10rem" }} />
+          <img src={logo} alt={source} style={{ size: "10rem" }} />
           <div className="truck-info">
             {/* //^ TRUCK NAME CARD */}
             <Card style={{ border: "none" }}>
@@ -164,9 +178,9 @@ const TruckDetails = () => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Name: </span>
+                  <span className="truck-data-title">Program: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {name}
+                    {source}
                   </span>
                 </p>
               </Card.Header>
@@ -188,7 +202,7 @@ const TruckDetails = () => {
                 </p>
               </Card.Header>
             </Card>
-            {/* //^ COMPANY CARD */}
+            {/* //^ CATEGORY CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
                 style={{
@@ -198,9 +212,43 @@ const TruckDetails = () => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Company: </span>
+                  <span className="truck-data-title">Category: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {company}
+                    {category}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ UNITS CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Units: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {units}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ PALLETS CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Pallets: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {palletCount}
                   </span>
                 </p>
               </Card.Header>

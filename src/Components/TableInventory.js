@@ -118,7 +118,7 @@ const TableInventory = () => {
                   {fob}
                 </p>
                 <p className="items all-trucks-retail text-truncate">
-                  {retailPrice}
+                  ${retailPrice}
                 </p>
                 <p className="items all-trucks-price text-truncate">
                   ${price}
