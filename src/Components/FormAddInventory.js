@@ -128,7 +128,7 @@ const FormAddInventory = ({
         {/* //^ ------------------------- CONTENTS ---------------------------- */}
         <Form.Group>
           <Form.Label className="form-label">Contents</Form.Label>
-          <Form.Control type="text" required name="contents" />
+          <Form.Control type="text" name="contents" />
           <Form.Text muted>
             Separate each content with a comma, e.g., clothes,toys
           </Form.Text>
