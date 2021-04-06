@@ -103,6 +103,11 @@ const LoginModal = () => {
                 id,
                 source,
                 price,
+                category,
+                retailPrice,
+                units,
+                palletCount,
+                fob,
                 contents,
                 manifestIds,
                 status,
@@ -115,20 +120,20 @@ const LoginModal = () => {
                     {source}
                   </p>
                   <p className="items all-trucks-category text-truncate">
-                    {/* {category} */}
+                    {category}
                   </p>
 
                   <span className="items all-trucks-units text-truncate">
-                    {/* {units} */}
+                    {units}
                   </span>
                   <span className="items all-trucks-pallets text-truncate">
-                    {/* {pallets} */}
+                    {palletCount}
                   </span>
                   <span className="items all-trucks-fob text-truncate">
-                    {/* {fob} */}
+                    {fob}
                   </span>
                   <span className="items all-trucks-retail text-truncate">
-                    {/* ${retail} */}
+                    ${retailPrice}
                   </span>
                   <span className="items all-trucks-price text-truncate">
                     {price}
