@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { useGlobalContext } from "../context";
 import FormAddInventory from "./FormAddInventory";
-import inventory from "../css/inventory.css";
-import modalandsidebar from "../css/modalandsidebar.css";
-import cancel from "../img/cancel.svg";
+import cancel from "../../img/cancel.svg";
 
 const AddInventory = ({ addNewTrucks }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { useAuthContext } from "../auth";
+import { useAuthContext } from "../../auth";
 import { useHistory } from "react-router-dom";
-import { useTruck } from "../truckContext";
+import { useTruck } from "../../truckContext";
 
 const FormAddInventory = ({
   manifestsCount,

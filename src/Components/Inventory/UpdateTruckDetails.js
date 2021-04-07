@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Col } from "react-bootstrap";
-import { useTruckContext } from "../truckContext";
-import Navigation from "./Navigation";
+import Navigation from "../Navigation";
 import { useHistory, useParams, Link } from "react-router-dom";
-import cancel from "../img/cancel.svg";
-import undo from "../img/undo.svg";
-import { useGlobalContext } from "../context";
-import { useAuthContext } from "../auth";
+import cancel from "../../img/cancel.svg";
+import undo from "../../img/undo.svg";
+import { useAuthContext } from "../../auth";
 
 const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
 const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/edit/";

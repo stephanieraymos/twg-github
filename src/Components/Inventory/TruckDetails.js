@@ -5,14 +5,13 @@ import {
   FaEdit,
   FaAngleDoubleDown,
 } from "react-icons/fa";
-import Navigation from "./Navigation";
+import Navigation from "../Navigation";
 // import { useTruck } from "../truckContext";
 import { useParams, Link, useHistory } from "react-router-dom";
-import Loading from "./Loading";
-import logo from "../img/w-logo.png";
+import Loading from "../Loading";
+import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
-import { useGlobalContext } from "../context";
-import { useAuthContext } from "../auth";
+import { useAuthContext } from "../../auth";
 
 const TruckDetails = () => {
   const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
@@ -146,12 +145,12 @@ const TruckDetails = () => {
     getManifest();
   }, [manifestId]);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
-  // if (!truck) {
-  //   return <h2>No truck to display</h2>;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
+  if (!loadId) {
+    return <h2>No truck to display</h2>;
+  }
 
   return (
     <>

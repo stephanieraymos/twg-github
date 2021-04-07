@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
 import Loading from "./Loading";
 import { useGlobalContext } from "../context";
-import { Button, Modal, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 
 const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
 

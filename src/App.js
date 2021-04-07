@@ -9,8 +9,8 @@ import "bootstrap/dist/css/bootstrap.min.css"
 
 import Contact from "./Components/Contact";
 import Home from "./Components/Home";
-import AddInventory from "./Components/AddInventory";
-import InventoryAllTrucks from "./Components/InventoryAllTrucks";
+import AddInventory from "./Components/Inventory/AddInventory";
+import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import Dashboard from "./Components/Dashboard";
 import Settings from "./Components/Settings";
 import Statements from "./Components/Statements";
@@ -22,8 +22,8 @@ import AccountDetails from "./Components/AccountDetails"
 import CustomerDb from "./Components/CustomerDb";
 import OrderDetails from "./Components/OrderDetails";
 import Orders from "./Components/Orders";
-import TruckDetails from "./Components/TruckDetails";
-import UpdateTruckDetails from "./Components/UpdateTruckDetails";
+import TruckDetails from "./Components/Inventory/TruckDetails";
+import UpdateTruckDetails from "./Components/Inventory/UpdateTruckDetails";
 import Error from "./Pages/Error";
 
 const App = () => {
