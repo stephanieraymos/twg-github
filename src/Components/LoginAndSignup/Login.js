@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 const getLocalStorage = () => {
@@ -20,19 +20,13 @@ const LoginModal = () => {
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
   const {
-    userId,
     setUserId,
     email,
     setEmail,
-    firstName,
     setFirstName,
-    lastName,
     setLastName,
-    company,
     setCompany,
-    phoneNumber,
     setPhoneNumber,
-    billingAddress,
     setBillingAddress,
   } = useGlobalContext();
 

@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../Navigation";
+import Navigation from "../Navigation/Navigation";
 import { useTruck } from "../../truckContext";
 import AddInventory from "./AddInventory";
 import { Container } from "react-bootstrap";

@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "./Navigation";
+import Navigation from "../Components/Navigation/Navigation";
 import contact from "../css/contact.css";
 
 const Contact = () => {

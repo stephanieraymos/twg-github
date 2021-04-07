@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
-import logo from "../img/logo-blue.svg";
+import logo from "../../img/logo-blue.svg";
 import { FaTimes } from "react-icons/fa";
 import { social, links } from "./nav-data";
-import { useGlobalContext } from "../context";
-import modalandsidebar from "../css/modalandsidebar.css";
+import { useGlobalContext } from "../../context";
+import modalandsidebar from "../../css/modalandsidebar.css";
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useGlobalContext();

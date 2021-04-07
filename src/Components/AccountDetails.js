@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Loading from "./Loading";
+import Loading from "../Pages/Loading";
 import { useGlobalContext } from "../context";
 import { Button, Form, Row, Col } from "react-bootstrap";
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import Navigation from "./Navigation";
+import Navigation from "../Navigation/Navigation";
 
-const CustomerDetails = ({ name, orders, cost }) => {
+const UserDetails = ({ name, orders, cost }) => {
   const [showInfo, setShowInfo] = useState(false);
 
   return (
@@ -31,6 +31,6 @@ const CustomerDetails = ({ name, orders, cost }) => {
   );
 };
 
-export default CustomerDetails;
+export default UserDetails;
 
 // TP-25

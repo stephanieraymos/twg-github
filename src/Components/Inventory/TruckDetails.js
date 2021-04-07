@@ -5,10 +5,10 @@ import {
   FaEdit,
   FaAngleDoubleDown,
 } from "react-icons/fa";
-import Navigation from "../Navigation";
+import Navigation from "../Navigation/Navigation";
 // import { useTruck } from "../truckContext";
 import { useParams, Link, useHistory } from "react-router-dom";
-import Loading from "../Loading";
+import Loading from "../../Pages/Loading";
 import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import { useAuthContext } from "../../auth";

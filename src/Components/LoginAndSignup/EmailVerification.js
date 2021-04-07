@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Loading from "./Loading";
-import { useGlobalContext } from "../context";
-import { useTruckContext } from "../truckContext";
+import Loading from "../../Pages/Loading";
+import { useGlobalContext } from "../../context";
 import { useHistory } from "react-router-dom";
-import { useAuthContext } from "../auth";
+import { useAuthContext } from "../../auth";
 
 const EmailVerification = () => {
   const url = "https://api.thewholesalegroup.com/v1/account/register/verify/";
@@ -21,16 +20,12 @@ const EmailVerification = () => {
     setCompany,
     setPhoneNumber,
     setBillingAddress,
-    error,
-    setError,
   } = useGlobalContext();
 
   const {
     setAccessToken,
     setRefreshToken,
   } = useAuthContext();
-
-  const { showAlert } = useTruckContext();
 
   document.title = "Email Verification";
 

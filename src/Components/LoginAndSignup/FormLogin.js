@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Button, Form, InputGroup, Image } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import visibleOn from "../img/visibility-on.svg";
-import visibleOff from "../img/visibility-off.svg";
-import { useGlobalContext } from "../context";
-import { useAuthContext } from "../auth";
+import visibleOn from "../../img/visibility-on.svg";
+import visibleOff from "../../img/visibility-off.svg";
+import { useGlobalContext } from "../../context";
+import { useAuthContext } from "../../auth";
 
 const FormLogin = () => {
   const url = "https://api.thewholesalegroup.com/v1/account/login/";

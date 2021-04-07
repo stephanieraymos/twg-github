@@ -1,12 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import Loading from "./Loading";
-import logo from "../img/w-logo.png";
-import { useGlobalContext } from "../context";
+import Loading from "../../Pages/Loading";
 
-import { useAuthContext } from "../auth";
-
-const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
+import { useAuthContext } from "../../auth";
 
 const Logout = () => {
   const [loading, setLoading] = useState(false);

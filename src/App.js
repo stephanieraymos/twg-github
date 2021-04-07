@@ -7,21 +7,21 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import Contact from "./Components/Contact";
-import Home from "./Components/Home";
+import Contact from "./Pages/Contact";
+import Home from "./Pages/Home";
 import AddInventory from "./Components/Inventory/AddInventory";
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import Dashboard from "./Components/Dashboard";
 import Settings from "./Components/Settings";
 import Statements from "./Components/Statements";
-import Sidebar from "./Components/Sidebar";
-import EmailVerification from "./Components/EmailVerification"
-import Login2 from "./Components/Login_2";
-import Logout from "./Components/Logout";
+import Sidebar from "./Components/Navigation/Sidebar";
+import EmailVerification from "./Components/LoginAndSignup/EmailVerification"
+import Login2 from "./Components/LoginAndSignup/Login_2";
+import Logout from "./Components/LoginAndSignup/Logout";
 import AccountDetails from "./Components/AccountDetails"
-import CustomerDb from "./Components/CustomerDb";
-import OrderDetails from "./Components/OrderDetails";
-import Orders from "./Components/Orders";
+import UserDb from "./Components/Users/UserDb";
+import OrderDetails from "./Components/Orders/OrderDetails";
+import Orders from "./Components/Orders/Orders";
 import TruckDetails from "./Components/Inventory/TruckDetails";
 import UpdateTruckDetails from "./Components/Inventory/UpdateTruckDetails";
 import Error from "./Pages/Error";
@@ -50,7 +50,7 @@ const App = () => {
             <Route path="/Settings" exact component={Settings} />
             <Route path="/Statements" exact component={Statements} />
             <Route path="/Contact" exact component={Contact} />
-            <Route path="/CustomerDb" exact component={CustomerDb} />
+            <Route path="/CustomerDb" exact component={UserDb} />
             <Route path="/OrderDetails" exact component={OrderDetails} />
             <Route path="/Orders" exact component={Orders} />
             <Route path="/TruckDetails/:id" exact component={TruckDetails} />

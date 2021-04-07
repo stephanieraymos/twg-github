@@ -1,7 +1,7 @@
 import React from "react";
-import Navigation from "./Navigation";
+import Navigation from "../Navigation/Navigation";
 
-const CustomerCreation = () => {
+const UserCreation = () => {
   document.title = "Client Creation";
 
   return (
@@ -11,6 +11,6 @@ const CustomerCreation = () => {
   );
 };
 
-export default CustomerCreation;
+export default UserCreation;
 
 // TP-26

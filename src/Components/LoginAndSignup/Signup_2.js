@@ -1,18 +1,18 @@
 import React, { useState, useRef } from "react";
-import { useGlobalContext } from "../context";
-import { useTruckContext } from "../truckContext";
+import { useGlobalContext } from "../../context";
+import { useTruckContext } from "../../truckContext";
 import { Button, Modal, Form, InputGroup, Image } from "react-bootstrap";
-import cancel from "../img/cancel.svg";
-import mail from "../img/mail.svg";
-import visibleOn from "../img/visibility-on.svg";
-import visibleOff from "../img/visibility-off.svg";
+import cancel from "../../img/cancel.svg";
+import mail from "../../img/mail.svg";
+import visibleOn from "../../img/visibility-on.svg";
+import visibleOff from "../../img/visibility-off.svg";
 
 const url = "https://api.thewholesalegroup.com/v1/account/register/";
 
 const Signup2 = () => {
   document.title = "Sign up";
 
-  const { error, setError, isModalOpen, closeModal } = useGlobalContext();
+  const { isModalOpen, closeModal } = useGlobalContext();
   const [validated, setValidated] = useState(false);
 
   const [password, setPassword] = useState("");

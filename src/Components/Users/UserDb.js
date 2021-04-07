@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Navigation from "./Navigation";
 
 const url = "http://143.110.225.28/account/user/"; //* API LINK
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Navigation from "./Navigation";
-import { useGlobalContext } from "../context";
-import { useTruckContext } from "../truckContext";
+import Navigation from "../Navigation/Navigation";
+import { useGlobalContext } from "../../context";
+import { useTruckContext } from "../../truckContext";
 import { Button, Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
@@ -18,11 +18,6 @@ const Signup = () => {
     setLastName,
     email,
     setEmail,
-    error,
-    setError,
-    setUserId,
-    postToDb,
-    closeModal
   } = useGlobalContext();
 
   const [password, setPassword] = useState("")

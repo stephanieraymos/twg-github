@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import FormLogin from "./FormLogin";
-import modalandsidebar from "../css/modalandsidebar.css";
+import modalandsidebar from "../../css/modalandsidebar.css";
 // import TableInventory from "./TableInventory";
-import logo from "../img/w-logo.png";
-import cancel from "../img/cancel.svg";
+import logo from "../../img/w-logo.png";
+import cancel from "../../img/cancel.svg";
 import Signup2 from "./Signup_2";
-import { useAuthContext } from "../auth";
-import { useTruck } from "../truckContext";
+import { useAuthContext } from "../../auth";
+import { useTruck } from "../../truckContext";
 import { useHistory } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 

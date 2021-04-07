@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Col } from "react-bootstrap";
-import Navigation from "../Navigation";
+import Navigation from "../Navigation/Navigation";
 import { useHistory, useParams, Link } from "react-router-dom";
 import cancel from "../../img/cancel.svg";
 import undo from "../../img/undo.svg";
@@ -12,7 +12,6 @@ const manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
-  const [isTruckUpdated, setIsTruckUpdated] = useState(false); // checking if truck is deleted
   const [source, setSource] = useState("");
   const [price, setPrice] = useState("");
   const [retailPrice, setRetailPrice] = useState("");

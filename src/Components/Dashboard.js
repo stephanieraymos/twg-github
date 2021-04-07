@@ -3,9 +3,9 @@ import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../context";
 import { useTruck } from "../truckContext";
 import dashboard from "../css/dashboard.css";
-import OrderDetails from "./OrderDetails";
+import OrderDetails from "./Orders/OrderDetails";
 import D3 from "./D3";
-import Loading from "./Loading";
+import Loading from "../Pages/Loading";
 import { useAuthContext } from "../auth";
 import { useHistory } from "react-router-dom";
 

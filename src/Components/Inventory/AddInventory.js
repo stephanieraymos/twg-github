@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import FormAddInventory from "./FormAddInventory";
 import cancel from "../../img/cancel.svg";

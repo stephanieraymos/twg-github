@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { links, social, logoLink } from "./nav-data";
-import logo from "../img/logo-blue.svg";
-import nav from "../css/nav.css";
+import logo from "../../img/logo-blue.svg";
+import nav from "../../css/nav.css";
 
 const Navigation = () => {
   const [showLinks, setShowLinks] = useState(false);
