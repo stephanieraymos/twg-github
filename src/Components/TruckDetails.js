@@ -373,7 +373,7 @@ const TruckDetails = () => {
                 <Accordion.Collapse eventKey="0">
                   <Card.Body style={{ backgroundColor: "transparent" }}>
                     {files.map((manifest, index) => {
-                      const { manifests, manifestsName } = manifest;
+                      const { manifests, manifestName } = manifest;
                       return (
                         <ul key={manifestId[index]}>
                           <li
@@ -384,7 +384,7 @@ const TruckDetails = () => {
                             }
                           >
                             <span style={{ cursor: "pointer", color: "black" }}>
-                              {manifestsName}
+                              {manifestName}
                             </span>
                           </li>
                         </ul>

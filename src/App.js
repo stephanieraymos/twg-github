@@ -1,26 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-  useLocation 
 } from "react-router-dom";
-import { AppProvider, useGlobalContext } from "./context";
 import "bootstrap/dist/css/bootstrap.min.css"
 
 import Contact from "./Components/Contact";
 import Home from "./Components/Home";
 import AddInventory from "./Components/AddInventory";
 import InventoryAllTrucks from "./Components/InventoryAllTrucks";
-import Navigation from "./Components/Navigation";
 import Dashboard from "./Components/Dashboard";
 import Settings from "./Components/Settings";
 import Statements from "./Components/Statements";
-import Login from "./Components/Login";
 import Sidebar from "./Components/Sidebar";
-import Signup from "./Components/Signup";
-import Signup2 from "./Components/Signup_2";
 import EmailVerification from "./Components/EmailVerification"
 import Login2 from "./Components/Login_2";
 import Logout from "./Components/Logout";

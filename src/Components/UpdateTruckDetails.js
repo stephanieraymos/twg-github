@@ -353,13 +353,13 @@ const UpdateTruckDetails = () => {
 
           {truckFile.map((manifest, index) => {
             const id = manifestIds[index];
-            const { manifests, manifestsName } = manifest;
+            const { manifests, manifestName } = manifest;
             return (
               <>
                 <Form.Row key={id}>
                   <Col sm={11}>
                     <Form.Control
-                      defaultValue={manifestsName} 
+                      defaultValue={manifestName} 
                       readOnly
                       style={{cursor: "pointer"}}
                       onClick={ () =>

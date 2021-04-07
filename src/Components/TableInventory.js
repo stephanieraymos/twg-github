@@ -150,7 +150,7 @@ const TableInventory = () => {
                         // Map method to get list of files for each truck inside modal
                         const {
                           manifests,
-                          manifestsName,
+                          manifestName,
                           manifestIds,
                         } = manifest;
                         return (
@@ -164,7 +164,7 @@ const TableInventory = () => {
                               }
                             >
                               <p style={{ cursor: "pointer", color: "black" }}>
-                                {manifestsName}
+                                {manifestName}
                               </p>
                             </li>
                           </ul>
