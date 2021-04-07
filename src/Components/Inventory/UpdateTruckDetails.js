@@ -20,6 +20,7 @@ const UpdateTruckDetails = () => {
   const [files, setFiles] = useState([]);
   const [oldManifestIds, setOldManifestIds] = useState([]);
   const [validated, setValidated] = useState(false);
+  const [owner, setOwner] = useState("");
 
   const { fetchAccessToken } = useAuthContext();
 
@@ -90,6 +91,7 @@ const UpdateTruckDetails = () => {
             palletCount,
             fob,
             status,
+            owner
           } = data[0];
 
           setSource(source);
@@ -102,11 +104,14 @@ const UpdateTruckDetails = () => {
           setManifestIds(manifestIds);
           setStatus(status);
           setFob(fob);
+          setOwner(owner);
         } else {
           throw new Error("Truck does not exist.");
         }
       })
-      .catch((error) => {console.log(error)});
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -183,6 +188,7 @@ const UpdateTruckDetails = () => {
           setOldManifestIds={setOldManifestIds}
           redirect={redirect}
           status={status}
+          owner={owner}
         />
       </div>
     </>

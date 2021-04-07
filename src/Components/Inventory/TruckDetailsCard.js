@@ -23,6 +23,7 @@ const TruckDetailsCard = ({
   id,
   deleteTruck,
   status,
+  owner
 }) => {
 
   return (
@@ -113,6 +114,23 @@ const TruckDetailsCard = ({
                   <span className="truck-data-title">Category: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {category}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ OWNER CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Owner: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {owner}
                   </span>
                 </p>
               </Card.Header>

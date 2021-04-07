@@ -146,7 +146,7 @@ const FormAddInventory = ({
         {/* //^ ------------------------- OWNER ---------------------------- */}
         <Form.Group>
           <Form.Label className="form-label">Owner</Form.Label>
-          <Form.Control type="text" name="owner" />
+          <Form.Control type="text" required name="owner" />
           <Form.Control.Feedback type="invalid">
             Who owns this truck?
           </Form.Control.Feedback>

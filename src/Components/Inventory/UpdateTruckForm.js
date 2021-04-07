@@ -22,6 +22,7 @@ const UpdateTruckForm = ({
   setOldManifestIds,
   redirect,
   status,
+  owner
 }) => {
   const [manifestsCount, setManifestsCount] = useState(0);
 
@@ -90,12 +91,25 @@ const UpdateTruckForm = ({
           </Form.Control.Feedback>
         </Form.Group>
 
+        {/* //^ ----------OWNER---------- */}
+        <Form.Group className="center-form-group">
+          <Form.Label className="form-label">Owner</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            defaultValue={owner}
+            name="category"
+          />
+          <Form.Control.Feedback type="invalid">
+            Who owns this truck?
+          </Form.Control.Feedback>
+        </Form.Group>
+
         {/* //^ ----------CONTENTS---------- */}
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Contents</Form.Label>
           <Form.Control
             type="text"
-            required
             defaultValue={contents}
             name="contents"
           />

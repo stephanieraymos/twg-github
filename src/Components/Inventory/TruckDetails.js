@@ -22,6 +22,7 @@ const TruckDetails = () => {
   const [fob, setFob] = useState("");
   const [manifestIds, setManifestIds] = useState([]);
   const [files, setFiles] = useState([]);
+  const [owner, setOwner] = useState("");
 
   const { fetchAccessToken } = useAuthContext();
 
@@ -88,6 +89,7 @@ const TruckDetails = () => {
             contents,
             manifestIds,
             status,
+            owner
           } = data[0];
 
           setLoadId(loadId);
@@ -101,6 +103,7 @@ const TruckDetails = () => {
           setPalletCount(palletCount);
           setFob(fob);
           setStatus(status);
+          setOwner(owner);
         }
         setLoading(false);
       })
@@ -118,6 +121,7 @@ const TruckDetails = () => {
         getTruck();
       })
       .catch((error) => {
+        console.log(error)
         history.push("/");
       });
 
@@ -162,6 +166,7 @@ const TruckDetails = () => {
         deleteTruck={deleteTruck}
         id={id}
         status={status}
+        owner={owner}
       />
     </>
   );
