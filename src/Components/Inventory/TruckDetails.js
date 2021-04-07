@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import Navigation from "../Navigation/Navigation";
-// import { useTruck } from "../truckContext";
 import { useParams, Link, useHistory } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { useAuthContext } from "../../auth";
@@ -51,8 +50,6 @@ const TruckDetails = () => {
         });
     }
   };
-
-  // *@todo update only works if the truck has a file. If the manifests is empty. POST fails
 
   const deleteTruck = () => {
     const data = new FormData();

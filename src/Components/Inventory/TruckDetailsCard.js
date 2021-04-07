@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import {
-  FaAngleDoubleLeft,
   FaTimes,
   FaEdit,
   FaAngleDoubleDown,
@@ -25,6 +24,7 @@ const TruckDetailsCard = ({
   deleteTruck,
   status,
 }) => {
+
   return (
     <>
       <section className="truck-section">
