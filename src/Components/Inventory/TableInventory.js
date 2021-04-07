@@ -5,9 +5,6 @@ import { useAuthContext } from "../../auth";
 
 const TableInventory = () => {
   let history = useHistory();
-
-  const keys = [];
-
   const [trucks] = useTruck();
 
   const {

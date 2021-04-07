@@ -23,6 +23,8 @@ const TruckDetails = () => {
   const [manifestIds, setManifestIds] = useState([]);
   const [files, setFiles] = useState([]);
   const [owner, setOwner] = useState("");
+  const [cost, setCost] = useState("");
+  const [commission, setCommission] = useState("");
 
   const { fetchAccessToken } = useAuthContext();
 
@@ -81,6 +83,8 @@ const TruckDetails = () => {
             loadId,
             source,
             price,
+            cost,
+            commission,
             retailPrice,
             category,
             fob,
@@ -95,6 +99,8 @@ const TruckDetails = () => {
           setLoadId(loadId);
           setSource(source);
           setPrice(price);
+          setCost(cost);
+          setCommission(commission)
           setRetailPrice(retailPrice);
           setContents(contents.join(", "));
           setManifestIds(manifestIds);
@@ -167,6 +173,8 @@ const TruckDetails = () => {
         id={id}
         status={status}
         owner={owner}
+        cost={cost}
+        commission={commission}
       />
     </>
   );

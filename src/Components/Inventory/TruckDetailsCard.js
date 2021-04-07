@@ -12,6 +12,7 @@ const TruckDetailsCard = ({
   source,
   loadId,
   price,
+  cost,
   retailPrice,
   category,
   units,
@@ -23,7 +24,8 @@ const TruckDetailsCard = ({
   id,
   deleteTruck,
   status,
-  owner
+  owner,
+  commission
 }) => {
 
   return (
@@ -80,6 +82,40 @@ const TruckDetailsCard = ({
                   <span className="truck-data-title">Price: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {price}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ OUR COST CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Cost: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {cost}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ COMMISSION CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Commission: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {commission}%
                   </span>
                 </p>
               </Card.Header>

@@ -21,6 +21,8 @@ const UpdateTruckDetails = () => {
   const [oldManifestIds, setOldManifestIds] = useState([]);
   const [validated, setValidated] = useState(false);
   const [owner, setOwner] = useState("");
+  const [cost, setCost] = useState("");
+  const [commission, setCommission] = useState("");
 
   const { fetchAccessToken } = useAuthContext();
 
@@ -83,6 +85,8 @@ const UpdateTruckDetails = () => {
           const {
             source,
             price,
+            cost,
+            commission,
             retailPrice,
             contents,
             manifestIds,
@@ -96,6 +100,8 @@ const UpdateTruckDetails = () => {
 
           setSource(source);
           setPrice(price);
+          setCost(cost);
+          setCommission(commission)
           setRetailPrice(retailPrice);
           setCategory(category);
           setUnits(units);
@@ -175,6 +181,8 @@ const UpdateTruckDetails = () => {
           handleSubmit={handleSubmit}
           source={source}
           price={price}
+          cost={cost}
+          commission={commission}
           retailPrice={retailPrice}
           category={category}
           contents={contents}

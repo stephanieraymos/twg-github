@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Col } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import undo from "../../img/undo.svg";
 
@@ -9,6 +9,8 @@ const UpdateTruckForm = ({
   handleSubmit,
   source,
   price,
+  cost,
+  commission,
   retailPrice,
   category,
   contents,
@@ -22,7 +24,7 @@ const UpdateTruckForm = ({
   setOldManifestIds,
   redirect,
   status,
-  owner
+  owner,
 }) => {
   const [manifestsCount, setManifestsCount] = useState(0);
 
@@ -49,33 +51,52 @@ const UpdateTruckForm = ({
           </Form.Control.Feedback>
         </Form.Group>
 
-        {/* //^ ------------PRICE------------ */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Price</Form.Label>
-          <Form.Control
-            type="text"
-            required
-            defaultValue={price}
-            name="price"
-          />
-          <Form.Control.Feedback type="invalid">
-            Please enter a truck price.
-          </Form.Control.Feedback>
-        </Form.Group>
-
-        {/* //^ ----------RETAIL PRICE---------- */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Price</Form.Label>
-          <Form.Control
-            type="text"
-            required
-            defaultValue={retailPrice}
-            name="retailPrice"
-          />
-          <Form.Control.Feedback type="invalid">
-            Please enter a truck price.
-          </Form.Control.Feedback>
-        </Form.Group>
+        <Row>
+          {/* //^ ---------------------- RETAIL PRICE ------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Retail Price</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={retailPrice}
+              name="retailPrice"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a truck price.
+            </Form.Control.Feedback>
+          </Col>
+          {/* //^ ---------------------- OUR PRICE------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Our Price</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={price}
+              name="price"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a truck price.
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
+        <Row>
+          {/* //^ ---------------------- OUR COST------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Our Cost</Form.Label>
+            <Form.Control type="text" defaultValue={cost} name="cost" />
+            <Form.Control.Feedback type="invalid">
+              Please enter our cost.
+            </Form.Control.Feedback>
+          </Col>
+          {/* //^ ---------------------- COMMISSION ------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Commission %</Form.Label>
+            <Form.Control type="text" defaultValue={commission} name="cost" />
+            <Form.Control.Feedback type="invalid">
+              Please enter commission rate.
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
 
         {/* //^ ----------CATEGORY---------- */}
         <Form.Group className="center-form-group">
@@ -108,11 +129,7 @@ const UpdateTruckForm = ({
         {/* //^ ----------CONTENTS---------- */}
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Contents</Form.Label>
-          <Form.Control
-            type="text"
-            defaultValue={contents}
-            name="contents"
-          />
+          <Form.Control type="text" defaultValue={contents} name="contents" />
           <Form.Control.Feedback type="invalid">
             Please specify the contents inside the truck.
           </Form.Control.Feedback>
@@ -122,34 +139,35 @@ const UpdateTruckForm = ({
           </Form.Text>
         </Form.Group>
 
-        {/* //^ ----------UNITS---------- */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Units</Form.Label>
-          <Form.Control
-            type="text"
-            required
-            defaultValue={units}
-            name="units"
-          />
-          <Form.Control.Feedback type="invalid">
-            Please add the # of units in the truck.
-          </Form.Control.Feedback>
-        </Form.Group>
+        <Row>
+          {/* //^ ----------UNITS---------- */}
+          <Col>
+            <Form.Label className="form-label">Units</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={units}
+              name="units"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please add the # of units in the truck.
+            </Form.Control.Feedback>
+          </Col>
 
-        {/* //^ ----------PALLETS---------- */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Pallets</Form.Label>
-          <Form.Control
-            type="text"
-            required
-            defaultValue={palletCount}
-            name="palletCount"
-          />
-          <Form.Control.Feedback type="invalid">
-            Please add the # of pallets in the truck.
-          </Form.Control.Feedback>
-        </Form.Group>
-
+          {/* //^ ----------PALLETS---------- */}
+          <Col>
+            <Form.Label className="form-label">Pallets</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={palletCount}
+              name="palletCount"
+            />
+            <Form.Control.Feedback type="invalid">
+              Please add the # of pallets in the truck.
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
         {/* //^ ----------FOB---------- */}
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">FOB</Form.Label>
@@ -158,71 +176,72 @@ const UpdateTruckForm = ({
             Please add the # of pallets in the truck.
           </Form.Control.Feedback>
         </Form.Group>
+        <Row>
+          {/* //^ ----------STATUS---------- */}
+          <Col>
+            <Form.Label className="form-label">Status</Form.Label>
+            <Form.Check
+              style={{ color: "black" }}
+              type="switch"
+              id="custom-switch"
+              name="status"
+              checked={status}
+              label="Available"
+              onChange={() => setStatus(status ? 0 : 1)}
+            />
+          </Col>
 
-        {/* //^ ----------STATUS---------- */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Status</Form.Label>
-          <Form.Check
-            style={{ color: "black" }}
-            type="switch"
-            id="custom-switch"
-            name="status"
-            checked={status}
-            label="Available"
-            onChange={() => setStatus(status ? 0 : 1)}
-          />
-        </Form.Group>
-
-        {/* //^ ----------FILES---------- */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Manifest</Form.Label>
-          {Array(manifestsCount).fill(
-            <>
-              <Form.Control
-                type="file"
-                multiple
-                required
-                name="manifests"
-                style={{ fontSize: "1rem", color: "black" }}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please add a file.
-              </Form.Control.Feedback>
-              <Form.Text muted>
-                Select multiple files by holding down the SHIFT key
-              </Form.Text>
-            </>
-          )}
-          {manifestsCount == 0 ? (
-            <Button
-              onClick={() => setManifestsCount(manifestsCount + 1)}
-              className="form-button"
-              block
-              style={{
-                width: "150px",
-                backgroundColor: "#000",
-                alignSelf: "start",
-                margin: "0rem",
-              }}
-            >
-              Add Files
-            </Button>
-          ) : (
-            <Button
-              onClick={() => setManifestsCount(manifestsCount - 1)}
-              className="form-button"
-              block
-              style={{
-                width: "150px",
-                backgroundColor: "#000",
-                alignSelf: "start",
-                margin: ".75rem 0rem",
-              }}
-            >
-              Remove Files
-            </Button>
-          )}
-        </Form.Group>
+          {/* //^ ----------FILES---------- */}
+          <Col>
+            <Form.Label className="form-label">Manifest</Form.Label>
+            {Array(manifestsCount).fill(
+              <>
+                <Form.Control
+                  type="file"
+                  multiple
+                  required
+                  name="manifests"
+                  style={{ fontSize: "1rem", color: "black" }}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please add a file.
+                </Form.Control.Feedback>
+                <Form.Text muted>
+                  Select multiple files by holding down the SHIFT key
+                </Form.Text>
+              </>
+            )}
+            {manifestsCount == 0 ? (
+              <Button
+                onClick={() => setManifestsCount(manifestsCount + 1)}
+                className="form-button"
+                block
+                style={{
+                  width: "150px",
+                  backgroundColor: "#000",
+                  alignSelf: "start",
+                  margin: "0rem",
+                }}
+              >
+                Add Files
+              </Button>
+            ) : (
+              <Button
+                onClick={() => setManifestsCount(manifestsCount - 1)}
+                className="form-button"
+                block
+                style={{
+                  width: "150px",
+                  backgroundColor: "#000",
+                  alignSelf: "start",
+                  margin: ".75rem 0rem",
+                }}
+              >
+                Remove Files
+              </Button>
+            )}
+          </Col>
+        </Row>
 
         {files.map((manifest, index) => {
           const id = manifestIds[index];

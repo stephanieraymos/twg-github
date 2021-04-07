@@ -113,7 +113,24 @@ const FormAddInventory = ({
             </Form.Control.Feedback>
           </Col>
         </Row>
-
+        <Row>
+          {/* //^ ---------------------- OUR COST------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Our Cost</Form.Label>
+            <Form.Control type="text" name="cost" />
+            <Form.Control.Feedback type="invalid">
+              Please enter our cost.
+            </Form.Control.Feedback>
+          </Col>
+          {/* //^ ---------------------- COMMISSION ------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Commission %</Form.Label>
+            <Form.Control type="text" name="commission" />
+            <Form.Control.Feedback type="invalid">
+              Please enter commission rate.
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
         {/* //^ -------------------------- FOB ----------------------------- */}
         <Form.Group>
           <Form.Label className="form-label">FOB</Form.Label>
