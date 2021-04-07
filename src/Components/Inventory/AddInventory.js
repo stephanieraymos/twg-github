@@ -21,7 +21,7 @@ const AddInventory = ({ addNewTrucks }) => {
 
   return (
     <>
-      //^ ---- ADD LOAD BUTTON ----
+      {/* //^ ---- ADD LOAD BUTTON ---- */}
       <div className="btn-container">
         <Button
           className="boot-button"
@@ -31,13 +31,13 @@ const AddInventory = ({ addNewTrucks }) => {
           Add Load
         </Button>
       </div>
-      //^ ---- ADD LOAD MODAL START ----
+      {/* //^ ---- ADD LOAD MODAL START ---- */}
       <Modal show={isModalOpen} onHide={closeModal} centered>
         <div
           className="form-body-container"
           style={{ width: "40rem", alignSelf: "center" }}
         >
-          //^ MODAL HEADER
+          {/* //^ MODAL HEADER */}
           <div
             className="form-header-container"
             style={{
@@ -53,7 +53,7 @@ const AddInventory = ({ addNewTrucks }) => {
             >
               New Load
             </div>
-            //^ CLOSE MODAL BUTTON
+            {/* //^ CLOSE MODAL BUTTON */}
             <button
               style={{
                 background: "transparent",
@@ -71,7 +71,7 @@ const AddInventory = ({ addNewTrucks }) => {
               opacity: "25%",
             }}
           />
-          //^ MODAL BODY
+          {/* //^ MODAL BODY */}
           <FormAddInventory
             manifestsCount={manifestsCount}
             setManifestsCount={setManifestsCount}

@@ -19,7 +19,7 @@ const UpdateTruckDetails = () => {
   const [status, setStatus] = useState(0);
   const [contents, setContents] = useState([]);
   const [manifestIds, setManifestIds] = useState([]);
-  const [truckFile, setTruckFile] = useState([]);
+  const [files, setFiles] = useState([]);
   const [oldManifestIds, setOldManifestIds] = useState([]);
   const [validated, setValidated] = useState(false);
   const [manifestsCount, setManifestsCount] = useState(0);
@@ -63,8 +63,8 @@ const UpdateTruckDetails = () => {
         body: data,
       })
         .then((response) => response.json())
-        .then((manifest) => setTruckFile(manifest))
-        .catch((error) => {});
+        .then((manifest) => setFiles(manifest))
+        .catch((error) => {console.log(error)});
     }
   };
 
@@ -348,7 +348,7 @@ const UpdateTruckDetails = () => {
             )}
           </Form.Group>
 
-          {truckFile.map((manifest, index) => {
+          {files.map((manifest, index) => {
             const id = manifestIds[index];
             const { manifests, manifestName } = manifest;
             return (

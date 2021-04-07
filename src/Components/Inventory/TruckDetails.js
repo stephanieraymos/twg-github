@@ -12,28 +12,25 @@ import Loading from "../../Pages/Loading";
 import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import { useAuthContext } from "../../auth";
-import {getByIdURL, inventoryURL, manifestURL} from "../../Pages/urls"
+import { getByIdURL, inventoryURL, manifestURL } from "../../Pages/urls";
 
 const TruckDetails = () => {
-
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  const [loadId, setLoadId] = useState(""); 
+  const [loadId, setLoadId] = useState("");
   const [source, setSource] = useState("");
   const [retailPrice, setRetailPrice] = useState("");
   const [price, setPrice] = useState("");
   const [status, setStatus] = useState(1);
   const [contents, setContents] = useState("");
-  const [category, setCategory] = useState("")
+  const [category, setCategory] = useState("");
   const [units, setUnits] = useState("");
   const [palletCount, setPalletCount] = useState("");
   const [fob, setFob] = useState("");
-  const [manifestId, setManifestId] = useState([]);
+  const [manifestIds, setManifestIds] = useState([]);
   const [files, setFiles] = useState([]);
 
-  const {
-    fetchAccessToken,
-  } = useAuthContext();
+  const { fetchAccessToken } = useAuthContext();
 
   const [accessToken, setAccessToken] = useState("");
 
@@ -43,21 +40,22 @@ const TruckDetails = () => {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = () => {
-    if (manifestId.length > 0) {
+    if (manifestIds.length > 0) {
       const data = new FormData();
-      manifestId.map((id) => data.append("manifestIds", id));
+      manifestIds.map((id) => data.append("manifestIds", id));
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: data,
       })
         .then((response) => response.json())
         .then((manifest) => setFiles(manifest))
-        .catch((error) => {console.log(error)});
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    
   };
 
   // *@todo update only works if the truck has a file. If the manifests is empty. POST fails
@@ -65,17 +63,14 @@ const TruckDetails = () => {
   const deleteTruck = () => {
     const data = new FormData();
     data.append("id", id);
-    manifestId.map((id) => data.append("manifestIds", id));
+    manifestIds.map((id) => data.append("manifestIds", id));
     fetch(inventoryURL, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: data,
-    })
-      .then((response) => {
-        history.push("/trucks");
-      });
+    }).then(history.push("/trucks"));
   };
 
   const getTruck = () => {
@@ -101,29 +96,28 @@ const TruckDetails = () => {
             palletCount,
             contents,
             manifestIds,
-            company,
             status,
           } = data[0];
 
-        setLoadId(loadId);
-        setSource(source);
-        setPrice(price);
-        setRetailPrice(retailPrice);
-        setContents(contents.join(', '));
-        setManifestId(manifestIds);
-        setCategory(category);
-        setUnits(units);
-        setPalletCount(palletCount);
-        setFob(fob);
-        setStatus(status);
-      }
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.log(error);
-      setLoading(false);
-    });
-  }
+          setLoadId(loadId);
+          setSource(source);
+          setPrice(price);
+          setRetailPrice(retailPrice);
+          setContents(contents.join(", "));
+          setManifestIds(manifestIds);
+          setCategory(category);
+          setUnits(units);
+          setPalletCount(palletCount);
+          setFob(fob);
+          setStatus(status);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     // send user back to login if they're not logged in
@@ -141,7 +135,7 @@ const TruckDetails = () => {
 
   useEffect(() => {
     getManifest();
-  }, [manifestId]);
+  }, [manifestIds]);
 
   if (loading) {
     return <Loading />;
@@ -372,7 +366,7 @@ const TruckDetails = () => {
                     {files.map((manifest, index) => {
                       const { manifests, manifestName } = manifest;
                       return (
-                        <ul key={manifestId[index]}>
+                        <ul key={manifestIds[index]}>
                           <li
                             onClick={
                               () =>
