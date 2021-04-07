@@ -143,6 +143,24 @@ const FormAddInventory = ({
           </Form.Control.Feedback>
         </Form.Group>
 
+        {/* //^ ------------------------- OWNER ---------------------------- */}
+        <Form.Group>
+          <Form.Label className="form-label">Owner</Form.Label>
+          <Form.Control type="text" name="owner" />
+          <Form.Control.Feedback type="invalid">
+            Who owns this truck?
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        {/* //^ ------------------------- CATEGORY ---------------------------- */}
+        <Form.Group>
+          <Form.Label className="form-label">Category</Form.Label>
+          <Form.Control type="text" required name="category" />
+          <Form.Control.Feedback type="invalid">
+            Please specify the category.
+          </Form.Control.Feedback>
+        </Form.Group>
+
         <Row>
           {/* //^ ---------------------- PALLET COUNT ------------------------- */}
           <Col>
