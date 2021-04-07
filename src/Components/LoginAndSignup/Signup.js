@@ -4,8 +4,8 @@ import { useGlobalContext } from "../../context";
 import { useTruckContext } from "../../truckContext";
 import { Button, Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import { registerURL } from "../../Pages/urls";
 
-const url = "https://api.thewholesalegroup.com/v1/account/register/";
 const id = uuidv4();
 
 const Signup = () => {
@@ -55,7 +55,7 @@ const Signup = () => {
   //* useEffect for user post request
   const signUp = () => {
     console.log("signup is running")
-    fetch(url,
+    fetch(registerURL,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

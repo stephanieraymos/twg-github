@@ -3,6 +3,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useAuthContext } from "../../auth";
 import { useHistory } from "react-router-dom";
 import { useTruck } from "../../truckContext";
+import { inventoryURL } from "../../Pages/urls";
 
 const FormAddInventory = ({
   manifestsCount,
@@ -49,7 +50,7 @@ const FormAddInventory = ({
       });
   }, []);
 
-  //Fetching the trucks db from the API link above //^----POST (ADD INVENTORY)----
+  //^---- POST (ADD INVENTORY) ----
   const postTrucks = async () => {
     const data = new FormData(form.current);
     data.append("userId", userId);
@@ -59,16 +60,13 @@ const FormAddInventory = ({
 
     data.forEach((value, key) => console.log("Key, Value", key, value));
     try {
-      const response = await fetch(
-        "https://api.thewholesalegroup.com/v1/inventory/edit/",
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + accessToken,
-          },
-          body: data,
-        }
-      );
+      const response = await fetch(inventoryURL, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+        body: data,
+      });
       console.log(response);
       const newTruck = await response.json();
       console.log(newTruck);
@@ -213,7 +211,7 @@ const FormAddInventory = ({
               </Button>
             )}
           </Col>
-          
+
           {/* //^ ------------------------- STATUS ---------------------------- */}
           <Col>
             <Form.Label className="form-label">Status</Form.Label>

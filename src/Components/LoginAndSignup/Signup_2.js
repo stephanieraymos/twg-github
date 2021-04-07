@@ -6,9 +6,7 @@ import cancel from "../../img/cancel.svg";
 import mail from "../../img/mail.svg";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
-
-const url = "https://api.thewholesalegroup.com/v1/account/register/";
-
+import { registerURL } from "../../Pages/urls";
 const Signup2 = () => {
   document.title = "Sign up";
 
@@ -19,7 +17,9 @@ const Signup2 = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
-  const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(false);
+  const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(
+    false
+  );
 
   const { showAlert } = useTruckContext();
 
@@ -30,7 +30,7 @@ const Signup2 = () => {
     setConfirmPassword("");
     setTogglePasswordVisibility(false);
     setValidated(false);
-  }
+  };
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -45,14 +45,16 @@ const Signup2 = () => {
       - at least 1 uppercase character, and
       - at least 1 numeric character
     */
-    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+    const strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
+    );
 
     if (!strongRegex.test(password)) {
-      allErrors.password = true
+      allErrors.password = true;
     }
 
     if (password !== confirmPassword) {
-      allErrors.confirmPassword = true
+      allErrors.confirmPassword = true;
     }
 
     setErrors(allErrors);
@@ -63,7 +65,7 @@ const Signup2 = () => {
     } else if (form.checkValidity() === true) {
       // no errors
       setValidated(true);
-      signUp(reset)
+      signUp(reset);
     } else {
       // no password or confirm password errors but errors in other fields
       setValidated(true);
@@ -71,11 +73,11 @@ const Signup2 = () => {
   };
 
   //* useEffect for user post request
-  const signUp = (cleanUp=() => {}) => {
+  const signUp = (cleanUp = () => {}) => {
     const data = new FormData(form.current);
     var object = {};
-    data.forEach((value, key) => object[key] = value);
-    fetch(url, {
+    data.forEach((value, key) => (object[key] = value));
+    fetch(registerURL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(object),
@@ -123,10 +125,14 @@ const Signup2 = () => {
                   borderColor: "transparent",
                 }}
               >
-                <img src={cancel} alt="cancel" onClick={() => {
-                  setIsSignUpSuccess(false);
-                  closeModal();
-                }} />
+                <img
+                  src={cancel}
+                  alt="cancel"
+                  onClick={() => {
+                    setIsSignUpSuccess(false);
+                    closeModal();
+                  }}
+                />
               </button>
             </div>
 
@@ -201,18 +207,14 @@ const Signup2 = () => {
 
             <Form
               ref={form}
-              noValidate 
+              noValidate
               validated={validated}
               onSubmit={handleSubmit}
               style={{ width: "85%", margin: "0% 5% 5%" }}
             >
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  required
-                  name="email"
-                />
+                <Form.Control type="email" required name="email" />
                 <Form.Control.Feedback type="invalid">
                   Please enter a valid email address.
                 </Form.Control.Feedback>
@@ -220,11 +222,7 @@ const Signup2 = () => {
 
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">First Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="first_name"
-                />
+                <Form.Control type="text" required name="first_name" />
                 <Form.Control.Feedback type="invalid">
                   Please enter your first name.
                 </Form.Control.Feedback>
@@ -232,11 +230,7 @@ const Signup2 = () => {
 
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="last_name"
-                />
+                <Form.Control type="text" required name="last_name" />
                 <Form.Control.Feedback type="invalid">
                   Please enter your last name.
                 </Form.Control.Feedback>
@@ -253,37 +247,28 @@ const Signup2 = () => {
                     isInvalid={!!errors.password}
                   />
                   <InputGroup.Append>
-                    <Image 
+                    <Image
                       src={togglePasswordVisibility ? visibleOn : visibleOff}
-                      thumbnail 
-                      style={{cursor: "pointer"}}
-                      onClick={() => setTogglePasswordVisibility(!togglePasswordVisibility)}/>
+                      thumbnail
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        setTogglePasswordVisibility(!togglePasswordVisibility)
+                      }
+                    />
                   </InputGroup.Append>
                   <Form.Control.Feedback type="invalid">
                     Your password does not meet the requirements.
                   </Form.Control.Feedback>
                 </InputGroup>
-                <Form.Text muted>
-                    Password Requirements:
-                  </Form.Text>
-                  <Form.Text muted>
-                    * 8 characters or longer
-                  </Form.Text>
-                  <Form.Text muted>
-                    * 1 or more lowercase characters
-                  </Form.Text>
-                  <Form.Text muted>
-                    * 1 or more uppercase character
-                  </Form.Text>
-                  <Form.Text muted>
-                    * 1 or more numeric character
-                  </Form.Text>
+                <Form.Text muted>Password Requirements:</Form.Text>
+                <Form.Text muted>* 8 characters or longer</Form.Text>
+                <Form.Text muted>* 1 or more lowercase characters</Form.Text>
+                <Form.Text muted>* 1 or more uppercase character</Form.Text>
+                <Form.Text muted>* 1 or more numeric character</Form.Text>
               </Form.Group>
 
               <Form.Group className="center-form-group">
-                <Form.Label className="form-label">
-                  Confirm Password
-                </Form.Label>
+                <Form.Label className="form-label">Confirm Password</Form.Label>
                 <Form.Control
                   type="password"
                   required

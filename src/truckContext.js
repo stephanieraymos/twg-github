@@ -5,6 +5,7 @@ import React, {
   useContext,
   createContext,
 } from "react";
+import { url } from "./Pages/urls";
 
 // Generating context
 const TruckContext = createContext();
@@ -151,8 +152,7 @@ export const useTruck = () => {
 
     const fetchTrucks = async () => {
       try {
-        const response = await fetch(
-          "https://api.thewholesalegroup.com/v1/inventory/",
+        const response = await fetch(url,
           {
             method: "GET",
             headers: {
@@ -182,12 +182,6 @@ export const useTruck = () => {
       console.log("cleanup");
     };
   }, []);
-  // }, [postRefresh]);
-
-  // setPostRefresh is not a function error message inside postTruck function (in addInventory) after posting truck
-  //Trying to make data available without having to refresh
-
-  // @todo If anything is added as parameter to useEffect surrounding fetch trucks it causes an endless loop
 
   return [trucks, addTruck, loading, errorMessage];
 };

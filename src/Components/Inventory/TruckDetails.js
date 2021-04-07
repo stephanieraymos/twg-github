@@ -12,11 +12,9 @@ import Loading from "../../Pages/Loading";
 import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import { useAuthContext } from "../../auth";
+import {getByIdURL, inventoryURL, manifestURL} from "../../Pages/urls"
 
 const TruckDetails = () => {
-  const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
-  const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/edit/";
-  const manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
 
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -81,7 +79,7 @@ const TruckDetails = () => {
   };
 
   const getTruck = () => {
-    fetch(`${url}${id}`, {
+    fetch(`${getByIdURL}${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

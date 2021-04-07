@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Loading from "../../Pages/Loading";
-
+import { logoutURL } from "../../Pages/urls";
 import { useAuthContext } from "../../auth";
 
 const Logout = () => {
@@ -29,28 +29,27 @@ const Logout = () => {
   }, []);
 
   const logout = (accessToken) => {
-    const url = "https://api.thewholesalegroup.com/v1/account/logout/";
     // user might have a refresh token that have not expired yet
-    fetch(url, {
-        method: "POST",
-        headers: { 
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-            refresh: fetchRefreshToken()
-        }),
+    fetch(logoutURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        refresh: fetchRefreshToken(),
+      }),
     })
-    .then((response) => {
-      removeTokens();
-      history.push("/");
-    })
-    .catch((error) => {
-      history.push("/")
-    });
-  }
+      .then((response) => {
+        removeTokens();
+        history.push("/");
+      })
+      .catch((error) => {
+        history.push("/");
+      });
+  };
 
-  return <Loading />
+  return <Loading />;
 };
 
 export default Logout;

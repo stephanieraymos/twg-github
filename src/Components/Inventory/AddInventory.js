@@ -9,7 +9,7 @@ const AddInventory = ({ addNewTrucks }) => {
 
   document.title = "Add Inventory";
 
-  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -21,21 +21,23 @@ const AddInventory = ({ addNewTrucks }) => {
 
   return (
     <>
+      //^ ---- ADD LOAD BUTTON ----
       <div className="btn-container">
         <Button
           className="boot-button"
           style={{ margin: "1rem 0 -.75rem 0" }}
           onClick={openModal}
         >
-          Add Truck
+          Add Load
         </Button>
       </div>
-
+      //^ ---- ADD LOAD MODAL START ----
       <Modal show={isModalOpen} onHide={closeModal} centered>
         <div
           className="form-body-container"
           style={{ width: "40rem", alignSelf: "center" }}
         >
+          //^ MODAL HEADER
           <div
             className="form-header-container"
             style={{
@@ -49,8 +51,9 @@ const AddInventory = ({ addNewTrucks }) => {
               className="form-label"
               style={{ color: "black", fontSize: "36px" }}
             >
-              New Truck
+              New Load
             </div>
+            //^ CLOSE MODAL BUTTON
             <button
               style={{
                 background: "transparent",
@@ -60,7 +63,6 @@ const AddInventory = ({ addNewTrucks }) => {
               <img src={cancel} alt="cancel" onClick={closeModal} />
             </button>
           </div>
-
           <hr
             style={{
               width: "100%",
@@ -69,6 +71,7 @@ const AddInventory = ({ addNewTrucks }) => {
               opacity: "25%",
             }}
           />
+          //^ MODAL BODY
           <FormAddInventory
             manifestsCount={manifestsCount}
             setManifestsCount={setManifestsCount}

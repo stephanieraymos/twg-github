@@ -5,10 +5,7 @@ import { useHistory, useParams, Link } from "react-router-dom";
 import cancel from "../../img/cancel.svg";
 import undo from "../../img/undo.svg";
 import { useAuthContext } from "../../auth";
-
-const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
-const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/edit/";
-const manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
+import { getByIdURL, manifestURL, inventoryURL } from "../../Pages/urls";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
@@ -25,29 +22,15 @@ const UpdateTruckDetails = () => {
   const [truckFile, setTruckFile] = useState([]);
   const [oldManifestIds, setOldManifestIds] = useState([]);
   const [validated, setValidated] = useState(false);
-  const [manifestsCount, setManifestsCount] = useState(0)
-  
-  const {
-    fetchAccessToken,
-  } = useAuthContext();
+  const [manifestsCount, setManifestsCount] = useState(0);
+
+  const { fetchAccessToken } = useAuthContext();
 
   const [accessToken, setAccessToken] = useState("");
 
   let history = useHistory();
 
   document.title = "Add Inventory";
-  // const {
-  //   truckLoad,
-  //   setTruckLoad,
-  //   source,
-  //   setsource,
-  //   price,
-  //   setprice,
-  //   contents,
-  //   setContents,
-
-  //   showAlert,
-  // } = useTruckContext();
 
   const form = useRef(null);
 
@@ -75,7 +58,7 @@ const UpdateTruckDetails = () => {
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: data,
       })
@@ -86,7 +69,7 @@ const UpdateTruckDetails = () => {
   };
 
   const getTruck = () => {
-    fetch(`${url}${id}`, {
+    fetch(`${getByIdURL}${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -97,8 +80,19 @@ const UpdateTruckDetails = () => {
       })
       .then((data) => {
         if (data) {
-          const {source, price, retailPrice, contents, manifestIds, category, units, palletCount, fob, status} = data[0]
-  
+          const {
+            source,
+            price,
+            retailPrice,
+            contents,
+            manifestIds,
+            category,
+            units,
+            palletCount,
+            fob,
+            status,
+          } = data[0];
+
           setSource(source);
           setPrice(price);
           setRetailPrice(retailPrice);
@@ -109,13 +103,12 @@ const UpdateTruckDetails = () => {
           setManifestIds(manifestIds);
           setStatus(status);
           setFob(fob);
-  
         } else {
           throw new Error("Truck does not exist.");
         }
       })
       .catch((error) => {});
-  }
+  };
 
   useEffect(() => {
     // send user back to login if they're not logged in
@@ -125,7 +118,7 @@ const UpdateTruckDetails = () => {
         getTruck();
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         history.push("/");
       });
   }, []);
@@ -143,13 +136,13 @@ const UpdateTruckDetails = () => {
     // turn string to array and insert to truck contents
     const tempcontents = data.get("contents").split(",");
     data.delete("contents");
-    tempcontents.map(item => data.append("contents", item))
+    tempcontents.map((item) => data.append("contents", item));
 
     oldManifestIds.map((id) => data.append("manifestIds", id));
     fetch(inventoryURL, {
       method: "PUT",
       headers: {
-        "Authorization": "Bearer " + accessToken,
+        Authorization: "Bearer " + accessToken,
       },
       body: data,
     })
@@ -159,7 +152,9 @@ const UpdateTruckDetails = () => {
           return true;
         } else return false;
       })
-      .catch((error) => {console.log(error)});
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -170,10 +165,9 @@ const UpdateTruckDetails = () => {
       <h1 className="update-truck-header">Edit truck details</h1>
 
       <div className="update-truck-form-container">
-
         <Form
           ref={form}
-          noValidate 
+          noValidate
           validated={validated}
           onSubmit={handleSubmit}
           className="update-truck-form"
@@ -247,7 +241,8 @@ const UpdateTruckDetails = () => {
               Please specify the contents inside the truck.
             </Form.Control.Feedback>
             <Form.Text muted>
-              Separate each content with a comma (no space character), e.g., clothes,toys
+              Separate each content with a comma (no space character), e.g.,
+              clothes,toys
             </Form.Text>
           </Form.Group>
 
@@ -275,29 +270,24 @@ const UpdateTruckDetails = () => {
               name="palletCount"
             />
             <Form.Control.Feedback type="invalid">
-            Please add the # of pallets in the truck.
+              Please add the # of pallets in the truck.
             </Form.Control.Feedback>
           </Form.Group>
 
           {/* //^ ----------FOB---------- */}
           <Form.Group className="center-form-group">
             <Form.Label className="form-label">FOB</Form.Label>
-            <Form.Control
-              type="text"
-              required
-              defaultValue={fob}
-              name="fob"
-            />
+            <Form.Control type="text" required defaultValue={fob} name="fob" />
             <Form.Control.Feedback type="invalid">
-            Please add the # of pallets in the truck.
+              Please add the # of pallets in the truck.
             </Form.Control.Feedback>
           </Form.Group>
 
           {/* //^ ----------STATUS---------- */}
           <Form.Group className="center-form-group">
             <Form.Label className="form-label">Status</Form.Label>
-            <Form.Check 
-              style={{color: "black"}}
+            <Form.Check
+              style={{ color: "black" }}
               type="switch"
               id="custom-switch"
               name="status"
@@ -320,32 +310,42 @@ const UpdateTruckDetails = () => {
                   style={{ fontSize: "1rem", color: "black" }}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please add a file. 
+                  Please add a file.
                 </Form.Control.Feedback>
                 <Form.Text muted>
                   Select multiple files by holding down the SHIFT key
                 </Form.Text>
               </>
             )}
-            {manifestsCount == 0 ?
+            {manifestsCount == 0 ? (
               <Button
                 onClick={() => setManifestsCount(manifestsCount + 1)}
                 className="form-button"
                 block
-                style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: "0rem" }}
+                style={{
+                  width: "150px",
+                  backgroundColor: "#000",
+                  alignSelf: "start",
+                  margin: "0rem",
+                }}
               >
                 Add Files
               </Button>
-              :
+            ) : (
               <Button
                 onClick={() => setManifestsCount(manifestsCount - 1)}
                 className="form-button"
                 block
-                style={{ width: "150px", backgroundColor: "#000", alignSelf: "start", margin: ".75rem 0rem" }}
+                style={{
+                  width: "150px",
+                  backgroundColor: "#000",
+                  alignSelf: "start",
+                  margin: ".75rem 0rem",
+                }}
               >
                 Remove Files
               </Button>
-            }
+            )}
           </Form.Group>
 
           {truckFile.map((manifest, index) => {
@@ -356,53 +356,56 @@ const UpdateTruckDetails = () => {
                 <Form.Row key={id}>
                   <Col sm={11}>
                     <Form.Control
-                      defaultValue={manifestName} 
+                      defaultValue={manifestName}
                       readOnly
-                      style={{cursor: "pointer"}}
-                      onClick={ () =>
-                        window.open(manifests, "_blank") ||
-                        window.location.replace(manifests) //Opens in new tab || Opens in same tab if pop ups are blocked
-                      } />
+                      style={{ cursor: "pointer" }}
+                      onClick={
+                        () =>
+                          window.open(manifests, "_blank") ||
+                          window.location.replace(manifests) //Opens in new tab || Opens in same tab if pop ups are blocked
+                      }
+                    />
                   </Col>
                   <Col sm={1}>
                     <button
-                        type="button"
-                        style={{
-                          background: "transparent",
-                          borderColor: "transparent",
-                          height: "100%"
-                        }}
-                      >
-                        {oldManifestIds.includes(id) ?
-                          <img 
-                            src={undo} 
-                            alt="undo" 
-                            onClick={() =>{
-                              console.log("id to be added back", id);
-                              setOldManifestIds(oldManifestIds.filter(item => item !== id))
-                              console.log("old manifest id", oldManifestIds);
-                            }}
-                          />
-                          :
-                          <img 
-                            src={cancel} 
-                            alt="remove" 
-                            onClick={() =>{
-                              console.log("id to be deleted", id);
-                              setOldManifestIds([...oldManifestIds, id])
-                              console.log("old manifest id", oldManifestIds);
-                            }}
-                          />
-                        }
-                        
+                      type="button"
+                      style={{
+                        background: "transparent",
+                        borderColor: "transparent",
+                        height: "100%",
+                      }}
+                    >
+                      {oldManifestIds.includes(id) ? (
+                        <img
+                          src={undo}
+                          alt="undo"
+                          onClick={() => {
+                            console.log("id to be added back", id);
+                            setOldManifestIds(
+                              oldManifestIds.filter((item) => item !== id)
+                            );
+                            console.log("old manifest id", oldManifestIds);
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={cancel}
+                          alt="remove"
+                          onClick={() => {
+                            console.log("id to be deleted", id);
+                            setOldManifestIds([...oldManifestIds, id]);
+                            console.log("old manifest id", oldManifestIds);
+                          }}
+                        />
+                      )}
                     </button>
                   </Col>
                 </Form.Row>
-                {oldManifestIds.includes(id) &&
-                  <Form.Text style={{color: "red"}}>
+                {oldManifestIds.includes(id) && (
+                  <Form.Text style={{ color: "red" }}>
                     Marked for deletion
                   </Form.Text>
-                }
+                )}
               </>
             );
           })}
@@ -412,7 +415,11 @@ const UpdateTruckDetails = () => {
               type="submit"
               className="form-button"
               block
-              style={{ width: "100%", backgroundColor: "#f47c20", margin: "1.5rem 0rem 0rem" }}
+              style={{
+                width: "100%",
+                backgroundColor: "#f47c20",
+                margin: "1.5rem 0rem 0rem",
+              }}
             >
               Update Truck
             </Button>
@@ -424,7 +431,11 @@ const UpdateTruckDetails = () => {
               }}
               className="form-button"
               block
-              style={{ width: "100%", backgroundColor: "#000", margin: ".5rem 0rem 0rem" }}
+              style={{
+                width: "100%",
+                backgroundColor: "#000",
+                margin: ".5rem 0rem 0rem",
+              }}
             >
               Cancel
             </Button>
@@ -443,7 +454,6 @@ const UpdateTruckDetails = () => {
             Submit changes
           </Link> */}
         </Form>
-
       </div>
     </>
   );

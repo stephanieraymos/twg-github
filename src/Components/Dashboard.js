@@ -8,11 +8,10 @@ import D3 from "./D3";
 import Loading from "../Pages/Loading";
 import { useAuthContext } from "../auth";
 import { useHistory } from "react-router-dom";
+import {userURL} from "../Pages/urls"
 
 const Dashboard = () => {
   document.title = "Dashboard";
-
-  const userDetailsUrl = "https://api.thewholesalegroup.com/v1/account/user/"
 
   const { openSidebar, isSidebarOpen } = useGlobalContext();
   // const { getData } = useTruckContext();
@@ -40,7 +39,7 @@ const Dashboard = () => {
   };
 
   const getUserDetails = (accessToken) => {
-    fetch(userDetailsUrl, {
+    fetch(userURL, {
       method: "GET",
       headers: { 
         "Authorization": `Bearer ${accessToken}`

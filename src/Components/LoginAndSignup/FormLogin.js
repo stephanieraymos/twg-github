@@ -5,10 +5,9 @@ import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
 import { useGlobalContext } from "../../context";
 import { useAuthContext } from "../../auth";
+import { loginURL } from "../../Pages/urls";
 
 const FormLogin = () => {
-  const url = "https://api.thewholesalegroup.com/v1/account/login/";
-
   const form = useRef(null);
   const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(
     false
@@ -18,10 +17,7 @@ const FormLogin = () => {
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
   const [userId, setUserId] = useState("");
 
-  const {
-    setAccessToken,
-    setRefreshToken,
-  } = useAuthContext();
+  const { setAccessToken, setRefreshToken } = useAuthContext();
 
   const {
     email,
@@ -61,7 +57,7 @@ const FormLogin = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
-    fetch(url, {
+    fetch(loginURL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(object),
@@ -104,8 +100,8 @@ const FormLogin = () => {
   }, [userId]);
 
   useEffect(() => {
-    localStorage.setItem('userId', userId);
-  }, [userId])
+    localStorage.setItem("userId", userId);
+  }, [userId]);
 
   return (
     <>

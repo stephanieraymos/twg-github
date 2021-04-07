@@ -4,8 +4,6 @@ import { useGlobalContext } from "../context";
 import modalandsidebar from "../css/modalandsidebar.css";
 import { Link } from "react-router-dom";
 
-const url = "https://api.thewholesalegroup.com/v1/account/user/"
-
 const Home = () => {
   document.title = "Home";
   const { openModal, isModalOpen } = useGlobalContext();

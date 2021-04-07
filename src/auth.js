@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useCookies } from "react-cookie";
-
+import {tokenVerifyURL, tokenRefreshURL} from "./Pages/urls"
 const AuthContext = React.createContext(null)
 
 const AuthProvider = ({ children }) => {
     // URLs to communicate with the auth API
-    const tokenVerifyURL = "https://api.thewholesalegroup.com/v1/account/token/verify/";
-    const tokenRefreshURL = "https://api.thewholesalegroup.com/v1/account/token/refresh/";
+
 
     // keys for the cookies
     const accessTokenKey = "user-access-token";

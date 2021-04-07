@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
+
 // Generating context
 const AppContext = React.createContext(null);
 //Generating provider
 const AppProvider = ({ children }) => {
-  const url = "https://api.thewholesalegroup.com/api/v1/inventory/"; //API LINK
   //////////////////////// &&--STATE--&& /////////////////////////////
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);

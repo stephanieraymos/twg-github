@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Loading from "../Pages/Loading";
 import { useGlobalContext } from "../context";
 import { Button, Form, Row, Col } from "react-bootstrap";
-
-const url = "https://api.thewholesalegroup.com/v1/inventory/?id=";
+import { getByIdURL, userURL } from "../Pages/urls";
 
 const AccountDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -30,8 +29,7 @@ const AccountDetails = () => {
   } = useGlobalContext();
 
   const getUserDetails = () => {
-    const url = "https://api.thewholesalegroup.com/v1/account/user/"
-    fetch(url, {
+    fetch(userURL, {
       method: "GET",
       headers: {
         "Authorization": "Bearer " + cookies["user-access-token"],

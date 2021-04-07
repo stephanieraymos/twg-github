@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { useGlobalContext } from "../../context";
+import { loginURL } from "../../Pages/urls";
 import modalandsidebar from "../css/modalandsidebar.css";
 
 const getLocalStorage = () => {
@@ -13,8 +14,6 @@ const getLocalStorage = () => {
 };
 
 const LoginModal = () => {
-  const url = "https://api.thewholesalegroup.com/v1/account/login/";
-
   const { isModalOpen, closeModal } = useGlobalContext();
 
   const [password, setPassword] = useState("");
@@ -51,7 +50,7 @@ const LoginModal = () => {
   //* useEffect for user post request
   const login = () => {
     console.log("login is running");
-    fetch(url, {
+    fetch(loginURL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
