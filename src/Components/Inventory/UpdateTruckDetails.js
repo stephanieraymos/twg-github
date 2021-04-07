@@ -106,7 +106,7 @@ const UpdateTruckDetails = () => {
           throw new Error("Truck does not exist.");
         }
       })
-      .catch((error) => {});
+      .catch((error) => {console.log(error)});
   };
 
   useEffect(() => {

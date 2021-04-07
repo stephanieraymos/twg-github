@@ -21,7 +21,7 @@ const UpdateTruckForm = ({
   oldManifestIds,
   setOldManifestIds,
   redirect,
-  status
+  status,
 }) => {
   const [manifestsCount, setManifestsCount] = useState(0);
 
@@ -302,19 +302,6 @@ const UpdateTruckForm = ({
             Cancel
           </Button>
         </div>
-
-        {/* <Link
-            to={history}
-            onClick={(e) => {
-              e.preventDefault();
-              updateTruck(id, source, price, contents);
-              console.log("Submit changes button pressed");
-              redirect();
-            }}
-            className="edit-truck-btn"
-          >
-            Submit changes
-          </Link> */}
       </Form>
     </>
   );
