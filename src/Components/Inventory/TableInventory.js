@@ -53,10 +53,11 @@ const TableInventory = () => {
               palletCount,
               fob,
               retailPrice,
+              status
             } = truck;
 
             return (
-              <div className="truckLoad" key={id}>
+              <div className={`${status === 0 ? "truckLoad status-row-red" : status === 1 ? "truckLoad status-row-green" : "truckLoad status-row-yellow"}`} key={id}>
                 <Link
                   to={`/TruckDetails/${id}`}
                   className="items all-trucks-load text-truncate"
