@@ -8,12 +8,23 @@ import D3 from "./D3";
 import Loading from "../Pages/Loading";
 import { useAuthContext } from "../auth";
 import { useHistory } from "react-router-dom";
-import {userURL} from "../Pages/urls"
+import { userURL } from "../Pages/urls";
 
 const Dashboard = () => {
   document.title = "Dashboard";
-
-  const { openSidebar, isSidebarOpen } = useGlobalContext();
+  const { fetchAccessToken } = useAuthContext();
+  const {
+    openSidebar,
+    isSidebarOpen,
+    userId,
+    setUserId,
+    setEmail,
+    setFirstName,
+    setLastName,
+    setCompany,
+    setPhoneNumber,
+    setBillingAddress
+  } = useGlobalContext();
   // const { getData } = useTruckContext();
   const [trucks, loading] = useTruck();
 
@@ -21,20 +32,6 @@ const Dashboard = () => {
 
   let history = useHistory();
 
-  const {
-    userId, 
-    setUserId,
-    setEmail,
-    setFirstName,
-    setLastName,
-    setCompany,
-    setPhoneNumber,
-    setBillingAddress,
-  } = useGlobalContext();
-
-  const {
-    fetchAccessToken,
-  } = useAuthContext();
 
   const handleViewDetails = () => {
     return <OrderDetails />;
@@ -43,13 +40,13 @@ const Dashboard = () => {
   const getUserDetails = (accessToken) => {
     fetch(userURL, {
       method: "GET",
-      headers: { 
-        "Authorization": `Bearer ${accessToken}`
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
     })
       .then((response) => {
         const res = response.json();
-        console.log(res)
+        console.log(res);
         if (response.ok) {
           return res;
         } else {
@@ -66,13 +63,13 @@ const Dashboard = () => {
         setBillingAddress(user["billing_address"]);
       })
       .catch((error) => {
-
+        console.log(error)
       });
   };
 
   useEffect(() => {
-    localStorage.setItem('userId', userId);
-  }, [userId])
+    localStorage.setItem("userId", userId);
+  }, [userId]);
 
   useEffect(() => {
     console.log("userId", userId);
@@ -81,6 +78,7 @@ const Dashboard = () => {
         getUserDetails(token);
       })
       .catch((error) => {
+        console.log(error)
         history.push("/");
       });
   }, []);
@@ -117,7 +115,6 @@ const Dashboard = () => {
             <p className="dash-count">64</p>
           </div>
         </div>
-
 
         <div className="sales-graph-container">
           <div className="sales-graph">

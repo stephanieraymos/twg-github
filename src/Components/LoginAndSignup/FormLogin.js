@@ -24,6 +24,7 @@ const FormLogin = () => {
     setUserId,
     email,
     setEmail,
+    firstName,
     setFirstName,
     setLastName,
     setCompany,
@@ -43,6 +44,8 @@ const FormLogin = () => {
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
+    console.log("userID in handleSubmit", userId)
+    console.log(openModal)
     event.preventDefault();
     event.stopPropagation();
 
@@ -50,7 +53,9 @@ const FormLogin = () => {
 
     if (form.checkValidity() === true) {
       // no errors
-      login();
+      login()
+      setUserId(userId)
+      console.log("userId in conditional inside handle submit", userId)
     }
   };
 
@@ -67,7 +72,8 @@ const FormLogin = () => {
       .then((response) => {
         const res = response.json();
         if (response.ok) {
-          console.log("Response is OK");
+          console.log("Response from login is OK");
+          console.log("Res", res)
           return res;
         } else {
           throw new Error(res.message);
@@ -75,10 +81,6 @@ const FormLogin = () => {
       })
       .then((user) => {
         setUserId(user["id"]);
-        console.log("user[]", user["id"]);
-        // console.log("Type of user[]", typeof(user["id"]))
-        // console.log("Type of userId", typeof(userId))
-        //console.log("userId", userId);
         setEmail(user["email"]);
         setFirstName(user["first_name"]);
         setLastName(user["last_name"]);
@@ -87,6 +89,13 @@ const FormLogin = () => {
         setBillingAddress(user["billing_address"]);
         setAccessToken(user["token"]["access"]);
         setRefreshToken(user["token"]["refresh"]);
+        console.log("user[]", user["id"]);
+        console.log("userId inside login", userId)
+        console.log("Type of user[]", typeof(user["id"]))
+        console.log("Type of userId", typeof(userId))
+        console.log("userId", userId);
+        console.log("First Name", firstName)
+        console.log("email", email)
       })
       .then(() => {
         console.log("userId", userId);
@@ -94,13 +103,11 @@ const FormLogin = () => {
         history.push("/dashboard");
       })
       .catch((error) => {
+        console.log(error)
         setIsLoginIncorrect(true);
         setValidated(false);
       });
   };
-  useEffect(() => {
-    login();
-  }, [userId]);
 
   useEffect(() => {
     localStorage.setItem("userId", userId);
