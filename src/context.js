@@ -11,6 +11,7 @@ const AppProvider = ({ children }) => {
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
   const [error, setError] = useState(false);
+  const [userId, setUserId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -63,6 +64,8 @@ const AppProvider = ({ children }) => {
         setPhoneNumber,
         billingAddress,
         setBillingAddress,
+        userId,
+        setUserId,
       }}
     >
       {children}

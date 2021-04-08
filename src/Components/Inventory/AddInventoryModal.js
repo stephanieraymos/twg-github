@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FormAddInventory from "./FormAddInventory";
 import { Modal } from "react-bootstrap";
+import { useGlobalContext } from "../../context";
 
 const AddInventoryModal = ({
   isModalOpen,
@@ -9,7 +10,12 @@ const AddInventoryModal = ({
   addNewTrucks,
 }) => {
   const [manifestsCount, setManifestsCount] = useState(0);
-  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  // const [userId, setUserId] = useState(localStorage.getItem("userId"));
+
+  const {
+    userId,
+    setUserId,
+  } = useGlobalContext();
 
   const closeModal = () => {
     setIsModalOpen(false);

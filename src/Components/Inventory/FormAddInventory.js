@@ -40,6 +40,7 @@ const FormAddInventory = ({
 
   useEffect(() => {
     // send user back to login if they're not logged in
+    console.log("userId", userId);
     fetchAccessToken
       .then((token) => {
         setAccessToken(token);

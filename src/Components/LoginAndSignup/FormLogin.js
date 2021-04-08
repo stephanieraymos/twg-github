@@ -15,11 +15,13 @@ const FormLogin = () => {
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
-  const [userId, setUserId] = useState("");
+  // const [userId, setUserId] = useState("");
 
   const { setAccessToken, setRefreshToken } = useAuthContext();
 
   const {
+    userId,
+    setUserId,
     email,
     setEmail,
     setFirstName,
@@ -76,7 +78,7 @@ const FormLogin = () => {
         console.log("user[]", user["id"]);
         // console.log("Type of user[]", typeof(user["id"]))
         // console.log("Type of userId", typeof(userId))
-        console.log("userId", userId);
+        //console.log("userId", userId);
         setEmail(user["email"]);
         setFirstName(user["first_name"]);
         setLastName(user["last_name"]);
@@ -87,6 +89,7 @@ const FormLogin = () => {
         setRefreshToken(user["token"]["refresh"]);
       })
       .then(() => {
+        console.log("userId", userId);
         resetValues();
         history.push("/dashboard");
       })
