@@ -7,7 +7,7 @@ import cancel from "../../img/cancel.svg";
 import Signup2 from "./Signup_2";
 import { useAuthContext } from "../../auth";
 import { useTruck } from "../../truckContext";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 
 const LoginModal = () => {
@@ -18,10 +18,14 @@ const LoginModal = () => {
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
 
   let history = useHistory();
+  let location = useLocation();
+
   useEffect(() => {
     fetchAccessToken
       .then((token) => {
-        history.push("/dashboard");
+        let { from } = { from: { pathname: "/dashboard" } };
+        //history.push("/dashboard");
+        history.replace(from);
       })
       .catch((error) => {console.log(error)});
 

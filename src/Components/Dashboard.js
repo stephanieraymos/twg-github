@@ -7,8 +7,10 @@ import OrderDetails from "./Orders/OrderDetails";
 import D3 from "./D3";
 import Loading from "../Pages/Loading";
 import { useAuthContext } from "../auth";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { userURL } from "../Pages/urls";
+
+import Navigation from "./Navigation/Navigation";
 
 const Dashboard = () => {
   document.title = "Dashboard";
@@ -73,27 +75,30 @@ const Dashboard = () => {
 
   useEffect(() => {
     console.log("userId", userId);
-    fetchAccessToken
-      .then((token) => {
-        getUserDetails(token);
-      })
-      .catch((error) => {
-        console.log(error)
-        history.push("/");
-      });
+    // fetchAccessToken
+    //   .then((token) => {
+    //     getUserDetails(token);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //     history.push("/");
+    //   });
   }, []);
 
   return (
     <>
+      <div>
+        <Navigation />
+      </div>
       <article className="admin-dashboard-content">
-        <button
+        {/* <button
           className={`${
             isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"
           }`}
           onClick={openSidebar}
         >
           <FaBars />
-        </button>
+        </button> */}
 
         <h1 className="dashboard-heading">Dashboard</h1>
 

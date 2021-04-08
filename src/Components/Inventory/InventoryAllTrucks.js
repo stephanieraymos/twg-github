@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Navigation from "../Navigation/Navigation";
 import { useTruck } from "../../truckContext";
 import AddInventory from "./AddInventory";
 import { Container } from "react-bootstrap";
 import TableInventory from "./TableInventory";
 import inventory from "../../css/inventory.css";
+import { useGlobalContext } from "../../context";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -13,6 +14,14 @@ const InventoryAllTrucks = () => {
     addTruck(truck);
   };
   const [addTruck] = useTruck();
+
+  const {
+    userId,
+  } = useGlobalContext();
+
+  useEffect(() => {
+    console.log("userId in inventory all truck", userId);
+  }, [])
 
   return (
     <>

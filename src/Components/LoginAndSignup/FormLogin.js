@@ -100,7 +100,10 @@ const FormLogin = () => {
       .then(() => {
         console.log("userId", userId);
         resetValues();
-        history.push("/dashboard");
+        //history.push("/dashboard");
+
+        let { from } = { from: { pathname: "/dashboard" } };
+        history.replace(from);
       })
       .catch((error) => {
         console.log(error)
@@ -183,13 +186,13 @@ const FormLogin = () => {
             Login
           </Button>
 
-          <Link
+          {/* <Link
             to={`/Login`}
             className="form-label"
             style={{ color: "#f47c20" }}
           >
             Forgot Password?
-          </Link>
+          </Link> */}
 
           <hr
             style={{

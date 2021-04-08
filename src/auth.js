@@ -6,10 +6,15 @@ const AuthContext = React.createContext(null)
 const AuthProvider = ({ children }) => {
     // URLs to communicate with the auth API
 
-
+    const maxAgeShort = 3600;
+    const maxAgeLong = 604800;
     // keys for the cookies
     const accessTokenKey = "user-access-token";
     const refreshTokenKey = "user-refresh-token";
+    const userIdKey = "user-id";
+    const isSellerKey = "is-seller";
+    const isAdminKey = "is-admin";
+    const isSuperuserKey = "is-superuser";
 
     const [cookies, setCookie, removeCookie] = useCookies([accessTokenKey, refreshTokenKey]);
     
@@ -22,7 +27,7 @@ const AuthProvider = ({ children }) => {
         setCookie(accessTokenKey, token, {
           path: "/",
           // secure: true,
-          maxAge: 3600, // 1 hour
+          maxAge: maxAgeShort, // 1 hour
         });
     };
     
@@ -30,7 +35,39 @@ const AuthProvider = ({ children }) => {
         setCookie(refreshTokenKey, token, {
             path: "/",
             // secure: true,
-            maxAge: 604800, // 7 days
+            maxAge: maxAgeLong // 7 days
+        });
+    };
+
+    const setUserId = (value) => {
+        setCookie(userIdKey, value, {
+            path: "/",
+            // secure: true,
+            maxAge: maxAgeShort, // 1 hour
+        });
+    };
+
+    const setIsSeller = (value) => {
+        setCookie(isSellerKey, value, {
+            path: "/",
+            // secure: true,
+            maxAge: maxAgeShort, // 1 hour
+        });
+    };
+
+    const setIsAdmin = (value) => {
+        setCookie(isAdminKey, value, {
+            path: "/",
+            // secure: true,
+            maxAge: maxAgeShort, // 1 hour
+        });
+    };
+
+    const setIsSuperuser = (value) => {
+        setCookie(isSuperuserKey, value, {
+            path: "/",
+            // secure: true,
+            maxAge: maxAgeShort, // 1 hour
         });
     };
 
@@ -101,6 +138,10 @@ const AuthProvider = ({ children }) => {
         removeTokens,
         fetchAccessToken,
         fetchRefreshToken,
+        setUserId,
+        setIsSeller,
+        setIsAdmin,
+        setIsSuperuser,
     }
 
     return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>

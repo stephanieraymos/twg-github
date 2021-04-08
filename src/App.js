@@ -7,32 +7,46 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import Contact from "./Pages/Contact";
-import Home from "./Pages/Home";
-import AddInventory from "./Components/Inventory/AddInventory";
+import { useAuthContext } from "./auth";
+import Sidebar from "./Components/Navigation/Sidebar";
+import Login2 from "./Components/LoginAndSignup/Login_2";
+// import Contact from "./Pages/Contact";
+// import Home from "./Pages/Home";
+// import AddInventory from "./Components/Inventory/AddInventory";
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import Dashboard from "./Components/Dashboard";
-import Settings from "./Components/Settings";
-import Statements from "./Components/Statements";
-import Sidebar from "./Components/Navigation/Sidebar";
-import EmailVerification from "./Components/LoginAndSignup/EmailVerification"
-import Login2 from "./Components/LoginAndSignup/Login_2";
-import Logout from "./Components/LoginAndSignup/Logout";
-import AccountDetails from "./Components/AccountDetails"
-import UserDb from "./Components/Users/UserDb";
-import OrderDetails from "./Components/Orders/OrderDetails";
-import Orders from "./Components/Orders/Orders";
-import TruckDetails from "./Components/Inventory/TruckDetails";
-import UpdateTruckDetails from "./Components/Inventory/UpdateTruckDetails";
-import Error from "./Pages/Error";
+// import Settings from "./Components/Settings";
+// import Statements from "./Components/Statements";
+// import EmailVerification from "./Components/LoginAndSignup/EmailVerification"
+// import Logout from "./Components/LoginAndSignup/Logout";
+// import AccountDetails from "./Components/AccountDetails"
+// import UserDb from "./Components/Users/UserDb";
+// import OrderDetails from "./Components/Orders/OrderDetails";
+// import Orders from "./Components/Orders/Orders";
+// import TruckDetails from "./Components/Inventory/TruckDetails";
+// import UpdateTruckDetails from "./Components/Inventory/UpdateTruckDetails";
+// import Error from "./Pages/Error";
 
 const App = () => {
 
   return (
     <>
-      <Sidebar />
 
-      
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Login2 />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+          <Route path="/trucks">
+            <InventoryAllTrucks />
+          </Route>
+        </Switch>
+      </Router>
+
+      {/* <Sidebar />
       <Router>
         <Switch>
             <Route path="/" exact component={Login2} />
@@ -58,7 +72,7 @@ const App = () => {
             <Route path="*" exact component={Error} />
             <Redirect to="/" />
         </Switch>
-      </Router>
+      </Router> */}
     </>
   );
 };
