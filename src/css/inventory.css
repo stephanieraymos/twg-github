@@ -138,14 +138,23 @@ input:hover::placeholder {
 .truckLoad-list {
   border-radius: 0.25em;
 }
+.status-row-green {
+  background-color:rgba(0, 128, 0, 0.295);
+}
+.status-row-red {
+  background-color:rgba(216, 0, 0, 0.295);
+}
+.status-row-yellow {
+  background-color:rgba(161, 151, 0, 0.377);
+}
 
-.truckLoad:nth-child(even) {
+/* .truckLoad:nth-child(even) {
   background: rgb(194, 192, 192);
 }
 
 .truckLoad:nth-child(even):hover {
   background: var(--gray);
-}
+} */
 
 .folder-icon {
   background-color: transparent;
