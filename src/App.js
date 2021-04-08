@@ -11,7 +11,7 @@ import Contact from "./Pages/Contact";
 import Home from "./Pages/Home";
 import AddInventory from "./Components/Inventory/AddInventory";
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
-import Dashboard from "./Components/Dashboard";
+import Dashboard from "./Components/Dashboard/Dashboard";
 import Settings from "./Components/Settings";
 import Statements from "./Components/Statements";
 import Sidebar from "./Components/Navigation/Sidebar";
