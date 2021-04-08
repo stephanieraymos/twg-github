@@ -57,15 +57,40 @@ input:hover::placeholder {
   color: var(--text);
 }
 
-.items {
-  margin-bottom: 0;
-  justify-content: center;
-  /* text-align: center; */
+.table-id-link {
   color: var(--dark);
   letter-spacing: 2px;
-  transition: var(--transition);
 }
 
+
+.a-circle {
+  width: 10px;
+  height: 10px;
+  background: green;
+  border-radius: 50%;
+  display: block;
+
+}
+.s-circle {
+  width: 10px;
+  height: 10px;
+  background: red;
+  border-radius: 50%;
+  display: block;
+}
+.p-circle {
+  width: 10px;
+  height: 10px;
+  background: yellow;
+  border-radius: 50%;
+  display: block;
+
+}
+
+
+
+
+/* 
 .truck {
   width: 30%;
   color: white;
@@ -81,13 +106,11 @@ input:hover::placeholder {
 .manifest {
   width: 15%;
   color: white;
-}
+} */
 
 .header-items {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 0.25rem;
   background: var(--sections);
+  color: white;
 }
 
 .side-btn-container {
@@ -168,15 +191,20 @@ input:hover::placeholder {
 .table-wrapper {
   display: flex;
   flex-direction: column;
+  width: 100%;
   padding: 2rem;
   margin: 0 auto;
 }
 
-/* //! TABLE HEADERS */
-tr.all-trucks-table-header-load {
-  width: 14%;
+.table th:not(#id, #program){
+  padding-left: 0;
 }
-tr.all-trucks-table-header-program {
+
+/* //! TABLE HEADERS */
+/* th.all-trucks-table-header-load {
+  min-width: 14%;
+}
+th.all-trucks-table-header-program {
   width: 14%;
   align-self: center;
 }
@@ -203,10 +231,10 @@ tr.all-trucks-table-header-price {
   width: 10%;
   text-align: right;
   padding-right: 3%;
-}
+} */
 
 /* //! TABLE CONTENTS */
-.all-trucks-load {
+/* .all-trucks-load {
   width: 13%;
   padding-left: 0.4rem;
 }
@@ -234,7 +262,7 @@ tr.all-trucks-table-header-price {
 .all-trucks-price {
   width: 10%;
   text-align: center;
-}
+} */
 
 /*=============================================
 =               TRUCK DETAILS               =
@@ -262,8 +290,8 @@ tr.all-trucks-table-header-price {
 }
 
 .truck {
-  width: var(--smallWidth);
-  max-width: var(--fullWidth);
+  /* width: var(--smallWidth);
+  max-width: var(--fullWidth); */
   text-align: left;
   /* text-align: space-between;
   justify-content: space-between; */
@@ -317,7 +345,7 @@ li {
   padding-bottom: 0;
 }
 
-@media screen and (min-width: 992px) {
+/* @media screen and (min-width: 992px) {
   .truck {
     display: grid;
     grid-template-columns: 2fr 3fr;
@@ -327,7 +355,7 @@ li {
   .truck-info {
     padding-top: 0;
   }
-}
+} */
 .delete-truck-btn {
   background: transparent;
   border-color: transparent;

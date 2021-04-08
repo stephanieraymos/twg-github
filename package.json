@@ -17,6 +17,8 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
+    "react-table": "^7.6.3",
+    "sorttable": "^1.0.2",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.0"
   },
