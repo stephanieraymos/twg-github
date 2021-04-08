@@ -21,13 +21,13 @@ const LoginModal = () => {
   let location = useLocation();
 
   useEffect(() => {
-    fetchAccessToken
-      .then((token) => {
-        let { from } = { from: { pathname: "/dashboard" } };
-        //history.push("/dashboard");
-        history.replace(from);
-      })
-      .catch((error) => {console.log(error)});
+    // fetchAccessToken
+    //   .then((token) => {
+    //     let { from } = { from: { pathname: "/dashboard" } };
+    //     //history.push("/dashboard");
+    //     history.replace(from);
+    //   })
+    //   .catch((error) => {console.log(error)});
 
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);

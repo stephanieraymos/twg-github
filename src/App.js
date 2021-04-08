@@ -7,7 +7,9 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import { useAuthContext } from "./auth";
+import { dashboard, inventory } from "./Pages/paths";
+
+import { PrivateRoute } from "./auth";
 import Sidebar from "./Components/Navigation/Sidebar";
 import Login2 from "./Components/LoginAndSignup/Login_2";
 // import Contact from "./Pages/Contact";
@@ -15,6 +17,7 @@ import Login2 from "./Components/LoginAndSignup/Login_2";
 // import AddInventory from "./Components/Inventory/AddInventory";
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import Dashboard from "./Components/Dashboard";
+import { inventoryURL } from "./Pages/urls";
 // import Settings from "./Components/Settings";
 // import Statements from "./Components/Statements";
 // import EmailVerification from "./Components/LoginAndSignup/EmailVerification"
@@ -37,12 +40,12 @@ const App = () => {
           <Route exact path="/">
             <Login2 />
           </Route>
-          <Route path="/dashboard">
+          {/* <PrivateRoute path={dashboard}>
             <Dashboard />
-          </Route>
-          <Route path="/trucks">
+          </PrivateRoute>
+          <PrivateRoute path={inventory}>
             <InventoryAllTrucks />
-          </Route>
+          </PrivateRoute> */}
         </Switch>
       </Router>
 
