@@ -139,13 +139,13 @@ input:hover::placeholder {
   border-radius: 0.25em;
 }
 .status-row-green {
-  background-color:rgba(0, 128, 0, 0.295);
+  background-color: rgba(0, 128, 0, 0.295);
 }
 .status-row-red {
-  background-color:rgba(216, 0, 0, 0.295);
+  background-color: rgba(216, 0, 0, 0.295);
 }
 .status-row-yellow {
-  background-color:rgba(161, 151, 0, 0.377);
+  background-color: rgba(161, 151, 0, 0.377);
 }
 
 /* .truckLoad:nth-child(even) {
@@ -166,38 +166,40 @@ input:hover::placeholder {
 =============================================*/
 
 .table-wrapper {
-  align-self: center;
+  display: flex;
+  flex-direction: column;
   padding: 2rem;
+  margin: 0 auto;
 }
 
 /* //! TABLE HEADERS */
-span.all-trucks-table-header-load {
+tr.all-trucks-table-header-load {
   width: 14%;
 }
-span.all-trucks-table-header-program {
+tr.all-trucks-table-header-program {
   width: 14%;
   align-self: center;
 }
-span.all-trucks-table-header-category {
+tr.all-trucks-table-header-category {
   width: 10%;
 }
-span.all-trucks-table-header-units {
+tr.all-trucks-table-header-units {
   width: 5%;
-  padding-right: .2rem;
+  padding-right: 0.2rem;
 }
-span.all-trucks-table-header-pallets {
+tr.all-trucks-table-header-pallets {
   width: 5%;
 }
-span.all-trucks-table-header-fob {
+tr.all-trucks-table-header-fob {
   text-align: center;
   width: 12%;
   padding-right: 1.5rem;
 }
-span.all-trucks-table-header-retail {
+tr.all-trucks-table-header-retail {
   width: 5%;
   padding-right: 1.5rem;
 }
-span.all-trucks-table-header-price {
+tr.all-trucks-table-header-price {
   width: 10%;
   text-align: right;
   padding-right: 3%;
@@ -206,7 +208,7 @@ span.all-trucks-table-header-price {
 /* //! TABLE CONTENTS */
 .all-trucks-load {
   width: 13%;
-  padding-left: .4rem;
+  padding-left: 0.4rem;
 }
 .all-trucks-program {
   width: 13%;
@@ -234,7 +236,6 @@ span.all-trucks-table-header-price {
   text-align: center;
 }
 
-
 /*=============================================
 =               TRUCK DETAILS               =
 =============================================*/
@@ -244,7 +245,7 @@ span.all-trucks-table-header-price {
   padding-top: 1rem;
 }
 .back-to-link {
-  padding-left: .5rem;
+  padding-left: 0.5rem;
   color: black;
 }
 .truck-section {
@@ -303,7 +304,8 @@ span.all-trucks-table-header-price {
   padding-top: 2rem;
 }
 
-ul, li {
+ul,
+li {
   padding: 0;
   margin: 0;
   justify-content: space-between;
@@ -312,7 +314,7 @@ ul, li {
 .data-wrapper {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 0
+  padding-bottom: 0;
 }
 
 @media screen and (min-width: 992px) {

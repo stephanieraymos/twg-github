@@ -7,9 +7,7 @@ const TableInventory = () => {
   let history = useHistory();
   const [trucks] = useTruck();
 
-  const {
-    fetchAccessToken,
-  } = useAuthContext();
+  const { fetchAccessToken } = useAuthContext();
 
   const [accessToken, setAccessToken] = useState("");
 
@@ -20,28 +18,31 @@ const TableInventory = () => {
         setAccessToken(token);
       })
       .catch((error) => {
+        console.log(error);
         history.push("/");
       });
   }, []);
 
   return (
     <>
-      <div className="table-wrapper">
-        <div className="header-items">
-          <span className="all-trucks-table-header-load truck">ID</span>
-          <span className="all-trucks-table-header-program program">PROGRAM</span>
-          <span className="all-trucks-table-header-category category">
+      <table className="table-wrapper" id="table">
+        <thead className="header-items">
+          <tr className="all-trucks-table-header-load truck">ID</tr>
+          <tr className="all-trucks-table-header-program program">
+            PROGRAM
+          </tr>
+          <tr className="all-trucks-table-header-category category">
             CATEGORY
-          </span>
-          <span className="all-trucks-table-header-units units">
-            UNITS
-          </span>
-          <span className="all-trucks-table-header-pallets pallets">PALLETS</span>
-          <span className="all-trucks-table-header-fob fob">FOB</span>
-          <span className="all-trucks-table-header-retail retail">RETAIL</span>
-          <span className="all-trucks-table-header-price price">PRICE</span>
-        </div>
-        <div className="truckLoad-list">
+          </tr>
+          <tr className="all-trucks-table-header-units units">UNITS</tr>
+          <tr className="all-trucks-table-header-pallets pallets">
+            PALLETS
+          </tr>
+          <tr className="all-trucks-table-header-fob fob">FOB</tr>
+          <tr className="all-trucks-table-header-retail retail">RETAIL</tr>
+          <tr className="all-trucks-table-header-price price">PRICE</tr>
+        </thead>
+        <tbody className="truckLoad-list">
           {trucks.map((truck) => {
             let {
               id,
@@ -53,11 +54,20 @@ const TableInventory = () => {
               palletCount,
               fob,
               retailPrice,
-              status
+              status,
             } = truck;
-
+            console.log(trucks);
             return (
-              <div className={`${status === 0 ? "truckLoad status-row-red" : status === 1 ? "truckLoad status-row-green" : "truckLoad status-row-yellow"}`} key={id}>
+              <tr
+                className={`${
+                  status === 0
+                    ? "truckLoad status-row-red"
+                    : status === 1
+                    ? "truckLoad status-row-green"
+                    : "truckLoad status-row-yellow"
+                }`}
+                key={id}
+              >
                 <Link
                   to={`/TruckDetails/${id}`}
                   className="items all-trucks-load text-truncate"
@@ -65,32 +75,31 @@ const TableInventory = () => {
                   {loadId}
                 </Link>
 
-                <p className="items all-trucks-program text-truncate">
+                <td className="items all-trucks-program text-truncate">
                   {source}
-                </p>
-                <p className="items all-trucks-category text-truncate">
+                </td>
+                <td className="items all-trucks-category text-truncate">
                   {category}
-                </p>
-                <p className="items all-trucks-units text-truncate">
-                  {units}
-                </p>
-                <p className="items all-trucks-pallets text-truncate">
+                </td>
+                <td className="items all-trucks-units text-truncate">{units}</td>
+                <td className="items all-trucks-pallets text-truncate">
                   {palletCount}
-                </p>
-                <p className="items all-trucks-fob text-truncate">
-                  {fob}
-                </p>
-                <p className="items all-trucks-retail text-truncate">
+                </td>
+                <td className="items all-trucks-fob text-truncate">{fob}</td>
+                <td className="items all-trucks-retail text-truncate">
                   ${retailPrice}
-                </p>
-                <p className="items all-trucks-price text-truncate">
-                  ${price}
-                </p>
-              </div>
+                </td>
+                <td className="items all-trucks-price text-truncate">${price}</td>
+              </tr>
             );
           })}
-        </div>
-      </div>
+        </tbody>
+        {function() {
+    ('#table').DataTable( {
+        "order": [[ 3, "status" ]]
+    } );
+} }
+      </table>
     </>
   );
 };
