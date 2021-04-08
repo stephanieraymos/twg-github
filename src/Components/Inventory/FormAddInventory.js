@@ -40,6 +40,7 @@ const FormAddInventory = ({
 
   useEffect(() => {
     // send user back to login if they're not logged in
+    console.log("userId", userId);
     fetchAccessToken
       .then((token) => {
         setAccessToken(token);
@@ -140,6 +141,15 @@ const FormAddInventory = ({
           </Form.Control.Feedback>
         </Form.Group>
 
+        {/* //^ ------------------------- CATEGORY ---------------------------- */}
+        <Form.Group>
+          <Form.Label className="form-label">Category</Form.Label>
+          <Form.Control type="text" required name="category" />
+          <Form.Control.Feedback type="invalid">
+            Please specify the category.
+          </Form.Control.Feedback>
+        </Form.Group>
+
         {/* //^ ------------------------- CONTENTS ---------------------------- */}
         <Form.Group>
           <Form.Label className="form-label">Contents</Form.Label>
@@ -152,29 +162,12 @@ const FormAddInventory = ({
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group>
-          <Form.Label className="form-label">Category</Form.Label>
-          <Form.Control type="text" required name="category" />
-          <Form.Control.Feedback type="invalid">
-            Please specify the category.
-          </Form.Control.Feedback>
-        </Form.Group>
-
         {/* //^ ------------------------- OWNER ---------------------------- */}
         <Form.Group>
           <Form.Label className="form-label">Owner</Form.Label>
           <Form.Control type="text" required name="owner" />
           <Form.Control.Feedback type="invalid">
             Who owns this truck?
-          </Form.Control.Feedback>
-        </Form.Group>
-
-        {/* //^ ------------------------- CATEGORY ---------------------------- */}
-        <Form.Group>
-          <Form.Label className="form-label">Category</Form.Label>
-          <Form.Control type="text" required name="category" />
-          <Form.Control.Feedback type="invalid">
-            Please specify the category.
           </Form.Control.Feedback>
         </Form.Group>
 
