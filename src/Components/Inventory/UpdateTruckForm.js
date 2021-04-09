@@ -186,13 +186,19 @@ const UpdateTruckForm = ({
               required
               name="status"
               custom
-              label={status}
+              placeholder={status}
               // onChange={() => setStatus(option)}
               onChange={(e) => {
                 setStatus(e.target.value);
               }}
-              defaultValue={status}
             >
+              <option value="" disabled selected hidden>
+                {status === 0
+                  ? "Unavailable"
+                  : status === 1
+                  ? "Available"
+                  : "Pending"}
+              </option>
               <option value="1">Available</option>
               <option value="2">Pending</option>
               <option value="0">Unavailable</option>

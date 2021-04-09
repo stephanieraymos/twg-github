@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FaAngleDoubleLeft } from "react-icons/fa";
 import Navigation from "../Navigation/Navigation";
 import { useParams, Link, useHistory } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, inventoryURL, manifestURL } from "../../Pages/urls";
 import TruckDetailsCard from "./TruckDetailsCard";
+import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
 
 const TruckDetails = () => {
   const { id } = useParams();
@@ -93,14 +93,14 @@ const TruckDetails = () => {
             contents,
             manifestIds,
             status,
-            owner
+            owner,
           } = data[0];
 
           setLoadId(loadId);
           setSource(source);
           setPrice(price);
           setCost(cost);
-          setCommission(commission)
+          setCommission(commission);
           setRetailPrice(retailPrice);
           setContents(contents.join(", "));
           setManifestIds(manifestIds);
@@ -127,7 +127,7 @@ const TruckDetails = () => {
         getTruck();
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         history.push("/");
       });
 
@@ -150,10 +150,23 @@ const TruckDetails = () => {
       <div>
         <Navigation />
       </div>
-      <div className="back-to-link-container">
-        <FaAngleDoubleLeft />
+      <div className="truck-details-links-container">
         <Link to="/trucks" className="back-to-link">
+          <FaAngleDoubleLeft />
           Back to inventory
+        </Link>
+
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            deleteTruck();
+          }}
+          className="delete-truck-btn"
+        >
+          <FaTimes /> Delete this truck
+        </button>
+        <Link className="edit-truck-btn" to={`/UpdateTruckDetails/${id}`}>
+          <FaEdit /> Edit this truck
         </Link>
       </div>
 
