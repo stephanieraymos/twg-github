@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
-import { FaAngleDoubleDown } from "react-icons/fa";
+import { FaAngleDoubleDown, FaEdit } from "react-icons/fa";
+import { useParams, Link } from "react-router-dom";
 
 const TruckDetailsCard = ({
   source,
@@ -24,6 +25,9 @@ const TruckDetailsCard = ({
   accounting,
   logistics,
 }) => {
+  const [readMore, setReadMore] = useState(false);
+  const { id } = useParams();
+
   return (
     <>
       <section className="truck-section">
@@ -31,78 +35,110 @@ const TruckDetailsCard = ({
         <div className="truck">
           <div className="truck-info">
             <img src={logo} alt={source} style={{ size: "10rem" }} />
-              {/* //^ SALES NOTES ACCORDION */}
-              <Accordion>
-                <Card style={{ border: "none" }}>
-                  <Accordion.Toggle
-                    as={Card.Header}
-                    eventKey="0"
-                    className="all-accordions"
-                  >
-                    <p className="data-wrapper">
-                      <span className="truck-data-title">Sales Notes: </span>
-                      <span className="truck-data-title">
-                        <FaAngleDoubleDown />
-                      </span>
-                    </p>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body
-                      style={{ color: "black", backgroundColor: "transparent" }}
+            {/* //^ SALES NOTES */}
+            <Card style={{ border: "none" }}>
+              <Card.Header className="all-accordions">
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Sales Notes: </span>
+                </p>
+              </Card.Header>
+              <Card.Body
+                style={{ color: "black", backgroundColor: "transparent" }}
+              >
+                {sales.length < 115 && sales.length !== 0 ? (
+                  `${sales}`
+                ) : sales.length > 115 ? (
+                  <span>
+                    {readMore ? sales : `${sales.substring(0, 115)}...`}
+                    <button
+                      className="show-more-btn"
+                      onClick={() => {
+                        setReadMore(!readMore);
+                      }}
                     >
-                      <span>{sales}</span>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-              {/* //^ ACCOUNTING NOTES ACCORDION */}
-              <Accordion>
-                <Card style={{ border: "none" }}>
-                  <Accordion.Toggle
-                    as={Card.Header}
-                    eventKey="0"
-                    className="all-accordions"
-                  >
-                    <p className="data-wrapper">
-                      <span className="truck-data-title">Accounting Notes: </span>
-                      <span className="truck-data-title">
-                        <FaAngleDoubleDown />
-                      </span>
-                    </p>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body
-                      style={{ color: "black", backgroundColor: "transparent" }}
+                      {readMore ? "show less" : "read more"}
+                    </button>
+                  </span>
+                ) : (
+                  <div className="no-notes-body">
+                    <p>No Notes yet</p>
+                    <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
+                      <FaEdit /> Add Notes
+                    </Link>
+                  </div>
+                )}
+              </Card.Body>
+            </Card>
+            {/* //^ ACCOUNTING NOTES */}
+            <Card style={{ border: "none" }}>
+              <Card.Header className="all-accordions">
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Accounting Notes: </span>
+                </p>
+              </Card.Header>
+              <Card.Body
+                style={{ color: "black", backgroundColor: "transparent" }}
+              >
+                {accounting.length < 115 && accounting.length !== 0 ? (
+                  `${accounting}`
+                ) : accounting.length > 115 ? (
+                  <span>
+                    {readMore
+                      ? accounting
+                      : `${accounting.substring(0, 115)}...`}
+                    <button
+                      className="show-more-btn"
+                      onClick={() => {
+                        setReadMore(!readMore);
+                      }}
                     >
-                      <span>{accounting}</span>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-              {/* //^ LOGISTICS NOTES ACCORDION */}
-              <Accordion>
-                <Card style={{ border: "none" }}>
-                  <Accordion.Toggle
-                    as={Card.Header}
-                    eventKey="0"
-                    className="all-accordions"
-                  >
-                    <p className="data-wrapper">
-                      <span className="truck-data-title">Logistics Notes: </span>
-                      <span className="truck-data-title">
-                        <FaAngleDoubleDown />
-                      </span>
-                    </p>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body
-                      style={{ color: "black", backgroundColor: "transparent" }}
+                      {readMore ? "show less" : "read more"}
+                    </button>
+                  </span>
+                ) : (
+                  <div className="no-notes-body">
+                    <p>No Notes yet</p>
+                    <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
+                      <FaEdit /> Add Notes
+                    </Link>
+                  </div>
+                )}
+              </Card.Body>
+            </Card>
+            {/* //^ LOGISTICS NOTES */}
+            <Card style={{ border: "none" }}>
+              <Card.Header className="all-accordions">
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Logistics Notes: </span>
+                </p>
+              </Card.Header>
+              <Card.Body
+                style={{ color: "black", backgroundColor: "transparent" }}
+              >
+                {logistics.length < 115 && logistics.length !== 0 ? (
+                  `${logistics}`
+                ) : logistics.length > 115 ? (
+                  <span>
+                    {readMore ? logistics : `${logistics.substring(0, 115)}...`}
+                    <button
+                      className="show-more-btn"
+                      onClick={() => {
+                        setReadMore(!readMore);
+                      }}
                     >
-                      <span>{logistics}</span>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
+                      {readMore ? "show less" : "read more"}
+                    </button>
+                  </span>
+                ) : (
+                  <div className="no-notes-body">
+                    <p>No Notes yet</p>
+                    <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
+                      <FaEdit /> Add Notes
+                    </Link>
+                  </div>
+                )}
+              </Card.Body>
+            </Card>
           </div>
           <div className="truck-info">
             {/* //^ TRUCK ID CARD */}
@@ -395,7 +431,6 @@ const TruckDetailsCard = ({
                 </Accordion.Collapse>
               </Card>
             </Accordion>
-           
           </div>
         </div>
       </section>
