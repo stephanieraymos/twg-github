@@ -8,7 +8,7 @@ import Signup2 from "./Signup_2";
 import { useAuthContext } from "../../auth";
 import { useTruck } from "../../truckContext";
 import { useHistory } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Modal, Table } from "react-bootstrap";
 
 const LoginModal = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -23,7 +23,9 @@ const LoginModal = () => {
       .then((token) => {
         history.push("/dashboard");
       })
-      .catch((error) => {console.log(error)});
+      .catch((error) => {
+        console.log(error);
+      });
 
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -79,71 +81,73 @@ const LoginModal = () => {
         </div>
       ) : (
         <div className="table-wrapper">
-          <div className="header-items">
-            <span className="all-trucks-table-header-load truck">ID</span>
-            <span className="all-trucks-table-header-program program">
-              PROGRAM
-            </span>
-            <span className="all-trucks-table-header-category category">
-              CATEGORY
-            </span>
-            <span className="all-trucks-table-header-units units">UNITS</span>
-            <span className="all-trucks-table-header-pallets pallets">
-              PALLETS
-            </span>
-            <span className="all-trucks-table-header-fob fob">FOB</span>
-            <span className="all-trucks-table-header-retail retail">
-              RETAIL
-            </span>
-            <span className="all-trucks-table-header-price price">PRICE</span>
-          </div>
-          <div className="truckLoad-list">
-            {trucks.map((truck) => {
-              let {
-                id,
-                loadId,
-                source,
-                price,
-                category,
-                retailPrice,
-                units,
-                palletCount,
-                fob,
-                contents,
-                manifestIds,
-                status,
-              } = truck;
-
-              return (
-                <div className="truckLoad" key={id}>
-                  <p className="items all-trucks-load text-truncate">{loadId}</p>
-                  <p className="items all-trucks-program text-truncate">
-                    {source}
-                  </p>
-                  <p className="items all-trucks-category text-truncate">
-                    {category}
-                  </p>
-
-                  <span className="items all-trucks-units text-truncate">
-                    {units}
-                  </span>
-                  <span className="items all-trucks-pallets text-truncate">
-                    {palletCount}
-                  </span>
-                  <span className="items all-trucks-fob text-truncate">
-                    {fob}
-                  </span>
-                  <span className="items all-trucks-retail text-truncate">
-                    ${retailPrice}
-                  </span>
-                  <span className="items all-trucks-price text-truncate">
-                    ${price}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-
+          <Table responsive>
+            <thead className="header-items">
+              <tr>
+                <th id="id">ID</th>
+                <th id="program">PROGRAM</th>
+                <th> CATEGORY</th>
+                <th>UNITS</th>
+                <th>PALLETS</th>
+                <th>FOB</th>
+                <th>RETAIL</th>
+                <th>PRICE</th>
+                <th width={"5px"}>STATUS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trucks.map((truck) => {
+                let {
+                  id,
+                  loadId,
+                  price,
+                  source,
+                  category,
+                  units,
+                  palletCount,
+                  fob,
+                  retailPrice,
+                  status,
+                } = truck;
+                console.log(trucks);
+                return (
+                  <tr
+                    className={`${
+                      status === 0
+                        ? "status-row-red"
+                        : status === 1
+                        ? "status-row-green"
+                        : "status-row-yellow"
+                    }`}
+                    key={id}
+                  >
+                    <td>{loadId}</td>
+                    <td>{source}</td>
+                    <td>{category}</td>
+                    <td>{units}</td>
+                    <td>{palletCount}</td>
+                    <td>{fob}</td>
+                    <td>${retailPrice}</td>
+                    <td>${price}</td>
+                    <td style={{ fontSize: "10px", textAlign: "center" }}>{`${
+                      status === 0
+                        ? "sold"
+                        : status === 1
+                        ? "available"
+                        : "pending"
+                    }`}</td>
+                    {/* <td><td className={`${
+                    status === 0
+                      ? "s-circle"
+                      : status === 1
+                      ? "a-circle"
+                      : "p-circle"
+                  }`}>{status}</td></td> */}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
           <Modal
             show={isModalOpen}
             onHide={openAlertModal}
