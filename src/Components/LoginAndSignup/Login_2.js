@@ -6,7 +6,7 @@ import logo from "../../img/w-logo.png";
 import cancel from "../../img/cancel.svg";
 import Signup2 from "./Signup_2";
 import { useTruck } from "../../truckContext";
-import { Modal } from "react-bootstrap";
+import { Modal, Table } from "react-bootstrap";
 
 const LoginModal = () => {
   const [width, setWidth] = useState(window.innerWidth);
