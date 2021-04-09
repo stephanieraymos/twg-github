@@ -125,21 +125,29 @@ const AuthProvider = ({ children }) => {
                 .then((response) => {
                   const res = response.json();
                   if (response.ok) {
+                    console.log(res);
                     return res;
                   } else {
                     throw new Error(res.message);
                   }
                 })
                 .then((user) => {
-                    setUserId(user["id"]);
-                    setIsSeller(user["is_seller"]);
-                    setIsAdmin(user["is_admin"]);
-                    setIsSuperuser(user["is_superuser"]);
-                    setAccessToken(user["token"]["access"]);
-                    setRefreshToken(user["token"]["refresh"]);
-                    setIsAuthenticated(true);
-                    // return the whole json response at the end
-                    resolve(user)
+                    console.log(user['message'])
+                    if ('message' in user) {
+                        // user have to verify email
+                        resolve("User needs to veify email first");
+                    } else {
+                        setUserId(user["id"]);
+                        setIsSeller(user["is_seller"]);
+                        setIsAdmin(user["is_admin"]);
+                        setIsSuperuser(user["is_superuser"]);
+                        setAccessToken(user["token"]["access"]);
+                        setRefreshToken(user["token"]["refresh"]);
+                        setIsAuthenticated(true);
+                        // return the whole json response at the end
+                        resolve(user)
+                    }
+                    
                 })
                 .catch((error) => {
                   reject(error)

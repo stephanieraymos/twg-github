@@ -16,7 +16,6 @@ const FormLogin = () => {
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
-  // const [userId, setUserId] = useState("");
 
   const { login } = useAuthContext();
 
@@ -29,6 +28,7 @@ const FormLogin = () => {
     setCompany,
     setPhoneNumber,
     setBillingAddress,
+    setIsSignUpSuccess,
     openModal,
   } = useGlobalContext();
 
@@ -61,17 +61,21 @@ const FormLogin = () => {
     data.forEach((value, key) => (object[key] = value));
     login(JSON.stringify(object))
       .then((user) => {
-        setEmail(user["email"]);
-        setFirstName(user["first_name"]);
-        setLastName(user["last_name"]);
-        setCompany(user["company"]);
-        setPhoneNumber(user["phone_number"]);
-        setBillingAddress(user["billing_address"]);
         resetValues();
-      })
-      .then(() => {
-        let { from } = location.state || { from: { pathname: "/" } };
-        history.replace(from);
+        if (typeof user === 'string') {
+          // user needs to verify email
+          openModal();
+          setIsSignUpSuccess(true);
+        } else {
+          setEmail(user["email"]);
+          setFirstName(user["first_name"]);
+          setLastName(user["last_name"]);
+          setCompany(user["company"]);
+          setPhoneNumber(user["phone_number"]);
+          setBillingAddress(user["billing_address"]);
+          let { from } = location.state || { from: { pathname: "/" } };
+          history.replace(from);
+        }
       })
       .catch((error) => {
         console.log(error)
