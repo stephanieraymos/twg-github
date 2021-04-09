@@ -229,7 +229,13 @@ const TruckDetailsCard = ({
                 <p className="data-wrapper">
                   <span className="truck-data-title">status: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {status ? "Available" : "Sold"}
+                    {`${
+                      status === 0
+                        ? "sold"
+                        : status === 1
+                        ? "available"
+                        : "pending"
+                    }`}
                   </span>
                 </p>
               </Card.Header>
