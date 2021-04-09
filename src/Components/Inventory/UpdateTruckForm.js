@@ -180,15 +180,23 @@ const UpdateTruckForm = ({
           {/* //^ ----------STATUS---------- */}
           <Col>
             <Form.Label className="form-label">Status</Form.Label>
-            <Form.Check
-              style={{ color: "black" }}
-              type="switch"
-              id="custom-switch"
+
+            <Form.Control
+              as="select"
+              required
               name="status"
-              checked={status}
-              label="Available"
-              onChange={() => setStatus(status ? 0 : 1)}
-            />
+              custom
+              label={status}
+              // onChange={() => setStatus(option)}
+              onChange={(e) => {
+                setStatus(e.target.value);
+              }}
+              defaultValue={status}
+            >
+              <option value="1">Available</option>
+              <option value="2">Pending</option>
+              <option value="0">Unavailable</option>
+            </Form.Control>
           </Col>
 
           {/* //^ ----------FILES---------- */}
