@@ -172,13 +172,13 @@ const TruckDetails = () => {
           }}
           className="delete-truck-btn"
         >
-          <FaTimes /> Delete this truck
+          <FaTimes /> Delete truck
         </button>
         <Link className="edit-truck-btn" to={`/UpdateTruckDetails/${id}`}>
-          <FaEdit /> Edit this truck
+          <FaEdit /> Edit truck
         </Link>
-        <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
-          <FaEdit /> Add Notes
+        <Link className="edit-notes-btn" to={`/UpdateNotes/${id}`}>
+          <FaEdit /> Edit Notes
         </Link>
       </div>
 

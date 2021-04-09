@@ -190,14 +190,6 @@ input:hover::placeholder {
 =               TRUCK DETAILS               =
 =============================================*/
 
-.truck-details-links-container {
-  display: flex;
-  margin-right: 50%;
-  padding-left: 1rem;
-  padding-top: 1rem;
-  justify-content: space-between;
-}
-
 .truck-section {
   text-align: center;
   padding: 1rem 0;
@@ -296,6 +288,33 @@ li {
 /*=============================================
 =         TRUCK DETAILS TOP BUTTONS           =
 =============================================*/
+
+.truck-details-links-container {
+  font-size: clamp(.8rem, 2.5vw, 1rem);
+  display: flex;
+  margin-right: 50%;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1100px) {
+  .truck-details-links-container {
+    display: flex;
+    margin-right: 0;
+    padding: 1rem;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 800px) {
+  .truck-details-links-container {
+    display: flex;
+    margin-right: 0;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    justify-content: space-between;
+  }
+}
 .back-to-link {
   padding-left: 0.5rem;
   color: black;
@@ -305,7 +324,6 @@ li {
   cursor: pointer;
   color: rgb(23, 3, 114);
   margin-top: 0.2rem;
-  outline: none;
 }
 .delete-truck-btn {
   background: transparent;
@@ -324,29 +342,30 @@ li {
   cursor: pointer;
   color: rgb(4, 102, 37);
   margin-top: 0.2rem;
-  outline: none;
 }
-.add-notes-btn {
+.edit-notes-btn {
   background: transparent;
   border-color: transparent;
   transition: var(--transition); /* root styles */
   cursor: pointer;
   color: rgb(23, 3, 114);
   margin-top: 0.2rem;
-  outline: none;
 }
 
 .back-to-link:hover {
-  color: rgb(54, 54, 54);
+  color: rgb(119, 119, 119);
+  text-decoration: none;
 }
 .delete-truck-btn:hover {
   color: rgb(241, 129, 129);
 }
 .edit-truck-btn:hover {
   color: rgba(9, 167, 48, 0.507);
+  text-decoration: none;
 }
-.add-notes-btn:hover {
-  color: rgb(97, 5, 172);
+.edit-notes-btn:hover {
+  color: rgb(111, 116, 187);
+  text-decoration: none;
 }
 
 .show-more-btn {
@@ -355,9 +374,13 @@ li {
   border-radius: 10px;
   border-color: rgba(0, 0, 0, 0.096);
 }
-.no-notes-body {
+.notes-header-wrapper {
   display: flex;
   justify-content: space-between;
+}
+.edit-notes-header-btn {
+  padding: 0 .5rem;
+  font-size: .9rem;
 }
 /*=============================================
 =            UPDATE TRUCK DETAILS             =
