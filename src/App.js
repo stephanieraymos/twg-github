@@ -75,6 +75,7 @@ const App = () => {
             <Route path="/Orders" exact component={Orders} />
             <Route path="/TruckDetails/:id" exact component={TruckDetails} />
             <Route path="/UpdateTruckDetails/:id" exact component={UpdateTruckDetails} />
+            <Route path="/UpdateNotes/:id" exact component={UpdateNotes} />
             <Route path="*" exact component={Error} />
             <Redirect to="/" />
         </Switch>

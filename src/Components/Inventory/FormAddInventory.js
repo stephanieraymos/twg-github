@@ -133,13 +133,23 @@ const FormAddInventory = ({
           </Col>
         </Row>
         {/* //^ -------------------------- FOB ----------------------------- */}
-        <Form.Group>
-          <Form.Label className="form-label">FOB</Form.Label>
-          <Form.Control type="text" required name="fob" />
-          <Form.Control.Feedback type="invalid">
-            Where is the truck now?
-          </Form.Control.Feedback>
-        </Form.Group>
+        <Row>
+          <Col>
+            <Form.Label className="form-label">FOB</Form.Label>
+            <Form.Control type="text" required name="fob" />
+            <Form.Control.Feedback type="invalid">
+              Where is the truck now?
+            </Form.Control.Feedback>
+          </Col>
+          {/* //^ -------------------------- LANE ----------------------------- */}
+          <Col>
+            <Form.Label className="form-label">Lane</Form.Label>
+            <Form.Control type="text" required name="lane" />
+            <Form.Control.Feedback type="invalid">
+              What lane is the truck in?
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
 
         {/* //^ ------------------------- CATEGORY ---------------------------- */}
         <Form.Group>
@@ -245,6 +255,7 @@ const FormAddInventory = ({
             <Form.Label className="form-label">Status</Form.Label>
             <Form.Control as="select" required name="status" custom>
               <option value="1">Available</option>
+              <option value="2">Pending</option>
               <option value="0">Unavailable</option>
             </Form.Control>
             <Form.Control.Feedback type="invalid">

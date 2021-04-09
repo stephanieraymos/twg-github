@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FaAngleDoubleLeft } from "react-icons/fa";
 import Navigation from "../Navigation/Navigation";
 import { useParams, Link, useHistory } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, inventoryURL, manifestURL } from "../../Pages/urls";
 import TruckDetailsCard from "./TruckDetailsCard";
+import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
 
 const TruckDetails = () => {
   const { id } = useParams();
@@ -25,6 +25,9 @@ const TruckDetails = () => {
   const [owner, setOwner] = useState("");
   const [cost, setCost] = useState("");
   const [commission, setCommission] = useState("");
+  const [sales, setSales] = useState("");
+  const [accounting, setAccounting] = useState("");
+  const [logistics, setLogistics] = useState("");
 
   const { fetchAccessToken } = useAuthContext();
 
@@ -93,14 +96,17 @@ const TruckDetails = () => {
             contents,
             manifestIds,
             status,
-            owner
+            owner,
+            sales,
+            accounting,
+            logistics,
           } = data[0];
 
           setLoadId(loadId);
           setSource(source);
           setPrice(price);
           setCost(cost);
-          setCommission(commission)
+          setCommission(commission);
           setRetailPrice(retailPrice);
           setContents(contents.join(", "));
           setManifestIds(manifestIds);
@@ -110,6 +116,9 @@ const TruckDetails = () => {
           setFob(fob);
           setStatus(status);
           setOwner(owner);
+          setSales(sales);
+          setAccounting(accounting);
+          setLogistics(logistics);
         }
         setLoading(false);
       })
@@ -127,7 +136,7 @@ const TruckDetails = () => {
         getTruck();
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         history.push("/");
       });
 
@@ -150,10 +159,26 @@ const TruckDetails = () => {
       <div>
         <Navigation />
       </div>
-      <div className="back-to-link-container">
-        <FaAngleDoubleLeft />
+      <div className="truck-details-links-container">
         <Link to="/trucks" className="back-to-link">
+          <FaAngleDoubleLeft />
           Back to inventory
+        </Link>
+
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            deleteTruck();
+          }}
+          className="delete-truck-btn"
+        >
+          <FaTimes /> Delete this truck
+        </button>
+        <Link className="edit-truck-btn" to={`/UpdateTruckDetails/${id}`}>
+          <FaEdit /> Edit this truck
+        </Link>
+        <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
+          <FaEdit /> Add Notes
         </Link>
       </div>
 
@@ -175,6 +200,9 @@ const TruckDetails = () => {
         owner={owner}
         cost={cost}
         commission={commission}
+        sales={sales}
+        accounting={accounting}
+        logistics={logistics}
       />
     </>
   );

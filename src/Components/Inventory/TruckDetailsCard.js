@@ -1,12 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
-import {
-  FaTimes,
-  FaEdit,
-  FaAngleDoubleDown,
-} from "react-icons/fa";
+import { FaAngleDoubleDown } from "react-icons/fa";
 
 const TruckDetailsCard = ({
   source,
@@ -21,19 +16,94 @@ const TruckDetailsCard = ({
   contents,
   files,
   manifestIds,
-  id,
-  deleteTruck,
   status,
   owner,
-  commission
+  commission,
+  lane,
+  sales,
+  accounting,
+  logistics,
 }) => {
-
   return (
     <>
       <section className="truck-section">
         <h2 className="truck-details-header">{source}</h2>
         <div className="truck">
-          <img src={logo} alt={source} style={{ size: "10rem" }} />
+          <div className="truck-info">
+            <img src={logo} alt={source} style={{ size: "10rem" }} />
+              {/* //^ SALES NOTES ACCORDION */}
+              <Accordion>
+                <Card style={{ border: "none" }}>
+                  <Accordion.Toggle
+                    as={Card.Header}
+                    eventKey="0"
+                    className="all-accordions"
+                  >
+                    <p className="data-wrapper">
+                      <span className="truck-data-title">Sales Notes: </span>
+                      <span className="truck-data-title">
+                        <FaAngleDoubleDown />
+                      </span>
+                    </p>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body
+                      style={{ color: "black", backgroundColor: "transparent" }}
+                    >
+                      <span>{sales}</span>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+              {/* //^ ACCOUNTING NOTES ACCORDION */}
+              <Accordion>
+                <Card style={{ border: "none" }}>
+                  <Accordion.Toggle
+                    as={Card.Header}
+                    eventKey="0"
+                    className="all-accordions"
+                  >
+                    <p className="data-wrapper">
+                      <span className="truck-data-title">Accounting Notes: </span>
+                      <span className="truck-data-title">
+                        <FaAngleDoubleDown />
+                      </span>
+                    </p>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body
+                      style={{ color: "black", backgroundColor: "transparent" }}
+                    >
+                      <span>{accounting}</span>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+              {/* //^ LOGISTICS NOTES ACCORDION */}
+              <Accordion>
+                <Card style={{ border: "none" }}>
+                  <Accordion.Toggle
+                    as={Card.Header}
+                    eventKey="0"
+                    className="all-accordions"
+                  >
+                    <p className="data-wrapper">
+                      <span className="truck-data-title">Logistics Notes: </span>
+                      <span className="truck-data-title">
+                        <FaAngleDoubleDown />
+                      </span>
+                    </p>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body
+                      style={{ color: "black", backgroundColor: "transparent" }}
+                    >
+                      <span>{logistics}</span>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+          </div>
           <div className="truck-info">
             {/* //^ TRUCK ID CARD */}
             <Card style={{ border: "none" }}>
@@ -222,6 +292,23 @@ const TruckDetailsCard = ({
                 </p>
               </Card.Header>
             </Card>
+            {/* //^ LANE CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Lane: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {lane}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
             {/* //^ STATUS CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
@@ -232,9 +319,15 @@ const TruckDetailsCard = ({
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">status: </span>
+                  <span className="truck-data-title">Status: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {status ? "Available" : "Sold"}
+                    {`${
+                      status === 0
+                        ? "sold"
+                        : status === 1
+                        ? "available"
+                        : "pending"
+                    }`}
                   </span>
                 </p>
               </Card.Header>
@@ -245,11 +338,7 @@ const TruckDetailsCard = ({
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"
-                  style={{
-                    padding: 0,
-                    borderBottom: "none",
-                    borderRadius: ".4rem",
-                  }}
+                  className="all-accordions"
                 >
                   <p className="data-wrapper">
                     <span className="truck-data-title">Contents: </span>
@@ -269,15 +358,11 @@ const TruckDetailsCard = ({
             </Accordion>
             {/* //^ TRUCK FILES ACCORDION */}
             <Accordion>
-              <Card style={{ border: "none" }}>
+              <Card style={{ border: "none" }} className="file-accordion">
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"
-                  style={{
-                    padding: 0,
-                    borderBottom: "none",
-                    borderRadius: ".4rem",
-                  }}
+                  className="all-accordions"
                 >
                   <p className="data-wrapper">
                     <span className="truck-data-title">Files: </span>
@@ -310,48 +395,7 @@ const TruckDetailsCard = ({
                 </Accordion.Collapse>
               </Card>
             </Accordion>
-            {/* //^ TRUCK MODIFY ACCORDION */}
-            <Accordion>
-              <Card style={{ border: "none" }}>
-                <Accordion.Toggle
-                  as={Card.Header}
-                  eventKey="0"
-                  style={{
-                    padding: 0,
-                    borderBottom: "none",
-                    borderRadius: ".4rem",
-                  }}
-                >
-                  <p className="data-wrapper">
-                    <span className="truck-data-title">Modify </span>
-                    <span className="truck-data-title">
-                      <FaAngleDoubleDown />
-                    </span>
-                  </p>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body style={{ backgroundColor: "transparent" }}>
-                    <p className="data-wrapper">
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          deleteTruck();
-                        }}
-                        className="delete-truck-btn"
-                      >
-                        <FaTimes /> Delete this truck
-                      </button>
-                      <Link
-                        className="edit-truck-btn"
-                        to={`/UpdateTruckDetails/${id}`}
-                      >
-                        <FaEdit /> Edit this truck
-                      </Link>
-                    </p>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
+           
           </div>
         </div>
       </section>

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useTruck } from "../../truckContext";
 import { useAuthContext } from "../../auth";
+import { Table } from "react-bootstrap";
+import { sorttable } from "sorttable";
 
 const TableInventory = () => {
   let history = useHistory();
   const [trucks] = useTruck();
 
-  const {
-    fetchAccessToken,
-  } = useAuthContext();
+  const { fetchAccessToken } = useAuthContext();
 
   const [accessToken, setAccessToken] = useState("");
 
@@ -20,76 +20,88 @@ const TableInventory = () => {
         setAccessToken(token);
       })
       .catch((error) => {
+        console.log(error);
         history.push("/");
       });
   }, []);
 
+
   return (
     <>
       <div className="table-wrapper">
-        <div className="header-items">
-          <span className="all-trucks-table-header-load truck">ID</span>
-          <span className="all-trucks-table-header-program program">PROGRAM</span>
-          <span className="all-trucks-table-header-category category">
-            CATEGORY
-          </span>
-          <span className="all-trucks-table-header-units units">
-            UNITS
-          </span>
-          <span className="all-trucks-table-header-pallets pallets">PALLETS</span>
-          <span className="all-trucks-table-header-fob fob">FOB</span>
-          <span className="all-trucks-table-header-retail retail">RETAIL</span>
-          <span className="all-trucks-table-header-price price">PRICE</span>
-        </div>
-        <div className="truckLoad-list">
-          {trucks.map((truck) => {
-            let {
-              id,
-              loadId,
-              price,
-              source,
-              category,
-              units,
-              palletCount,
-              fob,
-              retailPrice,
-              status
-            } = truck;
-
-            return (
-              <div className={`${status === 0 ? "truckLoad status-row-red" : status === 1 ? "truckLoad status-row-green" : "truckLoad status-row-yellow"}`} key={id}>
-                <Link
-                  to={`/TruckDetails/${id}`}
-                  className="items all-trucks-load text-truncate"
+        <Table className="sortable" responsive>
+          <thead className="header-items">
+            <tr>
+              <th id="id" >ID</th>
+              <th id="program">PROGRAM</th>
+              <th> CATEGORY</th>
+              <th>UNITS</th>
+              <th>PALLETS</th>
+              <th>FOB</th>
+              <th>RETAIL</th>
+              <th>PRICE</th>
+              <th width={"5px"}>STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {trucks.map((truck) => {
+              let {
+                id,
+                loadId,
+                price,
+                source,
+                category,
+                units,
+                palletCount,
+                fob,
+                retailPrice,
+                status,
+              } = truck;
+              console.log(trucks);
+              return (
+                <tr
+                  className={`${
+                    status === 0
+                      ? "status-row-red"
+                      : status === 1
+                      ? "status-row-green"
+                      : "status-row-yellow"
+                  }`}
+                  key={id}
                 >
-                  {loadId}
-                </Link>
+                  <td>
+                    <Link className="table-id-link" to={`/TruckDetails/${id}`}>
+                      {loadId}
+                    </Link>
+                  </td>
+                  <td>{source}</td>
+                  <td>{category}</td>
+                  <td>{units}</td>
+                  <td>{palletCount}</td>
+                  <td>{fob}</td>
+                  <td>${retailPrice}</td>
+                  <td>${price}</td>
+                  <td style={{fontSize:"10px", textAlign:"center"}}>{`${
+                    status === 0
+                      ? "sold"
+                      : status === 1
+                      ? "available"
+                      : "pending"
+                  }`}</td>
+                  {/* <td><td className={`${
+                    status === 0
+                      ? "s-circle"
+                      : status === 1
+                      ? "a-circle"
+                      : "p-circle"
+                  }`}>{status}</td></td> */}
 
-                <p className="items all-trucks-program text-truncate">
-                  {source}
-                </p>
-                <p className="items all-trucks-category text-truncate">
-                  {category}
-                </p>
-                <p className="items all-trucks-units text-truncate">
-                  {units}
-                </p>
-                <p className="items all-trucks-pallets text-truncate">
-                  {palletCount}
-                </p>
-                <p className="items all-trucks-fob text-truncate">
-                  {fob}
-                </p>
-                <p className="items all-trucks-retail text-truncate">
-                  ${retailPrice}
-                </p>
-                <p className="items all-trucks-price text-truncate">
-                  ${price}
-                </p>
-              </div>
-            );
-          })}
-        </div>
+
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       </div>
     </>
   );
