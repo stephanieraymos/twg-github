@@ -17,6 +17,7 @@ const UpdateTruckForm = ({
   units,
   palletCount,
   fob,
+  lane,
   setStatus,
   files,
   manifestIds,
@@ -169,13 +170,28 @@ const UpdateTruckForm = ({
           </Col>
         </Row>
         {/* //^ ----------FOB---------- */}
-        <Form.Group className="center-form-group">
-          <Form.Label className="form-label">FOB</Form.Label>
-          <Form.Control type="text" required defaultValue={fob} name="fob" />
-          <Form.Control.Feedback type="invalid">
-            Please add the # of pallets in the truck.
-          </Form.Control.Feedback>
-        </Form.Group>
+        <Row className="center-form-group">
+          <Col>
+            <Form.Label className="form-label">FOB</Form.Label>
+            <Form.Control type="text" required defaultValue={fob} name="fob" />
+            <Form.Control.Feedback type="invalid">
+              Please add the # of pallets in the truck.
+            </Form.Control.Feedback>
+          </Col>
+          {/* //^ ----------LANE---------- */}
+          <Col>
+            <Form.Label className="form-label">Lane</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              defaultValue={lane}
+              name="lane"
+            />
+            <Form.Control.Feedback type="invalid">
+              Which lane is this truck in?
+            </Form.Control.Feedback>
+          </Col>
+        </Row>
         <Row>
           {/* //^ ----------STATUS---------- */}
           <Col>
