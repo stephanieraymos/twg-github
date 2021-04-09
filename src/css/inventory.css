@@ -171,14 +171,6 @@ input:hover::placeholder {
   background-color: rgba(161, 151, 0, 0.377);
 }
 
-/* .truckLoad:nth-child(even) {
-  background: rgb(194, 192, 192);
-}
-
-.truckLoad:nth-child(even):hover {
-  background: var(--gray);
-} */
-
 .folder-icon {
   background-color: transparent;
   border: none;
@@ -200,70 +192,6 @@ input:hover::placeholder {
   padding-left: 0;
 }
 
-/* //! TABLE HEADERS */
-/* th.all-trucks-table-header-load {
-  min-width: 14%;
-}
-th.all-trucks-table-header-program {
-  width: 14%;
-  align-self: center;
-}
-tr.all-trucks-table-header-category {
-  width: 10%;
-}
-tr.all-trucks-table-header-units {
-  width: 5%;
-  padding-right: 0.2rem;
-}
-tr.all-trucks-table-header-pallets {
-  width: 5%;
-}
-tr.all-trucks-table-header-fob {
-  text-align: center;
-  width: 12%;
-  padding-right: 1.5rem;
-}
-tr.all-trucks-table-header-retail {
-  width: 5%;
-  padding-right: 1.5rem;
-}
-tr.all-trucks-table-header-price {
-  width: 10%;
-  text-align: right;
-  padding-right: 3%;
-} */
-
-/* //! TABLE CONTENTS */
-/* .all-trucks-load {
-  width: 13%;
-  padding-left: 0.4rem;
-}
-.all-trucks-program {
-  width: 13%;
-}
-.all-trucks-category {
-  width: 10%;
-}
-.all-trucks-units {
-  width: 5%;
-}
-.all-trucks-pallets {
-  width: 3%;
-  text-align: center;
-}
-.all-trucks-fob {
-  width: 11%;
-  text-align: center;
-}
-.all-trucks-retail {
-  width: 5%;
-  text-align: center;
-}
-.all-trucks-price {
-  width: 10%;
-  text-align: center;
-} */
-
 /*=============================================
 =               TRUCK DETAILS               =
 =============================================*/
@@ -277,8 +205,24 @@ tr.all-trucks-table-header-price {
   color: black;
 }
 .truck-section {
-  /* text-align: center; */
-  padding: 5rem 0;
+  text-align: center;
+  padding: 1rem 0;
+}
+.truck {
+  margin: 0 auto;
+
+}
+.card:nth-child(even) {
+  background: rgba(194, 192, 192, 0.199);
+}
+
+.file-accordion {
+  background: rgba(194, 192, 192, 0.199);
+}
+.all-accordions {
+  padding: 0;
+  border-bottom: none;
+  border-radius: .4rem
 }
 .truck-details-header {
   font-size: 2rem;
@@ -290,13 +234,14 @@ tr.all-trucks-table-header-price {
 }
 
 .truck {
-  /* width: var(--smallWidth);
-  max-width: var(--fullWidth); */
+  width: var(--smallWidth);
+  max-width: var(--fullWidth);
   text-align: left;
-  /* text-align: space-between;
-  justify-content: space-between; */
+  text-align: space-between;
 }
 .truck img {
+  display: flex;
+  margin: 0 auto;
   border-radius: var(--radius);
 }
 .truck p {
@@ -304,11 +249,8 @@ tr.all-trucks-table-header-price {
   text-transform: capitalize;
   line-height: 1.8;
 }
-.truck span {
-  margin-right: 0.5rem;
-}
+
 .truck-data-title {
-  background: var(--text);
   padding: 0.25rem 0.5rem;
   border-radius: var(--radius);
   color: var(--sections);
@@ -327,6 +269,7 @@ tr.all-trucks-table-header-price {
 }
 .truck-data {
   align-self: right;
+  padding-right: 0.5rem;
 }
 .truck-info {
   padding-top: 2rem;
@@ -345,7 +288,7 @@ li {
   padding-bottom: 0;
 }
 
-/* @media screen and (min-width: 992px) {
+@media screen and (min-width: 992px) {
   .truck {
     display: grid;
     grid-template-columns: 2fr 3fr;
@@ -355,7 +298,7 @@ li {
   .truck-info {
     padding-top: 0;
   }
-} */
+}
 .delete-truck-btn {
   background: transparent;
   border-color: transparent;
@@ -402,6 +345,3 @@ li {
   margin-top: 2rem;
 }
 
-/* .form-group-wrap {
-  display: flex;
-} */

@@ -2,11 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
-import {
-  FaTimes,
-  FaEdit,
-  FaAngleDoubleDown,
-} from "react-icons/fa";
+import { FaTimes, FaEdit, FaAngleDoubleDown } from "react-icons/fa";
 
 const TruckDetailsCard = ({
   source,
@@ -25,9 +21,8 @@ const TruckDetailsCard = ({
   deleteTruck,
   status,
   owner,
-  commission
+  commission,
 }) => {
-
   return (
     <>
       <section className="truck-section">
@@ -245,11 +240,7 @@ const TruckDetailsCard = ({
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"
-                  style={{
-                    padding: 0,
-                    borderBottom: "none",
-                    borderRadius: ".4rem",
-                  }}
+                  className="all-accordions"
                 >
                   <p className="data-wrapper">
                     <span className="truck-data-title">Contents: </span>
@@ -269,15 +260,11 @@ const TruckDetailsCard = ({
             </Accordion>
             {/* //^ TRUCK FILES ACCORDION */}
             <Accordion>
-              <Card style={{ border: "none" }}>
+              <Card style={{ border: "none" }} className="file-accordion">
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"
-                  style={{
-                    padding: 0,
-                    borderBottom: "none",
-                    borderRadius: ".4rem",
-                  }}
+                  className="all-accordions"
                 >
                   <p className="data-wrapper">
                     <span className="truck-data-title">Files: </span>
@@ -316,11 +303,7 @@ const TruckDetailsCard = ({
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"
-                  style={{
-                    padding: 0,
-                    borderBottom: "none",
-                    borderRadius: ".4rem",
-                  }}
+                  className="all-accordions"
                 >
                   <p className="data-wrapper">
                     <span className="truck-data-title">Modify </span>
