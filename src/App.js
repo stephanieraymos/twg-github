@@ -24,6 +24,7 @@ import OrderDetails from "./Components/Orders/OrderDetails";
 import Orders from "./Components/Orders/Orders";
 import TruckDetails from "./Components/Inventory/TruckDetails";
 import UpdateTruckDetails from "./Components/Inventory/UpdateTruckDetails";
+import UpdateNotes from "./Components/Inventory/UpdateNotes";
 import Error from "./Pages/Error";
 
 const App = () => {
@@ -55,6 +56,7 @@ const App = () => {
             <Route path="/Orders" exact component={Orders} />
             <Route path="/TruckDetails/:id" exact component={TruckDetails} />
             <Route path="/UpdateTruckDetails/:id" exact component={UpdateTruckDetails} />
+            <Route path="/UpdateNotes/:id" exact component={UpdateNotes} />
             <Route path="*" exact component={Error} />
             <Redirect to="/" />
         </Switch>

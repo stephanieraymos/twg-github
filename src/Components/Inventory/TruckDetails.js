@@ -25,6 +25,9 @@ const TruckDetails = () => {
   const [owner, setOwner] = useState("");
   const [cost, setCost] = useState("");
   const [commission, setCommission] = useState("");
+  const [sales, setSales] = useState("");
+  const [accounting, setAccounting] = useState("");
+  const [logistics, setLogistics] = useState("");
 
   const { fetchAccessToken } = useAuthContext();
 
@@ -94,6 +97,9 @@ const TruckDetails = () => {
             manifestIds,
             status,
             owner,
+            sales,
+            accounting,
+            logistics,
           } = data[0];
 
           setLoadId(loadId);
@@ -110,6 +116,9 @@ const TruckDetails = () => {
           setFob(fob);
           setStatus(status);
           setOwner(owner);
+          setSales(sales);
+          setAccounting(accounting);
+          setLogistics(logistics);
         }
         setLoading(false);
       })
@@ -168,6 +177,9 @@ const TruckDetails = () => {
         <Link className="edit-truck-btn" to={`/UpdateTruckDetails/${id}`}>
           <FaEdit /> Edit this truck
         </Link>
+        <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
+          <FaEdit /> Add Notes
+        </Link>
       </div>
 
       <TruckDetailsCard
@@ -188,6 +200,9 @@ const TruckDetails = () => {
         owner={owner}
         cost={cost}
         commission={commission}
+        sales={sales}
+        accounting={accounting}
+        logistics={logistics}
       />
     </>
   );

@@ -197,10 +197,7 @@ input:hover::placeholder {
   padding-top: 1rem;
   justify-content: space-between;
 }
-.back-to-link {
-  padding-left: 0.5rem;
-  color: black;
-}
+
 .truck-section {
   text-align: center;
   padding: 1rem 0;
@@ -296,18 +293,28 @@ li {
     padding-top: 0;
   }
 }
+/*=============================================
+=         TRUCK DETAILS TOP BUTTONS           =
+=============================================*/
+.back-to-link {
+  padding-left: 0.5rem;
+  color: black;
+  background: transparent;
+  border-color: transparent;
+  transition: var(--transition); /* root styles */
+  cursor: pointer;
+  color: rgb(23, 3, 114);
+  margin-top: 0.2rem;
+  outline: none;
+}
 .delete-truck-btn {
   background: transparent;
   border-color: transparent;
-  color: var(--sections); /* root styles */
   transition: var(--transition); /* root styles */
   cursor: pointer;
   color: rgb(114, 3, 3);
   margin-top: 0.2rem;
   outline: none;
-}
-.delete-truck-btn:hover {
-  color: rgb(241, 129, 129);
 }
 .edit-truck-btn {
   background: transparent;
@@ -319,10 +326,28 @@ li {
   margin-top: 0.2rem;
   outline: none;
 }
+.add-notes-btn {
+  background: transparent;
+  border-color: transparent;
+  transition: var(--transition); /* root styles */
+  cursor: pointer;
+  color: rgb(23, 3, 114);
+  margin-top: 0.2rem;
+  outline: none;
+}
+
+.back-to-link:hover {
+  color: rgb(54, 54, 54);
+}
+.delete-truck-btn:hover {
+  color: rgb(241, 129, 129);
+}
 .edit-truck-btn:hover {
   color: rgba(9, 167, 48, 0.507);
 }
-
+.add-notes-btn:hover {
+  color: rgb(97, 5, 172);
+}
 /*=============================================
 =            UPDATE TRUCK DETAILS             =
 =============================================*/
