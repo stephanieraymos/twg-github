@@ -25,7 +25,9 @@ const TruckDetailsCard = ({
   accounting,
   logistics,
 }) => {
-  const [readMore, setReadMore] = useState(false);
+  const [salesReadMore, setSalesReadMore] = useState(false);
+  const [accountingReadMore, setAccountingReadMore] = useState(false);
+  const [logisticsReadMore, setLogisticsReadMore] = useState(false);
   const { id } = useParams();
 
   return (
@@ -49,14 +51,14 @@ const TruckDetailsCard = ({
                   `${sales}`
                 ) : sales.length > 115 ? (
                   <span>
-                    {readMore ? sales : `${sales.substring(0, 115)}...`}
+                    {salesReadMore ? sales : `${sales.substring(0, 115)}...`}
                     <button
                       className="show-more-btn"
                       onClick={() => {
-                        setReadMore(!readMore);
+                        setSalesReadMore(!salesReadMore);
                       }}
                     >
-                      {readMore ? "show less" : "read more"}
+                      {salesReadMore ? "show less" : "read more"}
                     </button>
                   </span>
                 ) : (
@@ -83,16 +85,16 @@ const TruckDetailsCard = ({
                   `${accounting}`
                 ) : accounting.length > 115 ? (
                   <span>
-                    {readMore
+                    {accountingReadMore
                       ? accounting
                       : `${accounting.substring(0, 115)}...`}
                     <button
                       className="show-more-btn"
                       onClick={() => {
-                        setReadMore(!readMore);
+                        setAccountingReadMore(!accountingReadMore);
                       }}
                     >
-                      {readMore ? "show less" : "read more"}
+                      {accountingReadMore ? "show less" : "read more"}
                     </button>
                   </span>
                 ) : (
@@ -119,14 +121,14 @@ const TruckDetailsCard = ({
                   `${logistics}`
                 ) : logistics.length > 115 ? (
                   <span>
-                    {readMore ? logistics : `${logistics.substring(0, 115)}...`}
+                    {logisticsReadMore ? logistics : `${logistics.substring(0, 115)}...`}
                     <button
                       className="show-more-btn"
                       onClick={() => {
-                        setReadMore(!readMore);
+                        setLogisticsReadMore(!logisticsReadMore);
                       }}
                     >
-                      {readMore ? "show less" : "read more"}
+                      {logisticsReadMore ? "show less" : "read more"}
                     </button>
                   </span>
                 ) : (
