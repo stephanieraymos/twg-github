@@ -9,22 +9,7 @@ const TableInventory = () => {
   let history = useHistory();
   const [trucks] = useTruck();
 
-  const { fetchAccessToken } = useAuthContext();
-
-  const [accessToken, setAccessToken] = useState("");
-
-  useEffect(() => {
-    // send user back to login if they're not logged in
-    fetchAccessToken
-      .then((token) => {
-        setAccessToken(token);
-      })
-      .catch((error) => {
-        console.log(error);
-        history.push("/");
-      });
-  }, []);
-
+  const { userId } = useAuthContext();
 
   return (
     <>
@@ -57,7 +42,6 @@ const TableInventory = () => {
                 retailPrice,
                 status,
               } = truck;
-              console.log(trucks);
               return (
                 <tr
                   className={`${

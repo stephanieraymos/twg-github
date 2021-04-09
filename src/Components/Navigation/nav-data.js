@@ -18,7 +18,7 @@ export const links = [
   },
   {
     id: 2,
-    url: "/trucks",
+    url: "/inventory",
     text: "Inventory",
     icon: <FaTruckMoving />
   },

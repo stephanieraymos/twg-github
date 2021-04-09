@@ -28,15 +28,21 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         authenticate()
+            .then(() => {
+                console.log("Authenticate: success");
+            })
             .catch((error) => {
-                console.log("Authenticate Error:", error)
+                console.log("Authenticate Error:", error);
             });
 
         // run authenticate every hour
         setInterval(() => {
             authenticate()
+                .then(() => {
+                    console.log("Authenticate: success");
+                })
                 .catch((error) => {
-                    console.log("Authenticate Error:", error)
+                    console.log("Authenticate Error:", error);
                 });
         }, maxAgeShort * 1000);
     }, [])
@@ -125,14 +131,12 @@ const AuthProvider = ({ children }) => {
                 .then((response) => {
                   const res = response.json();
                   if (response.ok) {
-                    console.log(res);
                     return res;
                   } else {
                     throw new Error(res.message);
                   }
                 })
                 .then((user) => {
-                    console.log(user['message'])
                     if ('message' in user) {
                         // user have to verify email
                         resolve("User needs to veify email first");
@@ -147,7 +151,6 @@ const AuthProvider = ({ children }) => {
                         // return the whole json response at the end
                         resolve(user)
                     }
-                    
                 })
                 .catch((error) => {
                   reject(error)
@@ -189,12 +192,10 @@ const AuthProvider = ({ children }) => {
                 }),
               })
                 .then((response) => {
-                    console.log("logout response", response)
                     removeTokens();
                     resolve(true);
                 })
                 .catch((error) => {
-                    console.log("logout error", error)
                     removeTokens();
                     reject(error);
                 });

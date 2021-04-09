@@ -14,7 +14,7 @@ import Navigation from "../Navigation/Navigation";
 
 const Dashboard = () => {
   document.title = "Dashboard";
-  const { fetchAccessToken, userId } = useAuthContext();
+  const { userId } = useAuthContext();
   const {
     openSidebar,
     isSidebarOpen,
@@ -29,60 +29,11 @@ const Dashboard = () => {
   // const { getData } = useTruckContext();
   const [trucks, loading] = useTruck();
 
-  //const [userId, setUserId] = useState(localStorage.getItem('userId'));
-
   let history = useHistory();
-
 
   const handleViewDetails = () => {
     return <OrderDetails />;
   };
-
-  const getUserDetails = (accessToken) => {
-    fetch(userURL, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((response) => {
-        const res = response.json();
-        console.log(res);
-        if (response.ok) {
-          return res;
-        } else {
-          throw new Error(res.message);
-        }
-      })
-      .then((user) => {
-        setUserId(user["id"]);
-        setEmail(user["email"]);
-        setFirstName(user["first_name"]);
-        setLastName(user["last_name"]);
-        setCompany(user["company"]);
-        setPhoneNumber(user["phone_number"]);
-        setBillingAddress(user["billing_address"]);
-      })
-      .catch((error) => {
-        console.log(error)
-      });
-  };
-
-  // useEffect(() => {
-  //   localStorage.setItem("userId", userId);
-  // }, [userId]);
-
-  useEffect(() => {
-    console.log("userId", userId());
-    // fetchAccessToken
-    //   .then((token) => {
-    //     getUserDetails(token);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //     history.push("/");
-    //   });
-  }, []);
 
   return (
     <>

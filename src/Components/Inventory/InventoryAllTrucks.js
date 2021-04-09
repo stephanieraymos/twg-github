@@ -15,14 +15,6 @@ const InventoryAllTrucks = () => {
   };
   const [addTruck] = useTruck();
 
-  const {
-    userId,
-  } = useGlobalContext();
-
-  useEffect(() => {
-    console.log("userId in inventory all truck", userId);
-  }, [])
-
   return (
     <>
       <div>
