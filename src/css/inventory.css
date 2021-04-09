@@ -305,7 +305,6 @@ li {
   cursor: pointer;
   color: rgb(23, 3, 114);
   margin-top: 0.2rem;
-  outline: none;
 }
 .delete-truck-btn {
   background: transparent;
@@ -324,29 +323,30 @@ li {
   cursor: pointer;
   color: rgb(4, 102, 37);
   margin-top: 0.2rem;
-  outline: none;
 }
-.add-notes-btn {
+.edit-notes-btn {
   background: transparent;
   border-color: transparent;
   transition: var(--transition); /* root styles */
   cursor: pointer;
   color: rgb(23, 3, 114);
   margin-top: 0.2rem;
-  outline: none;
 }
 
 .back-to-link:hover {
-  color: rgb(54, 54, 54);
+  color: rgb(119, 119, 119);
+  text-decoration: none;
 }
 .delete-truck-btn:hover {
   color: rgb(241, 129, 129);
 }
 .edit-truck-btn:hover {
   color: rgba(9, 167, 48, 0.507);
+  text-decoration: none;
 }
-.add-notes-btn:hover {
-  color: rgb(97, 5, 172);
+.edit-notes-btn:hover {
+  color: rgb(111, 116, 187);
+  text-decoration: none;
 }
 
 .show-more-btn {
@@ -355,9 +355,13 @@ li {
   border-radius: 10px;
   border-color: rgba(0, 0, 0, 0.096);
 }
-.no-notes-body {
+.notes-header-wrapper {
   display: flex;
   justify-content: space-between;
+}
+.edit-notes-header-btn {
+  padding: 0 .5rem;
+  font-size: .9rem;
 }
 /*=============================================
 =            UPDATE TRUCK DETAILS             =

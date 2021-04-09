@@ -40,8 +40,15 @@ const TruckDetailsCard = ({
             {/* //^ SALES NOTES */}
             <Card style={{ border: "none" }}>
               <Card.Header className="all-accordions">
-                <p className="data-wrapper">
+                <p className="notes-header-wrapper">
                   <span className="truck-data-title">Sales Notes: </span>
+
+                  <Link
+                    className="edit-notes-btn edit-notes-header-btn"
+                    to={`/UpdateNotes/${id}`}
+                  >
+                    <FaEdit /> Edit Notes
+                  </Link>
                 </p>
               </Card.Header>
               <Card.Body
@@ -62,20 +69,22 @@ const TruckDetailsCard = ({
                     </button>
                   </span>
                 ) : (
-                  <div className="no-notes-body">
-                    <p>No Notes yet</p>
-                    <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
-                      <FaEdit /> Add Notes
-                    </Link>
-                  </div>
+                  <p>No Notes yet</p>
                 )}
               </Card.Body>
             </Card>
             {/* //^ ACCOUNTING NOTES */}
             <Card style={{ border: "none" }}>
               <Card.Header className="all-accordions">
-                <p className="data-wrapper">
+                <p className="notes-header-wrapper">
                   <span className="truck-data-title">Accounting Notes: </span>
+
+                  <Link
+                    className="edit-notes-btn edit-notes-header-btn"
+                    to={`/UpdateNotes/${id}`}
+                  >
+                    <FaEdit /> Edit Notes
+                  </Link>
                 </p>
               </Card.Header>
               <Card.Body
@@ -98,20 +107,21 @@ const TruckDetailsCard = ({
                     </button>
                   </span>
                 ) : (
-                  <div className="no-notes-body">
-                    <p>No Notes yet</p>
-                    <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
-                      <FaEdit /> Add Notes
-                    </Link>
-                  </div>
+                  <p>No Notes yet</p>
                 )}
               </Card.Body>
             </Card>
             {/* //^ LOGISTICS NOTES */}
             <Card style={{ border: "none" }}>
               <Card.Header className="all-accordions">
-                <p className="data-wrapper">
+                <p className="notes-header-wrapper">
                   <span className="truck-data-title">Logistics Notes: </span>
+                  <Link
+                    className="edit-notes-btn edit-notes-header-btn"
+                    to={`/UpdateNotes/${id}`}
+                  >
+                    <FaEdit /> Edit Notes
+                  </Link>
                 </p>
               </Card.Header>
               <Card.Body
@@ -121,7 +131,9 @@ const TruckDetailsCard = ({
                   `${logistics}`
                 ) : logistics.length > 115 ? (
                   <span>
-                    {logisticsReadMore ? logistics : `${logistics.substring(0, 115)}...`}
+                    {logisticsReadMore
+                      ? logistics
+                      : `${logistics.substring(0, 115)}...`}
                     <button
                       className="show-more-btn"
                       onClick={() => {
@@ -132,12 +144,7 @@ const TruckDetailsCard = ({
                     </button>
                   </span>
                 ) : (
-                  <div className="no-notes-body">
-                    <p>No Notes yet</p>
-                    <Link className="add-notes-btn" to={`/UpdateNotes/${id}`}>
-                      <FaEdit /> Add Notes
-                    </Link>
-                  </div>
+                  <p>No Notes yet</p>
                 )}
               </Card.Body>
             </Card>
