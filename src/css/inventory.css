@@ -348,6 +348,17 @@ li {
 .add-notes-btn:hover {
   color: rgb(97, 5, 172);
 }
+
+.show-more-btn {
+  padding: 0.1rem 0.2rem;
+  margin-left: .25rem;
+  border-radius: 10px;
+  border-color: rgba(0, 0, 0, 0.096);
+}
+.no-notes-body {
+  display: flex;
+  justify-content: space-between;
+}
 /*=============================================
 =            UPDATE TRUCK DETAILS             =
 =============================================*/
