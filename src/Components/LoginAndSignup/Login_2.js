@@ -95,7 +95,6 @@ const LoginModal = () => {
                   retailPrice,
                   status,
                 } = truck;
-                console.log(trucks);
                 return (
                   <tr
                     className={`${

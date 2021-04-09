@@ -17,7 +17,7 @@ import Logout from "./Components/LoginAndSignup/Logout";
 // import Home from "./Pages/Home";
 // import AddInventory from "./Components/Inventory/AddInventory";
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
-import Dashboard from "./Components/Dashboard";
+import Dashboard from "./Components/Dashboard/Dashboard";
 import { inventoryURL } from "./Pages/urls";
 // import Settings from "./Components/Settings";
 // import Statements from "./Components/Statements";

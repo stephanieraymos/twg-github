@@ -4,6 +4,11 @@ import { tokenVerifyURL, tokenRefreshURL, userURL, loginURL, registerURL, logout
 
 const AuthContext = React.createContext(null)
 
+/*  
+IMPORTANT: Change PRODUCTION to true when releasing to production
+*/
+const PRODUCTION = false;
+
 const AuthProvider = ({ children }) => {
     // URLs to communicate with the auth API
 
@@ -22,11 +27,17 @@ const AuthProvider = ({ children }) => {
     const [cookies, setCookie, removeCookie] = useCookies([accessTokenKey, refreshTokenKey, userKey]);
 
     useEffect(() => {
-        authenticate();
+        authenticate()
+            .catch((error) => {
+                console.log("Authenticate Error:", error)
+            });
 
         // run authenticate every hour
         setInterval(() => {
-            authenticate();
+            authenticate()
+                .catch((error) => {
+                    console.log("Authenticate Error:", error)
+                });
         }, maxAgeShort * 1000);
     }, [])
 
@@ -39,7 +50,7 @@ const AuthProvider = ({ children }) => {
     const setAccessToken = (token) => {
         setCookie(accessTokenKey, token, {
             path: "/",
-            // secure: true,
+            secure: PRODUCTION,
             maxAge: maxAgeShort, // 1 hour
         });
     };
@@ -47,7 +58,7 @@ const AuthProvider = ({ children }) => {
     const setRefreshToken = (token) => {
         setCookie(refreshTokenKey, token, {
             path: "/",
-            // secure: true,
+            secure: PRODUCTION,
             maxAge: maxAgeLong // 7 days
         });
     };
@@ -55,7 +66,7 @@ const AuthProvider = ({ children }) => {
     const setIsAuthenticated = (value) => {
         setCookie(userKey, value, {
             path: "/",
-            // secure: true,
+            secure: PRODUCTION,
             maxAge: maxAgeShort, // 1 hour
         });
     };
