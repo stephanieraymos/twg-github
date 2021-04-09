@@ -190,14 +190,6 @@ input:hover::placeholder {
 =               TRUCK DETAILS               =
 =============================================*/
 
-.truck-details-links-container {
-  display: flex;
-  margin-right: 50%;
-  padding-left: 1rem;
-  padding-top: 1rem;
-  justify-content: space-between;
-}
-
 .truck-section {
   text-align: center;
   padding: 1rem 0;
@@ -296,6 +288,33 @@ li {
 /*=============================================
 =         TRUCK DETAILS TOP BUTTONS           =
 =============================================*/
+
+.truck-details-links-container {
+  font-size: clamp(.8rem, 2.5vw, 1rem);
+  display: flex;
+  margin-right: 50%;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1100px) {
+  .truck-details-links-container {
+    display: flex;
+    margin-right: 0;
+    padding: 1rem;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 800px) {
+  .truck-details-links-container {
+    display: flex;
+    margin-right: 0;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    justify-content: space-between;
+  }
+}
 .back-to-link {
   padding-left: 0.5rem;
   color: black;
