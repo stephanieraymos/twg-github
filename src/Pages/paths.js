@@ -1,2 +1,4 @@
-export const dashboard = "/dashboard";
-export const inventory = "/inventory";
+export const loginPATH = "/login";
+export const logoutPATH = "/logout";
+export const dashboardPATH = "/";
+export const inventoryPATH = "/inventory";

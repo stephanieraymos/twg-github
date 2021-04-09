@@ -12,7 +12,7 @@ import {
 export const links = [
   {
     id: 1,
-    url: "/dashboard",
+    url: "/",
     text: "Dashboard",
     icon: <FaUserCircle />
   },

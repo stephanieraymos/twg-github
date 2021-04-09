@@ -14,11 +14,10 @@ import Navigation from "./Navigation/Navigation";
 
 const Dashboard = () => {
   document.title = "Dashboard";
-  const { fetchAccessToken } = useAuthContext();
+  const { fetchAccessToken, userId } = useAuthContext();
   const {
     openSidebar,
     isSidebarOpen,
-    userId,
     setUserId,
     setEmail,
     setFirstName,
@@ -69,12 +68,12 @@ const Dashboard = () => {
       });
   };
 
-  useEffect(() => {
-    localStorage.setItem("userId", userId);
-  }, [userId]);
+  // useEffect(() => {
+  //   localStorage.setItem("userId", userId);
+  // }, [userId]);
 
   useEffect(() => {
-    console.log("userId", userId);
+    console.log("userId", userId());
     // fetchAccessToken
     //   .then((token) => {
     //     getUserDetails(token);

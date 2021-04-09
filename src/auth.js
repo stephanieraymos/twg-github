@@ -1,12 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { useCookies } from "react-cookie";
-import { tokenVerifyURL, tokenRefreshURL, userURL, loginURL, registerURL } from "./Pages/urls"
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect,
-} from "react-router-dom";
+import { tokenVerifyURL, tokenRefreshURL, userURL, loginURL, registerURL, logoutURL } from "./Pages/urls"
+
 const AuthContext = React.createContext(null)
 
 const AuthProvider = ({ children }) => {
@@ -17,37 +12,28 @@ const AuthProvider = ({ children }) => {
     // keys for the cookies
     const accessTokenKey = "user-access-token";
     const refreshTokenKey = "user-refresh-token";
+    const userKey = "user";
+    // keys for the local storage
     const userIdKey = "user-id";
     const isSellerKey = "is-seller";
     const isAdminKey = "is-admin";
     const isSuperuserKey = "is-superuser";
 
-    const [cookies, setCookie, removeCookie] = useCookies([accessTokenKey, refreshTokenKey, userIdKey, isSellerKey, isAdminKey, isSuperuserKey]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [cookies, setCookie, removeCookie] = useCookies([accessTokenKey, refreshTokenKey, userKey]);
 
-    // run authenticate on start
-    setTimeout(() => {
-        runAuth();
-    });
-    
-    // run authenticate every hour
-    setInterval(() => {
-        runAuth();
-    }, maxAgeShort * 1000);
+    useEffect(() => {
+        authenticate();
 
-    const runAuth = () => {
-        authenticate()
-            .then(() => {
-                console.log("isAuthenticated", isAuthenticated);
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-    }
+        // run authenticate every hour
+        setInterval(() => {
+            authenticate();
+        }, maxAgeShort * 1000);
+    }, [])
 
     const removeTokens = () => {
         removeCookie(accessTokenKey);
         removeCookie(refreshTokenKey);
+        removeCookie(userKey);
     }
 
     const setAccessToken = (token) => {
@@ -66,36 +52,28 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const setUserId = (value) => {
-        setCookie(userIdKey, value, {
+    const setIsAuthenticated = (value) => {
+        setCookie(userKey, value, {
             path: "/",
             // secure: true,
             maxAge: maxAgeShort, // 1 hour
         });
+    };
+
+    const setUserId = (value) => {
+        localStorage.setItem(userIdKey, value);
     };
 
     const setIsSeller = (value) => {
-        setCookie(isSellerKey, value, {
-            path: "/",
-            // secure: true,
-            maxAge: maxAgeShort, // 1 hour
-        });
+        localStorage.setItem(isSellerKey, value);
     };
 
     const setIsAdmin = (value) => {
-        setCookie(isAdminKey, value, {
-            path: "/",
-            // secure: true,
-            maxAge: maxAgeShort, // 1 hour
-        });
+        localStorage.setItem(isAdminKey, value);
     };
 
     const setIsSuperuser = (value) => {
-        setCookie(isSuperuserKey, value, {
-            path: "/",
-            // secure: true,
-            maxAge: maxAgeShort, // 1 hour
-        });
+        localStorage.setItem(isSuperuserKey, value);
     };
 
     const refreshToken = () => {
@@ -106,78 +84,25 @@ const AuthProvider = ({ children }) => {
         return cookies[accessTokenKey];
     }
 
+    const isAuthenticated = () => {
+        return cookies[userKey] === 'true';
+    };
+
     const userId = () => {
-        return cookies[userIdKey];
+        return localStorage.getItem(userIdKey);
     };
 
     const isSeller = () => {
-        return cookies[isSellerKey];
+        return localStorage.getItem(isSellerKey);
     };
 
     const isAdmin = () => {
-        return cookies[isAdminKey];
+        return localStorage.getItem(isAdminKey);
     };
 
     const isSuperuser = () => {
-        return cookies[isSuperuserKey];
+        return localStorage.getItem(isSuperuserKey);
     };
-
-    // const fetchAccessToken = new Promise((resolve, reject) => {
-    //     const accessToken = cookies[accessTokenKey];
-    //     if (accessToken) {
-    //         fetch(tokenVerifyURL, {
-    //             method: "POST",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify({
-    //                 token: accessToken,
-    //             }),
-    //         })
-    //             .then((response) => {
-    //                 if (response.ok) {
-    //                     // access token is valid
-    //                     resolve(accessToken);
-    //                 } else {
-    //                     // access token is not valid
-    //                     // use refresh token to get a new access token
-    //                     const refreshToken = cookies[refreshTokenKey];
-    //                     if (refreshToken) {
-    //                         // user might have a refresh token that have not expired yet
-    //                         fetch(tokenRefreshURL, {
-    //                             method: "POST",
-    //                             headers: { "Content-Type": "application/json" },
-    //                             body: JSON.stringify({
-    //                                 refresh: refreshToken,
-    //                             }),
-    //                         })
-    //                             .then((response) => {
-    //                                 if (response.ok) {
-    //                                     // user is logged in again
-    //                                     return response.json();
-    //                                 } else {
-    //                                     reject("User is not logged in.")
-    //                                 }
-    //                             })
-    //                             .then((token) => {
-    //                                 if (token) {
-    //                                     setAccessToken(token["access"]);
-    //                                     resolve(token["access"]);
-    //                                 }
-    //                             })
-    //                             .catch((error) => {
-    //                                 reject("User is not logged in.")
-    //                             });
-    //                     } else {
-    //                         reject("User is not logged in.")
-    //                     }
-    //                 }
-    //             })
-    //             .catch((error) => {
-    //                 reject("User is not logged in.")
-    //             })
-    //     } else {
-    //         reject("User is not logged in.")
-    //     }
-    // });
 
     const login = (data) => {
         return new Promise((resolve, reject) => {
@@ -195,14 +120,15 @@ const AuthProvider = ({ children }) => {
                   }
                 })
                 .then((user) => {
-                  setUserId(user["id"]);
-                  setIsSeller(user["is_seller"]);
-                  setIsAdmin(user["is_admin"]);
-                  setIsSuperuser(user["is_superuser"]);
-                  setAccessToken(user["token"]["access"]);
-                  setRefreshToken(user["token"]["refresh"]);
-                  // return the whole json response at the end
-                  resolve(user)
+                    setUserId(user["id"]);
+                    setIsSeller(user["is_seller"]);
+                    setIsAdmin(user["is_admin"]);
+                    setIsSuperuser(user["is_superuser"]);
+                    setAccessToken(user["token"]["access"]);
+                    setRefreshToken(user["token"]["refresh"]);
+                    setIsAuthenticated(true);
+                    // return the whole json response at the end
+                    resolve(user)
                 })
                 .catch((error) => {
                   reject(error)
@@ -227,6 +153,31 @@ const AuthProvider = ({ children }) => {
                 })
                 .catch((error) => {
                   reject(error)
+                });
+        });
+    };
+
+    const logout = () => {
+        return new Promise((resolve, reject) => {
+            fetch(logoutURL, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${accessToken()}`,
+                },
+                body: JSON.stringify({
+                  refresh: refreshToken(),
+                }),
+              })
+                .then((response) => {
+                    console.log("logout response", response)
+                    removeTokens();
+                    resolve(true);
+                })
+                .catch((error) => {
+                    console.log("logout error", error)
+                    removeTokens();
+                    reject(error);
                 });
         });
     };
@@ -279,61 +230,88 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const authenticate = () => {
+    const checkAccessToken = (token) => {
         return new Promise((resolve, reject) => {
-            setIsAuthenticated(false);
-            console.log("checking access token");
+            fetch(tokenVerifyURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    token: token,
+                }),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // access token is valid
+                        resolve(response);
+                    } else {
+                        throw new Error("Access token is invalid.");
+                    }
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        });
+    };
+
+    const checkRefreshToken = (token) => {
+        return new Promise((resolve, reject) => {
+            fetch(tokenRefreshURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    refresh: token,
+                }),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // user is logged in again
+                        resolve(response.json());
+                    } else {
+                        throw new Error("Refresh token is invalid.");
+                    }
+                })
+                .catch((error) => {
+                    reject(error)
+                });
+        });
+    };
+
+    const checkToken = () => {
+        return new Promise((resolve, reject) => {
             const accessToken = cookies[accessTokenKey];
-            if (accessToken) {
-                fetch(tokenVerifyURL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        token: accessToken,
-                    }),
-                })
-                    .then((response) => {
-                        if (response.ok) {
-                            // access token is valid so we can retreive user data
-                            setIsAuthenticated(true);
-                            getUser(accessToken)
-                                .then((response) => {
-                                    resolve(response);
-                                })
-                                .catch((error) => {
-                                    reject(error);
-                                })
-                        }
-                    })
-                    .catch((error) => {
-                        reject(error)
-                    })
-            }
-    
-            console.log("checking refresh token");
-            // access token is not valid if we get here
-            // use refresh token to get a new access token
             const refreshToken = cookies[refreshTokenKey];
-            if (refreshToken) {
-                // user might have a refresh token that have not expired yet
-                fetch(tokenRefreshURL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        refresh: refreshToken,
-                    }),
-                })
-                    .then((response) => {
-                        const res = response.json();
-                        if (response.ok) {
-                            // user is logged in again
-                            return res;
-                        } else {
-                            throw new Error(res.message);
-                        }
+            if (accessToken && refreshToken) {
+                checkAccessToken(accessToken)
+                    .then(() => {
+                        getUser(accessToken)
+                            .then((response) => {
+                                resolve(response);
+                            })
+                            .catch((error) => {
+                                reject(error);
+                            })
                     })
+                    .catch(() => {
+                        checkRefreshToken(refreshToken)
+                            .then((token) => {
+                                setAccessToken(token["access"]);
+                                getUser(token["access"])
+                                    .then((response) => {
+                                        resolve(response);
+                                    })
+                                    .catch((error) => {
+                                        reject(error);
+                                    })
+                            })
+                            .catch(() => {
+                                // if we get here, then refresh token is  invalid as well
+                                reject("User is not logged in.")
+                            })
+                    })
+            } else if (refreshToken) {
+                // user might have a refresh token that have not expired yet
+                checkRefreshToken(refreshToken)
                     .then((token) => {
-                        setIsAuthenticated(true);
                         setAccessToken(token["access"]);
                         getUser(token["access"])
                             .then((response) => {
@@ -343,17 +321,28 @@ const AuthProvider = ({ children }) => {
                                 reject(error);
                             })
                     })
-                    .catch((error) => {
-                        reject(error)
-                    });
+                    .catch(() => {
+                        // if we get here, then refresh token is  invalid as well
+                        reject("User is not logged in.")
+                    })
+            } else {
+                // if we get here, then refresh token is  invalid as well
+                reject("User is not logged in.")
             }
-    
-            console.log("All tokens were invalid so we couldn't authenticate.")
-    
-    
-    
-            // if we get here, then refresh token is  invalid as well
-            reject("User is not logged in.")
+        });
+    };
+
+    const authenticate = () => {
+        return new Promise((resolve, reject) => {
+            checkToken()
+                .then(() => {
+                    setIsAuthenticated(true);
+                    resolve(true);
+                })
+                .catch((error) => {
+                    setIsAuthenticated(false);
+                    reject(error)
+                });
         });
     };
 
@@ -373,8 +362,9 @@ const AuthProvider = ({ children }) => {
         setIsAdmin,
         setIsSuperuser,
 
-        login, 
+        login,
         register,
+        logout,
         isAuthenticated,
         authenticate,
     }
@@ -386,26 +376,4 @@ const useAuthContext = () => {
     return useContext(AuthContext);
 };
 
-const PrivateRoute = ({ children, ...rest }) => {
-    const { isAuthenticated } = useAuthContext();
-
-    return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                isAuthenticated ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: "/",
-                            state: { from: location }
-                        }}
-                    />
-                )
-            }
-        />
-    );
-}
-
-export { AuthProvider, useAuthContext, PrivateRoute };
+export { AuthProvider, useAuthContext };

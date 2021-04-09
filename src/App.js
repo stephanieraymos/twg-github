@@ -7,11 +7,12 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import { dashboard, inventory } from "./Pages/paths";
+import { loginPATH, logoutPATH, dashboardPATH, inventoryPATH } from "./Pages/paths";
 
-import { PrivateRoute } from "./auth";
+import { LoginRoute, PrivateRoute } from "./Pages/router";
 import Sidebar from "./Components/Navigation/Sidebar";
 import Login2 from "./Components/LoginAndSignup/Login_2";
+import Logout from "./Components/LoginAndSignup/Logout";
 // import Contact from "./Pages/Contact";
 // import Home from "./Pages/Home";
 // import AddInventory from "./Components/Inventory/AddInventory";
@@ -21,7 +22,6 @@ import { inventoryURL } from "./Pages/urls";
 // import Settings from "./Components/Settings";
 // import Statements from "./Components/Statements";
 // import EmailVerification from "./Components/LoginAndSignup/EmailVerification"
-// import Logout from "./Components/LoginAndSignup/Logout";
 // import AccountDetails from "./Components/AccountDetails"
 // import UserDb from "./Components/Users/UserDb";
 // import OrderDetails from "./Components/Orders/OrderDetails";
@@ -37,15 +37,18 @@ const App = () => {
 
       <Router>
         <Switch>
-          <Route exact path="/">
+          <LoginRoute exact path={loginPATH}>
             <Login2 />
-          </Route>
-          {/* <PrivateRoute path={dashboard}>
+          </LoginRoute>
+          <PrivateRoute exact path={dashboardPATH}>
             <Dashboard />
           </PrivateRoute>
-          <PrivateRoute path={inventory}>
+          <PrivateRoute exact path={inventoryPATH}>
             <InventoryAllTrucks />
-          </PrivateRoute> */}
+          </PrivateRoute>
+          <Route exact path={logoutPATH}>
+            <Logout />
+          </Route>
         </Switch>
       </Router>
 

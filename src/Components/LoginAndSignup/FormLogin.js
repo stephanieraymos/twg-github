@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Button, Form, InputGroup, Image } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
 import { useGlobalContext } from "../../context";
 import { useAuthContext } from "../../auth";
 import { loginURL } from "../../Pages/urls";
+import { dashboardPATH } from "../../Pages/paths";
 
 const FormLogin = () => {
   const form = useRef(null);
@@ -17,11 +18,9 @@ const FormLogin = () => {
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
   // const [userId, setUserId] = useState("");
 
-  const { setAccessToken, setRefreshToken } = useAuthContext();
+  const { login } = useAuthContext();
 
   const {
-    userId,
-    setUserId,
     email,
     setEmail,
     firstName,
@@ -34,6 +33,7 @@ const FormLogin = () => {
   } = useGlobalContext();
 
   let history = useHistory();
+  let location = useLocation();
 
   const resetValues = () => {
     setPassword("");
@@ -44,8 +44,6 @@ const FormLogin = () => {
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
-    console.log("userID in handleSubmit", userId)
-    console.log(openModal)
     event.preventDefault();
     event.stopPropagation();
 
@@ -53,56 +51,26 @@ const FormLogin = () => {
 
     if (form.checkValidity() === true) {
       // no errors
-      login()
-      setUserId(userId)
-      console.log("userId in conditional inside handle submit", userId)
+      performLogin();
     }
   };
 
-  //* useEffect for user post request
-  const login = () => {
+  const performLogin = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
-    fetch(loginURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(object),
-    })
-      .then((response) => {
-        const res = response.json();
-        if (response.ok) {
-          console.log("Response from login is OK");
-          console.log("Res", res)
-          return res;
-        } else {
-          throw new Error(res.message);
-        }
-      })
+    login(JSON.stringify(object))
       .then((user) => {
-        setUserId(user["id"]);
         setEmail(user["email"]);
         setFirstName(user["first_name"]);
         setLastName(user["last_name"]);
         setCompany(user["company"]);
         setPhoneNumber(user["phone_number"]);
         setBillingAddress(user["billing_address"]);
-        setAccessToken(user["token"]["access"]);
-        setRefreshToken(user["token"]["refresh"]);
-        console.log("user[]", user["id"]);
-        console.log("userId inside login", userId)
-        console.log("Type of user[]", typeof(user["id"]))
-        console.log("Type of userId", typeof(userId))
-        console.log("userId", userId);
-        console.log("First Name", firstName)
-        console.log("email", email)
+        resetValues();
       })
       .then(() => {
-        console.log("userId", userId);
-        resetValues();
-        //history.push("/dashboard");
-
-        let { from } = { from: { pathname: "/dashboard" } };
+        let { from } = location.state || { from: { pathname: "/" } };
         history.replace(from);
       })
       .catch((error) => {
@@ -110,11 +78,64 @@ const FormLogin = () => {
         setIsLoginIncorrect(true);
         setValidated(false);
       });
-  };
+  }
 
-  useEffect(() => {
-    localStorage.setItem("userId", userId);
-  }, [userId]);
+  //* useEffect for user post request
+  // const login = () => {
+  //   const data = new FormData(form.current);
+  //   var object = {};
+  //   data.forEach((value, key) => (object[key] = value));
+  //   // fetch(loginURL, {
+  //   //   method: "POST",
+  //   //   headers: { "Content-Type": "application/json" },
+  //   //   body: JSON.stringify(object),
+  //   // })
+  //   //   .then((response) => {
+  //   //     const res = response.json();
+  //   //     if (response.ok) {
+  //   //       console.log("Response from login is OK");
+  //   //       console.log("Res", res)
+  //   //       return res;
+  //   //     } else {
+  //   //       throw new Error(res.message);
+  //   //     }
+  //   //   })
+  //   //   .then((user) => {
+  //   //     setUserId(user["id"]);
+  //   //     setEmail(user["email"]);
+  //   //     setFirstName(user["first_name"]);
+  //   //     setLastName(user["last_name"]);
+  //   //     setCompany(user["company"]);
+  //   //     setPhoneNumber(user["phone_number"]);
+  //   //     setBillingAddress(user["billing_address"]);
+  //   //     setAccessToken(user["token"]["access"]);
+  //   //     setRefreshToken(user["token"]["refresh"]);
+  //   //     console.log("user[]", user["id"]);
+  //   //     console.log("userId inside login", userId)
+  //   //     console.log("Type of user[]", typeof(user["id"]))
+  //   //     console.log("Type of userId", typeof(userId))
+  //   //     console.log("userId", userId);
+  //   //     console.log("First Name", firstName)
+  //   //     console.log("email", email)
+  //   //   })
+  //   //   .then(() => {
+  //   //     console.log("userId", userId);
+  //   //     resetValues();
+  //   //     //history.push("/dashboard");
+
+  //   //     let { from } = { from: { pathname: "/dashboard" } };
+  //   //     history.replace(from);
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.log(error)
+  //   //     setIsLoginIncorrect(true);
+  //   //     setValidated(false);
+  //   //   });
+  // };
+
+  // useEffect(() => {
+  //   localStorage.setItem("userId", userId);
+  // }, [userId]);
 
   return (
     <>
