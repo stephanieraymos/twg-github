@@ -120,7 +120,7 @@ const UpdateTruckForm = ({
             type="text"
             required
             defaultValue={owner}
-            name="category"
+            name="owner"
           />
           <Form.Control.Feedback type="invalid">
             Who owns this truck?
