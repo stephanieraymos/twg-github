@@ -104,9 +104,9 @@ ________________________________________________________________________________
 
 The navigation will vary based on the user's login status (Admin, Sales, or Buyer.) 
 
-Features:
+### Features:
 
-All applicable page navigation will be available in the sidebar.
+- All applicable page navigation will be available in the sidebar.
 
 ____________________________________________________________________________________________
 
