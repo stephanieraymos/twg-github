@@ -15,10 +15,10 @@ const Logout = () => {
   useEffect(() => {
     logout()
       .then(() => {
-        history.push("/");
+        history.push("/login");
       })
       .catch(() => {
-        history.push("/");
+        history.push("/login");
       });
   }, []);
 

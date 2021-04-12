@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import TruckDetails from "./TruckDetails";
 import UpdateTruckDetails from "./UpdateTruckDetails";
+import UpdateNotes from "./UpdateNotes";
 import { TruckProvider } from "../../truckContext";
 
 const InventoryAllTrucks = () => {
@@ -40,11 +41,14 @@ const InventoryAllTrucks = () => {
           </>
         </PrivateRoute>
         <TruckProvider>
-          <PrivateRoute path={`${path}/:id`}>
+          <PrivateRoute exact path={`${path}/:id`}>
             <TruckDetails />
           </PrivateRoute>
-          <PrivateRoute path={`${path}/edit/:id`}>
+          <PrivateRoute exact path={`${path}/edit/:id`}>
             <UpdateTruckDetails />
+          </PrivateRoute>
+          <PrivateRoute exact path={`${path}/edit/notes/:id`}>
+            <UpdateNotes />
           </PrivateRoute>
         </TruckProvider>
       </Switch>

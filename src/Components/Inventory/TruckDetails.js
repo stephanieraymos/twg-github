@@ -15,7 +15,7 @@ const TruckDetails = () => {
   const { id } = useParams();
 
   const {
-    loading: [loading, setLoading],
+    isEmpty: [isEmpty, setIsEmpty],
     loadId: [loadId, setLoadId],
     source: [source, setSource],
     retailPrice: [retailPrice, setRetailPrice],
@@ -40,8 +40,6 @@ const TruckDetails = () => {
 
   let history = useHistory();
   let location = useLocation();
-
-  let { path, url } = useRouteMatch();
 
   document.title = "Truck Details";
 
@@ -72,7 +70,7 @@ const TruckDetails = () => {
     fetch(inventoryURL, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken()}`,
       },
       body: data,
     }).then(history.push("/trucks"));
@@ -85,9 +83,7 @@ const TruckDetails = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data) {
           const {
@@ -110,6 +106,7 @@ const TruckDetails = () => {
             logistics,
           } = data[0];
 
+          setIsEmpty(false);
           setLoadId(loadId);
           setSource(source);
           setPrice(price);
@@ -128,35 +125,22 @@ const TruckDetails = () => {
           setAccounting(accounting);
           setLogistics(logistics);
         }
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
   };
 
   useEffect(() => {
-    // send user back to login if they're not logged in
-    // fetchAccessToken
-    //   .then((token) => {
-    //     setAccessToken(token);
-    //     getTruck();
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     history.push("/");
-    //   });
-    getTruck();
+    if (isEmpty) {
+      getTruck();
+    }
   }, []);
 
   useEffect(() => {
     getManifest();
   }, [manifestIds]);
 
-  if (loading) {
-    return <Loading />;
-  }
   if (!loadId) {
     return <h2>No truck to display</h2>;
   }
@@ -183,11 +167,15 @@ const TruckDetails = () => {
         </Button>
         
         <Button className="edit-truck-btn" onClick={(e) => {
-            history.push(`${inventoryPATH}/edit/${id}`);
+            e.preventDefault();
+            history.push(`${inventoryPATH}/edit/${id}`, { from: location.pathname });
           }} >
           <FaEdit /> Edit truck
         </Button>
-        <Button className="edit-notes-btn" to={`/UpdateNotes/${id}`}>
+        <Button className="edit-notes-btn" onClick={(e) => {
+            e.preventDefault();
+            history.push(`${inventoryPATH}/edit/notes/${id}`, { from: location.pathname });
+          }}>
           <FaEdit /> Edit Notes
         </Button>
       </div>

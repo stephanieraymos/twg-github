@@ -15,7 +15,7 @@ const TruckProvider = ({ children }) => {
   //////////////////////// &&--STATE--&& /////////////////////////////
 
   // const [truckLoad, setTruckLoad] = useState([]); //INVENTORY LIST ON ADD TRUCKLOAD PAGE
-
+  const [isEmpty, setIsEmpty] = useState(true);
   const [id, setId] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadId, setLoadId] = useState("");
@@ -52,27 +52,6 @@ const TruckProvider = ({ children }) => {
     setAlert({ show, type, msg });
   };
 
-  const resetValues = () => {
-    setLoadId("");
-    setSource("");
-    setPrice("");
-    setCost("");
-    setCommission("");
-    setRetailPrice("");
-    setContents("");
-    setManifestIds([]);
-    setFiles([]);
-    setCategory("");
-    setUnits("");
-    setPalletCount("");
-    setFob("");
-    setStatus(1);
-    setOwner("");
-    setSales("");
-    setAccounting("");
-    setLogistics("");
-  }
-
   //clearList function. Once list is cleared an alert confirms this to the user + truckLoad is set back to empty array
   // const clearList = () => {
   //   showAlert(true, "danger", "Trucks cleared successfully");
@@ -107,6 +86,7 @@ const TruckProvider = ({ children }) => {
   return (
     <TruckContext.Provider
       value={{
+        isEmpty: [isEmpty, setIsEmpty],
         id: [id, setId],
         loading: [loading, setLoading],
         loadId: [loadId, setLoadId],
@@ -127,7 +107,6 @@ const TruckProvider = ({ children }) => {
         sales: [sales, setSales],
         accounting: [accounting, setAccounting],
         logistics: [logistics, setLogistics],
-        resetValues
 
         // clearList,
         // showAlert,

@@ -1,20 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, inventoryURL } from "../../Pages/urls";
 import UpdateNotesForm from "./UpdateNotesForm";
+import { useTruckContext } from "../../truckContext";
 
 const UpdateNotes = () => {
   const { id } = useParams();
-  const [sales, setSales] = useState("");
-  const [logistics, setLogistics] = useState("");
-  const [accounting, setAccounting] = useState("");
+  // const [sales, setSales] = useState("");
+  // const [logistics, setLogistics] = useState("");
+  // const [accounting, setAccounting] = useState("");
   const [validated, setValidated] = useState(false);
 
-  const { fetchAccessToken } = useAuthContext();
-
-  const [accessToken, setAccessToken] = useState("");
+  const { accessToken } = useAuthContext();
 
   let history = useHistory();
 
@@ -22,8 +21,34 @@ const UpdateNotes = () => {
 
   const form = useRef(null);
 
+  let location = useLocation();
+
+  let { from } = location.state || { from: { pathname: "/" } };
+
+  const {
+    isEmpty: [isEmpty, setIsEmpty],
+    loadId: [loadId, setLoadId],
+    source: [source, setSource],
+    retailPrice: [retailPrice, setRetailPrice],
+    price: [price, setPrice],
+    status: [status, setStatus],
+    contents: [contents, setContents],
+    category: [category, setCategory],
+    units: [units, setUnits],
+    palletCount: [palletCount, setPalletCount],
+    fob: [fob, setFob],
+    manifestIds: [manifestIds, setManifestIds],
+    files: [files, setFiles],
+    owner: [owner, setOwner],
+    cost: [cost, setCost],
+    commission: [commission, setCommission],
+    sales: [sales, setSales],
+    accounting: [accounting, setAccounting],
+    logistics: [logistics, setLogistics],
+  } = useTruckContext();
+
   const redirect = () => {
-    history.push(`/TruckDetails/${id}`);
+    history.replace(from);
   };
 
   const handleSubmit = (event) => {
@@ -46,22 +71,47 @@ const UpdateNotes = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data) {
           const {
+            loadId,
+            source,
+            price,
+            cost,
+            commission,
+            retailPrice,
+            category,
+            fob,
+            units,
+            palletCount,
+            contents,
+            manifestIds,
+            status,
+            owner,
             sales,
-            logistics,
             accounting,
+            logistics,
           } = data[0];
 
+          setIsEmpty(false);
+          setLoadId(loadId);
+          setSource(source);
+          setPrice(price);
+          setCost(cost);
+          setCommission(commission);
+          setRetailPrice(retailPrice);
+          setContents(contents.join(", "));
+          setManifestIds(manifestIds);
+          setCategory(category);
+          setUnits(units);
+          setPalletCount(palletCount);
+          setFob(fob);
+          setStatus(status);
+          setOwner(owner);
           setSales(sales);
-          setLogistics(logistics);
           setAccounting(accounting);
-        } else {
-          throw new Error("Error getting notes");
+          setLogistics(logistics);
         }
       })
       .catch((error) => {
@@ -70,16 +120,9 @@ const UpdateNotes = () => {
   };
 
   useEffect(() => {
-    // send user back to login if they're not logged in
-    fetchAccessToken
-      .then((token) => {
-        setAccessToken(token);
-        getTruck();
-      })
-      .catch((error) => {
-        console.log(error);
-        history.push("/");
-      });
+    if (isEmpty) {
+      getTruck();
+    }
   }, []);
 
   // Return true or false to indicate if fetch was successful
@@ -90,7 +133,7 @@ const UpdateNotes = () => {
     fetch(inventoryURL, {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + accessToken(),
       },
       body: data,
     })

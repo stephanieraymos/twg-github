@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
-import { useHistory, useParams, Link } from "react-router-dom";
+import { useHistory, useParams, Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, manifestURL, inventoryURL } from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
@@ -28,6 +28,8 @@ const UpdateTruckDetails = () => {
   // const [commission, setCommission] = useState("");
 
   const {
+    isEmpty: [isEmpty, setIsEmpty],
+    loading: [loading, setLoading],
     loadId: [loadId, setLoadId],
     source: [source, setSource],
     retailPrice: [retailPrice, setRetailPrice],
@@ -43,18 +45,24 @@ const UpdateTruckDetails = () => {
     owner: [owner, setOwner],
     cost: [cost, setCost],
     commission: [commission, setCommission],
+    sales: [sales, setSales],
+    accounting: [accounting, setAccounting],
+    logistics: [logistics, setLogistics],
   } = useTruckContext();
 
   const { accessToken } = useAuthContext();
 
   let history = useHistory();
+  let location = useLocation();
+
+  let { from } = location.state || { from: { pathname: "/" } };
 
   document.title = "Add Inventory";
 
   const form = useRef(null);
 
   const redirect = () => {
-    history.push(`/TruckDetails/${id}`);
+    history.replace(from);
   };
 
   const handleSubmit = (event) => {
@@ -96,62 +104,60 @@ const UpdateTruckDetails = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data) {
           const {
+            loadId,
             source,
             price,
             cost,
             commission,
             retailPrice,
-            contents,
-            manifestIds,
             category,
+            fob,
             units,
             palletCount,
-            fob,
+            contents,
+            manifestIds,
             status,
-            owner
+            owner,
+            sales,
+            accounting,
+            logistics,
           } = data[0];
 
+          setIsEmpty(false);
+          setLoadId(loadId);
           setSource(source);
           setPrice(price);
           setCost(cost);
-          setCommission(commission)
+          setCommission(commission);
           setRetailPrice(retailPrice);
+          setContents(contents.join(", "));
+          setManifestIds(manifestIds);
           setCategory(category);
           setUnits(units);
           setPalletCount(palletCount);
-          setContents(contents);
-          setManifestIds(manifestIds);
-          setStatus(status);
           setFob(fob);
+          setStatus(status);
           setOwner(owner);
-        } else {
-          throw new Error("Truck does not exist.");
+          setSales(sales);
+          setAccounting(accounting);
+          setLogistics(logistics);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   };
 
   useEffect(() => {
-    // send user back to login if they're not logged in
-    // fetchAccessToken
-    //   .then((token) => {
-    //     setAccessToken(token);
-    //     getTruck();
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     history.push("/");
-    //   });
-
-    console.log("Hello");
+    if (isEmpty) {
+      getTruck();
+    }
   }, []);
 
   useEffect(() => {
