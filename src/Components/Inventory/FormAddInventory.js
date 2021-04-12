@@ -4,6 +4,8 @@ import { useAuthContext } from "../../auth";
 import { useHistory } from "react-router-dom";
 import { inventoryURL } from "../../Pages/urls";
 
+import { inventoryPATH } from "../../Pages/paths";
+
 const FormAddInventory = ({
   manifestsCount,
   setManifestsCount,
@@ -16,7 +18,6 @@ const FormAddInventory = ({
   
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
-  const [accessToken, setAccessToken] = useState("");
   const [trucks, dispatch] = useReducer(reducer, []);
 
 
@@ -36,27 +37,13 @@ const FormAddInventory = ({
     if (form.checkValidity() === true) {
       setValidated(false);
       setManifestsCount(0);
-      closeModal();
       postTrucks();
     } else {
       setValidated(true);
     }
   };
 
-  const { fetchAccessToken } = useAuthContext();
-
-  useEffect(() => {
-    // send user back to login if they're not logged in
-    console.log("userId", userId);
-    fetchAccessToken
-      .then((token) => {
-        setAccessToken(token);
-        console.log("userId", userId);
-      })
-      .catch((error) => {
-        history.push("/");
-      });
-  }, []);
+  const { accessToken } = useAuthContext();
 
   //^---- POST (ADD INVENTORY) ----
   const postTrucks = async () => {
@@ -65,21 +52,17 @@ const FormAddInventory = ({
     const contents = data.get("contents").split(",");
     data.delete("contents");
     contents.map((item) => data.append("contents", item));
-
-    data.forEach((value, key) => console.log("Key, Value", key, value));
     try {
       const response = await fetch(inventoryURL, {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + accessToken,
+          Authorization: "Bearer " + accessToken(),
         },
         body: data,
       });
-      console.log(response);
       const newTruck = await response.json();
-      console.log(newTruck);
-      history.push("/trucks");
       addNewTrucks([newTruck]);
+      closeModal();
     } catch (error) {
       console.log(error);
     }

@@ -74,7 +74,7 @@ const TruckDetails = () => {
         Authorization: `Bearer ${accessToken()}`,
       },
       body: data,
-    }).then(history.push("/trucks"));
+    }).then(history.replace(inventoryPATH));
   };
 
   const getTruck = () => {
