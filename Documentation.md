@@ -7,7 +7,6 @@
 - [Software Architecture](#software-architecture)
 - [Functional Requirements](#F-requirements)
 - [Components](#components)
-- [Timeline](#timeline)
 
 <a name="project-vision"></a>
 
@@ -339,61 +338,6 @@ Editable account information, including name, company, contact number, and billi
 Users will also be able to change their passwords.
 
 ____________________________________________________________________________________________
-<a name="timeline"></a>
- 
-### 6. Timeline
-Setup The Backend - XX Hours Estimation
-
-Setting up the backend of the project
-
- 
-
-Login & Authentication - XX Hours Estimation
-
-Login Form
-
-Reset Password Functionality
-
-User Management (Add/Remove/Update Roles)
-
- 
-
-Back-End Development - XX Hours Estimation
-
-Creating Environment
-
-Create API
-
-Create database
-
- 
-
- 
-
-Front- End Development - XX Hours Estimation
-
-Creating React App
-
-Design Components
-
-Styling CSS
-
- 
-
- 
-
-Dashboard Development -  XX Hours Estimation 
-
-Create an admin dashboard and customer dashboard. 
-
-Create filters for different types of accounts.
-
- 
-
-Order Creation Page - XX Hours Estimation
-
-Manifest Upload Functionality
-
 
 
 Created by [Stephanie Raymos](https://github.com/stephanieraymos)
