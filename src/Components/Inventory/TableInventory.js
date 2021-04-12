@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
 import { useTruck } from "../../truckContext";
 import { useAuthContext } from "../../auth";
 import { Table } from "react-bootstrap";
 import { sorttable } from "sorttable";
 
+import {
+  Link,
+  useRouteMatch,
+  useHistory
+} from "react-router-dom";
+
 const TableInventory = () => {
   let history = useHistory();
   const [trucks] = useTruck();
 
-  const { userId } = useAuthContext();
+  let { url } = useRouteMatch();
 
   return (
     <>
@@ -54,7 +59,7 @@ const TableInventory = () => {
                   key={id}
                 >
                   <td>
-                    <Link className="table-id-link" to={`/TruckDetails/${id}`}>
+                    <Link className="table-id-link" to={`${url}/${id}`} >
                       {loadId}
                     </Link>
                   </td>

@@ -26,8 +26,9 @@ import { inventoryURL } from "./Pages/urls";
 // import UserDb from "./Components/Users/UserDb";
 // import OrderDetails from "./Components/Orders/OrderDetails";
 // import Orders from "./Components/Orders/Orders";
-// import TruckDetails from "./Components/Inventory/TruckDetails";
-// import UpdateTruckDetails from "./Components/Inventory/UpdateTruckDetails";
+import TruckDetails from "./Components/Inventory/TruckDetails";
+import UpdateTruckDetails from "./Components/Inventory/UpdateTruckDetails";
+import { TruckProvider } from "./truckContext";
 // import Error from "./Pages/Error";
 
 const App = () => {
@@ -43,7 +44,7 @@ const App = () => {
           <PrivateRoute exact path={dashboardPATH}>
             <Dashboard />
           </PrivateRoute>
-          <PrivateRoute exact path={inventoryPATH}>
+          <PrivateRoute path={inventoryPATH}>
             <InventoryAllTrucks />
           </PrivateRoute>
           <Route exact path={logoutPATH}>

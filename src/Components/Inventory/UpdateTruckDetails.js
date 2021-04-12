@@ -4,29 +4,48 @@ import { useHistory, useParams, Link } from "react-router-dom";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, manifestURL, inventoryURL } from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
+import { useTruckContext } from "../../truckContext";
+
+import { inventoryPATH } from "../../Pages/paths";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
-  const [source, setSource] = useState("");
-  const [price, setPrice] = useState("");
-  const [retailPrice, setRetailPrice] = useState("");
-  const [units, setUnits] = useState("");
-  const [palletCount, setPalletCount] = useState("");
-  const [fob, setFob] = useState("");
-  const [category, setCategory] = useState("");
-  const [status, setStatus] = useState(0);
-  const [contents, setContents] = useState([]);
-  const [manifestIds, setManifestIds] = useState([]);
-  const [files, setFiles] = useState([]);
+  // const [source, setSource] = useState("");
+  // const [price, setPrice] = useState("");
+  // const [retailPrice, setRetailPrice] = useState("");
+  // const [units, setUnits] = useState("");
+  // const [palletCount, setPalletCount] = useState("");
+  // const [fob, setFob] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [status, setStatus] = useState(0);
+  // const [contents, setContents] = useState([]);
+  // const [manifestIds, setManifestIds] = useState([]);
+  // const [files, setFiles] = useState([]);
   const [oldManifestIds, setOldManifestIds] = useState([]);
   const [validated, setValidated] = useState(false);
-  const [owner, setOwner] = useState("");
-  const [cost, setCost] = useState("");
-  const [commission, setCommission] = useState("");
+  // const [owner, setOwner] = useState("");
+  // const [cost, setCost] = useState("");
+  // const [commission, setCommission] = useState("");
 
-  const { fetchAccessToken } = useAuthContext();
+  const {
+    loadId: [loadId, setLoadId],
+    source: [source, setSource],
+    retailPrice: [retailPrice, setRetailPrice],
+    price: [price, setPrice],
+    status: [status, setStatus],
+    contents: [contents, setContents],
+    category: [category, setCategory],
+    units: [units, setUnits],
+    palletCount: [palletCount, setPalletCount],
+    fob: [fob, setFob],
+    manifestIds: [manifestIds, setManifestIds],
+    files: [files, setFiles],
+    owner: [owner, setOwner],
+    cost: [cost, setCost],
+    commission: [commission, setCommission],
+  } = useTruckContext();
 
-  const [accessToken, setAccessToken] = useState("");
+  const { accessToken } = useAuthContext();
 
   let history = useHistory();
 
@@ -58,7 +77,7 @@ const UpdateTruckDetails = () => {
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken()}`,
         },
         body: data,
       })
@@ -122,15 +141,17 @@ const UpdateTruckDetails = () => {
 
   useEffect(() => {
     // send user back to login if they're not logged in
-    fetchAccessToken
-      .then((token) => {
-        setAccessToken(token);
-        getTruck();
-      })
-      .catch((error) => {
-        console.log(error);
-        history.push("/");
-      });
+    // fetchAccessToken
+    //   .then((token) => {
+    //     setAccessToken(token);
+    //     getTruck();
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     history.push("/");
+    //   });
+
+    console.log("Hello");
   }, []);
 
   useEffect(() => {
@@ -152,7 +173,7 @@ const UpdateTruckDetails = () => {
     fetch(inventoryURL, {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + accessToken(),
       },
       body: data,
     })

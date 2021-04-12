@@ -13,9 +13,7 @@ ReactDOM.render(
     <CookiesProvider>
       <AuthProvider>
         <AppProvider>
-          <TruckProvider>
-              <App />
-          </TruckProvider>
+          <App />
         </AppProvider>
       </AuthProvider>
     </CookiesProvider>
