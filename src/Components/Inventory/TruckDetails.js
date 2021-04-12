@@ -115,7 +115,7 @@ const TruckDetails = () => {
           setCost(cost);
           setCommission(commission);
           setRetailPrice(retailPrice);
-          setContents(contents.join(", "));
+          setContents(contents.join(","));
           setManifestIds(manifestIds);
           setCategory(category);
           setUnits(units);
@@ -135,8 +135,12 @@ const TruckDetails = () => {
   };
 
   useEffect(() => {
+    console.log("manifest", manifestIds.length);
+    console.log("files", files.length);
     if (isEmpty) {
       getTruck();
+    } else if (manifestIds.length != files.length) {
+      getManifest();
     }
   }, []);
 

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth";
-import { getByIdURL, inventoryURL } from "../../Pages/urls";
+import { getByIdURL, inventoryURL, manifestURL } from "../../Pages/urls";
 import UpdateNotesForm from "./UpdateNotesForm";
 import { useTruckContext } from "../../truckContext";
 
@@ -64,6 +64,25 @@ const UpdateNotes = () => {
     }
   };
 
+  const getManifest = () => {
+    if (manifestIds.length > 0) {
+      const data = new FormData();
+      manifestIds.map((id) => data.append("manifestIds", id));
+      fetch(manifestURL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken()}`,
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((manifest) => setFiles(manifest))
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
   const getTruck = () => {
     fetch(`${getByIdURL}${id}`, {
       method: "GET",
@@ -101,7 +120,7 @@ const UpdateNotes = () => {
           setCost(cost);
           setCommission(commission);
           setRetailPrice(retailPrice);
-          setContents(contents.join(", "));
+          setContents(contents.join(","));
           setManifestIds(manifestIds);
           setCategory(category);
           setUnits(units);
@@ -124,6 +143,10 @@ const UpdateNotes = () => {
       getTruck();
     }
   }, []);
+
+  useEffect(() => {
+    getManifest();
+  }, [manifestIds]);
 
   // Return true or false to indicate if fetch was successful
   const updateNotes = () => {
@@ -160,9 +183,6 @@ const UpdateNotes = () => {
           form={form}
           validated={validated}
           handleSubmit={handleSubmit}
-          sales={sales}
-          accounting={accounting}
-          logistics={logistics}
           redirect={redirect}
         />
       </div>

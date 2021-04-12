@@ -29,7 +29,6 @@ const UpdateTruckDetails = () => {
 
   const {
     isEmpty: [isEmpty, setIsEmpty],
-    loading: [loading, setLoading],
     loadId: [loadId, setLoadId],
     source: [source, setSource],
     retailPrice: [retailPrice, setRetailPrice],
@@ -73,7 +72,6 @@ const UpdateTruckDetails = () => {
     if (form.checkValidity() === true) {
       setValidated(false);
       updateTruck();
-      redirect();
     } else {
       setValidated(true);
     }
@@ -136,7 +134,7 @@ const UpdateTruckDetails = () => {
           setCost(cost);
           setCommission(commission);
           setRetailPrice(retailPrice);
-          setContents(contents.join(", "));
+          setContents(contents.join(","));
           setManifestIds(manifestIds);
           setCategory(category);
           setUnits(units);
@@ -151,11 +149,9 @@ const UpdateTruckDetails = () => {
         } else {
           throw new Error("Truck does not exist.");
         }
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
   };
 
@@ -176,9 +172,9 @@ const UpdateTruckDetails = () => {
     data.set("status", status);
 
     // turn string to array and insert to truck contents
-    const tempcontents = data.get("contents").split(",");
+    const tempContents = data.get("contents").split(",");
     data.delete("contents");
-    tempcontents.map((item) => data.append("contents", item));
+    tempContents.map((item) => data.append("contents", item));
 
     oldManifestIds.map((id) => data.append("manifestIds", id));
     fetch(inventoryURL, {
@@ -191,8 +187,8 @@ const UpdateTruckDetails = () => {
       .then((response) => {
         console.log(response);
         if (response.ok) {
-          return true;
-        } else return false;
+          redirect();
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -211,25 +207,9 @@ const UpdateTruckDetails = () => {
           form={form}
           validated={validated}
           handleSubmit={handleSubmit}
-          source={source}
-          price={price}
-          cost={cost}
-          commission={commission}
-          retailPrice={retailPrice}
-          category={category}
-          contents={contents}
-          units={units}
-          palletCount={palletCount}
-          fob={fob}
-          setStatus={setStatus}
-          files={files}
-          manifestIds={manifestIds}
           oldManifestIds={oldManifestIds}
           setOldManifestIds={setOldManifestIds}
           redirect={redirect}
-          status={status}
-          owner={owner}
-          lane={lane}
         />
       </div>
     </>
