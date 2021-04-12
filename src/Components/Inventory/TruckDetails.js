@@ -28,6 +28,7 @@ const TruckDetails = () => {
   const [sales, setSales] = useState("");
   const [accounting, setAccounting] = useState("");
   const [logistics, setLogistics] = useState("");
+  const [lane, setLane] = useState("");
 
   const { fetchAccessToken } = useAuthContext();
 
@@ -89,6 +90,7 @@ const TruckDetails = () => {
             cost,
             commission,
             retailPrice,
+            lane,
             category,
             fob,
             units,
@@ -119,6 +121,7 @@ const TruckDetails = () => {
           setSales(sales);
           setAccounting(accounting);
           setLogistics(logistics);
+          setLane(lane)
         }
         setLoading(false);
       })
@@ -189,6 +192,7 @@ const TruckDetails = () => {
         retailPrice={retailPrice}
         category={category}
         units={units}
+        lane={lane}
         palletCount={palletCount}
         fob={fob}
         contents={contents}

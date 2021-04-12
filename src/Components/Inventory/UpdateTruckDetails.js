@@ -23,6 +23,7 @@ const UpdateTruckDetails = () => {
   const [owner, setOwner] = useState("");
   const [cost, setCost] = useState("");
   const [commission, setCommission] = useState("");
+  const [lane, setLane] = useState("");
 
   const { fetchAccessToken } = useAuthContext();
 
@@ -95,7 +96,8 @@ const UpdateTruckDetails = () => {
             palletCount,
             fob,
             status,
-            owner
+            owner,
+            lane
           } = data[0];
 
           setSource(source);
@@ -111,6 +113,7 @@ const UpdateTruckDetails = () => {
           setStatus(status);
           setFob(fob);
           setOwner(owner);
+          setLane(lane);
         } else {
           throw new Error("Truck does not exist.");
         }
@@ -197,6 +200,7 @@ const UpdateTruckDetails = () => {
           redirect={redirect}
           status={status}
           owner={owner}
+          lane={lane}
         />
       </div>
     </>
