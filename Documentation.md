@@ -9,7 +9,7 @@
 - [Components](#Components)
 - [Timeline](#Timeline)
 
-## 1. Project Vision
+## 1. [Project Vision](#Project-Vision)
 - ### Objective
 The wholesale group is RL Liquidators' wholesaling division that will provide freight to our existing network of locations and dealers and wholesaling to other companies. The objective is to create a system that will allow The Wholesale Group to create and manage shipments while assigning those shipments in real-time to customers.  This function should be asynchronous in that the user will see the most up-to-date information at all times.  The architecture needs to be scalable to support many thousands of users and millions of orders. The system will include a homepage, authentication system, administrative dashboard, customer dashboard, login, logout, register, contact, and orders page. The system will also communicate to the necessary parties via email when sales orders are created, changes to shipments are made, and received orders. 
 
