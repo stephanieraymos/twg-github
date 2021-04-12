@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useReducer } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useAuthContext } from "../../auth";
 import { useHistory } from "react-router-dom";
-import { useTruck } from "../../truckContext";
 import { inventoryURL } from "../../Pages/urls";
 
 const FormAddInventory = ({
@@ -11,11 +10,19 @@ const FormAddInventory = ({
   closeModal,
   userId,
 }) => {
+  const reducer = (state, action) => {
+    return state.concat(action.value);
+  };
+  
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
   const [accessToken, setAccessToken] = useState("");
-  const [addTruck] = useTruck();
+  const [trucks, dispatch] = useReducer(reducer, []);
 
+
+  const addTruck = (truck) => {
+    dispatch({ value: truck });
+  };
   const addNewTrucks = (truck, user) => {
     addTruck(truck);
   };

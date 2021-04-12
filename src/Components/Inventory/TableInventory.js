@@ -32,6 +32,8 @@ const TableInventory = () => {
   }
   trucks.sort(dynamicSort("status"));
 
+
+
   return (
     <>
       <div className="table-wrapper">
@@ -65,7 +67,7 @@ const TableInventory = () => {
                 retailPrice,
                 status,
               } = truck;
-              console.log(trucks);
+
               return (
                 <tr
                   className={`${

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useTruck } from "../../truckContext";
 import AddInventory from "./AddInventory";
@@ -12,7 +12,10 @@ const InventoryAllTrucks = () => {
   const addNewTrucks = (truck, user) => {
     addTruck(truck);
   };
-  const [addTruck] = useTruck();
+  const [addTruck, setTrucks, trucks] = useTruck();
+  useEffect(() => {
+    setTrucks(trucks);
+  }, []);
 
   return (
     <>
