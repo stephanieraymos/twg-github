@@ -1,10 +1,11 @@
 # The Wholesale Group Project
 
 ## Table of contents
-=================
+
 - [Project Vision](#project-vision)
 - [Non-Functional Requirement](#NF-requirement)
 - [Software Architecture](#software-architecture)
+- [Programming Languages](#prog-languages)
 - [Functional Requirements](#F-requirements)
 - [Components](#components)
 
@@ -23,7 +24,7 @@ ________________________________________________________________________________
 # 2. Non-functional requirement
 - ## Appearance & Design
  
-There will be two views depending on the role. The home page, contact page, and orders page will include images as well as the content. The login, register, and dashboard page will be minimal as far as content and images go. The ideal color scheme will be greyish black with white or off-white text. The order process needs to be simple for customers and salespeople to generate and modify orders. 
+There will be 3 views depending on the role. The home page, contact page, and orders page will include images as well as the content. The login, register, and dashboard page will be minimal as far as content and images go. The ideal color scheme will be greyish black with white or off-white text. The order process needs to be simple for customers and salespeople to generate and modify orders. 
 
 Upon registration, the customer should go through an approval process on the admin side before placing orders. This will ensure that the customers are properly vetted before being able to place orders.  Sales should have the ability to create customers and place orders on their behalf.
 
@@ -31,17 +32,17 @@ Upon registration, the customer should go through an approval process on the adm
 
 There will be 3 roles in the system.
 
-* Administrator
-* Sales
-* Customer
+* Super Admin
+* Admin
+* User
 
  
 
-Administrators will be able to add or remove customers and sales agents, the ability to create customers, generate orders on their behalf, and view customer account information. 
+Super Admins will be able to add or remove users, generate orders and view all user account information. 
 
-Sales will have the ability to create customers, generate orders on their behalf, and view customer account information. 
+Admins will have the ability to add users, generate orders and view customer account information. 
 
-The Customer’ ability to view their own account information, generate orders, and view their open transactions in their dashboard.
+Users will be able to view their own account information, generate orders, and view their open transactions in their dashboard.
 
 ____________________________________________________________________________________________
 <a name="software-architecture"></a>
@@ -50,20 +51,22 @@ ________________________________________________________________________________
 - ## Technology Stack
 
 * ## Notion 
-Notion is a software used for bug tracking, issue tracking, and project management. 
-* ## Bitbucket 
-Bitbucket is a Git repository management solution that allows teams to manage git repositories, collaborate on your source code and guide you through the development flow. 
+Notion is an all-in-one workspace where you can write, plan, collaborate and get organized. It allows you to take notes, add tasks, manage projects & more.
+* ## Bitbucket & Github
+Bitbucket and Github are both Git repository management solutions that allow teams to manage git repositories, collaborate on your source code and manage branches to bring in changes made within the team. 
 * ## Figma
 Figma is a browser-based design application with excellent design, prototyping, and code-generation tools. It allows multiple users to collaborate at the same time to achieve the ultimate design. 
 
 * ## React
-React is an open-source, front-end JavaScript library for building user interfaces or UI components. It can be used as a base in the development of single-page or mobile applications.
+React is an open-source, front-end JavaScript library for building user interfaces or UI components. It can be used as a base in the development of single-page or mobile applications. It allows you to organize your code into small and isolated pieces of code called “components” that can be used throughout the application.
 
 * ## Django
 Django is a high-level Python web framework that enables the rapid development of secure and maintainable websites.
 
 * ## Heroku
 Heroku is a container-based cloud Platform as a Service (PaaS) that developers can use to deploy, manage, and scale modern apps.
+____________________________________________________________________________________________
+<a name="prog-languages"></a>
 
 # 4. Programming Languages
 - ## Python
