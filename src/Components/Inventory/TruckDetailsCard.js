@@ -370,8 +370,8 @@ const TruckDetailsCard = ({
                       status === 0
                         ? "sold"
                         : status === 1
-                        ? "available"
-                        : "pending"
+                        ? "pending"
+                        : "available"
                     }`}
                   </span>
                 </p>

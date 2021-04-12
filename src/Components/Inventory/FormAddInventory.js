@@ -254,8 +254,8 @@ const FormAddInventory = ({
           <Col>
             <Form.Label className="form-label">Status</Form.Label>
             <Form.Control as="select" required name="status" custom>
-              <option value="1">Available</option>
-              <option value="2">Pending</option>
+              <option value="2">Available</option>
+              <option value="1">Pending</option>
               <option value="0">Unavailable</option>
             </Form.Control>
             <Form.Control.Feedback type="invalid">

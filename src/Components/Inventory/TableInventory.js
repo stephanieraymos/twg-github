@@ -25,6 +25,13 @@ const TableInventory = () => {
       });
   }, []);
 
+  function dynamicSort(property) {
+    return function (a,b) {
+    return b[property] - a[property];
+    }
+    }
+trucks.sort(dynamicSort("status"));
+
 
   return (
     <>
@@ -32,7 +39,7 @@ const TableInventory = () => {
         <Table className="sortable" responsive>
           <thead className="header-items">
             <tr>
-              <th id="id" >ID</th>
+              <th id="id">ID</th>
               <th id="program">PROGRAM</th>
               <th> CATEGORY</th>
               <th>UNITS</th>
@@ -40,7 +47,9 @@ const TableInventory = () => {
               <th>FOB</th>
               <th>RETAIL</th>
               <th>PRICE</th>
-              <th width={"5px"}>STATUS</th>
+              <th width={"5px"} className="sort">
+                STATUS
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -64,8 +73,8 @@ const TableInventory = () => {
                     status === 0
                       ? "status-row-red"
                       : status === 1
-                      ? "status-row-green"
-                      : "status-row-yellow"
+                      ? "status-row-yellow"
+                      : "status-row-green"
                   }`}
                   key={id}
                 >
@@ -81,12 +90,12 @@ const TableInventory = () => {
                   <td>{fob}</td>
                   <td>${retailPrice}</td>
                   <td>${price}</td>
-                  <td style={{fontSize:"10px", textAlign:"center"}}>{`${
+                  <td style={{ fontSize: "10px", textAlign: "center" }}>{`${
                     status === 0
                       ? "sold"
                       : status === 1
-                      ? "available"
-                      : "pending"
+                      ? "pending"
+                      : "available"
                   }`}</td>
                   {/* <td><td className={`${
                     status === 0
@@ -95,8 +104,6 @@ const TableInventory = () => {
                       ? "a-circle"
                       : "p-circle"
                   }`}>{status}</td></td> */}
-
-
                 </tr>
               );
             })}

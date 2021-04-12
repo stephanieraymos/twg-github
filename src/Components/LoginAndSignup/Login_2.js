@@ -133,8 +133,8 @@ const LoginModal = () => {
                       status === 0
                         ? "sold"
                         : status === 1
-                        ? "available"
-                        : "pending"
+                        ? "pending"
+                        : "available"
                     }`}</td>
                     {/* <td><td className={`${
                     status === 0
