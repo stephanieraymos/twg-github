@@ -20,13 +20,7 @@ import { TruckProvider } from "../../truckContext";
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
-  const addNewTrucks = (truck, user) => {
-    addTruck(truck);
-  };
-  const [addTruck, setTrucks, trucks] = useTruck();
-  useEffect(() => {
-    setTrucks(trucks);
-  }, []);
+  const [trucks, addTruck] = useTruck();
 
   let { path } = useRouteMatch();
 
@@ -38,9 +32,9 @@ const InventoryAllTrucks = () => {
               <Navigation />
             </div>
             <Container fluid>
-              <AddInventory addNewTrucks={addNewTrucks} />
+              <AddInventory addNewTrucks={addTruck} />
             </Container>
-            <TableInventory />
+            <TableInventory trucks={trucks} />
           </>
         </PrivateRoute>
         <TruckProvider>

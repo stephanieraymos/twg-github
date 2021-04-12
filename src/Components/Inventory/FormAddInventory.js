@@ -1,34 +1,18 @@
 import React, { useRef, useState, useEffect, useReducer } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useAuthContext } from "../../auth";
-import { useHistory } from "react-router-dom";
 import { inventoryURL } from "../../Pages/urls";
-
-import { inventoryPATH } from "../../Pages/paths";
 
 const FormAddInventory = ({
   manifestsCount,
   setManifestsCount,
   closeModal,
   userId,
+  addNewTrucks
 }) => {
-  const reducer = (state, action) => {
-    return state.concat(action.value);
-  };
   
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
-  const [trucks, dispatch] = useReducer(reducer, []);
-
-
-  const addTruck = (truck) => {
-    dispatch({ value: truck });
-  };
-  const addNewTrucks = (truck, user) => {
-    addTruck(truck);
-  };
-
-  let history = useHistory();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;

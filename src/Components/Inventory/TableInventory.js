@@ -10,9 +10,8 @@ import {
   useHistory
 } from "react-router-dom";
 
-const TableInventory = () => {
+const TableInventory = ({ trucks }) => {
   let history = useHistory();
-  const [trucks] = useTruck();
 
   let { url } = useRouteMatch();
 
