@@ -48,6 +48,7 @@ const UpdateTruckDetails = () => {
     sales: [sales, setSales],
     accounting: [accounting, setAccounting],
     logistics: [logistics, setLogistics],
+    lane: [lane, setLane],
   } = useTruckContext();
 
   const { accessToken } = useAuthContext();
@@ -125,6 +126,7 @@ const UpdateTruckDetails = () => {
             sales,
             accounting,
             logistics,
+            lane
           } = data[0];
 
           setIsEmpty(false);
@@ -145,6 +147,9 @@ const UpdateTruckDetails = () => {
           setSales(sales);
           setAccounting(accounting);
           setLogistics(logistics);
+          setLane(lane);
+        } else {
+          throw new Error("Truck does not exist.");
         }
         setLoading(false);
       })
@@ -224,6 +229,7 @@ const UpdateTruckDetails = () => {
           redirect={redirect}
           status={status}
           owner={owner}
+          lane={lane}
         />
       </div>
     </>

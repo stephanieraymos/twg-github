@@ -38,6 +38,13 @@ const LoginModal = () => {
     openModal();
   }, []);
 
+  function dynamicSort(property) {
+    return function (a, b) {
+      return b[property] - a[property];
+    };
+  }
+  trucks.sort(dynamicSort("status"));
+
   return (
     <>
       <Signup2 />
@@ -101,8 +108,8 @@ const LoginModal = () => {
                       status === 0
                         ? "status-row-red"
                         : status === 1
-                        ? "status-row-green"
-                        : "status-row-yellow"
+                        ? "status-row-yellow"
+                        : "status-row-green"
                     }`}
                     key={id}
                   >
@@ -118,8 +125,8 @@ const LoginModal = () => {
                       status === 0
                         ? "sold"
                         : status === 1
-                        ? "available"
-                        : "pending"
+                        ? "pending"
+                        : "available"
                     }`}</td>
                     {/* <td><td className={`${
                     status === 0

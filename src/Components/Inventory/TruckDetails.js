@@ -34,6 +34,7 @@ const TruckDetails = () => {
     sales: [sales, setSales],
     accounting: [accounting, setAccounting],
     logistics: [logistics, setLogistics],
+    lane: [lane, setLane],
   } = useTruckContext();
 
   const { accessToken } = useAuthContext();
@@ -93,6 +94,7 @@ const TruckDetails = () => {
             cost,
             commission,
             retailPrice,
+            lane,
             category,
             fob,
             units,
@@ -124,6 +126,7 @@ const TruckDetails = () => {
           setSales(sales);
           setAccounting(accounting);
           setLogistics(logistics);
+          setLane(lane)
         }
       })
       .catch((error) => {
@@ -187,6 +190,7 @@ const TruckDetails = () => {
         retailPrice={retailPrice}
         category={category}
         units={units}
+        lane={lane}
         palletCount={palletCount}
         fob={fob}
         contents={contents}

@@ -23,7 +23,10 @@ const InventoryAllTrucks = () => {
   const addNewTrucks = (truck, user) => {
     addTruck(truck);
   };
-  const [addTruck] = useTruck();
+  const [addTruck, setTrucks, trucks] = useTruck();
+  useEffect(() => {
+    setTrucks(trucks);
+  }, []);
 
   let { path } = useRouteMatch();
 

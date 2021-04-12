@@ -36,6 +36,7 @@ const TruckProvider = ({ children }) => {
   const [sales, setSales] = useState("");
   const [accounting, setAccounting] = useState("");
   const [logistics, setLogistics] = useState("");
+  const [lane, setLane] = useState("");
 
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -107,6 +108,7 @@ const TruckProvider = ({ children }) => {
         sales: [sales, setSales],
         accounting: [accounting, setAccounting],
         logistics: [logistics, setLogistics],
+        lane: [lane, setLane],
 
         // clearList,
         // showAlert,

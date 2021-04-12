@@ -196,7 +196,7 @@ const TruckDetailsCard = ({
                 <p className="data-wrapper">
                   <span className="truck-data-title">Price: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {price}
+                    ${price}
                   </span>
                 </p>
               </Card.Header>
@@ -213,28 +213,12 @@ const TruckDetailsCard = ({
                 <p className="data-wrapper">
                   <span className="truck-data-title">Cost: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {cost}
+                    ${cost}
                   </span>
                 </p>
               </Card.Header>
             </Card>
-            {/* //^ COMMISSION CARD */}
-            <Card style={{ border: "none" }}>
-              <Card.Header
-                style={{
-                  padding: 0,
-                  borderBottom: "none",
-                  borderRadius: ".4rem",
-                }}
-              >
-                <p className="data-wrapper">
-                  <span className="truck-data-title">Commission: </span>
-                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {commission}%
-                  </span>
-                </p>
-              </Card.Header>
-            </Card>
+           
             {/* //^ TRUCK RETAIL PRICE CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
@@ -247,7 +231,24 @@ const TruckDetailsCard = ({
                 <p className="data-wrapper">
                   <span className="truck-data-title">Retail Price: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {retailPrice}
+                    ${retailPrice}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+             {/* //^ COMMISSION CARD */}
+             <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Commission: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {commission}%
                   </span>
                 </p>
               </Card.Header>
@@ -370,8 +371,8 @@ const TruckDetailsCard = ({
                       status === 0
                         ? "sold"
                         : status === 1
-                        ? "available"
-                        : "pending"
+                        ? "pending"
+                        : "available"
                     }`}
                   </span>
                 </p>
