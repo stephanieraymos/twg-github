@@ -200,15 +200,18 @@ const UpdateTruckForm = ({
             <Form.Control
               as="select"
               required
+              
               name="status"
               custom
               placeholder={status}
               // onChange={() => setStatus(option)}
               onChange={(e) => {
-                setStatus(e.target.value);
+                setStatus(e.target.value)
               }}
+              value={status}
+
             >
-              <option value="" disabled selected hidden>
+              <option value="" disabled hidden>
                 {status === 0
                   ? "Unavailable"
                   : status === 1
