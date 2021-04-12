@@ -26,12 +26,11 @@ const TableInventory = () => {
   }, []);
 
   function dynamicSort(property) {
-    return function (a,b) {
-    return b[property] - a[property];
-    }
-    }
-trucks.sort(dynamicSort("status"));
-
+    return function (a, b) {
+      return b[property] - a[property];
+    };
+  }
+  trucks.sort(dynamicSort("status"));
 
   return (
     <>
