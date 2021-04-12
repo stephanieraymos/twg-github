@@ -1,4 +1,4 @@
-var stIsIE = /*@cc_on!@*/ false;
+const stIsIE = /*@cc_on!@*/ false;
 
 sorttable = {
   init: function () {
@@ -350,28 +350,11 @@ sorttable = {
   },
 };
 
-/* ******************************************************************
-   Supporting functions: bundled here to avoid depending on a library
-   ****************************************************************** */
-
-// Dean Edwards/Matthias Miller/John Resig
 
 /* for Mozilla/Opera9 */
 if (document.addEventListener) {
   document.addEventListener("DOMContentLoaded", sorttable.init, false);
 }
-
-/* for Internet Explorer */
-/*@cc_on @*/
-/*@if (@_win32)
-    document.write("<script id=__ie_onload defer src=javascript:void(0)><\/script>");
-    var script = document.getElementById("__ie_onload");
-    script.onreadystatechange = function() {
-        if (this.readyState == "complete") {
-            sorttable.init(); // call the onload handler
-        }
-    };
-/*@end @*/
 
 /* for Safari */
 if (/WebKit/i.test(navigator.userAgent)) {
@@ -386,12 +369,7 @@ if (/WebKit/i.test(navigator.userAgent)) {
 /* for other browsers */
 window.onload = sorttable.init;
 
-// written by Dean Edwards, 2005
-// with input from Tino Zijdel, Matthias Miller, Diego Perini
-
-// http://dean.edwards.name/weblog/2005/10/add-event/
-
-function dean_addEvent(element, type, handler) {
+const dean_addEvent = (element, type, handler) => {
   if (element.addEventListener) {
     element.addEventListener(type, handler, false);
   } else {
@@ -417,7 +395,7 @@ function dean_addEvent(element, type, handler) {
 // a counter used to create unique IDs
 dean_addEvent.guid = 1;
 
-function removeEvent(element, type, handler) {
+const removeEvent = (element, type, handler) => {
   if (element.removeEventListener) {
     element.removeEventListener(type, handler, false);
   } else {
@@ -428,7 +406,7 @@ function removeEvent(element, type, handler) {
   }
 }
 
-function handleEvent(event) {
+const handleEvent = (event) => {
   var returnValue = true;
   // grab the event object (IE uses a global event object)
   event =
@@ -449,7 +427,7 @@ function handleEvent(event) {
   return returnValue;
 }
 
-function fixEvent(event) {
+const fixEvent = (event) => {
   // add W3C standard event methods
   event.preventDefault = fixEvent.preventDefault;
   event.stopPropagation = fixEvent.stopPropagation;
@@ -461,13 +439,6 @@ fixEvent.preventDefault = function () {
 fixEvent.stopPropagation = function () {
   this.cancelBubble = true;
 };
-
-// Dean's forEach: http://dean.edwards.name/base/forEach.js
-/*
-	forEach, version 1.0
-	Copyright 2006, Dean Edwards
-	License: http://www.opensource.org/licenses/mit-license.php
-*/
 
 // array-like enumeration
 if (!Array.forEach) {
