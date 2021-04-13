@@ -84,63 +84,6 @@ const FormLogin = () => {
       });
   }
 
-  //* useEffect for user post request
-  // const login = () => {
-  //   const data = new FormData(form.current);
-  //   var object = {};
-  //   data.forEach((value, key) => (object[key] = value));
-  //   // fetch(loginURL, {
-  //   //   method: "POST",
-  //   //   headers: { "Content-Type": "application/json" },
-  //   //   body: JSON.stringify(object),
-  //   // })
-  //   //   .then((response) => {
-  //   //     const res = response.json();
-  //   //     if (response.ok) {
-  //   //       console.log("Response from login is OK");
-  //   //       console.log("Res", res)
-  //   //       return res;
-  //   //     } else {
-  //   //       throw new Error(res.message);
-  //   //     }
-  //   //   })
-  //   //   .then((user) => {
-  //   //     setUserId(user["id"]);
-  //   //     setEmail(user["email"]);
-  //   //     setFirstName(user["first_name"]);
-  //   //     setLastName(user["last_name"]);
-  //   //     setCompany(user["company"]);
-  //   //     setPhoneNumber(user["phone_number"]);
-  //   //     setBillingAddress(user["billing_address"]);
-  //   //     setAccessToken(user["token"]["access"]);
-  //   //     setRefreshToken(user["token"]["refresh"]);
-  //   //     console.log("user[]", user["id"]);
-  //   //     console.log("userId inside login", userId)
-  //   //     console.log("Type of user[]", typeof(user["id"]))
-  //   //     console.log("Type of userId", typeof(userId))
-  //   //     console.log("userId", userId);
-  //   //     console.log("First Name", firstName)
-  //   //     console.log("email", email)
-  //   //   })
-  //   //   .then(() => {
-  //   //     console.log("userId", userId);
-  //   //     resetValues();
-  //   //     //history.push("/dashboard");
-
-  //   //     let { from } = { from: { pathname: "/dashboard" } };
-  //   //     history.replace(from);
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     console.log(error)
-  //   //     setIsLoginIncorrect(true);
-  //   //     setValidated(false);
-  //   //   });
-  // };
-
-  // useEffect(() => {
-  //   localStorage.setItem("userId", userId);
-  // }, [userId]);
-
   return (
     <>
       <Form

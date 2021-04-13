@@ -6,7 +6,7 @@ const UserCreation = () => {
 
   return (
     <>
-      <h1>Client Creation</h1>
+      <h1>User Creation</h1>
     </>
   );
 };

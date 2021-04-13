@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import {
@@ -11,6 +7,7 @@ import {
   logoutPATH,
   dashboardPATH,
   inventoryPATH,
+  usersPATH,
 } from "./Pages/paths";
 
 import { LoginRoute, PrivateRoute } from "./Pages/router";
@@ -19,6 +16,7 @@ import Logout from "./Components/LoginAndSignup/Logout";
 
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import UserDb from "./Components/Users/UserDb";
 
 const App = () => {
   return (
@@ -36,6 +34,9 @@ const App = () => {
           </PrivateRoute>
           <Route exact path={logoutPATH}>
             <Logout />
+          </Route>
+          <Route exact path={usersPATH}>
+            <UserDb />
           </Route>
         </Switch>
       </Router>

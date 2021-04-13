@@ -22,6 +22,12 @@ export const links = [
     text: "Inventory",
     icon: <FaTruckMoving />
   },
+  {
+    id: 4,
+    url: "/users",
+    text: "Users",
+    icon: <FaUserFriends />
+  },
   // {
   //   id: 3,
   //   url: "/Settings",
