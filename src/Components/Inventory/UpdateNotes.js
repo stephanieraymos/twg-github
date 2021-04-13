@@ -66,7 +66,7 @@ const UpdateNotes = () => {
   };
 
   const getManifest = () => {
-    setFileCount(manifestIds.length)
+    setFileCount(manifestIds.length);
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
