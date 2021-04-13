@@ -2,13 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useTruckContext } from "../../truckContext";
 
-const UpdateTruckForm = ({
-  form,
-  validated,
-  handleSubmit,
-  redirect,
-}) => {
-  
+const UpdateTruckForm = ({ form, validated, handleSubmit, redirect }) => {
   const {
     sales: [sales, setSales],
     accounting: [accounting, setAccounting],
@@ -24,7 +18,6 @@ const UpdateTruckForm = ({
         onSubmit={handleSubmit}
         className="update-truck-form"
       >
-       
         {/* //^ ----------SALES NOTES---------- */}
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Sales Notes</Form.Label>
@@ -65,7 +58,6 @@ const UpdateTruckForm = ({
           </Form.Control.Feedback>
         </Form.Group>
 
-       
         <div className="form-footer-container">
           <Button
             type="submit"
