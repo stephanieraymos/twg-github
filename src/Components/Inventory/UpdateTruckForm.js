@@ -92,11 +92,12 @@ const UpdateTruckForm = ({
           {/* //^ ---------------------- OUR COST------------------------- */}
           <Col>
             <Form.Label className="form-label">Our Cost</Form.Label>
-            <Form.Control 
-              type="text" 
-              defaultValue={cost} 
+            <Form.Control
+              type="text"
+              defaultValue={cost}
               name="cost"
-              onChange={(e) => setCost(e.target.value)} />
+              onChange={(e) => setCost(e.target.value)}
+            />
             <Form.Control.Feedback type="invalid">
               Please enter our cost.
             </Form.Control.Feedback>
@@ -104,11 +105,12 @@ const UpdateTruckForm = ({
           {/* //^ ---------------------- COMMISSION ------------------------- */}
           <Col>
             <Form.Label className="form-label">Commission %</Form.Label>
-            <Form.Control 
-              type="text" 
-              defaultValue={commission} 
+            <Form.Control
+              type="text"
+              defaultValue={commission}
               name="commission"
-              onChange={(e) => setCommission(e.target.value)} />
+              onChange={(e) => setCommission(e.target.value)}
+            />
             <Form.Control.Feedback type="invalid">
               Please enter commission rate.
             </Form.Control.Feedback>
@@ -148,11 +150,12 @@ const UpdateTruckForm = ({
         {/* //^ ----------CONTENTS---------- */}
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Contents</Form.Label>
-          <Form.Control 
-            type="text" 
-            defaultValue={contents} 
+          <Form.Control
+            type="text"
+            defaultValue={contents}
             name="contents"
-            onChange={(e) => setContents(e.target.value)} />
+            onChange={(e) => setContents(e.target.value)}
+          />
           <Form.Control.Feedback type="invalid">
             Please specify the contents inside the truck.
           </Form.Control.Feedback>
@@ -197,12 +200,13 @@ const UpdateTruckForm = ({
         <Row className="center-form-group">
           <Col>
             <Form.Label className="form-label">FOB</Form.Label>
-            <Form.Control 
-              type="text" 
-              required 
-              defaultValue={fob} 
+            <Form.Control
+              type="text"
+              required
+              defaultValue={fob}
               name="fob"
-              onChange={(e) => setFob(e.target.value)} />
+              onChange={(e) => setFob(e.target.value)}
+            />
             <Form.Control.Feedback type="invalid">
               Please add the # of pallets in the truck.
             </Form.Control.Feedback>
@@ -234,10 +238,9 @@ const UpdateTruckForm = ({
               custom
               placeholder={status}
               onChange={(e) => {
-                setStatus(e.target.value)
+                setStatus(e.target.value);
               }}
               value={status}
-
             >
               <option value="" disabled hidden>
                 {status === 0

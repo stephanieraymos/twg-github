@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useTruck } from "../../truckContext";
-import { useAuthContext } from "../../auth";
+import React from "react";
 import { Table } from "react-bootstrap";
 import { sorttable } from "sorttable";
 
-import {
-  Link,
-  useRouteMatch,
-  useHistory
-} from "react-router-dom";
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
 
 const TableInventory = ({ trucks }) => {
   let history = useHistory();
@@ -68,7 +62,7 @@ const TableInventory = ({ trucks }) => {
                   key={id}
                 >
                   <td>
-                    <Link className="table-id-link" to={`${url}/${id}`} >
+                    <Link className="table-id-link" to={`${url}/${id}`}>
                       {loadId}
                     </Link>
                   </td>
@@ -86,13 +80,6 @@ const TableInventory = ({ trucks }) => {
                       ? "pending"
                       : "available"
                   }`}</td>
-                  {/* <td><td className={`${
-                    status === 0
-                      ? "s-circle"
-                      : status === 1
-                      ? "a-circle"
-                      : "p-circle"
-                  }`}>{status}</td></td> */}
                 </tr>
               );
             })}

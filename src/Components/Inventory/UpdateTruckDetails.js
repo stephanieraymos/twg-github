@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
-import { useHistory, useParams, Link, useLocation } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, manifestURL, inventoryURL } from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
@@ -10,22 +10,8 @@ import { inventoryPATH } from "../../Pages/paths";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
-  // const [source, setSource] = useState("");
-  // const [price, setPrice] = useState("");
-  // const [retailPrice, setRetailPrice] = useState("");
-  // const [units, setUnits] = useState("");
-  // const [palletCount, setPalletCount] = useState("");
-  // const [fob, setFob] = useState("");
-  // const [category, setCategory] = useState("");
-  // const [status, setStatus] = useState(0);
-  // const [contents, setContents] = useState([]);
-  // const [manifestIds, setManifestIds] = useState([]);
-  // const [files, setFiles] = useState([]);
   const [oldManifestIds, setOldManifestIds] = useState([]);
   const [validated, setValidated] = useState(false);
-  // const [owner, setOwner] = useState("");
-  // const [cost, setCost] = useState("");
-  // const [commission, setCommission] = useState("");
 
   const {
     isEmpty: [isEmpty, setIsEmpty],
@@ -79,7 +65,7 @@ const UpdateTruckDetails = () => {
   };
 
   const getManifest = () => {
-    setFileCount(manifestIds.length)
+    setFileCount(manifestIds.length);
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
@@ -128,7 +114,7 @@ const UpdateTruckDetails = () => {
             sales,
             accounting,
             logistics,
-            lane
+            lane,
           } = data[0];
 
           setIsEmpty(false);
