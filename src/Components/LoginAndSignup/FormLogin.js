@@ -45,7 +45,9 @@ const FormLogin = () => {
     setIsLoginIncorrect(false);
   };
 
-  const openResetModal = () => {
+  const openResetModal = (e) => {
+    e.preventDefault();
+    console.log("openResetModal triggered")
     setIsResetModalOpen(true);
   };
 
@@ -162,7 +164,7 @@ const FormLogin = () => {
           </Button>
 
           <button
-            onClick={openResetModal}
+            onClick={(e) => openResetModal}
             className="forgot-password-button"
             style={{ color: "#f47c20" }}
           >
