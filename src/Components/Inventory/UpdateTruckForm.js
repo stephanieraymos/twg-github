@@ -57,65 +57,68 @@ const UpdateTruckForm = ({
             Please enter a truck name.
           </Form.Control.Feedback>
         </Form.Group>
-
-        <Row>
-          {/* //^ ---------------------- RETAIL PRICE ------------------------- */}
-          <Col>
-            <Form.Label className="form-label">Retail Price</Form.Label>
-            <Form.Control
-              type="text"
-              required
-              defaultValue={retailPrice}
-              name="retailPrice"
-              onChange={(e) => setRetailPrice(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a truck price.
-            </Form.Control.Feedback>
-          </Col>
-          {/* //^ ---------------------- OUR PRICE------------------------- */}
-          <Col>
-            <Form.Label className="form-label">Our Price</Form.Label>
-            <Form.Control
-              type="text"
-              required
-              defaultValue={price}
-              name="price"
-              onChange={(e) => setPrice(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a truck price.
-            </Form.Control.Feedback>
-          </Col>
-        </Row>
-        <Row>
-          {/* //^ ---------------------- OUR COST------------------------- */}
-          <Col>
-            <Form.Label className="form-label">Our Cost</Form.Label>
-            <Form.Control
-              type="text"
-              defaultValue={cost}
-              name="cost"
-              onChange={(e) => setCost(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter our cost.
-            </Form.Control.Feedback>
-          </Col>
-          {/* //^ ---------------------- COMMISSION ------------------------- */}
-          <Col>
-            <Form.Label className="form-label">Commission %</Form.Label>
-            <Form.Control
-              type="text"
-              defaultValue={commission}
-              name="commission"
-              onChange={(e) => setCommission(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter commission rate.
-            </Form.Control.Feedback>
-          </Col>
-        </Row>
+        <Form.Group>
+          <Row>
+            {/* //^ ---------------------- RETAIL PRICE ------------------------- */}
+            <Col>
+              <Form.Label className="form-label">Retail Price</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                defaultValue={retailPrice}
+                name="retailPrice"
+                onChange={(e) => setRetailPrice(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please enter a truck price.
+              </Form.Control.Feedback>
+            </Col>
+            {/* //^ ---------------------- OUR PRICE------------------------- */}
+            <Col>
+              <Form.Label className="form-label">Our Price</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                defaultValue={price}
+                name="price"
+                onChange={(e) => setPrice(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please enter a truck price.
+              </Form.Control.Feedback>
+            </Col>
+          </Row>
+        </Form.Group>
+        <Form.Group>
+          <Row>
+            {/* //^ ---------------------- OUR COST------------------------- */}
+            <Col>
+              <Form.Label className="form-label">Our Cost</Form.Label>
+              <Form.Control
+                type="text"
+                defaultValue={cost}
+                name="cost"
+                onChange={(e) => setCost(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please enter our cost.
+              </Form.Control.Feedback>
+            </Col>
+            {/* //^ ---------------------- COMMISSION ------------------------- */}
+            <Col>
+              <Form.Label className="form-label">Commission %</Form.Label>
+              <Form.Control
+                type="text"
+                defaultValue={commission}
+                name="commission"
+                onChange={(e) => setCommission(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please enter commission rate.
+              </Form.Control.Feedback>
+            </Col>
+          </Row>
+        </Form.Group>
 
         {/* //^ ----------CATEGORY---------- */}
         <Form.Group className="center-form-group">
@@ -165,153 +168,161 @@ const UpdateTruckForm = ({
           </Form.Text>
         </Form.Group>
 
-        <Row>
-          {/* //^ ----------UNITS---------- */}
-          <Col>
-            <Form.Label className="form-label">Units</Form.Label>
-            <Form.Control
-              type="text"
-              required
-              defaultValue={units}
-              name="units"
-              onChange={(e) => setUnits(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please add the # of units in the truck.
-            </Form.Control.Feedback>
-          </Col>
+        <Form.Group>
+          <Row>
+            {/* //^ ----------UNITS---------- */}
+            <Col>
+              <Form.Label className="form-label">Units</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                defaultValue={units}
+                name="units"
+                onChange={(e) => setUnits(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please add the # of units in the truck.
+              </Form.Control.Feedback>
+            </Col>
 
-          {/* //^ ----------PALLETS---------- */}
-          <Col>
-            <Form.Label className="form-label">Pallets</Form.Label>
-            <Form.Control
-              type="text"
-              required
-              defaultValue={palletCount}
-              name="palletCount"
-              onChange={(e) => setPalletCount(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please add the # of pallets in the truck.
-            </Form.Control.Feedback>
-          </Col>
-        </Row>
-        {/* //^ ----------FOB---------- */}
-        <Row className="center-form-group">
-          <Col>
-            <Form.Label className="form-label">FOB</Form.Label>
-            <Form.Control
-              type="text"
-              required
-              defaultValue={fob}
-              name="fob"
-              onChange={(e) => setFob(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please add the # of pallets in the truck.
-            </Form.Control.Feedback>
-          </Col>
-          {/* //^ ----------LANE---------- */}
-          <Col>
-            <Form.Label className="form-label">Lane</Form.Label>
-            <Form.Control
-              type="text"
-              required
-              defaultValue={lane}
-              name="lane"
-              onChange={(e) => setLane(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Which lane is this truck in?
-            </Form.Control.Feedback>
-          </Col>
-        </Row>
-        <Row>
-          {/* //^ ----------STATUS---------- */}
-          <Col>
-            <Form.Label className="form-label">Status</Form.Label>
+            {/* //^ ----------PALLETS---------- */}
+            <Col>
+              <Form.Label className="form-label">Pallets</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                defaultValue={palletCount}
+                name="palletCount"
+                onChange={(e) => setPalletCount(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please add the # of pallets in the truck.
+              </Form.Control.Feedback>
+            </Col>
+          </Row>
+        </Form.Group>
 
-            <Form.Control
-              as="select"
-              required
-              name="status"
-              custom
-              placeholder={status}
-              onChange={(e) => {
-                setStatus(e.target.value);
-              }}
-              value={status}
-            >
-              <option value="" disabled hidden>
-                {status === 0
-                  ? "Unavailable"
-                  : status === 1
-                  ? "Pending"
-                  : "Available"}
-              </option>
-              <option value="2">Available</option>
-              <option value="1">Pending</option>
-              <option value="0">Unavailable</option>
-            </Form.Control>
-          </Col>
+        <Form.Group>
+          {/* //^ ----------FOB---------- */}
+          <Row className="center-form-group">
+            <Col>
+              <Form.Label className="form-label">FOB</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                defaultValue={fob}
+                name="fob"
+                onChange={(e) => setFob(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please add the # of pallets in the truck.
+              </Form.Control.Feedback>
+            </Col>
+            {/* //^ ----------LANE---------- */}
+            <Col>
+              <Form.Label className="form-label">Lane</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                defaultValue={lane}
+                name="lane"
+                onChange={(e) => setLane(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Which lane is this truck in?
+              </Form.Control.Feedback>
+            </Col>
+          </Row>
+        </Form.Group>
 
-          {/* //^ ----------FILES---------- */}
-          <Col>
-            <Form.Label className="form-label">Manifest</Form.Label>
-            {Array(manifestsCount).fill(
-              <>
-                <Form.Control
-                  type="file"
-                  multiple
-                  required
-                  name="manifests"
-                  style={{ fontSize: "1rem", color: "black" }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please add a file.
-                </Form.Control.Feedback>
-                <Form.Text muted>
-                  Select multiple files by holding down the SHIFT key
-                </Form.Text>
-              </>
-            )}
-            {manifestsCount == 0 ? (
-              <Button
-                onClick={() => {
-                  setManifestsCount(manifestsCount + 1);
-                  setFileCount(fileCount + 1);
+        <Form.Group>
+          <Row>
+            {/* //^ ----------STATUS---------- */}
+            <Col>
+              <Form.Label className="form-label">Status</Form.Label>
+
+              <Form.Control
+                as="select"
+                required
+                name="status"
+                custom
+                placeholder={status}
+                onChange={(e) => {
+                  setStatus(e.target.value);
                 }}
-                className="form-button"
-                block
-                style={{
-                  width: "150px",
-                  backgroundColor: "#000",
-                  alignSelf: "start",
-                  margin: "0rem",
-                }}
+                value={status}
               >
-                Add Files
-              </Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  setManifestsCount(manifestsCount - 1);
-                  setFileCount(fileCount - 1);
-                }}
-                className="form-button"
-                block
-                style={{
-                  width: "150px",
-                  backgroundColor: "#000",
-                  alignSelf: "start",
-                  margin: ".75rem 0rem",
-                }}
-              >
-                Remove Files
-              </Button>
-            )}
-          </Col>
-        </Row>
+                <option value="" disabled hidden>
+                  {status === 0
+                    ? "Unavailable"
+                    : status === 1
+                    ? "Pending"
+                    : "Available"}
+                </option>
+                <option value="2">Available</option>
+                <option value="1">Pending</option>
+                <option value="0">Unavailable</option>
+              </Form.Control>
+            </Col>
+
+            {/* //^ ----------FILES---------- */}
+            <Col>
+              <Form.Label className="form-label">Manifest</Form.Label>
+              {Array(manifestsCount).fill(
+                <>
+                  <Form.Control
+                    type="file"
+                    multiple
+                    required
+                    name="manifests"
+                    style={{ fontSize: "1rem", color: "black" }}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please add a file.
+                  </Form.Control.Feedback>
+                  <Form.Text muted>
+                    Select multiple files by holding down the SHIFT key
+                  </Form.Text>
+                </>
+              )}
+              {manifestsCount == 0 ? (
+                <Button
+                  onClick={() => {
+                    setManifestsCount(manifestsCount + 1);
+                    setFileCount(fileCount + 1);
+                  }}
+                  className="form-button"
+                  block
+                  style={{
+                    width: "150px",
+                    backgroundColor: "#000",
+                    alignSelf: "start",
+                    margin: "0rem",
+                  }}
+                >
+                  Add Files
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    setManifestsCount(manifestsCount - 1);
+                    setFileCount(fileCount - 1);
+                  }}
+                  className="form-button"
+                  block
+                  style={{
+                    width: "150px",
+                    backgroundColor: "#000",
+                    alignSelf: "start",
+                    margin: ".75rem 0rem",
+                  }}
+                >
+                  Remove Files
+                </Button>
+              )}
+            </Col>
+          </Row>
+        </Form.Group>
 
         {files.map((manifest, index) => {
           const id = manifestIds[index];

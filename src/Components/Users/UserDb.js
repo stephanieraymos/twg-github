@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { userURL } from "../../Pages/urls";
+import Navigation from "../Navigation/Navigation";
 
 const UserDb = () => {
   //* Setting state values, params are default values
@@ -41,11 +42,12 @@ const UserDb = () => {
 
   return (
     <>
+      <Navigation />
       <div className="table-wrapper">
         <Table responsive>
           <thead className="header-items">
             <tr>
-              <th>FIRST NAME</th>
+              <th id="id">FIRST NAME</th>
               <th>LAST NAME</th>
               <th>EMAIL</th>
             </tr>
