@@ -16,7 +16,7 @@ const AccountDetails = () => {
 
   document.title = "Account Details";
 
-  const { accessToken } = useAuthContext();
+  const { accessToken, changePassword } = useAuthContext();
 
   const {
     email,
@@ -273,7 +273,7 @@ const AccountDetails = () => {
           <div className="form-footer-container">
             <Button
               type="submit"
-              onClick={null}
+              onClick={() => changePassword(currentPassword, newPassword, confirmNewPassword)}
               className="form-button"
               block
               style={{ width: "200px", backgroundColor: "#1f85b4", alignSelf: "start", margin: "1rem 0rem" }}
