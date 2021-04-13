@@ -12,37 +12,36 @@ import {
 export const links = [
   {
     id: 1,
-    url: "/dashboard",
+    url: "/",
     text: "Dashboard",
     icon: <FaUserCircle />
   },
   {
     id: 2,
-    url: "/trucks",
+    url: "/inventory",
     text: "Inventory",
     icon: <FaTruckMoving />
   },
+  // {
+  //   id: 3,
+  //   url: "/Settings",
+  //   text: "Settings",
+  //   icon: <FaWpforms />,
+  // },
+  // {
+  //   id: 4,
+  //   url: "/Statements",
+  //   text: "Statements",
+  //   icon: <FaFolderOpen />,
+  // },
+  // {
+  //   id: 5,
+  //   url: "/Contact",
+  //   text: "Contact",
+  //   icon: <FaUserFriends />,
+  // },
   {
     id: 3,
-    url: "/Settings",
-    text: "Settings",
-    icon: <FaWpforms />,
-  },
-  {
-    id: 4,
-    url: "/Statements",
-    text: "Statements",
-    icon: <FaFolderOpen />,
-  },
-  {
-    id: 5,
-    url: "/Contact",
-    text: "Contact",
-    icon: <FaUserFriends />,
-  },
-  ,
-  {
-    id: 6,
     url: "/logout",
     text: "Log Out",
     icon: <FaUserFriends />,

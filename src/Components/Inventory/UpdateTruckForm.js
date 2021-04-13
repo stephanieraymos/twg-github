@@ -3,31 +3,36 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import undo from "../../img/undo.svg";
 
+import { useTruckContext } from "../../truckContext";
+
 const UpdateTruckForm = ({
   form,
   validated,
   handleSubmit,
-  source,
-  price,
-  cost,
-  commission,
-  retailPrice,
-  category,
-  contents,
-  units,
-  palletCount,
-  fob,
-  lane,
-  setStatus,
-  files,
-  manifestIds,
   oldManifestIds,
   setOldManifestIds,
   redirect,
-  status,
-  owner,
 }) => {
   const [manifestsCount, setManifestsCount] = useState(0);
+
+  const {
+    source: [source, setSource],
+    retailPrice: [retailPrice, setRetailPrice],
+    price: [price, setPrice],
+    status: [status, setStatus],
+    contents: [contents, setContents],
+    category: [category, setCategory],
+    units: [units, setUnits],
+    palletCount: [palletCount, setPalletCount],
+    fob: [fob, setFob],
+    manifestIds: [manifestIds, setManifestIds],
+    files: [files, setFiles],
+    owner: [owner, setOwner],
+    cost: [cost, setCost],
+    commission: [commission, setCommission],
+    lane: [lane, setLane],
+    fileCount: [fileCount, setFileCount],
+  } = useTruckContext();
 
   return (
     <>
@@ -46,6 +51,7 @@ const UpdateTruckForm = ({
             required
             defaultValue={source}
             name="source"
+            onChange={(e) => setSource(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Please enter a truck name.
@@ -61,6 +67,7 @@ const UpdateTruckForm = ({
               required
               defaultValue={retailPrice}
               name="retailPrice"
+              onChange={(e) => setRetailPrice(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
               Please enter a truck price.
@@ -74,6 +81,7 @@ const UpdateTruckForm = ({
               required
               defaultValue={price}
               name="price"
+              onChange={(e) => setPrice(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
               Please enter a truck price.
@@ -84,7 +92,12 @@ const UpdateTruckForm = ({
           {/* //^ ---------------------- OUR COST------------------------- */}
           <Col>
             <Form.Label className="form-label">Our Cost</Form.Label>
-            <Form.Control type="text" defaultValue={cost} name="cost" />
+            <Form.Control
+              type="text"
+              defaultValue={cost}
+              name="cost"
+              onChange={(e) => setCost(e.target.value)}
+            />
             <Form.Control.Feedback type="invalid">
               Please enter our cost.
             </Form.Control.Feedback>
@@ -92,7 +105,12 @@ const UpdateTruckForm = ({
           {/* //^ ---------------------- COMMISSION ------------------------- */}
           <Col>
             <Form.Label className="form-label">Commission %</Form.Label>
-            <Form.Control type="text" defaultValue={commission} name="cost" />
+            <Form.Control
+              type="text"
+              defaultValue={commission}
+              name="commission"
+              onChange={(e) => setCommission(e.target.value)}
+            />
             <Form.Control.Feedback type="invalid">
               Please enter commission rate.
             </Form.Control.Feedback>
@@ -107,6 +125,7 @@ const UpdateTruckForm = ({
             required
             defaultValue={category}
             name="category"
+            onChange={(e) => setCategory(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Please enter a company name.
@@ -121,6 +140,7 @@ const UpdateTruckForm = ({
             required
             defaultValue={owner}
             name="owner"
+            onChange={(e) => setOwner(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Who owns this truck?
@@ -130,7 +150,12 @@ const UpdateTruckForm = ({
         {/* //^ ----------CONTENTS---------- */}
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Contents</Form.Label>
-          <Form.Control type="text" defaultValue={contents} name="contents" />
+          <Form.Control
+            type="text"
+            defaultValue={contents}
+            name="contents"
+            onChange={(e) => setContents(e.target.value)}
+          />
           <Form.Control.Feedback type="invalid">
             Please specify the contents inside the truck.
           </Form.Control.Feedback>
@@ -149,6 +174,7 @@ const UpdateTruckForm = ({
               required
               defaultValue={units}
               name="units"
+              onChange={(e) => setUnits(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
               Please add the # of units in the truck.
@@ -163,6 +189,7 @@ const UpdateTruckForm = ({
               required
               defaultValue={palletCount}
               name="palletCount"
+              onChange={(e) => setPalletCount(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
               Please add the # of pallets in the truck.
@@ -173,7 +200,13 @@ const UpdateTruckForm = ({
         <Row className="center-form-group">
           <Col>
             <Form.Label className="form-label">FOB</Form.Label>
-            <Form.Control type="text" required defaultValue={fob} name="fob" />
+            <Form.Control
+              type="text"
+              required
+              defaultValue={fob}
+              name="fob"
+              onChange={(e) => setFob(e.target.value)}
+            />
             <Form.Control.Feedback type="invalid">
               Please add the # of pallets in the truck.
             </Form.Control.Feedback>
@@ -186,6 +219,7 @@ const UpdateTruckForm = ({
               required
               defaultValue={lane}
               name="lane"
+              onChange={(e) => setLane(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
               Which lane is this truck in?
@@ -200,16 +234,13 @@ const UpdateTruckForm = ({
             <Form.Control
               as="select"
               required
-              
               name="status"
               custom
               placeholder={status}
-              // onChange={() => setStatus(option)}
               onChange={(e) => {
-                setStatus(e.target.value)
+                setStatus(e.target.value);
               }}
               value={status}
-
             >
               <option value="" disabled hidden>
                 {status === 0
@@ -246,7 +277,10 @@ const UpdateTruckForm = ({
             )}
             {manifestsCount == 0 ? (
               <Button
-                onClick={() => setManifestsCount(manifestsCount + 1)}
+                onClick={() => {
+                  setManifestsCount(manifestsCount + 1);
+                  setFileCount(fileCount + 1);
+                }}
                 className="form-button"
                 block
                 style={{
@@ -260,7 +294,10 @@ const UpdateTruckForm = ({
               </Button>
             ) : (
               <Button
-                onClick={() => setManifestsCount(manifestsCount - 1)}
+                onClick={() => {
+                  setManifestsCount(manifestsCount - 1);
+                  setFileCount(fileCount - 1);
+                }}
                 className="form-button"
                 block
                 style={{
@@ -312,6 +349,7 @@ const UpdateTruckForm = ({
                           setOldManifestIds(
                             oldManifestIds.filter((item) => item !== id)
                           );
+                          setFileCount(fileCount + 1);
                           console.log("old manifest id", oldManifestIds);
                         }}
                       />
@@ -322,6 +360,7 @@ const UpdateTruckForm = ({
                         onClick={() => {
                           console.log("id to be deleted", id);
                           setOldManifestIds([...oldManifestIds, id]);
+                          setFileCount(fileCount - 1);
                           console.log("old manifest id", oldManifestIds);
                         }}
                       />

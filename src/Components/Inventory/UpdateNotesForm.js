@@ -1,15 +1,19 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import { useTruckContext } from "../../truckContext";
 
 const UpdateTruckForm = ({
   form,
   validated,
   handleSubmit,
   redirect,
-  sales,
-  accounting,
-  logistics,
 }) => {
+  
+  const {
+    sales: [sales, setSales],
+    accounting: [accounting, setAccounting],
+    logistics: [logistics, setLogistics],
+  } = useTruckContext();
 
   return (
     <>
@@ -28,6 +32,7 @@ const UpdateTruckForm = ({
             type="text"
             defaultValue={sales}
             name="sales"
+            onChange={(e) => setSales(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Make sure your notes include no numbers.
@@ -40,6 +45,7 @@ const UpdateTruckForm = ({
             type="text"
             defaultValue={accounting}
             name="accounting"
+            onChange={(e) => setAccounting(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Make sure your notes include no numbers.
@@ -52,6 +58,7 @@ const UpdateTruckForm = ({
             type="text"
             defaultValue={logistics}
             name="logistics"
+            onChange={(e) => setLogistics(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Make sure your notes include no numbers.

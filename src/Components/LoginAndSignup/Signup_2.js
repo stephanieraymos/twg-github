@@ -7,6 +7,8 @@ import mail from "../../img/mail.svg";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
 import { registerURL } from "../../Pages/urls";
+import { useAuthContext } from "../../auth";
+
 const Signup2 = () => {
   document.title = "Sign up";
 
@@ -16,16 +18,20 @@ const Signup2 = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
   const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(
     false
   );
 
-  const { showAlert } = useTruckContext();
+  const {
+    isSignUpSuccess,
+    setIsSignUpSuccess
+  } = useGlobalContext();
+
+  const { register } = useAuthContext();
 
   const form = useRef(null);
 
-  const reset = () => {
+  const resetValues = () => {
     setPassword("");
     setConfirmPassword("");
     setTogglePasswordVisibility(false);
@@ -65,7 +71,7 @@ const Signup2 = () => {
     } else if (form.checkValidity() === true) {
       // no errors
       setValidated(true);
-      signUp(reset);
+      performSignUp();
     } else {
       // no password or confirm password errors but errors in other fields
       setValidated(true);
@@ -73,27 +79,17 @@ const Signup2 = () => {
   };
 
   //* useEffect for user post request
-  const signUp = (cleanUp = () => {}) => {
+  const performSignUp = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
-    fetch(registerURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(object),
-    })
-      .then((response) => {
-        const res = response.json();
-        if (response.ok) {
-          setIsSignUpSuccess(true);
-        } else {
-          throw new Error(res.message);
-        }
-        cleanUp();
+    register(JSON.stringify(object))
+      .then(() => {
+        setIsSignUpSuccess(true);
+        resetValues();
       })
       .catch((error) => {
-        showAlert(true, "danger", error.message);
-        cleanUp();
+        console.log("Sign Up Error:", error);
       });
   };
 

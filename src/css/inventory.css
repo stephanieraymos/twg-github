@@ -317,54 +317,44 @@ li {
 }
 .back-to-link {
   padding-left: 0.5rem;
-  color: black;
-  background: transparent;
-  border-color: transparent;
-  transition: var(--transition); /* root styles */
+  background-color: transparent !important;
+  border-color: transparent !important;
   cursor: pointer;
-  color: rgb(23, 3, 114);
-  margin-top: 0.2rem;
+  color: rgb(23, 3, 114) !important;
 }
 .delete-truck-btn {
-  background: transparent;
-  border-color: transparent;
-  transition: var(--transition); /* root styles */
+  background-color: transparent !important;
+  border-color: transparent !important;
   cursor: pointer;
-  color: rgb(114, 3, 3);
-  margin-top: 0.2rem;
-  outline: none;
+  color: rgb(114, 3, 3) !important;
 }
 .edit-truck-btn {
-  background: transparent;
-  border-color: transparent;
-  color: var(--sections); /* root styles */
-  transition: var(--transition); /* root styles */
+  background-color: transparent !important;
+  border-color: transparent !important;
   cursor: pointer;
-  color: rgb(4, 102, 37);
-  margin-top: 0.2rem;
+  color: rgb(4, 102, 37) !important;
 }
 .edit-notes-btn {
-  background: transparent;
-  border-color: transparent;
-  transition: var(--transition); /* root styles */
+  background-color: transparent !important;
+  border-color: transparent !important;
   cursor: pointer;
-  color: rgb(23, 3, 114);
-  margin-top: 0.2rem;
+  color: rgb(23, 3, 114) !important;
 }
 
 .back-to-link:hover {
-  color: rgb(119, 119, 119);
+  color: rgb(119, 119, 119) !important;
   text-decoration: none;
 }
 .delete-truck-btn:hover {
-  color: rgb(241, 129, 129);
+  color: rgb(241, 129, 129) !important;
+  text-decoration: none;
 }
 .edit-truck-btn:hover {
-  color: rgba(9, 167, 48, 0.507);
+  color: rgba(9, 167, 48, 0.507) !important;
   text-decoration: none;
 }
 .edit-notes-btn:hover {
-  color: rgb(111, 116, 187);
+  color: rgb(111, 116, 187) !important;
   text-decoration: none;
 }
 
