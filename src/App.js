@@ -9,6 +9,7 @@ import {
   inventoryPATH,
   usersPATH,
   accountPATH,
+  emailVerificationPATH,
 } from "./Pages/paths";
 
 import { LoginRoute, PrivateRoute } from "./Pages/router";
@@ -19,6 +20,7 @@ import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import UserDb from "./Components/Users/UserDb";
 import AccountDetails from "./Components/AccountDetails";
+import EmailVerification from "./Components/LoginAndSignup/EmailVerification";
 
 const App = () => {
   return (
@@ -39,6 +41,9 @@ const App = () => {
           </PrivateRoute>
           <Route exact path={logoutPATH}>
             <Logout />
+          </Route>
+          <Route exact path={`${emailVerificationPATH}:id/:token/`}>
+            <EmailVerification />
           </Route>
           {/* <Route exact path={usersPATH}>
             <UserDb />
