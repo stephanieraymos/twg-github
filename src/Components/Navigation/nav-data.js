@@ -23,11 +23,17 @@ export const links = [
     icon: <FaTruckMoving />
   },
   {
-    id: 4,
-    url: "/users",
-    text: "Users",
+    id: 3,
+    url: "/account",
+    text: "Account",
     icon: <FaUserFriends />
   },
+  // {
+  //   id: 3,
+  //   url: "/users",
+  //   text: "Users",
+  //   icon: <FaUserFriends />
+  // },
   // {
   //   id: 3,
   //   url: "/Settings",
@@ -47,7 +53,7 @@ export const links = [
   //   icon: <FaUserFriends />,
   // },
   {
-    id: 3,
+    id: 4,
     url: "/logout",
     text: "Log Out",
     icon: <FaUserFriends />,

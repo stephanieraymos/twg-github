@@ -8,6 +8,7 @@ import {
   dashboardPATH,
   inventoryPATH,
   usersPATH,
+  accountPATH,
 } from "./Pages/paths";
 
 import { LoginRoute, PrivateRoute } from "./Pages/router";
@@ -17,6 +18,7 @@ import Logout from "./Components/LoginAndSignup/Logout";
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import UserDb from "./Components/Users/UserDb";
+import AccountDetails from "./Components/AccountDetails";
 
 const App = () => {
   return (
@@ -32,12 +34,15 @@ const App = () => {
           <PrivateRoute path={inventoryPATH}>
             <InventoryAllTrucks />
           </PrivateRoute>
+          <PrivateRoute path={accountPATH}>
+            <AccountDetails />
+          </PrivateRoute>
           <Route exact path={logoutPATH}>
             <Logout />
           </Route>
-          <Route exact path={usersPATH}>
+          {/* <Route exact path={usersPATH}>
             <UserDb />
-          </Route>
+          </Route> */}
         </Switch>
       </Router>
     </>
