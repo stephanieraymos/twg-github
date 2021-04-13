@@ -45,7 +45,7 @@ const UserDb = () => {
         <Table responsive>
           <thead className="header-items">
             <tr>
-              <th>FIRST NAME</th>
+              <th id="id">FIRST NAME</th>
               <th>LAST NAME</th>
               <th>EMAIL</th>
             </tr>
