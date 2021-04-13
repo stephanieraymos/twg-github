@@ -1,42 +1,69 @@
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
-import { useHistory, useParams, Link } from "react-router-dom";
+import { useHistory, useParams, Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, manifestURL, inventoryURL } from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
+import { useTruckContext } from "../../truckContext";
+
+import { inventoryPATH } from "../../Pages/paths";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();
-  const [source, setSource] = useState("");
-  const [price, setPrice] = useState("");
-  const [retailPrice, setRetailPrice] = useState("");
-  const [units, setUnits] = useState("");
-  const [palletCount, setPalletCount] = useState("");
-  const [fob, setFob] = useState("");
-  const [category, setCategory] = useState("");
-  const [status, setStatus] = useState(0);
-  const [contents, setContents] = useState([]);
-  const [manifestIds, setManifestIds] = useState([]);
-  const [files, setFiles] = useState([]);
+  // const [source, setSource] = useState("");
+  // const [price, setPrice] = useState("");
+  // const [retailPrice, setRetailPrice] = useState("");
+  // const [units, setUnits] = useState("");
+  // const [palletCount, setPalletCount] = useState("");
+  // const [fob, setFob] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [status, setStatus] = useState(0);
+  // const [contents, setContents] = useState([]);
+  // const [manifestIds, setManifestIds] = useState([]);
+  // const [files, setFiles] = useState([]);
   const [oldManifestIds, setOldManifestIds] = useState([]);
   const [validated, setValidated] = useState(false);
-  const [owner, setOwner] = useState("");
-  const [cost, setCost] = useState("");
-  const [commission, setCommission] = useState("");
-  const [lane, setLane] = useState("");
+  // const [owner, setOwner] = useState("");
+  // const [cost, setCost] = useState("");
+  // const [commission, setCommission] = useState("");
 
-  const { fetchAccessToken } = useAuthContext();
+  const {
+    isEmpty: [isEmpty, setIsEmpty],
+    loadId: [loadId, setLoadId],
+    source: [source, setSource],
+    retailPrice: [retailPrice, setRetailPrice],
+    price: [price, setPrice],
+    status: [status, setStatus],
+    contents: [contents, setContents],
+    category: [category, setCategory],
+    units: [units, setUnits],
+    palletCount: [palletCount, setPalletCount],
+    fob: [fob, setFob],
+    manifestIds: [manifestIds, setManifestIds],
+    files: [files, setFiles],
+    owner: [owner, setOwner],
+    cost: [cost, setCost],
+    commission: [commission, setCommission],
+    sales: [sales, setSales],
+    accounting: [accounting, setAccounting],
+    logistics: [logistics, setLogistics],
+    lane: [lane, setLane],
+    fileCount: [fileCount, setFileCount],
+  } = useTruckContext();
 
-  const [accessToken, setAccessToken] = useState("");
+  const { accessToken } = useAuthContext();
 
   let history = useHistory();
+  let location = useLocation();
+
+  let { from } = location.state || { from: { pathname: "/" } };
 
   document.title = "Add Inventory";
 
   const form = useRef(null);
 
   const redirect = () => {
-    history.push(`/TruckDetails/${id}`);
+    history.replace(from);
   };
 
   const handleSubmit = (event) => {
@@ -46,20 +73,20 @@ const UpdateTruckDetails = () => {
     if (form.checkValidity() === true) {
       setValidated(false);
       updateTruck();
-      redirect();
     } else {
       setValidated(true);
     }
   };
 
   const getManifest = () => {
+    setFileCount(manifestIds.length)
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken()}`,
         },
         body: data,
       })
@@ -68,6 +95,8 @@ const UpdateTruckDetails = () => {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      setFiles([]);
     }
   };
 
@@ -78,41 +107,48 @@ const UpdateTruckDetails = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data) {
           const {
+            loadId,
             source,
             price,
             cost,
             commission,
             retailPrice,
-            contents,
-            manifestIds,
             category,
+            fob,
             units,
             palletCount,
-            fob,
+            contents,
+            manifestIds,
             status,
             owner,
+            sales,
+            accounting,
+            logistics,
             lane
           } = data[0];
 
+          setIsEmpty(false);
+          setLoadId(loadId);
           setSource(source);
           setPrice(price);
           setCost(cost);
-          setCommission(commission)
+          setCommission(commission);
           setRetailPrice(retailPrice);
+          setContents(contents.join(","));
+          setManifestIds(manifestIds);
           setCategory(category);
           setUnits(units);
           setPalletCount(palletCount);
-          setContents(contents);
-          setManifestIds(manifestIds);
-          setStatus(status);
           setFob(fob);
+          setStatus(status);
           setOwner(owner);
+          setSales(sales);
+          setAccounting(accounting);
+          setLogistics(logistics);
           setLane(lane);
         } else {
           throw new Error("Truck does not exist.");
@@ -124,16 +160,9 @@ const UpdateTruckDetails = () => {
   };
 
   useEffect(() => {
-    // send user back to login if they're not logged in
-    fetchAccessToken
-      .then((token) => {
-        setAccessToken(token);
-        getTruck();
-      })
-      .catch((error) => {
-        console.log(error);
-        history.push("/");
-      });
+    if (isEmpty) {
+      getTruck();
+    }
   }, []);
 
   useEffect(() => {
@@ -147,23 +176,23 @@ const UpdateTruckDetails = () => {
     data.set("status", status);
 
     // turn string to array and insert to truck contents
-    const tempcontents = data.get("contents").split(",");
+    const tempContents = data.get("contents").split(",");
     data.delete("contents");
-    tempcontents.map((item) => data.append("contents", item));
+    tempContents.map((item) => data.append("contents", item));
 
     oldManifestIds.map((id) => data.append("manifestIds", id));
     fetch(inventoryURL, {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + accessToken(),
       },
       body: data,
     })
       .then((response) => {
         console.log(response);
         if (response.ok) {
-          return true;
-        } else return false;
+          redirect();
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -182,25 +211,9 @@ const UpdateTruckDetails = () => {
           form={form}
           validated={validated}
           handleSubmit={handleSubmit}
-          source={source}
-          price={price}
-          cost={cost}
-          commission={commission}
-          retailPrice={retailPrice}
-          category={category}
-          contents={contents}
-          units={units}
-          palletCount={palletCount}
-          fob={fob}
-          setStatus={setStatus}
-          files={files}
-          manifestIds={manifestIds}
           oldManifestIds={oldManifestIds}
           setOldManifestIds={setOldManifestIds}
           redirect={redirect}
-          status={status}
-          owner={owner}
-          lane={lane}
         />
       </div>
     </>

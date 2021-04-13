@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Button, Form, InputGroup, Image } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
 import { useGlobalContext } from "../../context";
 import { useAuthContext } from "../../auth";
 import { loginURL } from "../../Pages/urls";
+import { dashboardPATH } from "../../Pages/paths";
 
 const FormLogin = () => {
   const form = useRef(null);
@@ -15,22 +16,24 @@ const FormLogin = () => {
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
-  const [userId, setUserId] = useState("");
 
-  const { setAccessToken, setRefreshToken } = useAuthContext();
+  const { login } = useAuthContext();
 
   const {
     email,
     setEmail,
+    firstName,
     setFirstName,
     setLastName,
     setCompany,
     setPhoneNumber,
     setBillingAddress,
+    setIsSignUpSuccess,
     openModal,
   } = useGlobalContext();
 
   let history = useHistory();
+  let location = useLocation();
 
   const resetValues = () => {
     setPassword("");
@@ -48,60 +51,95 @@ const FormLogin = () => {
 
     if (form.checkValidity() === true) {
       // no errors
-      login();
+      performLogin();
     }
   };
 
-  //* useEffect for user post request
-  const login = () => {
+  const performLogin = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
-    fetch(loginURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(object),
-    })
-      .then((response) => {
-        const res = response.json();
-        if (response.ok) {
-          console.log("Response is OK");
-          return res;
+    login(JSON.stringify(object))
+      .then((user) => {
+        resetValues();
+        if (typeof user === 'string') {
+          // user needs to verify email
+          openModal();
+          setIsSignUpSuccess(true);
         } else {
-          throw new Error(res.message);
+          setEmail(user["email"]);
+          setFirstName(user["first_name"]);
+          setLastName(user["last_name"]);
+          setCompany(user["company"]);
+          setPhoneNumber(user["phone_number"]);
+          setBillingAddress(user["billing_address"]);
+          let { from } = location.state || { from: { pathname: "/" } };
+          history.replace(from);
         }
       })
-      .then((user) => {
-        setUserId(user["id"]);
-        console.log("user[]", user["id"]);
-        // console.log("Type of user[]", typeof(user["id"]))
-        // console.log("Type of userId", typeof(userId))
-        console.log("userId", userId);
-        setEmail(user["email"]);
-        setFirstName(user["first_name"]);
-        setLastName(user["last_name"]);
-        setCompany(user["company"]);
-        setPhoneNumber(user["phone_number"]);
-        setBillingAddress(user["billing_address"]);
-        setAccessToken(user["token"]["access"]);
-        setRefreshToken(user["token"]["refresh"]);
-      })
-      .then(() => {
-        resetValues();
-        history.push("/dashboard");
-      })
       .catch((error) => {
+        console.log(error)
         setIsLoginIncorrect(true);
         setValidated(false);
       });
-  };
-  useEffect(() => {
-    login();
-  }, [userId]);
+  }
 
-  useEffect(() => {
-    localStorage.setItem("userId", userId);
-  }, [userId]);
+  //* useEffect for user post request
+  // const login = () => {
+  //   const data = new FormData(form.current);
+  //   var object = {};
+  //   data.forEach((value, key) => (object[key] = value));
+  //   // fetch(loginURL, {
+  //   //   method: "POST",
+  //   //   headers: { "Content-Type": "application/json" },
+  //   //   body: JSON.stringify(object),
+  //   // })
+  //   //   .then((response) => {
+  //   //     const res = response.json();
+  //   //     if (response.ok) {
+  //   //       console.log("Response from login is OK");
+  //   //       console.log("Res", res)
+  //   //       return res;
+  //   //     } else {
+  //   //       throw new Error(res.message);
+  //   //     }
+  //   //   })
+  //   //   .then((user) => {
+  //   //     setUserId(user["id"]);
+  //   //     setEmail(user["email"]);
+  //   //     setFirstName(user["first_name"]);
+  //   //     setLastName(user["last_name"]);
+  //   //     setCompany(user["company"]);
+  //   //     setPhoneNumber(user["phone_number"]);
+  //   //     setBillingAddress(user["billing_address"]);
+  //   //     setAccessToken(user["token"]["access"]);
+  //   //     setRefreshToken(user["token"]["refresh"]);
+  //   //     console.log("user[]", user["id"]);
+  //   //     console.log("userId inside login", userId)
+  //   //     console.log("Type of user[]", typeof(user["id"]))
+  //   //     console.log("Type of userId", typeof(userId))
+  //   //     console.log("userId", userId);
+  //   //     console.log("First Name", firstName)
+  //   //     console.log("email", email)
+  //   //   })
+  //   //   .then(() => {
+  //   //     console.log("userId", userId);
+  //   //     resetValues();
+  //   //     //history.push("/dashboard");
+
+  //   //     let { from } = { from: { pathname: "/dashboard" } };
+  //   //     history.replace(from);
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.log(error)
+  //   //     setIsLoginIncorrect(true);
+  //   //     setValidated(false);
+  //   //   });
+  // };
+
+  // useEffect(() => {
+  //   localStorage.setItem("userId", userId);
+  // }, [userId]);
 
   return (
     <>
@@ -173,13 +211,13 @@ const FormLogin = () => {
             Login
           </Button>
 
-          <Link
+          {/* <Link
             to={`/Login`}
             className="form-label"
             style={{ color: "#f47c20" }}
           >
             Forgot Password?
-          </Link>
+          </Link> */}
 
           <hr
             style={{

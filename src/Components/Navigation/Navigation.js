@@ -3,6 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { links, social, logoLink } from "./nav-data";
 import logo from "../../img/logo-blue.svg";
 import nav from "../../css/nav.css";
+import { useHistory, Link } from "react-router-dom";
 
 const Navigation = () => {
   const [showLinks, setShowLinks] = useState(false);
@@ -49,7 +50,7 @@ const Navigation = () => {
               const { id, url, text } = link;
               return (
                 <li key={id}>
-                  <a href={url}>{text}</a>
+                  <Link to={url}>{text}</Link>
                 </li>
               );
             })}

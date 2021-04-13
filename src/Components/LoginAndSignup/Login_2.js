@@ -5,28 +5,16 @@ import modalandsidebar from "../../css/modalandsidebar.css";
 import logo from "../../img/w-logo.png";
 import cancel from "../../img/cancel.svg";
 import Signup2 from "./Signup_2";
-import { useAuthContext } from "../../auth";
 import { useTruck } from "../../truckContext";
-import { useHistory } from "react-router-dom";
 import { Modal, Table } from "react-bootstrap";
 
 const LoginModal = () => {
   const [width, setWidth] = useState(window.innerWidth);
-  const { fetchAccessToken } = useAuthContext();
   const [trucks] = useTruck();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
 
-  let history = useHistory();
   useEffect(() => {
-    fetchAccessToken
-      .then((token) => {
-        history.push("/dashboard");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     // clean up code
@@ -38,8 +26,6 @@ const LoginModal = () => {
   };
   const openAlertModal = () => {
     setIsAlertModalOpen(true);
-    console.log("It's working");
-    console.log(isAlertModalOpen);
   };
   const closeModal = () => {
     setIsModalOpen(true);
@@ -116,7 +102,6 @@ const LoginModal = () => {
                   retailPrice,
                   status,
                 } = truck;
-                console.log(trucks);
                 return (
                   <tr
                     className={`${

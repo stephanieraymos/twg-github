@@ -1,29 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
 import { useTruck } from "../../truckContext";
 import { useAuthContext } from "../../auth";
 import { Table } from "react-bootstrap";
 import { sorttable } from "sorttable";
 
-const TableInventory = () => {
+import {
+  Link,
+  useRouteMatch,
+  useHistory
+} from "react-router-dom";
+
+const TableInventory = ({ trucks }) => {
   let history = useHistory();
-  const [trucks] = useTruck();
 
-  const { fetchAccessToken } = useAuthContext();
-
-  const [accessToken, setAccessToken] = useState("");
-
-  useEffect(() => {
-    // send user back to login if they're not logged in
-    fetchAccessToken
-      .then((token) => {
-        setAccessToken(token);
-      })
-      .catch((error) => {
-        console.log(error);
-        history.push("/");
-      });
-  }, []);
+  let { url } = useRouteMatch();
 
   function dynamicSort(property) {
     return function (a, b) {
@@ -31,8 +21,6 @@ const TableInventory = () => {
     };
   }
   trucks.sort(dynamicSort("status"));
-
-
 
   return (
     <>
@@ -80,7 +68,7 @@ const TableInventory = () => {
                   key={id}
                 >
                   <td>
-                    <Link className="table-id-link" to={`/TruckDetails/${id}`}>
+                    <Link className="table-id-link" to={`${url}/${id}`} >
                       {loadId}
                     </Link>
                   </td>

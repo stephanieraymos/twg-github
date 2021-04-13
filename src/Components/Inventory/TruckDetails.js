@@ -1,52 +1,60 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link, useHistory, useRouteMatch, useLocation } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, inventoryURL, manifestURL } from "../../Pages/urls";
 import TruckDetailsCard from "./TruckDetailsCard";
 import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
+import { useTruckContext } from "../../truckContext";
+import { Button } from "react-bootstrap";
+
+import { inventoryPATH } from "../../Pages/paths";
 
 const TruckDetails = () => {
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
-  const [loadId, setLoadId] = useState("");
-  const [source, setSource] = useState("");
-  const [retailPrice, setRetailPrice] = useState("");
-  const [price, setPrice] = useState("");
-  const [status, setStatus] = useState(1);
-  const [contents, setContents] = useState("");
-  const [category, setCategory] = useState("");
-  const [units, setUnits] = useState("");
-  const [palletCount, setPalletCount] = useState("");
-  const [fob, setFob] = useState("");
-  const [manifestIds, setManifestIds] = useState([]);
-  const [files, setFiles] = useState([]);
-  const [owner, setOwner] = useState("");
-  const [cost, setCost] = useState("");
-  const [commission, setCommission] = useState("");
-  const [sales, setSales] = useState("");
-  const [accounting, setAccounting] = useState("");
-  const [logistics, setLogistics] = useState("");
-  const [lane, setLane] = useState("");
 
-  const { fetchAccessToken } = useAuthContext();
+  const {
+    isEmpty: [isEmpty, setIsEmpty],
+    loadId: [loadId, setLoadId],
+    source: [source, setSource],
+    retailPrice: [retailPrice, setRetailPrice],
+    price: [price, setPrice],
+    status: [status, setStatus],
+    contents: [contents, setContents],
+    category: [category, setCategory],
+    units: [units, setUnits],
+    palletCount: [palletCount, setPalletCount],
+    fob: [fob, setFob],
+    manifestIds: [manifestIds, setManifestIds],
+    files: [files, setFiles],
+    owner: [owner, setOwner],
+    cost: [cost, setCost],
+    commission: [commission, setCommission],
+    sales: [sales, setSales],
+    accounting: [accounting, setAccounting],
+    logistics: [logistics, setLogistics],
+    lane: [lane, setLane],
+    fileCount: [fileCount, setFileCount],
+  } = useTruckContext();
 
-  const [accessToken, setAccessToken] = useState("");
+  const { accessToken } = useAuthContext();
 
   let history = useHistory();
+  let location = useLocation();
 
   document.title = "Truck Details";
 
   //^ GET MANIFEST REQUEST //
   const getManifest = () => {
+    setFileCount(manifestIds.length)
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken()}`,
         },
         body: data,
       })
@@ -55,6 +63,8 @@ const TruckDetails = () => {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      setFiles([]);
     }
   };
 
@@ -65,10 +75,10 @@ const TruckDetails = () => {
     fetch(inventoryURL, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken()}`,
       },
       body: data,
-    }).then(history.push("/trucks"));
+    }).then(history.replace(inventoryPATH));
   };
 
   const getTruck = () => {
@@ -78,9 +88,7 @@ const TruckDetails = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data) {
           const {
@@ -104,13 +112,14 @@ const TruckDetails = () => {
             logistics,
           } = data[0];
 
+          setIsEmpty(false);
           setLoadId(loadId);
           setSource(source);
           setPrice(price);
           setCost(cost);
           setCommission(commission);
           setRetailPrice(retailPrice);
-          setContents(contents.join(", "));
+          setContents(contents.join(","));
           setManifestIds(manifestIds);
           setCategory(category);
           setUnits(units);
@@ -123,36 +132,22 @@ const TruckDetails = () => {
           setLogistics(logistics);
           setLane(lane)
         }
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
   };
 
   useEffect(() => {
-    // send user back to login if they're not logged in
-    fetchAccessToken
-      .then((token) => {
-        setAccessToken(token);
-        getTruck();
-      })
-      .catch((error) => {
-        console.log(error);
-        history.push("/");
-      });
-
-    setLoading(true);
+    if (isEmpty || manifestIds.length != fileCount) {
+      getTruck();
+    }
   }, []);
 
   useEffect(() => {
     getManifest();
   }, [manifestIds]);
 
-  if (loading) {
-    return <Loading />;
-  }
   if (!loadId) {
     return <h2>No truck to display</h2>;
   }
@@ -163,26 +158,33 @@ const TruckDetails = () => {
         <Navigation />
       </div>
       <div className="truck-details-links-container">
-        <Link to="/trucks" className="back-to-link">
-          <FaAngleDoubleLeft />
-          Back to inventory
-        </Link>
+        <Button onClick={(e) => {
+            e.preventDefault();
+            history.replace(inventoryPATH);
+          }} className="back-to-link" >
+          <FaAngleDoubleLeft /> Back to inventory
+        </Button>
 
-        <button
+        <Button
           onClick={(e) => {
             e.preventDefault();
             deleteTruck();
-          }}
-          className="delete-truck-btn"
-        >
+          }} className="delete-truck-btn" >
           <FaTimes /> Delete truck
-        </button>
-        <Link className="edit-truck-btn" to={`/UpdateTruckDetails/${id}`}>
+        </Button>
+        
+        <Button className="edit-truck-btn" onClick={(e) => {
+            e.preventDefault();
+            history.push(`${inventoryPATH}/edit/${id}`, { from: location.pathname });
+          }} >
           <FaEdit /> Edit truck
-        </Link>
-        <Link className="edit-notes-btn" to={`/UpdateNotes/${id}`}>
+        </Button>
+        <Button className="edit-notes-btn" onClick={(e) => {
+            e.preventDefault();
+            history.push(`${inventoryPATH}/edit/notes/${id}`, { from: location.pathname });
+          }}>
           <FaEdit /> Edit Notes
-        </Link>
+        </Button>
       </div>
 
       <TruckDetailsCard

@@ -14,27 +14,38 @@ const TruckContext = createContext();
 const TruckProvider = ({ children }) => {
   //////////////////////// &&--STATE--&& /////////////////////////////
 
-  const [truckLoad, setTruckLoad] = useState([]); //INVENTORY LIST ON ADD TRUCKLOAD PAGE
+  // const [truckLoad, setTruckLoad] = useState([]); //INVENTORY LIST ON ADD TRUCKLOAD PAGE
+  const [isEmpty, setIsEmpty] = useState(true);
+  const [id, setId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [loadId, setLoadId] = useState("");
   const [source, setSource] = useState("");
-  const [price, setPrice] = useState("");
   const [retailPrice, setRetailPrice] = useState("");
-  const [contents, setContents] = useState([]);
-  const [manifests, setManifests] = useState([]);
+  const [price, setPrice] = useState("");
+  const [status, setStatus] = useState(1);
+  const [contents, setContents] = useState("");
   const [category, setCategory] = useState("");
   const [units, setUnits] = useState("");
   const [palletCount, setPalletCount] = useState("");
   const [fob, setFob] = useState("");
-  const [status, setStatus] = useState("");
-
-  const [id, setId] = useState("");
+  const [manifestIds, setManifestIds] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [owner, setOwner] = useState("");
+  const [cost, setCost] = useState("");
+  const [commission, setCommission] = useState("");
+  const [sales, setSales] = useState("");
+  const [accounting, setAccounting] = useState("");
+  const [logistics, setLogistics] = useState("");
+  const [lane, setLane] = useState("");
+  const [fileCount, setFileCount] = useState(0);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
 
-  if (truckLoad.source === "") {
-    console.log("The truck name is empty but printing");
-  }
+  // if (truckLoad.source === "") {
+  //   console.log("The truck name is empty but printing");
+  // }
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
 
@@ -44,76 +55,75 @@ const TruckProvider = ({ children }) => {
   };
 
   //clearList function. Once list is cleared an alert confirms this to the user + truckLoad is set back to empty array
-  const clearList = () => {
-    showAlert(true, "danger", "Trucks cleared successfully");
-    setTruckLoad([]);
-  };
+  // const clearList = () => {
+  //   showAlert(true, "danger", "Trucks cleared successfully");
+  //   setTruckLoad([]);
+  // };
 
   //removeItem grabs the id of the item to be removed, shows an alert to the user confirming
   //deletion + filters through the truckLoad to keep only the trucks whose id doesn't match the removed truck
-  const removeItem = (id) => {
-    showAlert(true, "danger", "Truck Removed");
-    setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
-  };
+  // const removeItem = (id) => {
+  //   showAlert(true, "danger", "Truck Removed");
+  //   setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
+  // };
 
   //editItem grabs the id of the item to be edited, sets the item and sets all required values
-  const editItem = (id) => {
-    const specificItem = truckLoad.find((truck) => truck.id === id);
-    setIsEditing(true);
-    setEditId(id);
-    setSource(specificItem.source);
-    setPrice(specificItem.price);
-    setRetailPrice(specificItem.retailPrice);
-    setUnits(specificItem.units);
-    setPalletCount(specificItem.palletCount);
-    setCategory(specificItem.category);
-    setFob(specificItem.fob);
-    setStatus(specificItem.status);
-    setContents(specificItem.contents);
-    setManifests(specificItem.manifests);
-  };
+  // const editItem = (id) => {
+  //   const specificItem = truckLoad.find((truck) => truck.id === id);
+  //   setIsEditing(true);
+  //   setEditId(id);
+  //   setSource(specificItem.source);
+  //   setPrice(specificItem.price);
+  //   setRetailPrice(specificItem.retailPrice);
+  //   setUnits(specificItem.units);
+  //   setPalletCount(specificItem.palletCount);
+  //   setCategory(specificItem.category);
+  //   setFob(specificItem.fob);
+  //   setStatus(specificItem.status);
+  //   setContents(specificItem.contents);
+  //   setManifests(specificItem.manifests);
+  // };
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
     <TruckContext.Provider
       value={{
-        source,
-        setSource,
-        price,
-        setPrice,
-        contents,
-        setContents,
-        manifests,
-        setManifests,
-        truckLoad,
-        setTruckLoad,
-        retailPrice,
-        setRetailPrice,
-        category,
-        setCategory,
-        units,
-        setUnits,
-        palletCount,
-        setPalletCount,
-        fob,
-        setFob,
-        status,
-        setStatus,
-        id,
-        setId,
+        isEmpty: [isEmpty, setIsEmpty],
+        id: [id, setId],
+        loading: [loading, setLoading],
+        loadId: [loadId, setLoadId],
+        source: [source, setSource],
+        retailPrice: [retailPrice, setRetailPrice],
+        price: [price, setPrice],
+        status: [status, setStatus],
+        contents: [contents, setContents],
+        category: [category, setCategory],
+        units: [units, setUnits],
+        palletCount: [palletCount, setPalletCount],
+        fob: [fob, setFob],
+        manifestIds: [manifestIds, setManifestIds],
+        files: [files, setFiles],
+        owner: [owner, setOwner],
+        cost: [cost, setCost],
+        commission: [commission, setCommission],
+        sales: [sales, setSales],
+        accounting: [accounting, setAccounting],
+        logistics: [logistics, setLogistics],
+        lane: [lane, setLane],
+        fileCount: [fileCount, setFileCount],
 
-        clearList,
-        showAlert,
-        editItem,
-        removeItem,
+        // clearList,
+        // showAlert,
+        // editItem,
+        // removeItem,
 
-        // getData,
-        alert,
-        isEditing,
-        editId,
-        setAlert,
-        setIsEditing,
-        setEditId,
+        // // getData,
+        // alert,
+        // isEditing,
+        // editId,
+        // setAlert,
+        // setIsEditing,
+        // setEditId,
       }}
     >
       {children}
