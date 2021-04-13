@@ -37,6 +37,7 @@ const TruckProvider = ({ children }) => {
   const [accounting, setAccounting] = useState("");
   const [logistics, setLogistics] = useState("");
   const [lane, setLane] = useState("");
+  const [fileCount, setFileCount] = useState(0);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -109,6 +110,7 @@ const TruckProvider = ({ children }) => {
         accounting: [accounting, setAccounting],
         logistics: [logistics, setLogistics],
         lane: [lane, setLane],
+        fileCount: [fileCount, setFileCount],
 
         // clearList,
         // showAlert,

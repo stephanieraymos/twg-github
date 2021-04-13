@@ -45,6 +45,7 @@ const UpdateNotes = () => {
     sales: [sales, setSales],
     accounting: [accounting, setAccounting],
     logistics: [logistics, setLogistics],
+    fileCount: [fileCount, setFileCount],
   } = useTruckContext();
 
   const redirect = () => {
@@ -65,6 +66,7 @@ const UpdateNotes = () => {
   };
 
   const getManifest = () => {
+    setFileCount(manifestIds.length)
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
@@ -80,6 +82,8 @@ const UpdateNotes = () => {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      setFiles([]);
     }
   };
 

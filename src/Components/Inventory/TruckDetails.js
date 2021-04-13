@@ -35,6 +35,7 @@ const TruckDetails = () => {
     accounting: [accounting, setAccounting],
     logistics: [logistics, setLogistics],
     lane: [lane, setLane],
+    fileCount: [fileCount, setFileCount],
   } = useTruckContext();
 
   const { accessToken } = useAuthContext();
@@ -46,6 +47,7 @@ const TruckDetails = () => {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = () => {
+    setFileCount(manifestIds.length)
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
@@ -61,6 +63,8 @@ const TruckDetails = () => {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      setFiles([]);
     }
   };
 
@@ -135,12 +139,8 @@ const TruckDetails = () => {
   };
 
   useEffect(() => {
-    console.log("manifest", manifestIds.length);
-    console.log("files", files.length);
-    if (isEmpty) {
+    if (isEmpty || manifestIds.length != fileCount) {
       getTruck();
-    } else if (manifestIds.length != files.length) {
-      getManifest();
     }
   }, []);
 

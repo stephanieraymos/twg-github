@@ -31,6 +31,7 @@ const UpdateTruckForm = ({
     cost: [cost, setCost],
     commission: [commission, setCommission],
     lane: [lane, setLane],
+    fileCount: [fileCount, setFileCount],
   } = useTruckContext();
 
   return (
@@ -273,7 +274,10 @@ const UpdateTruckForm = ({
             )}
             {manifestsCount == 0 ? (
               <Button
-                onClick={() => setManifestsCount(manifestsCount + 1)}
+                onClick={() => {
+                  setManifestsCount(manifestsCount + 1);
+                  setFileCount(fileCount + 1);
+                }}
                 className="form-button"
                 block
                 style={{
@@ -287,7 +291,10 @@ const UpdateTruckForm = ({
               </Button>
             ) : (
               <Button
-                onClick={() => setManifestsCount(manifestsCount - 1)}
+                onClick={() => {
+                  setManifestsCount(manifestsCount - 1);
+                  setFileCount(fileCount - 1);
+                }}
                 className="form-button"
                 block
                 style={{
@@ -339,6 +346,7 @@ const UpdateTruckForm = ({
                           setOldManifestIds(
                             oldManifestIds.filter((item) => item !== id)
                           );
+                          setFileCount(fileCount + 1);
                           console.log("old manifest id", oldManifestIds);
                         }}
                       />
@@ -349,6 +357,7 @@ const UpdateTruckForm = ({
                         onClick={() => {
                           console.log("id to be deleted", id);
                           setOldManifestIds([...oldManifestIds, id]);
+                          setFileCount(fileCount - 1);
                           console.log("old manifest id", oldManifestIds);
                         }}
                       />

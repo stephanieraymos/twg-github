@@ -48,6 +48,7 @@ const UpdateTruckDetails = () => {
     accounting: [accounting, setAccounting],
     logistics: [logistics, setLogistics],
     lane: [lane, setLane],
+    fileCount: [fileCount, setFileCount],
   } = useTruckContext();
 
   const { accessToken } = useAuthContext();
@@ -78,6 +79,7 @@ const UpdateTruckDetails = () => {
   };
 
   const getManifest = () => {
+    setFileCount(manifestIds.length)
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
@@ -93,6 +95,8 @@ const UpdateTruckDetails = () => {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      setFiles([]);
     }
   };
 
