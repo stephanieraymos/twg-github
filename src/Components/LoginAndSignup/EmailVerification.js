@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { useGlobalContext } from "../../context";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth";
-import { verifyURL } from "../../Pages/urls";
 
 const EmailVerification = () => {
   const { id } = useParams();
   const { token } = useParams();
   let history = useHistory();
+  let location = useLocation();
 
-  const [userId, setUserId] = useState("");
+  let { from } = location.state || { from: { pathname: "/" } };
 
   const {
     setFirstName,
@@ -22,34 +22,25 @@ const EmailVerification = () => {
     setBillingAddress,
   } = useGlobalContext();
 
-  const { setAccessToken, setRefreshToken } = useAuthContext();
+  const { emailVerification } = useAuthContext();
 
   document.title = "Email Verification";
 
   useEffect(() => {
-    fetch(`${verifyURL}${id}/${token}/`)
-      .then((response) => {
-        const res = response.json();
-        if (response.ok) {
-          return res;
-        } else {
-          throw new Error(res.message);
-        }
-      })
+    emailVerification(id, token)
       .then((user) => {
-        setUserId(user["id"]);
         setEmail(user["email"]);
         setFirstName(user["first_name"]);
         setLastName(user["last_name"]);
         setCompany(user["company"]);
         setPhoneNumber(user["phone_number"]);
         setBillingAddress(user["billing_address"]);
-        setAccessToken(user["token"]["access"]);
-        setRefreshToken(user["token"]["refresh"]);
       })
-      .then(() => history.push("/dashboard"))
+      .then(() => {
+        history.replace(from);
+      })
       .catch((error) => {
-        history.push("/");
+        history.replace(from);
       });
   }, []);
 
