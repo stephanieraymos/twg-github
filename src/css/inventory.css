@@ -156,13 +156,47 @@ input:hover::placeholder {
   border-radius: 0.25em;
 }
 .status-row-green {
-  background-color: rgba(0, 128, 0, 0.295);
+  background-color: var(--status-green);
 }
 .status-row-red {
-  background-color: rgba(216, 0, 0, 0.295);
+  background-color: var(--status-red);
 }
 .status-row-yellow {
-  background-color: rgba(161, 151, 0, 0.377);
+  background-color: var(--status-yellow);
+}
+
+.legend-container {
+  color: black;
+  float: right;
+  margin-right: 2rem;
+  padding: 1rem;
+}
+
+.table-top-container {
+  display: flex;
+  justify-content: space-around;
+  margin-left: 1rem;
+}
+
+.box {
+  float: left;
+  height: 20px;
+  width: 20px;
+  margin-right: 0.25rem;
+  border: 1px solid black;
+  clear: both;
+}
+
+.red {
+  background-color:var(--status-red);
+}
+
+.green {
+  background-color:var(--status-green);
+}
+
+.yellow {
+  background-color: var(--status-yellow);
 }
 
 .folder-icon {
@@ -290,7 +324,7 @@ li {
 =============================================*/
 
 .truck-details-links-container {
-  font-size: clamp(.8rem, 2.5vw, 1rem);
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
   display: flex;
   margin-right: 50%;
   padding-left: 1rem;
@@ -360,7 +394,7 @@ li {
 
 .show-more-btn {
   padding: 0.1rem 0.2rem;
-  margin-left: .25rem;
+  margin-left: 0.25rem;
   border-radius: 10px;
   border-color: rgba(0, 0, 0, 0.096);
 }
@@ -369,8 +403,8 @@ li {
   justify-content: space-between;
 }
 .edit-notes-header-btn {
-  padding: 0 .5rem;
-  font-size: .9rem;
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
 }
 /*=============================================
 =            UPDATE TRUCK DETAILS             =
@@ -390,3 +424,5 @@ li {
   text-align: center;
   margin-top: 2rem;
 }
+
+

@@ -4,6 +4,7 @@ import { useTruck } from "../../truckContext";
 import AddInventory from "./AddInventory";
 import { Container } from "react-bootstrap";
 import TableInventory from "./TableInventory";
+import TableLegend from "./TableLegend";
 import inventory from "../../css/inventory.css";
 import { PrivateRoute } from "../../Pages/router";
 import { Switch, useRouteMatch } from "react-router-dom";
@@ -27,7 +28,10 @@ const InventoryAllTrucks = () => {
             <Navigation />
           </div>
           <Container fluid>
-            <AddInventory addNewTrucks={addTruck} />
+            <div className="table-top-container">
+              <AddInventory addNewTrucks={addTruck} />
+              <TableLegend />
+            </div>
           </Container>
           <TableInventory trucks={trucks} />
         </>
