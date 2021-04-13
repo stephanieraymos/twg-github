@@ -3,32 +3,37 @@ import logo from "../../img/w-logo.png";
 import { Card, Accordion } from "react-bootstrap";
 import { FaAngleDoubleDown, FaEdit } from "react-icons/fa";
 import { useParams, Link } from "react-router-dom";
+import { inventoryPATH } from "../../Pages/paths";
+import { useTruckContext } from "../../truckContext";
 
-const TruckDetailsCard = ({
-  source,
-  loadId,
-  price,
-  cost,
-  retailPrice,
-  category,
-  units,
-  palletCount,
-  fob,
-  contents,
-  files,
-  manifestIds,
-  status,
-  owner,
-  commission,
-  lane,
-  sales,
-  accounting,
-  logistics,
-}) => {
+const TruckDetailsCard = ({ id, current }) => {
+  const {
+    isEmpty: [isEmpty, setIsEmpty],
+    loadId: [loadId, setLoadId],
+    source: [source, setSource],
+    retailPrice: [retailPrice, setRetailPrice],
+    price: [price, setPrice],
+    status: [status, setStatus],
+    contents: [contents, setContents],
+    category: [category, setCategory],
+    units: [units, setUnits],
+    palletCount: [palletCount, setPalletCount],
+    fob: [fob, setFob],
+    manifestIds: [manifestIds, setManifestIds],
+    files: [files, setFiles],
+    owner: [owner, setOwner],
+    cost: [cost, setCost],
+    commission: [commission, setCommission],
+    sales: [sales, setSales],
+    accounting: [accounting, setAccounting],
+    logistics: [logistics, setLogistics],
+    lane: [lane, setLane],
+    fileCount: [fileCount, setFileCount],
+  } = useTruckContext();
+
   const [salesReadMore, setSalesReadMore] = useState(false);
   const [accountingReadMore, setAccountingReadMore] = useState(false);
   const [logisticsReadMore, setLogisticsReadMore] = useState(false);
-  const { id } = useParams();
 
   return (
     <>
@@ -45,7 +50,10 @@ const TruckDetailsCard = ({
 
                   <Link
                     className="edit-notes-btn edit-notes-header-btn"
-                    to={`/UpdateNotes/${id}`}
+                    to={{
+                      pathname: `${inventoryPATH}/edit/notes/${id}`,
+                      state: { from: current }
+                    }}
                   >
                     <FaEdit /> Edit Notes
                   </Link>
@@ -81,7 +89,10 @@ const TruckDetailsCard = ({
 
                   <Link
                     className="edit-notes-btn edit-notes-header-btn"
-                    to={`/UpdateNotes/${id}`}
+                    to={{
+                      pathname: `${inventoryPATH}/edit/notes/${id}`,
+                      state: { from: current }
+                    }}
                   >
                     <FaEdit /> Edit Notes
                   </Link>
@@ -118,7 +129,10 @@ const TruckDetailsCard = ({
                   <span className="truck-data-title">Logistics Notes: </span>
                   <Link
                     className="edit-notes-btn edit-notes-header-btn"
-                    to={`/UpdateNotes/${id}`}
+                    to={{
+                      pathname: `${inventoryPATH}/edit/notes/${id}`,
+                      state: { from: current }
+                    }}
                   >
                     <FaEdit /> Edit Notes
                   </Link>
