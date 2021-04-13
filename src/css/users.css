@@ -59,3 +59,7 @@
     outline-style: none;
   }
   
+  .forgot-password-button {
+    border: none;
+    background-color: transparent;
+  }

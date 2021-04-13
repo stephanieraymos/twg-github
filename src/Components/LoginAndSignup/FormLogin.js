@@ -7,6 +7,8 @@ import { useGlobalContext } from "../../context";
 import { useAuthContext } from "../../auth";
 import { loginURL } from "../../Pages/urls";
 import { dashboardPATH } from "../../Pages/paths";
+import users from "../../css/users.css";
+import ResetPasswordModal from "../Users/ResetPasswordModal";
 
 const FormLogin = () => {
   const form = useRef(null);
@@ -16,6 +18,7 @@ const FormLogin = () => {
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
   const { login } = useAuthContext();
 
@@ -42,6 +45,10 @@ const FormLogin = () => {
     setIsLoginIncorrect(false);
   };
 
+  const openResetModal = () => {
+    setIsResetModalOpen(true);
+  };
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -62,7 +69,7 @@ const FormLogin = () => {
     login(JSON.stringify(object))
       .then((user) => {
         resetValues();
-        if (typeof user === 'string') {
+        if (typeof user === "string") {
           // user needs to verify email
           openModal();
           setIsSignUpSuccess(true);
@@ -78,11 +85,11 @@ const FormLogin = () => {
         }
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         setIsLoginIncorrect(true);
         setValidated(false);
       });
-  }
+  };
 
   return (
     <>
@@ -154,13 +161,18 @@ const FormLogin = () => {
             Login
           </Button>
 
-          {/* <Link
-            to={`/Login`}
-            className="form-label"
+          <button
+            onClick={openResetModal}
+            className="forgot-password-button"
             style={{ color: "#f47c20" }}
           >
             Forgot Password?
-          </Link> */}
+          </button>
+
+          <ResetPasswordModal
+            isResetModalOpen={isResetModalOpen}
+            setIsResetModalOpen={setIsResetModalOpen}
+          />
 
           <hr
             style={{
