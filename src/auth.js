@@ -203,7 +203,7 @@ const AuthProvider = ({ children }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken()}`,
+          "Authorization": `Bearer ${accessToken()}`,
         },
         body: JSON.stringify({
           refresh: refreshToken(),
@@ -220,24 +220,25 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  const changePassword = (old_password, new_password, confirm_new_password) => {
+  const changePassword = (oldPassword, newPassword, confirmNewPassword) => {
     return new Promise((resolve, reject) => {
       fetch(passwordURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken()}`,
+          "Authorization": `Bearer ${accessToken()}`,
         },
-        body: JSON.stringify({"old_password": old_password, "new_password": new_password, "confirm_new_password":confirm_new_password}),
+        body: JSON.stringify({
+            "old_password": oldPassword, 
+            "new_password": newPassword, 
+            "confirm_new_password": confirmNewPassword
+        }),
       })
         .then((response) => {
-        //   setNewPassword(response);
-        //   resolve(true);
-        console.log(response)
+            resolve(true);
         })
         .catch((error) => {
-            console.log(error)
-        //   reject(error);
+            reject(error);
         });
     });
   };

@@ -272,8 +272,13 @@ const AccountDetails = () => {
 
           <div className="form-footer-container">
             <Button
-              type="submit"
-              onClick={() => changePassword(currentPassword, newPassword, confirmNewPassword)}
+              type="button"
+              onClick={() => {
+                changePassword(currentPassword, newPassword, confirmNewPassword)
+                setCurrentPassword("");
+                setNewPassword("");
+                setConfirmNewPassword("");
+              }}
               className="form-button"
               block
               style={{ width: "200px", backgroundColor: "#1f85b4", alignSelf: "start", margin: "1rem 0rem" }}
