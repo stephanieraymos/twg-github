@@ -176,10 +176,6 @@ input:hover::placeholder {
   margin: 0 auto;
 }
 
-.table th:not(#id, #program) {
-  padding-left: 0;
-}
-
 /*=============================================
 =               TRUCK DETAILS               =
 =============================================*/
@@ -384,9 +380,4 @@ li {
   text-align: center;
   margin-top: 2rem;
 }
-
-.table#firstName {
-  padding-left: .25rem ;
-}
-
 
