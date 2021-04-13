@@ -1,4 +1,4 @@
-import { loginPATH, dashboardPATH, usersPATH } from "./paths";
+import { loginPATH, dashboardPATH } from "./paths";
 import {
     Route,
     Redirect,

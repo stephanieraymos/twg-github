@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Loading from "../Pages/Loading";
 import { useGlobalContext } from "../context";
+import { useAuthContext } from "../auth";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { getByIdURL, userURL } from "../Pages/urls";
+import { userURL } from "../Pages/urls";
 import Navigation from "./Navigation/Navigation";
 
 const AccountDetails = () => {
-  const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const form = useRef(null);
 
   document.title = "Account Details";
 
+  const { accessToken } = useAuthContext();
+
   const {
-    userId,
-    setUserId,
     email,
     setEmail,
     firstName,
@@ -26,39 +31,22 @@ const AccountDetails = () => {
     setPhoneNumber,
     billingAddress,
     setBillingAddress,
-    cookies,
+    getUser,
   } = useGlobalContext();
 
-  // const getUserDetails = () => {
-  //   fetch(userURL, {
-  //     method: "GET",
-  //     headers: {
-  //       "Authorization": "Bearer " + cookies["user-access-token"],
-  //     },
-  //   })
-  //     .then((response) => {
-  //       const res = response.json()
-  //       console.log(res)
-  //       if (response.ok) {
-  //         console.log("ok")
-  //         setUserId(res["id"]);
-  //         setEmail(res["email"]);
-  //         setFirstName(res["first_name"]);
-  //         setLastName(res["last_name"]);
-  //         setCompany(res["company"]);
-  //         setPhoneNumber(res["phone_number"]);
-  //         setBillingAddress(res["billing_address"]);
-  //       } else {
-  //         throw new Error(res.message);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  //     });
-  // }
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+    if (form.checkValidity() === true) {
+      setValidated(false);
+    } else {
+      setValidated(true);
+    }
+  };
 
   useEffect(() => {
-    // getUserDetails();
+    getUser(accessToken());
   }, []);
 
   return (
@@ -76,7 +64,10 @@ const AccountDetails = () => {
         </div>
 
         <Form
-          onSubmit={null}
+          ref={form}
+          noValidate
+          validated={validated}
+          onSubmit={handleSubmit}
           style={{ width: "85%", margin: "24px auto" }}
         >
           <Form.Group as={Row} className="center-form-group">
@@ -219,7 +210,8 @@ const AccountDetails = () => {
 
           <div className="form-footer-container">
             <Button
-              type="submit"
+              type="button"
+              onClick={() =>  setIsEditing(!isEditing)}
               className="form-button"
               block
               style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
@@ -247,8 +239,8 @@ const AccountDetails = () => {
             <Col sm={8}>
               <Form.Control
                 type="password"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
               />
             </Col>
 
@@ -259,8 +251,8 @@ const AccountDetails = () => {
             <Col sm={8}>
               <Form.Control
                 type="password"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </Col>
 
@@ -271,8 +263,8 @@ const AccountDetails = () => {
             <Col sm={8}>
               <Form.Control
                 type="password"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
               />
             </Col>
 

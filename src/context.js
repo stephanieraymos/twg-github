@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { userURL } from "./Pages/urls"
 
 // Generating context
 const AppContext = React.createContext(null);
@@ -31,6 +32,37 @@ const AppProvider = ({ children }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const getUser = (token) => {
+    return new Promise((resolve, reject) => {
+      fetch(userURL, {
+          method: "GET",
+          headers: {
+              Authorization: "Bearer " + token, 
+          },
+        })
+          .then((response) => {
+            const res = response.json();
+            if (response.ok) {
+              return res;
+            } else {
+              throw new Error(res.message);
+            }
+          })
+          .then((user) => {
+            setEmail(user["email"]);
+            setFirstName(user["first_name"]);
+            setLastName(user["last_name"]);
+            setCompany(user["company"]);
+            setPhoneNumber(user["phone_number"]);
+            setBillingAddress(user["billing_address"]);
+            resolve(true)
+          })
+          .catch((error) => {
+            reject(error)
+          });
+    });
+};
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
@@ -66,6 +98,7 @@ const AppProvider = ({ children }) => {
         setBillingAddress,
         isSignUpSuccess,
         setIsSignUpSuccess,
+        getUser,
       }}
     >
       {children}
