@@ -187,29 +187,7 @@ const TruckDetails = () => {
         </Button>
       </div>
 
-      <TruckDetailsCard
-        source={source}
-        loadId={loadId}
-        price={price}
-        retailPrice={retailPrice}
-        category={category}
-        units={units}
-        lane={lane}
-        palletCount={palletCount}
-        fob={fob}
-        contents={contents}
-        files={files}
-        manifestIds={manifestIds}
-        deleteTruck={deleteTruck}
-        id={id}
-        status={status}
-        owner={owner}
-        cost={cost}
-        commission={commission}
-        sales={sales}
-        accounting={accounting}
-        logistics={logistics}
-      />
+      <TruckDetailsCard id={id} current={location.pathname}/>
     </>
   );
 };
