@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import { useGlobalContext } from "../../context";
+import { useAuthContext } from "../../auth";
 import mail from "../../img/mail.svg";
 
+//Values from FormLogin:
 const ResetPasswordModal = ({
   validated,
   currentPassword,
-  resetPassword,
-  form,
-  handleSubmit,
   isResetModalOpen,
   setIsResetModalOpen,
 }) => {
   document.title = "Reset Password";
+
+  const resetForm = useRef(null);
 
   const {
     isModalOpen,
@@ -21,10 +22,24 @@ const ResetPasswordModal = ({
     setIsResetEmailSuccess,
   } = useGlobalContext();
 
+  const { resetPassword, resetPasswordEmail } = useAuthContext();
+
   const closeModal = () => {
     setIsResetModalOpen(false);
   };
   console.log(isResetModalOpen);
+
+  const handleResetSubmit = () => {
+    console.log("Triggered");
+    const data = new FormData(resetForm.current);
+    var object = {};
+    data.forEach((value, key) => (object[key] = value));
+    resetPasswordEmail(JSON.stringify(object))
+      .then(() => console.log("Handle reset submit triggered"))
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -128,38 +143,32 @@ const ResetPasswordModal = ({
             {/* //^ MODAL BODY */}
 
             <Form
-              ref={form}
+              ref={resetForm}
               noValidate
               validated={validated}
-              onSubmit={handleSubmit}
+              onSubmit={handleResetSubmit}
             >
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Enter your email</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  defaultValue={currentPassword}
-                  name="source"
-                  onChange={(e) => resetPassword(e.target.value)}
-                />
+                <Form.Control type="text" required name="email" />
                 <Form.Control.Feedback type="invalid">
                   Please make sure to enter the email you used to create this
                   account.
                 </Form.Control.Feedback>
               </Form.Group>
+              <Button
+                type="submit"
+                className="form-button"
+                block
+                style={{
+                  width: "200px",
+                  backgroundColor: "#1f85b4",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                Send reset email
+              </Button>
             </Form>
-            <Button
-              type="button"
-              className="form-button"
-              block
-              style={{
-                width: "200px",
-                backgroundColor: "#1f85b4",
-                marginBottom: "0.5rem",
-              }}
-            >
-              Send reset email
-            </Button>
           </div>
         </Modal>
       )}

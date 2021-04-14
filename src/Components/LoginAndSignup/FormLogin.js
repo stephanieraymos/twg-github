@@ -9,6 +9,7 @@ import { loginURL } from "../../Pages/urls";
 import { dashboardPATH } from "../../Pages/paths";
 import users from "../../css/users.css";
 import ResetPasswordModal from "../Users/ResetPasswordModal";
+// import { toggleModal } from "toggle-modal";
 
 const FormLogin = () => {
   const form = useRef(null);
@@ -20,12 +21,11 @@ const FormLogin = () => {
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
-  const { login, resetPassword } = useAuthContext();
+  const { login } = useAuthContext();
 
   const {
     email,
     setEmail,
-    firstName,
     setFirstName,
     setLastName,
     setCompany,
@@ -46,7 +46,7 @@ const FormLogin = () => {
   };
 
   const openResetModal = () => {
-    console.log("openResetModal triggered")
+    console.log("openResetModal triggered");
     setIsResetModalOpen(true);
   };
 
@@ -72,6 +72,7 @@ const FormLogin = () => {
         resetValues();
         if (typeof user === "string") {
           // user needs to verify email
+          // toggleModal.openModal();
           openModal();
           setIsSignUpSuccess(true);
         } else {
@@ -163,6 +164,7 @@ const FormLogin = () => {
           </Button>
 
           <button
+            type="button"
             onClick={openResetModal}
             className="forgot-password-button"
             style={{ color: "#f47c20" }}
