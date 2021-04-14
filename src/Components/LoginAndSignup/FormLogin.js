@@ -164,6 +164,7 @@ const FormLogin = () => {
           </Button>
 
           <button
+            type="button"
             onClick={openResetModal}
             className="forgot-password-button"
             style={{ color: "#f47c20" }}
