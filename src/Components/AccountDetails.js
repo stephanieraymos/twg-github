@@ -16,7 +16,7 @@ const AccountDetails = () => {
 
   document.title = "Account Details";
 
-  const { accessToken, changePassword } = useAuthContext();
+  const { accessToken, changePassword, updateUser } = useAuthContext();
 
   const {
     email,
@@ -44,6 +44,25 @@ const AccountDetails = () => {
       setValidated(true);
     }
   };
+
+  const performUserUpdate = () => {
+    const data = new FormData(form.current);
+    var object = {};
+    data.forEach((value, key) => (object[key] = value));
+    updateUser(JSON.stringify(object))
+      .then((user) => {
+        setEmail(user["email"]);
+        setFirstName(user["first_name"]);
+        setLastName(user["last_name"]);
+        setCompany(user["company"]);
+        setPhoneNumber(user["phone_number"]);
+        setBillingAddress(user["billing_address"]);
+        setIsEditing(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   useEffect(() => {
     getUser(accessToken());
@@ -79,6 +98,7 @@ const AccountDetails = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    name="email"
                   />
                 ) : (
                   <Form.Control
@@ -86,6 +106,7 @@ const AccountDetails = () => {
                     readOnly
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    name="email"
                   />
                 )
               }
@@ -102,6 +123,7 @@ const AccountDetails = () => {
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    name="first_name"
                   />
                 ) : (
                   <Form.Control
@@ -109,6 +131,7 @@ const AccountDetails = () => {
                     readOnly
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    name="first_name"
                   />
                 )
               }
@@ -125,6 +148,7 @@ const AccountDetails = () => {
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    name="last_name"
                   />
                 ) : (
                   <Form.Control
@@ -132,6 +156,7 @@ const AccountDetails = () => {
                     readOnly
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    name="last_name"
                   />
                 )
               }
@@ -148,6 +173,7 @@ const AccountDetails = () => {
                     type="text"
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
+                    name="company"
                   />
                 ) : (
                   <Form.Control
@@ -155,6 +181,7 @@ const AccountDetails = () => {
                     readOnly
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
+                    name="company"
                   />
                 )
               }
@@ -171,6 +198,7 @@ const AccountDetails = () => {
                     type="text"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
+                    name="phone_number"
                   />
                 ) : (
                   <Form.Control
@@ -178,6 +206,7 @@ const AccountDetails = () => {
                     readOnly
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
+                    name="phone_number"
                   />
                 )
               }
@@ -194,6 +223,7 @@ const AccountDetails = () => {
                     type="text"
                     value={billingAddress}
                     onChange={(e) => setBillingAddress(e.target.value)}
+                    name="billing_address"
                   />
                 ) : (
                   <Form.Control
@@ -201,6 +231,7 @@ const AccountDetails = () => {
                     readOnly
                     value={billingAddress}
                     onChange={(e) => setBillingAddress(e.target.value)}
+                    name="billing_address"
                   />
                 )
               }
@@ -209,15 +240,29 @@ const AccountDetails = () => {
           </Form.Group>
 
           <div className="form-footer-container">
-            <Button
-              type="button"
-              onClick={() =>  setIsEditing(!isEditing)}
-              className="form-button"
-              block
-              style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
-            >
-              Edit Profile
-          </Button>
+            {
+              isEditing ? (
+                <Button
+                  type="button"
+                  onClick={() =>  performUserUpdate()}
+                  className="form-button"
+                  block
+                  style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
+                >
+                  Update
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  onClick={() =>  setIsEditing(!isEditing)}
+                  className="form-button"
+                  block
+                  style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
+                >
+                  Edit Profile
+                </Button>
+              )
+            }
           </div>
         </Form>
 

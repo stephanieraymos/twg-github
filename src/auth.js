@@ -4,6 +4,7 @@ import {
     tokenVerifyURL,
     tokenRefreshURL,
     userURL,
+    userUpdateURL,
     loginURL,
     registerURL,
     logoutURL,
@@ -349,6 +350,30 @@ const AuthProvider = ({ children }) => {
         });
     };
 
+    const updateUser = (data) => {
+        return new Promise((resolve, reject) => {
+            fetch(userUpdateURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${accessToken()}`,
+                },
+                body: data,
+            })
+                .then((response) => {
+                    const res = response.json();
+                    if (response.ok) {
+                        resolve(res);
+                    } else {
+                        throw new Error(res.message);
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    };
+
     const checkAccessToken = (token) => {
         return new Promise((resolve, reject) => {
             fetch(tokenVerifyURL, {
@@ -489,7 +514,8 @@ const AuthProvider = ({ children }) => {
         changePassword,
         resetPasswordEmail,
         resetPassword,
-        emailVerification
+        emailVerification,
+        updateUser,
     };
 
     return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
