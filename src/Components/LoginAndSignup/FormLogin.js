@@ -20,7 +20,7 @@ const FormLogin = () => {
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
-  const { login } = useAuthContext();
+  const { login, resetPassword } = useAuthContext();
 
   const {
     email,
@@ -45,8 +45,7 @@ const FormLogin = () => {
     setIsLoginIncorrect(false);
   };
 
-  const openResetModal = (e) => {
-    e.preventDefault();
+  const openResetModal = () => {
     console.log("openResetModal triggered")
     setIsResetModalOpen(true);
   };
@@ -164,7 +163,7 @@ const FormLogin = () => {
           </Button>
 
           <button
-            onClick={(e) => openResetModal}
+            onClick={openResetModal}
             className="forgot-password-button"
             style={{ color: "#f47c20" }}
           >

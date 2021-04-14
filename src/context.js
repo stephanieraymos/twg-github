@@ -19,6 +19,8 @@ const AppProvider = ({ children }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
   const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
+  const [isResetEmailSuccess, setIsResetEmailSuccess] = useState(false);
+
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -98,6 +100,8 @@ const AppProvider = ({ children }) => {
         setBillingAddress,
         isSignUpSuccess,
         setIsSignUpSuccess,
+        isResetEmailSuccess,
+        setIsResetEmailSuccess,
         getUser,
       }}
     >
