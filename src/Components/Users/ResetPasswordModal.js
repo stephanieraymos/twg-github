@@ -2,27 +2,28 @@ import React from "react";
 import { Form, Modal } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 
-const ResetPasswordModal = (
+const ResetPasswordModal = ({
   validated,
   currentPassword,
   resetPassword,
   form,
   handleSubmit,
   isResetModalOpen,
-  setIsResetModalOpen
-) => {
+  setIsResetModalOpen,
+}) => {
   document.title = "Reset Password";
 
   const closeModal = () => {
     setIsResetModalOpen(false);
   };
+  console.log(isResetModalOpen);
 
   return (
     <>
       <Modal show={isResetModalOpen} onHide={closeModal}>
         <div
           className="form-body-container"
-          style={{ width: "40rem", alignSelf: "center" }}
+          style={{ width: "25rem", alignSelf: "center" }}
         >
           {/* //^ MODAL HEADER */}
           <div
@@ -35,10 +36,9 @@ const ResetPasswordModal = (
             }}
           >
             <div
-              className="form-label"
               style={{ color: "black", fontSize: "36px" }}
             >
-              New Load
+              Reset Password
             </div>
             {/* //^ CLOSE MODAL BUTTON */}
             <button
