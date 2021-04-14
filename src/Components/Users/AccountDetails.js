@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import Loading from "../Pages/Loading";
-import { useGlobalContext } from "../context";
-import { useAuthContext } from "../auth";
+import Loading from "../../Pages/Loading";
+import { useGlobalContext } from "../../context";
+import { useAuthContext } from "../../auth";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { userURL } from "../Pages/urls";
-import Navigation from "./Navigation/Navigation";
+import { userURL } from "../../Pages/urls";
+import Navigation from "../Navigation/Navigation";
 
 const AccountDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -74,12 +74,12 @@ const AccountDetails = () => {
         <Navigation />
       </div>
         
-      <div>
+      <div className="account-details-wrapper">
         <div
           className="form-label"
           style={{ width: "85%", color: "black", fontSize: "36px", margin: "24px auto" }}
         >
-          Account
+          {firstName}'s Account
         </div>
 
         <Form

@@ -19,7 +19,7 @@ import Logout from "./Components/LoginAndSignup/Logout";
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import UserDb from "./Components/Users/UserDb";
-import AccountDetails from "./Components/AccountDetails";
+import AccountDetails from "./Components/Users/AccountDetails";
 import EmailVerification from "./Components/LoginAndSignup/EmailVerification";
 
 const App = () => {

@@ -2,14 +2,14 @@ import React from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import { useGlobalContext } from "../../context";
+import { useAuthContext } from "../../auth";
 import mail from "../../img/mail.svg";
 
+//Values from FormLogin:
 const ResetPasswordModal = ({
   validated,
   currentPassword,
-  resetPassword,
   form,
-  handleSubmit,
   isResetModalOpen,
   setIsResetModalOpen,
 }) => {
@@ -21,10 +21,19 @@ const ResetPasswordModal = ({
     setIsResetEmailSuccess,
   } = useGlobalContext();
 
+  const { resetPassword } = useAuthContext();
+
   const closeModal = () => {
     setIsResetModalOpen(false);
   };
   console.log(isResetModalOpen);
+
+  const handleResetSubmit = (email, e) => {
+    console.log("Handle reset submit triggered");
+    if (email === e.target.value) {
+      resetPassword();
+    }
+  };
 
   return (
     <>
@@ -131,7 +140,7 @@ const ResetPasswordModal = ({
               ref={form}
               noValidate
               validated={validated}
-              onSubmit={handleSubmit}
+              onSubmit={handleResetSubmit}
             >
               <Form.Group className="center-form-group">
                 <Form.Label className="form-label">Enter your email</Form.Label>
