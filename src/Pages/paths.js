@@ -5,3 +5,5 @@ export const inventoryPATH = "/inventory";
 export const usersPATH = "/users";
 export const accountPATH = "/account";
 export const emailVerificationPATH = "/register/verify/"
+export const passwordResetPATH = "/password/reset"
+export const passwordChangePATH = "/password/update"

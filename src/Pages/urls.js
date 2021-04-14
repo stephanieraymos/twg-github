@@ -16,6 +16,7 @@ export const logoutURL = "https://api.thewholesalegroup.com/v1/account/logout/";
 export const registerURL = "https://api.thewholesalegroup.com/v1/account/register/";
 
 export const userURL = "https://api.thewholesalegroup.com/v1/account/user/";
+export const userUpdateURL = "https://api.thewholesalegroup.com/v1/account/user/update/"
 export const passwordChangeURL = "https://api.thewholesalegroup.com/v1/account/password/change/";
 
 export const resetPasswordEmailURL = "https://api.thewholesalegroup.com/v1/account/password/reset/email/";
