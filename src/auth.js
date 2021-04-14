@@ -275,7 +275,7 @@ const AuthProvider = ({ children }) => {
                 },
                 body: JSON.stringify({
                     "password": password,
-                    "confirmPassword": confirmPassword,
+                    "confirm_password": confirmPassword,
                 }),
             })
                 .then((response) => {
