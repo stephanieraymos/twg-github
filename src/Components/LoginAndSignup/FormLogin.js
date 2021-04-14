@@ -20,7 +20,7 @@ const FormLogin = () => {
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
-  const { login } = useAuthContext();
+  const { login, resetPassword } = useAuthContext();
 
   const {
     email,

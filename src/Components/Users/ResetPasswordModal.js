@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Modal } from "react-bootstrap";
+import { Form, Modal, Button } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 
 const ResetPasswordModal = ({
@@ -67,7 +67,7 @@ const ResetPasswordModal = ({
             onSubmit={handleSubmit}
           >
             <Form.Group className="center-form-group">
-              <Form.Label className="form-label">Reset Password</Form.Label>
+              <Form.Label className="form-label">Enter your email</Form.Label>
               <Form.Control
                 type="text"
                 required
@@ -76,10 +76,22 @@ const ResetPasswordModal = ({
                 onChange={(e) => resetPassword(e.target.value)}
               />
               <Form.Control.Feedback type="invalid">
-                Please enter a valid password.
+                Please make sure to enter the email you used to create this account.
               </Form.Control.Feedback>
             </Form.Group>
           </Form>
+          <Button
+            type="button"
+            className="form-button"
+            block
+            style={{
+              width: "200px",
+              backgroundColor: "#1f85b4",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Send reset email
+          </Button>
         </div>
       </Modal>
     </>
