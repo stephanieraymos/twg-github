@@ -76,10 +76,10 @@ const AccountDetails = () => {
         
       <div className="account-details-wrapper">
         <div
-          className="form-label center"
+          className="form-label"
           style={{ width: "85%", color: "black", fontSize: "36px", margin: "24px auto" }}
         >
-          {firstName}'s Account
+          Account
         </div>
 
         <Form

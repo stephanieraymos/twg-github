@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { superuserURL } from "./Pages/urls";
 import { useAuthContext } from "./auth";
+import { superuserPATH } from "./Pages/paths";
 
 // Generating context
 const SuperuserContext = createContext();
@@ -61,6 +62,44 @@ const SuperuserProvider = ({ children }) => {
             });
     }, []);
 
+    const getUser = (id) => {
+        return new Promise((resolve, reject) => {
+            fetch(`${superuserURL}?id=${id}`, {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + accessToken(),
+                },
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error(response);
+                    }
+                })
+                .then((user) => {
+                    setId(user["id"])
+                    setEmail(user["email"]);
+                    setFirstName(user["first_name"]);
+                    setLastName(user["last_name"]);
+                    setCompany(user["company"]);
+                    setPhoneNumber(user["phone_number"]);
+                    setBillingAddress(user["billing_address"]);
+                    setIsActive(user["is_active"]);
+                    setIsVerified(user["is_verified"]);
+                    setIsSeller(user["is_seller"]);
+                    setIsAdmin(user["is_admin"]);
+                    setIsSuperuser(user["is_superuser"]);
+                    setDateJoined(user["date_joined"]);
+                    setLastLogin(user["last_login"]);
+                    resolve(true)
+                })
+                .catch((error) => {
+                    reject(error)
+                });
+        })
+    };
+
     ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
     return (
         <SuperuserContext.Provider
@@ -80,6 +119,7 @@ const SuperuserProvider = ({ children }) => {
                 isSuperuser, setIsSuperuser,
                 dateJoined, setDateJoined,
                 lastLogin, setLastLogin,
+                getUser
             }}
         >
             {children}

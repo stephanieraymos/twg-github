@@ -36,10 +36,10 @@ const App = () => {
           <PrivateRoute exact path={dashboardPATH}>
             <Dashboard />
           </PrivateRoute>
-          <PrivateRoute exact path={inventoryPATH}>
+          <PrivateRoute path={inventoryPATH}>
             <InventoryAllTrucks />
           </PrivateRoute>
-          <PrivateRoute exact path={accountPATH}>
+          <PrivateRoute path={accountPATH}>
             <AccountDetails />
           </PrivateRoute>
           <Route exact path={logoutPATH}>
@@ -49,7 +49,7 @@ const App = () => {
             <EmailVerification />
           </Route>
           <SuperuserProvider>
-            <SuperuserRoute exact path={superuserPATH}>
+            <SuperuserRoute path={superuserPATH}>
               <SuperuserHome />
             </SuperuserRoute>
           </SuperuserProvider>

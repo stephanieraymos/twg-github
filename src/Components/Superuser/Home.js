@@ -3,14 +3,13 @@ import Navigation from "../Navigation/Navigation";
 import { Container } from "react-bootstrap";
 import { SuperuserRoute } from "../../Pages/router";
 import { Switch, useRouteMatch } from "react-router-dom";
-import { useSuperuserContext } from "../../superuser";
 import SuperuserTable from "./Table";
+import SuperuserDetails from "./Details";
 
 const SuperuserHome = () => {
     document.title = "Superuser - Home";
   
     let { path } = useRouteMatch();
-    const { users } = useSuperuserContext();
   
     return (
       <Switch>
@@ -19,13 +18,13 @@ const SuperuserHome = () => {
             <div>
               <Navigation />
             </div>
-            <SuperuserTable users={users} />
+            <SuperuserTable />
           </>
         </SuperuserRoute>
-        {/* <SuperuserRoute exact path={`${path}/:id`}>
-          <TruckDetails />
+        <SuperuserRoute path={`${path}/:id`}>
+          <SuperuserDetails />
         </SuperuserRoute>
-        <SuperuserRoute exact path={`${path}/edit/:id`}>
+        {/* <SuperuserRoute exact path={`${path}/edit/:id`}>
           <UpdateTruckDetails />
         </SuperuserRoute>
         <SuperuserRoute exact path={`${path}/edit/notes/:id`}>
