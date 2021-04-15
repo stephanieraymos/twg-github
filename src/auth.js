@@ -241,23 +241,20 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const resetPasswordEmail = (email) => {
+    const resetPasswordEmail = (data) => {
         return new Promise((resolve, reject) => {
             fetch(resetPasswordEmailURL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    "email": email,
-                }),
+                body: data,
             })
                 .then((response) => {
-                    const res = response.json();
                     if (response.ok) {
                         resolve(true);
                     } else {
-                        throw new Error(res.message);
+                        throw new Error(response);
                     }
                 })
                 .catch((error) => {
@@ -266,17 +263,14 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const resetPassword = (id, token, password, confirmPassword) => {
+    const resetPassword = (id, token, data) => {
         return new Promise((resolve, reject) => {
             fetch(`${resetPasswordURL}${id}/${token}/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    "password": password,
-                    "confirm_password": confirmPassword,
-                }),
+                body: data,
             })
                 .then((response) => {
                     const res = response.json();

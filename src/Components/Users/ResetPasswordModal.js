@@ -30,12 +30,14 @@ const ResetPasswordModal = ({
   console.log(isResetModalOpen);
 
   const handleResetSubmit = () => {
-    console.log("Triggered");
     const data = new FormData(resetForm.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
     resetPasswordEmail(JSON.stringify(object))
-      .then(() => console.log("Handle reset submit triggered"))
+      .then(() => {
+        // success
+        setIsResetEmailSuccess(true);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -45,7 +47,7 @@ const ResetPasswordModal = ({
     <>
       {isResetEmailSuccess ? (
         <Modal
-          show={isModalOpen}
+          show={isResetModalOpen}
           onHide={closeModal}
           backdrop="static"
           centered
@@ -104,7 +106,13 @@ const ResetPasswordModal = ({
           </div>
         </Modal>
       ) : (
-        <Modal show={isResetModalOpen} onHide={closeModal}>
+        <Modal 
+          show={isResetModalOpen} 
+          onHide={closeModal}
+          backdrop="static"
+          centered
+          >
+            
           <div
             className="form-body-container"
             style={{ width: "25rem", alignSelf: "center" }}
