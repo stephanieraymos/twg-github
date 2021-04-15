@@ -51,7 +51,7 @@ const ResetPasswordPage = () => {
   return (
     <div className="reset-page-wrap">
       <div className="confirm-reset-pass-container">
-        <h3>Create New Password</h3>
+        <h3>Reset Password</h3>
         <Form
           ref={finalResetForm}
           noValidate
@@ -112,19 +112,13 @@ const ResetPasswordPage = () => {
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
-          <Button
+          <button
             type="submit"
-            className="form-button"
+            className="form-button confirm-reset-pass-btn"
             block
-            style={{
-              width: "200px",
-              backgroundColor: "#1f85b4",
-              marginBottom: "0.5rem",
-              margin: "0 auto"
-            }}
           >
-            Change Password
-          </Button>
+            Reset Password
+          </button>
         </Form>
       </div>
     </div>
