@@ -618,7 +618,7 @@ input:hover {
 
 .reset-page-wrap {
   min-height: 100vh;
-  background-color: var(--dark-gray);
+  background-image: linear-gradient(290deg,  var(--orange), var(--sections));
 }
 
 .confirm-reset-pass-container {
