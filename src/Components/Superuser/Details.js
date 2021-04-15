@@ -6,6 +6,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { userURL } from "../../Pages/urls";
 import Navigation from "../Navigation/Navigation";
 import { useParams, Link, useHistory, useRouteMatch, useLocation } from "react-router-dom";
+import { superuserPATH } from "../../Pages/paths";
 
 const SuperuserDetails = () => {
     const { id } = useParams();
@@ -13,11 +14,14 @@ const SuperuserDetails = () => {
     const [validated, setValidated] = useState(false);
     const form = useRef(null);
 
+    let history = useHistory();
+
     document.title = "User Details";
 
     const { accessToken } = useAuthContext();
 
     const {
+        setUsers,
         email, setEmail,
         firstName, setFirstName,
         lastName, setLastName,
@@ -31,7 +35,8 @@ const SuperuserDetails = () => {
         isSuperuser, setIsSuperuser,
         dateJoined, setDateJoined,
         lastLogin, setLastLogin,
-        getUser
+        getUser,
+        updateUser,
     } = useSuperuserContext();
 
     const handleSubmit = (event) => {
@@ -40,28 +45,39 @@ const SuperuserDetails = () => {
         event.stopPropagation();
         if (form.checkValidity() === true) {
             setValidated(false);
+            performUserUpdate();
         } else {
             setValidated(true);
         }
     };
 
+    const boolToString = (value) => (value ? 1 : 0).toString();
+
     const performUserUpdate = () => {
         const data = new FormData(form.current);
         var object = {};
-        data.forEach((value, key) => console.log(key, value));
-        // updateUser(JSON.stringify(object))
-        //     .then((user) => {
-        //         setEmail(user["email"]);
-        //         setFirstName(user["first_name"]);
-        //         setLastName(user["last_name"]);
-        //         setCompany(user["company"]);
-        //         setPhoneNumber(user["phone_number"]);
-        //         setBillingAddress(user["billing_address"]);
-        //         setIsEditing(false);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
+        data.forEach((value, key) => {
+            object[key] = value
+        });
+
+        object["id"] = id;
+        object["is_active"] = boolToString(isActive);
+        object["is_verified"] = boolToString(isVerified);
+        object["is_seller"] = boolToString(isSeller);
+        object["is_admin"] = boolToString(isAdmin);
+        object["is_superuser"] = boolToString(isSuperuser);
+        console.log("object", object);
+        updateUser(JSON.stringify(object))
+            .then((user) => {
+                setIsEditing(false);
+                setUsers(prevState => ({
+                    ...prevState,
+                    [id]: object
+                }));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     useEffect(() => {
@@ -101,6 +117,7 @@ const SuperuserDetails = () => {
                                 isEditing ? (
                                     <Form.Control
                                         type="email"
+                                        required
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         name="email"
@@ -108,6 +125,7 @@ const SuperuserDetails = () => {
                                 ) : (
                                     <Form.Control
                                         type="email"
+                                        required
                                         readOnly
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
@@ -126,6 +144,7 @@ const SuperuserDetails = () => {
                                 isEditing ? (
                                     <Form.Control
                                         type="text"
+                                        required
                                         value={firstName}
                                         onChange={(e) => setFirstName(e.target.value)}
                                         name="first_name"
@@ -133,6 +152,7 @@ const SuperuserDetails = () => {
                                 ) : (
                                     <Form.Control
                                         type="text"
+                                        required
                                         readOnly
                                         value={firstName}
                                         onChange={(e) => setFirstName(e.target.value)}
@@ -151,6 +171,7 @@ const SuperuserDetails = () => {
                                 isEditing ? (
                                     <Form.Control
                                         type="text"
+                                        required
                                         value={lastName}
                                         onChange={(e) => setLastName(e.target.value)}
                                         name="last_name"
@@ -158,6 +179,7 @@ const SuperuserDetails = () => {
                                 ) : (
                                     <Form.Control
                                         type="text"
+                                        required
                                         readOnly
                                         value={lastName}
                                         onChange={(e) => setLastName(e.target.value)}
@@ -377,12 +399,42 @@ const SuperuserDetails = () => {
                     <div className="form-footer-container" style={{
                         flexDirection: "row"
                     }}>
-                        {
+                        <Button
+                            key={isEditing ? "button-submit" : "button-edit"}
+                            type={isEditing ? "submit" : "button"}
+                            onClick={isEditing ? null : () => setIsEditing(true)}
+                            className="form-button"
+                            style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
+                        >
+                            {isEditing ? "Update" : "Edit User"}
+                        </Button>
+
+                        <div 
+                            style={{
+                                width: "24px",
+                                height: "0px",
+                            }}>
+                        </div>
+
+                        <Button
+                            key={isEditing ? "button-cancel" : "button-back"}
+                            type="button"
+                            onClick={isEditing ? () => setIsEditing(false) : (e) => {
+                                e.preventDefault();
+                                history.replace(superuserPATH);
+                              }}
+                            className="form-button"
+                            block
+                            style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
+                        >
+                            {isEditing ? "Cancel" : "Back to Table"}
+                        </Button>
+
+                        {/* {
                             isEditing ? (
                                 <>
                                     <Button
                                         type="button"
-                                        onClick={() => performUserUpdate()}
                                         className="form-button"
                                         block
                                         style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
@@ -390,17 +442,16 @@ const SuperuserDetails = () => {
                                         Update
                                     </Button>
 
-                                    <hr
+                                    <div 
                                         style={{
                                             width: "24px",
                                             height: "0px",
-                                            backgroundColor: "transaprent",
-                                        }}
-                                    />
+                                        }}>
+                                    </div>
 
                                     <Button
                                         type="button"
-                                        onClick={() => performUserUpdate()}
+                                        onClick={() => setIsEditing(false)}
                                         className="form-button"
                                         block
                                         style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
@@ -409,17 +460,36 @@ const SuperuserDetails = () => {
                                     </Button>
                                 </>
                             ) : (
-                                <Button
-                                    type="button"
-                                    onClick={() => setIsEditing(!isEditing)}
-                                    className="form-button"
-                                    block
-                                    style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
-                                >
-                                    Edit User
-                                </Button>
+                                <>
+                                    <Button
+                                        type="button"
+                                        onClick={() => setIsEditing(true)}
+                                        className="form-button"
+                                        block
+                                        style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
+                                    >
+                                        Edit User
+                                    </Button>
+
+                                    <div 
+                                        style={{
+                                            width: "24px",
+                                            height: "0px",
+                                        }}>
+                                    </div>
+
+                                    <Button
+                                        type="button"
+                                        onClick={() => setIsEditing(false)}
+                                        className="form-button"
+                                        block
+                                        style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
+                                    >
+                                        Back
+                                    </Button>
+                                </>
                             )
-                        }
+                        } */}
                     </div>
                 </Form>
             </div>

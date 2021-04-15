@@ -100,6 +100,29 @@ const SuperuserProvider = ({ children }) => {
         })
     };
 
+    const updateUser = (data) => {
+        return new Promise((resolve, reject) => {
+            fetch(superuserURL, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${accessToken()}`,
+                },
+                body: data,
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        resolve(response.json());
+                    } else {
+                        throw new Error(response);
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    };
+
     ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
     return (
         <SuperuserContext.Provider
@@ -119,7 +142,8 @@ const SuperuserProvider = ({ children }) => {
                 isSuperuser, setIsSuperuser,
                 dateJoined, setDateJoined,
                 lastLogin, setLastLogin,
-                getUser
+                getUser,
+                updateUser,
             }}
         >
             {children}
