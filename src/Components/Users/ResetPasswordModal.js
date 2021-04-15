@@ -17,12 +17,11 @@ const ResetPasswordModal = ({
   const resetForm = useRef(null);
 
   const {
-    isModalOpen,
     isResetEmailSuccess,
     setIsResetEmailSuccess,
   } = useGlobalContext();
 
-  const { resetPassword, resetPasswordEmail } = useAuthContext();
+  const { resetPasswordEmail } = useAuthContext();
 
   const closeModal = () => {
     setIsResetModalOpen(false);
