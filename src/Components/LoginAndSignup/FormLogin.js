@@ -1,12 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Form, InputGroup, Image } from "react-bootstrap";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
 import { useGlobalContext } from "../../context";
 import { useAuthContext } from "../../auth";
-import { loginURL } from "../../Pages/urls";
-import { dashboardPATH } from "../../Pages/paths";
 import users from "../../css/users.css";
 import ResetPasswordModal from "../Users/ResetPasswordModal";
 // import { toggleModal } from "toggle-modal";

@@ -15,7 +15,6 @@ const ResetPasswordModal = ({
   const resetForm = useRef(null);
 
   const {
-    isModalOpen,
     isResetEmailSuccess,
     setIsResetEmailSuccess,
   } = useGlobalContext();
