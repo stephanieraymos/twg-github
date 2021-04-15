@@ -19,13 +19,9 @@ const ResetPasswordModal = ({
     setIsResetEmailSuccess,
   } = useGlobalContext();
 
-<<<<<<< HEAD
-  const { resetPasswordEmail } = useAuthContext();
-=======
   const [validated, setValidated] = useState(false);
 
   const { resetPassword, resetPasswordEmail } = useAuthContext();
->>>>>>> 69edd609722ae76bb2ce98b6bc93cf5386486cef
 
   const closeModal = () => {
     setValidated(false);
