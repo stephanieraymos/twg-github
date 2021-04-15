@@ -6,7 +6,7 @@ import {
 import { useAuthContext } from "../auth";
 
 
-const PrivateRoute = ({ children, ...rest }) => {
+export const PrivateRoute = ({ children, ...rest }) => {
     const { isAuthenticated } = useAuthContext();
 
     return (
@@ -28,7 +28,29 @@ const PrivateRoute = ({ children, ...rest }) => {
     );
 }
 
-const LoginRoute = ({ children, ...rest }) => {
+export const SuperuserRoute = ({ children, ...rest }) => {
+    const { isAuthenticated, isSuperuser } = useAuthContext();
+
+    return (
+        <Route
+            {...rest}
+            render={({ location }) =>
+                isAuthenticated() && isSuperuser() ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: dashboardPATH,
+                            state: { from: location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+}
+
+export const LoginRoute = ({ children, ...rest }) => {
     const { isAuthenticated } = useAuthContext();
 
     return (
@@ -49,5 +71,3 @@ const LoginRoute = ({ children, ...rest }) => {
         />
     );
 }
-
-export { PrivateRoute, LoginRoute };

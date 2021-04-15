@@ -69,6 +69,13 @@ const AuthProvider = ({ children }) => {
         removeCookie(userKey);
     };
 
+    const resetLocalStorage = () => {
+        localStorage.removeItem(userIdKey);
+        localStorage.removeItem(isSellerKey);
+        localStorage.removeItem(isAdminKey);
+        localStorage.removeItem(isSuperuserKey);
+    };
+
     const setAccessToken = (token) => {
         setCookie(accessTokenKey, token, {
             path: "/",
@@ -122,19 +129,19 @@ const AuthProvider = ({ children }) => {
     };
 
     const userId = () => {
-        return localStorage.getItem(userIdKey);
+        return localStorage.getItem(userIdKey) === "true";
     };
 
     const isSeller = () => {
-        return localStorage.getItem(isSellerKey);
+        return localStorage.getItem(isSellerKey) === "true";
     };
 
     const isAdmin = () => {
-        return localStorage.getItem(isAdminKey);
+        return localStorage.getItem(isAdminKey) === "true";
     };
 
     const isSuperuser = () => {
-        return localStorage.getItem(isSuperuserKey);
+        return localStorage.getItem(isSuperuserKey) === "true";
     };
 
     const login = (data) => {
@@ -209,10 +216,12 @@ const AuthProvider = ({ children }) => {
             })
                 .then((response) => {
                     removeTokens();
+                    resetLocalStorage();
                     resolve(true);
                 })
                 .catch((error) => {
                     removeTokens();
+                    resetLocalStorage();
                     reject(error);
                 });
         });
