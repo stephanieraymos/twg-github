@@ -13,6 +13,7 @@ const ResetPasswordPage = () => {
   );
   const [errors, setErrors] = useState({});
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { resetPassword } = useAuthContext();
 
@@ -68,6 +69,19 @@ const ResetPasswordPage = () => {
           <Form.Text muted>* 1 or more uppercase character</Form.Text>
           <Form.Text muted>* 1 or more numeric character</Form.Text>
         </Form.Group>
+        <Form.Group className="center-form-group">
+          <Form.Label className="form-label">Confirm New Password</Form.Label>
+          <Form.Control
+            type="password"
+            required
+            name="confirm_password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            isInvalid={!!errors.confirmPassword}
+          />
+          <Form.Control.Feedback type="invalid">
+            Your confirm password doesn't match your password.
+          </Form.Control.Feedback>
+        </Form.Group>
         <Button
           type="submit"
           className="form-button"
@@ -78,7 +92,7 @@ const ResetPasswordPage = () => {
             marginBottom: "0.5rem",
           }}
         >
-          Send reset email
+          Change Password
         </Button>
       </Form>
     </div>
