@@ -3,32 +3,50 @@ import { useAuthContext } from "../../auth";
 import { Form, Button, Image, InputGroup } from "react-bootstrap";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
+import { useParams } from "react-router-dom";
 
 const ResetPasswordPage = () => {
+  const {id, token} = useParams();
   const finalResetForm = useRef(null);
   const [validated, setValidated] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState("");
   const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(
     false
   );
   const [errors, setErrors] = useState({});
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { resetPassword } = useAuthContext();
 
-  const handleFinalResetSubmit = () => {
-    const data = new FormData(finalResetForm.current);
-    var object = {};
-    data.forEach((value, key) => (object[key] = value));
-    resetPassword(JSON.stringify(object))
-      .then(() => {
-        // success
-        setCurrentPassword(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleFinalResetSubmit = (event) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+
+    setValidated(true);
+
+    if (form.checkValidity() === true) {
+      // no errors
+      const data = new FormData(finalResetForm.current);
+      var object = {};
+      data.forEach((value, key) => object[key] = value);
+      resetPassword(id, token, JSON.stringify(object))
+        .then(() => {
+          // success
+          console.log("success")
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    
+    // resetPassword(JSON.stringify(object))
+    //   .then(() => {
+    //     // success
+    //     setCurrentPassword(data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -46,7 +64,6 @@ const ResetPasswordPage = () => {
               type={togglePasswordVisibility ? "text" : "password"}
               required
               name="password"
-              onChange={(e) => setPassword(e.target.value)}
               isInvalid={!!errors.password}
             />
             <InputGroup.Append>
@@ -75,7 +92,6 @@ const ResetPasswordPage = () => {
             type="password"
             required
             name="confirm_password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
             isInvalid={!!errors.confirmPassword}
           />
           <Form.Control.Feedback type="invalid">

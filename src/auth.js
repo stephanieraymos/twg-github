@@ -282,11 +282,10 @@ const AuthProvider = ({ children }) => {
                 body: data,
             })
                 .then((response) => {
-                    const res = response.json();
                     if (response.ok) {
                         resolve(true);
                     } else {
-                        throw new Error(res.message);
+                        throw new Error(response);
                     }
                 })
                 .catch((error) => {

@@ -11,6 +11,7 @@ import {
   accountPATH,
   emailVerificationPATH,
   superuserPATH,
+  passwordResetPATH
 } from "./Pages/paths";
 
 import { LoginRoute, PrivateRoute, SuperuserRoute } from "./Pages/router";
@@ -24,6 +25,7 @@ import AccountDetails from "./Components/Users/AccountDetails";
 import EmailVerification from "./Components/LoginAndSignup/EmailVerification";
 import SuperuserHome from "./Components/Superuser/Home";
 import { SuperuserProvider } from "./superuser";
+import ResetPasswordPage from "./Components/Users/ResetPasswordPage";
 
 const App = () => {
   return (
@@ -47,6 +49,9 @@ const App = () => {
           </Route>
           <Route exact path={`${emailVerificationPATH}/:id/:token/`}>
             <EmailVerification />
+          </Route>
+          <Route exact path={`${passwordResetPATH}/:id/:token/`}>
+            <ResetPasswordPage />
           </Route>
           <SuperuserProvider>
             <SuperuserRoute path={superuserPATH}>
