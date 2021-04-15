@@ -21,3 +21,5 @@ export const passwordChangeURL = "https://api.thewholesalegroup.com/v1/account/p
 
 export const resetPasswordEmailURL = "https://api.thewholesalegroup.com/v1/account/password/reset/email/";
 export const resetPasswordURL = "https://api.thewholesalegroup.com/v1/account/password/reset/";
+
+export const superuserURL = "https://api.thewholesalegroup.com/v1/superuser/users/"

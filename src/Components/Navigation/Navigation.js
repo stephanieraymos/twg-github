@@ -4,14 +4,21 @@ import { links, social, logoLink } from "./nav-data";
 import logo from "../../img/logo-blue.svg";
 import nav from "../../css/nav.css";
 import { useHistory, Link } from "react-router-dom";
+import { useAuthContext } from "../../auth";
 
 const Navigation = () => {
   const [showLinks, setShowLinks] = useState(false);
   const linksContainerRef = useRef(null); //For DIV
   const linksRef = useRef(null); //For UL
+  const { isSuperuser } = useAuthContext();
+  const [filteredLinks, setFilteredLinks] = useState(links);
 
   // {params != Home ? <Navigation /> : null}
-
+  useEffect(() => {
+    if (!isSuperuser()) {
+      setFilteredLinks(filteredLinks.filter(item => item.text !== "Superuser"))
+    }
+  }, []);
 
   useEffect(() => {
     const linksHeight = linksRef.current.getBoundingClientRect().height; //* Returning size values for links
@@ -46,7 +53,7 @@ const Navigation = () => {
         
         <div className="nav-links-container" ref={linksContainerRef}>
           <ul className="nav-links" ref={linksRef}>
-            {links.map((link) => {
+            {filteredLinks.map((link) => {
               const { id, url, text } = link;
               return (
                 <li key={id}>
