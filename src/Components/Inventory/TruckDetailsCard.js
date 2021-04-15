@@ -433,15 +433,15 @@ const TruckDetailsCard = ({ id, current }) => {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body style={{ backgroundColor: "transparent" }}>
-                    {files.map((manifest, index) => {
-                      const { manifests, manifestName } = manifest;
+                    {files.map((file, index) => {
+                      const { manifest, manifestName } = file;
                       return (
                         <ul key={manifestIds[index]}>
                           <li
                             onClick={
                               () =>
-                                window.open(manifests, "_blank") ||
-                                window.location.replace(manifests) //Opens in new tab || Opens in same tab if pop ups are blocked
+                                window.open(manifest, "_blank") ||
+                                window.location.replace(manifest) //Opens in new tab || Opens in same tab if pop ups are blocked
                             }
                           >
                             <span style={{ cursor: "pointer", color: "black" }}>

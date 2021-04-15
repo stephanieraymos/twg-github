@@ -324,9 +324,9 @@ const UpdateTruckForm = ({
           </Row>
         </Form.Group>
 
-        {files.map((manifest, index) => {
+        {files.map((file, index) => {
           const id = manifestIds[index];
-          const { manifests, manifestName } = manifest;
+          const { manifest, manifestName } = file;
           return (
             <>
               <Form.Row key={id}>
@@ -337,8 +337,8 @@ const UpdateTruckForm = ({
                     style={{ cursor: "pointer" }}
                     onClick={
                       () =>
-                        window.open(manifests, "_blank") ||
-                        window.location.replace(manifests) //Opens in new tab || Opens in same tab if pop ups are blocked
+                        window.open(manifest, "_blank") ||
+                        window.location.replace(manifest) //Opens in new tab || Opens in same tab if pop ups are blocked
                     }
                   />
                 </Col>
