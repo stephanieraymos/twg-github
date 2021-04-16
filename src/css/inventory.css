@@ -282,7 +282,7 @@ li {
 .truck-details-links-container {
   font-size: clamp(0.8rem, 2.5vw, 1rem);
   display: flex;
-  margin-right: 50%;
+  margin-right: 40%;
   padding-left: 1rem;
   padding-top: 1rem;
   justify-content: space-between;
@@ -324,6 +324,12 @@ li {
   cursor: pointer;
   color: rgb(4, 102, 37) !important;
 }
+.add-image-btn {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  cursor: pointer;
+  color: rgb(4, 55, 102) !important;
+}
 .edit-notes-btn {
   background-color: transparent !important;
   border-color: transparent !important;
@@ -341,6 +347,10 @@ li {
 }
 .edit-truck-btn:hover {
   color: rgba(9, 167, 48, 0.507) !important;
+  text-decoration: none;
+}
+.add-image-btn:hover {
+  color: rgba(5, 82, 145, 0.555) !important;
   text-decoration: none;
 }
 .edit-notes-btn:hover {

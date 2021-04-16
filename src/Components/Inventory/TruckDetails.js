@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
-import { useParams, Link, useHistory, useRouteMatch, useLocation } from "react-router-dom";
+import {
+  useParams,
+  Link,
+  useHistory,
+  useRouteMatch,
+  useLocation,
+} from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { useAuthContext } from "../../auth";
 import { getByIdURL, inventoryURL, manifestURL } from "../../Pages/urls";
@@ -10,6 +16,7 @@ import { useTruckContext } from "../../truckContext";
 import { Button } from "react-bootstrap";
 
 import { inventoryPATH } from "../../Pages/paths";
+import AddImage from "./AddImage";
 
 const TruckDetails = () => {
   const { id } = useParams();
@@ -47,7 +54,7 @@ const TruckDetails = () => {
 
   //^ GET MANIFEST REQUEST //
   const getManifest = () => {
-    setFileCount(manifestIds.length)
+    setFileCount(manifestIds.length);
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
@@ -130,7 +137,7 @@ const TruckDetails = () => {
           setSales(sales);
           setAccounting(accounting);
           setLogistics(logistics);
-          setLane(lane)
+          setLane(lane);
         }
       })
       .catch((error) => {
@@ -158,10 +165,13 @@ const TruckDetails = () => {
         <Navigation />
       </div>
       <div className="truck-details-links-container">
-        <Button onClick={(e) => {
+        <Button
+          onClick={(e) => {
             e.preventDefault();
             history.replace(inventoryPATH);
-          }} className="back-to-link" >
+          }}
+          className="back-to-link"
+        >
           <FaAngleDoubleLeft /> Back to inventory
         </Button>
 
@@ -169,25 +179,38 @@ const TruckDetails = () => {
           onClick={(e) => {
             e.preventDefault();
             deleteTruck();
-          }} className="delete-truck-btn" >
+          }}
+          className="delete-truck-btn"
+        >
           <FaTimes /> Delete truck
         </Button>
-        
-        <Button className="edit-truck-btn" onClick={(e) => {
+
+        <Button
+          className="edit-truck-btn"
+          onClick={(e) => {
             e.preventDefault();
-            history.push(`${inventoryPATH}/edit/${id}`, { from: location.pathname });
-          }} >
+            history.push(`${inventoryPATH}/edit/${id}`, {
+              from: location.pathname,
+            });
+          }}
+        >
           <FaEdit /> Edit truck
         </Button>
-        <Button className="edit-notes-btn" onClick={(e) => {
+        <Button
+          className="edit-notes-btn"
+          onClick={(e) => {
             e.preventDefault();
-            history.push(`${inventoryPATH}/edit/notes/${id}`, { from: location.pathname });
-          }}>
+            history.push(`${inventoryPATH}/edit/notes/${id}`, {
+              from: location.pathname,
+            });
+          }}
+        >
           <FaEdit /> Edit Notes
         </Button>
+        <AddImage />
       </div>
 
-      <TruckDetailsCard id={id} current={location.pathname}/>
+      <TruckDetailsCard id={id} current={location.pathname} />
     </>
   );
 };
