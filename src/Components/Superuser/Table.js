@@ -247,10 +247,13 @@ const SuperuserTable = () => {
                 is_admin,
                 is_superuser,
               } = value;
+
+              //Capitalizing first char of first and last name
               const firstName =
                 first_name.charAt(0).toUpperCase() + first_name.substring(1);
               const lastName =
                 last_name.charAt(0).toUpperCase() + last_name.substring(1);
+
               return (
                 <tr key={email}>
                   <td>
