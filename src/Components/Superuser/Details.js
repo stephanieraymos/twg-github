@@ -20,8 +20,9 @@ const SuperuserDetails = () => {
 
     const { accessToken } = useAuthContext();
 
+    const [originalValues, setOriginalValues] = useState({})
+
     const {
-        setUsers,
         email, setEmail,
         firstName, setFirstName,
         lastName, setLastName,
@@ -35,9 +36,68 @@ const SuperuserDetails = () => {
         isSuperuser, setIsSuperuser,
         dateJoined, setDateJoined,
         lastLogin, setLastLogin,
-        getUser,
+        setUsers,
+        getUserById,
         updateUser,
     } = useSuperuserContext();
+
+    const fields = [
+        "email",
+        "first_name",
+        "last_name",
+        "company",
+        "phone_number",
+        "billing_address",
+        "is_active",
+        "is_verified",
+        "is_seller",
+        "is_admin",
+        "is_superuser"
+    ]
+
+    const updateOriginalValues = (user) => {
+        if (user == null) {
+            setOriginalValues(prevState => ({
+                ...prevState,
+                "email": email,
+                "first_name": firstName,
+                "last_name": lastName,
+                "company": company,
+                "phone_number": phoneNumber,
+                "billing_address": billingAddress,
+                "is_active": isActive,
+                "is_verified": isVerified,
+                "is_seller": isSeller,
+                "is_admin": isAdmin,
+                "is_superuser": isSuperuser,
+            }));
+        } else {
+            const newFields = {}
+            for (const field of fields) {
+                newFields[field] = user[field];
+            }
+            
+            setOriginalValues(prevState => ({
+                ...prevState,
+                ...newFields
+            }));
+        }
+    };
+
+    const cancel = () => {
+        setIsEditing(false);
+        setEmail(originalValues["email"]);
+        setFirstName(originalValues["first_name"]);
+        setLastName(originalValues["last_name"]);
+        setCompany(originalValues["company"]);
+        setPhoneNumber(originalValues["phone_number"]);
+        setBillingAddress(originalValues["billing_address"]);
+        setIsActive(originalValues["is_active"]);
+        setIsVerified(originalValues["is_verified"]);
+        setIsSeller(originalValues["is_seller"]);
+        setIsAdmin(originalValues["is_admin"]);
+        setIsSuperuser(originalValues["is_superuser"]);
+    };
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -51,8 +111,6 @@ const SuperuserDetails = () => {
         }
     };
 
-    const boolToString = (value) => (value ? 1 : 0).toString();
-
     const performUserUpdate = () => {
         const data = new FormData(form.current);
         var object = {};
@@ -61,19 +119,19 @@ const SuperuserDetails = () => {
         });
 
         object["id"] = id;
-        object["is_active"] = boolToString(isActive);
-        object["is_verified"] = boolToString(isVerified);
-        object["is_seller"] = boolToString(isSeller);
-        object["is_admin"] = boolToString(isAdmin);
-        object["is_superuser"] = boolToString(isSuperuser);
-        console.log("object", object);
-        updateUser(JSON.stringify(object))
+        object["is_active"] = isActive;
+        object["is_verified"] = isVerified;
+        object["is_seller"] = isSeller;
+        object["is_admin"] = isAdmin;
+        object["is_superuser"] = isSuperuser;
+        updateUser(object)
             .then((user) => {
                 setIsEditing(false);
                 setUsers(prevState => ({
                     ...prevState,
                     [id]: object
                 }));
+                updateOriginalValues(null);
             })
             .catch((error) => {
                 console.log(error);
@@ -81,7 +139,10 @@ const SuperuserDetails = () => {
     }
 
     useEffect(() => {
-        getUser(id)
+        getUserById(id)
+            .then((user) => {
+                updateOriginalValues(user);
+            })
             .catch((error) => console.log(error))
     }, []);
 
@@ -355,7 +416,10 @@ const SuperuserDetails = () => {
                                             onChange={() => setIsAdmin(true)} />
                                         <Form.Check inline style={{color: "black"}} label="False" type="radio" id={`inline-radio-2`} 
                                             checked={!isAdmin}
-                                            onChange={() => setIsAdmin(false)} />
+                                            onChange={() => {
+                                                if (!isSuperuser)
+                                                    setIsAdmin(false);
+                                            }} />
                                     </div>
                                 ) : (
                                     <div>
@@ -378,7 +442,10 @@ const SuperuserDetails = () => {
                                     <div>
                                         <Form.Check inline style={{color: "black", paddingRight: "50px"}} label="True" type="radio" id={`inline-radio-1`} 
                                             checked={isSuperuser}
-                                            onChange={() => setIsSuperuser(true)} />
+                                            onChange={() => {
+                                                setIsSuperuser(true);
+                                                setIsAdmin(true);
+                                            }} />
                                         <Form.Check inline style={{color: "black"}} label="False" type="radio" id={`inline-radio-2`} 
                                             checked={!isSuperuser}
                                             onChange={() => setIsSuperuser(false)} />
@@ -393,11 +460,15 @@ const SuperuserDetails = () => {
                                 )
                             }
                         </Col>
-
                     </Form.Group>
+                    {isEditing && 
+                        <Form.Text muted>NOTE: Marking Superuser as True will automatically mark Admin as True.</Form.Text>
+                    }
+
 
                     <div className="form-footer-container" style={{
-                        flexDirection: "row"
+                        flexDirection: "row",
+                        marginTop: "10px"
                     }}>
                         <Button
                             key={isEditing ? "button-submit" : "button-edit"}
@@ -419,7 +490,7 @@ const SuperuserDetails = () => {
                         <Button
                             key={isEditing ? "button-cancel" : "button-back"}
                             type="button"
-                            onClick={isEditing ? () => setIsEditing(false) : (e) => {
+                            onClick={isEditing ? () => cancel() : (e) => {
                                 e.preventDefault();
                                 history.replace(superuserPATH);
                               }}
@@ -429,67 +500,6 @@ const SuperuserDetails = () => {
                         >
                             {isEditing ? "Cancel" : "Back to Table"}
                         </Button>
-
-                        {/* {
-                            isEditing ? (
-                                <>
-                                    <Button
-                                        type="button"
-                                        className="form-button"
-                                        block
-                                        style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
-                                    >
-                                        Update
-                                    </Button>
-
-                                    <div 
-                                        style={{
-                                            width: "24px",
-                                            height: "0px",
-                                        }}>
-                                    </div>
-
-                                    <Button
-                                        type="button"
-                                        onClick={() => setIsEditing(false)}
-                                        className="form-button"
-                                        block
-                                        style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
-                                    >
-                                        Cancel
-                                    </Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Button
-                                        type="button"
-                                        onClick={() => setIsEditing(true)}
-                                        className="form-button"
-                                        block
-                                        style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
-                                    >
-                                        Edit User
-                                    </Button>
-
-                                    <div 
-                                        style={{
-                                            width: "24px",
-                                            height: "0px",
-                                        }}>
-                                    </div>
-
-                                    <Button
-                                        type="button"
-                                        onClick={() => setIsEditing(false)}
-                                        className="form-button"
-                                        block
-                                        style={{ width: "150px", backgroundColor: "#f47c20", alignSelf: "start", margin: "1rem 0rem" }}
-                                    >
-                                        Back
-                                    </Button>
-                                </>
-                            )
-                        } */}
                     </div>
                 </Form>
             </div>

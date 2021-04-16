@@ -11,7 +11,7 @@ const SuperuserTable = () => {
     const { users } = useSuperuserContext();
 
     let { url } = useRouteMatch();
-    const headers = ['EMAIL', 'FIRST NAME', 'LAST NAME', 'Superuser']
+    const headers = ['EMAIL', 'FIRST NAME', 'LAST NAME', 'SELLER', 'ADMIN', 'SUPERUSER']
 
     return (
         <>
@@ -31,6 +31,8 @@ const SuperuserTable = () => {
                                 email,
                                 first_name,
                                 last_name,
+                                is_seller,
+                                is_admin,
                                 is_superuser,
                             } = value;
 
@@ -43,6 +45,16 @@ const SuperuserTable = () => {
                                     </td>
                                     <td>{first_name}</td>
                                     <td>{last_name}</td>
+                                    <td>
+                                        <Image
+                                            src={is_seller ? checkGreen : checkRed}
+                                        />
+                                    </td>
+                                    <td>
+                                        <Image
+                                            src={is_admin ? checkGreen : checkRed}
+                                        />
+                                    </td>
                                     <td>
                                         <Image
                                             src={is_superuser ? checkGreen : checkRed}
