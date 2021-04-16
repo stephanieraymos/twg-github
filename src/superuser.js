@@ -8,6 +8,7 @@ import React, {
 import { superuserURL } from "./Pages/urls";
 import { useAuthContext } from "./auth";
 import { superuserPATH } from "./Pages/paths";
+import { json } from "d3-fetch";
 
 // Generating context
 const SuperuserContext = createContext();
@@ -49,20 +50,21 @@ const SuperuserProvider = ({ children }) => {
                 }
             })
             .then((data) => {
+                const newData = {}
                 for (const user of data) {
-                    const userId = user['id'];
-                    setUsers(prevState => ({
-                        ...prevState,
-                        [userId]: user
-                    }));
+                    newData[user['id']] = user;
                 }
+                setUsers(prevState => ({
+                    ...prevState,
+                    ...newData
+                }));
             })
             .catch((error) => {
                 console.log(error)
             });
     }, []);
 
-    const getUser = (id) => {
+    const getUserById = (id) => {
         return new Promise((resolve, reject) => {
             fetch(`${superuserURL}?id=${id}`, {
                 method: "GET",
@@ -92,12 +94,80 @@ const SuperuserProvider = ({ children }) => {
                     setIsSuperuser(user["is_superuser"]);
                     setDateJoined(user["date_joined"]);
                     setLastLogin(user["last_login"]);
-                    resolve(true)
+                    resolve(user);
                 })
                 .catch((error) => {
-                    reject(error)
+                    reject(error);
                 });
         })
+    };
+
+    const boolToString = (value) => (value ? 1 : 0).toString();
+
+    const createUser = (data) => {
+        const formatedData = {};
+
+        for (const key in data) {
+            const value = data[key];
+            if (typeof value === "boolean")
+                formatedData[key] = boolToString(value);
+            else
+                formatedData[key] = value;
+        }
+        
+        return new Promise((resolve, reject) => {
+            fetch(superuserURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${accessToken()}`,
+                },
+                body: JSON.stringify(formatedData),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        resolve(response.json());
+                    } else {
+                        throw new Error(response);
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    };
+
+    const updateUser = (data) => {
+        const formatedData = {};
+
+        for (const key in data) {
+            const value = data[key];
+            if (typeof value === "boolean")
+                formatedData[key] = boolToString(value);
+            else
+                formatedData[key] = value;
+        }
+        
+        return new Promise((resolve, reject) => {
+            fetch(superuserURL, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${accessToken()}`,
+                },
+                body: JSON.stringify(formatedData),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        resolve(response.json());
+                    } else {
+                        throw new Error(response);
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
     };
 
     ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
@@ -119,7 +189,9 @@ const SuperuserProvider = ({ children }) => {
                 isSuperuser, setIsSuperuser,
                 dateJoined, setDateJoined,
                 lastLogin, setLastLogin,
-                getUser
+                getUserById,
+                createUser,
+                updateUser,
             }}
         >
             {children}
