@@ -18,8 +18,6 @@ const SuperuserDetails = () => {
 
     document.title = "User Details";
 
-    const { accessToken } = useAuthContext();
-
     const [originalValues, setOriginalValues] = useState({})
 
     const {

@@ -27,7 +27,6 @@ const ResetPasswordModal = ({
     setValidated(false);
     setIsResetModalOpen(false);
   };
-  console.log(isResetModalOpen);
 
   const handleResetSubmit = (event) => {
     const form = event.currentTarget;

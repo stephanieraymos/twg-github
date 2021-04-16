@@ -50,13 +50,14 @@ const SuperuserProvider = ({ children }) => {
                 }
             })
             .then((data) => {
+                const newData = {}
                 for (const user of data) {
-                    const userId = user['id'];
-                    setUsers(prevState => ({
-                        ...prevState,
-                        [userId]: user
-                    }));
+                    newData[user['id']] = user;
                 }
+                setUsers(prevState => ({
+                    ...prevState,
+                    ...newData
+                }));
             })
             .catch((error) => {
                 console.log(error)
