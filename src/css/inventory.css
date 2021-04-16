@@ -281,6 +281,7 @@ li {
 
 .truck-details-links-container {
   font-size: clamp(0.8rem, 2.5vw, 1rem);
+  flex-wrap: wrap;
   display: flex;
   margin-right: 40%;
   padding-left: 1rem;

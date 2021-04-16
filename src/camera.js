@@ -3,12 +3,12 @@ const camera = (function () {
   let height = 0;
 
   const createObjects = () => {
-    // const video = document.createElement("video");
-    // video.id = "video";
-    // video.width = width;
-    // video.width = height;
-    // video.autoplay = true;
-    // document.body.appendChild(video);
+    const video = document.createElement("video");
+    video.id = "video";
+    video.width = width;
+    video.width = height;
+    video.autoplay = true;
+    document.body.appendChild(video);
 
     const canvas = document.createElement("canvas");
     canvas.id = "canvas";
@@ -18,7 +18,7 @@ const camera = (function () {
   };
 
   return {
-    // video: null,
+    video: null,
     context: null,
     canvas: null,
 
@@ -29,18 +29,18 @@ const camera = (function () {
 
         createObjects();
 
-        // this.video = document.getElementById("video");
+        this.video = document.getElementById("video");
         this.canvas = document.getElementById("canvas");
         this.context = this.canvas.getContext("2d");
 
-        // (function (video) {
-        //   navigator.mediaDevices
-        //     .getUserMedia({ video: true })
-        //     .then(function (stream) {
-        //       video.srcObject = stream;
-        //       video.play();
-        //     });
-        // })(this.video);
+        (function (video) {
+          navigator.mediaDevices
+            .getUserMedia({ video: true })
+            .then(function (stream) {
+              video.srcObject = stream;
+              video.play();
+            });
+        })(this.video);
       }
     },
 
