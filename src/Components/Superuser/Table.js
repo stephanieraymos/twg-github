@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Table, Image, Form, InputGroup } from "react-bootstrap";
+import { Table, Image, Form, InputGroup, Button } from "react-bootstrap";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import checkGreen from "../../img/check-circle-green.svg";
 import checkRed from "../../img/check-circle-red.svg";
 import { useSuperuserContext } from "../../superuser";
 import search from "../../img/search.svg";
+import CreateUserModal from "./CreateUserModal";
 
 const SuperuserTable = () => {
     let history = useHistory();
@@ -14,6 +15,7 @@ const SuperuserTable = () => {
     const [filteredData, setFilteredData] = useState([])
     const [searchText, setSearchText] = useState("");
     const [booleanFilter, setBooleanFilter] = useState({"none": true, "is_seller": false, "is_admin": false, "is_superuser": false})
+    const [openUserModal, setOpenUserModal] = useState(false);
 
     let { url } = useRouteMatch();
     const headers = ['EMAIL', 'FIRST NAME', 'LAST NAME', 'SELLER', 'ADMIN', 'SUPERUSER']
@@ -25,6 +27,8 @@ const SuperuserTable = () => {
         "is_admin",
         "is_superuser"
     ]
+
+    const closeUserModal = () => setOpenUserModal(false);
 
     useEffect(() => {
         const items = [];
@@ -43,8 +47,7 @@ const SuperuserTable = () => {
     }, [searchText])
 
     useEffect(() => {
-        console.log("filter", booleanFilter);
-        setFilteredData(filterByBoolean(data));
+        setFilteredData(filterByBoolean(data, booleanFilter["none"], booleanFilter[sortFields[3]], booleanFilter[sortFields[4]], booleanFilter[sortFields[5]]));
     }, [booleanFilter])
 
     const filterByText = (data, substring) => {
@@ -56,12 +59,23 @@ const SuperuserTable = () => {
         })
     }
 
-    const filterByBoolean = (data) => {
+    const filterByBoolean = (data, checkNone, checkSeller, checkAdmin, checkSuperuser) => {
         return data.filter((object) => {
-            const seller = object[sortFields[3]];
-            const admin = object[sortFields[4]];
-            const superuser = object[sortFields[5]];
-            return seller === booleanFilter[sortFields[3]] || admin === booleanFilter[sortFields[4]] || superuser === booleanFilter[sortFields[5]];
+
+            if (checkNone)
+                return true;
+
+            let valid = false;
+            if (checkSeller)
+                valid = object[sortFields[3]] === booleanFilter[sortFields[3]];
+
+            if (checkAdmin)
+                valid = object[sortFields[4]] === booleanFilter[sortFields[4]];
+
+            if (checkSuperuser)
+                valid = object[sortFields[5]] === booleanFilter[sortFields[5]];
+
+            return valid;
         })
     }
 
@@ -81,66 +95,72 @@ const SuperuserTable = () => {
 
     return (
         <>
+            <CreateUserModal openUserModal={openUserModal} closeUserModal={closeUserModal} />
             <div className="superuser-header-container">
-                <div className="superuser-search_filter-container" style={{
-                    width: "60%"
-                }}>
-                    <Form
-                        style={{ width: "100%" }}
-                    >
-                        <Form.Group className="center-form-group">
-                            <Form.Label className="form-label">Search</Form.Label>
-                            <InputGroup>
-                                <InputGroup.Prepend>
-                                    <Image
-                                        src={search}
-                                        thumbnail
-                                    />
-                                </InputGroup.Prepend>
-                                <Form.Control
-                                    type="text"
-                                    value={searchText}
-                                    onChange={(e) => setSearchText(e.target.value)}
+                <Form
+                    style={{ width: "50%", marginRight: "15px" }}
+                >
+                    <Form.Group className="center-form-group">
+                        <Form.Label className="form-label">Search</Form.Label>
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <Image
+                                    src={search}
+                                    thumbnail
                                 />
-                            </InputGroup>
-                        </Form.Group>
-                    </Form>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type="text"
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                            />
+                        </InputGroup>
+                    </Form.Group>
+                </Form>
 
-                    <Form
-                        style={{ width: "100%" }}
-                    >
-                        <Form.Group className="center-form-group">
-                            <Form.Label className="form-label">Filters</Form.Label>
-                            <div>
-                                <Form.Check inline style={{color: "black", paddingRight: "50px"}} label="None" type="radio" id={`inline-radio-1`}
-                                    checked={booleanFilter["none"]}
-                                    onChange={() => setBooleanFilter({"none": true, "is_seller": false, "is_admin": false, "is_superuser": false})} />
-                                <Form.Check inline style={{color: "black", paddingRight: "50px"}} label="Seller" type="radio" id={`inline-radio-1`}
-                                    checked={booleanFilter[sortFields[3]]}
-                                    onChange={() => setBooleanFilter(prevState => ({
-                                        ...prevState,
-                                        [sortFields[3]]: !prevState[sortFields[3]],
-                                        "none": false
-                                    }))} />
-                                <Form.Check inline style={{color: "black", paddingRight: "50px"}} label="Admin" type="radio" id={`inline-radio-2`}
-                                    checked={booleanFilter[sortFields[4]]}
-                                    onChange={() => setBooleanFilter(prevState => ({
-                                        ...prevState,
-                                        [sortFields[4]]: !prevState[sortFields[4]],
-                                        "none": false
-                                    }))} />
-                                <Form.Check inline style={{color: "black"}} label="Superuser" type="radio" id={`inline-radio-2`}
-                                    checked={booleanFilter[sortFields[5]]}
-                                    onChange={() => setBooleanFilter(prevState => ({
-                                        ...prevState,
-                                        [sortFields[5]]: !prevState[sortFields[5]],
-                                        "none": false
-                                    }))} />
-                            </div>
-                        </Form.Group>
-                    </Form>
-                </div>
-                
+                <Form
+                    style={{ width: "35%", marginRight: "15px" }}
+                >
+                    <Form.Group className="center-form-group">
+                        <Form.Label className="form-label">Filters</Form.Label>
+                        <div>
+                            <Form.Check inline style={{color: "black", paddingRight: "15px"}} label="None" type="radio" id={`inline-radio-1`}
+                                checked={booleanFilter["none"]}
+                                onChange={() => setBooleanFilter({"none": true, "is_seller": false, "is_admin": false, "is_superuser": false})} />
+                            <Form.Check inline style={{color: "black", paddingRight: "15px"}} label="Seller" type="radio" id={`inline-radio-2`}
+                                checked={booleanFilter[sortFields[3]]}
+                                onChange={() => setBooleanFilter(prevState => ({
+                                    ...prevState,
+                                    [sortFields[3]]: !prevState[sortFields[3]],
+                                    "none": false
+                                }))} />
+                            <Form.Check inline style={{color: "black", paddingRight: "15px"}} label="Admin" type="radio" id={`inline-radio-3`}
+                                checked={booleanFilter[sortFields[4]]}
+                                onChange={() => setBooleanFilter(prevState => ({
+                                    ...prevState,
+                                    [sortFields[4]]: !prevState[sortFields[4]],
+                                    "none": false
+                                }))} />
+                            <Form.Check inline style={{color: "black"}} label="Superuser" type="radio" id={`inline-radio-4`}
+                                checked={booleanFilter[sortFields[5]]}
+                                onChange={() => setBooleanFilter(prevState => ({
+                                    ...prevState,
+                                    [sortFields[5]]: !prevState[sortFields[5]],
+                                    "none": false
+                                }))} />
+                        </div>
+                    </Form.Group>
+                </Form>
+
+                <Button
+                    key="button-create-user"
+                    type="button"
+                    onClick={() => setOpenUserModal(true)}
+                    className="form-button"
+                    style={{ width: "200px", height: "50px", backgroundColor: "#f47c20", margin: "auto" }}
+                >
+                    Create User
+                </Button>
             </div>
 
             <div className="table-wrapper" style={{padding: "0rem 2rem"}}>

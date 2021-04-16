@@ -104,6 +104,39 @@ const SuperuserProvider = ({ children }) => {
 
     const boolToString = (value) => (value ? 1 : 0).toString();
 
+    const createUser = (data) => {
+        const formatedData = {};
+
+        for (const key in data) {
+            const value = data[key];
+            if (typeof value === "boolean")
+                formatedData[key] = boolToString(value);
+            else
+                formatedData[key] = value;
+        }
+        
+        return new Promise((resolve, reject) => {
+            fetch(superuserURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${accessToken()}`,
+                },
+                body: JSON.stringify(formatedData),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        resolve(response.json());
+                    } else {
+                        throw new Error(response);
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    };
+
     const updateUser = (data) => {
         const formatedData = {};
 
@@ -157,6 +190,7 @@ const SuperuserProvider = ({ children }) => {
                 dateJoined, setDateJoined,
                 lastLogin, setLastLogin,
                 getUserById,
+                createUser,
                 updateUser,
             }}
         >
