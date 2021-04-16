@@ -19,7 +19,6 @@
   --status-red: rgba(216, 0, 0, 0.295);
   --status-yellow: rgba(161, 151, 0, 0.377);
 
-
   --spacing: 0.1rem;
   --radius: 0.4rem;
   --transition: all 0.3s linear;
@@ -586,12 +585,12 @@ input:hover {
   width: auto;
 }
 
-.form-label-our-price{
-  margin-left: .2rem;
+.form-label-our-price {
+  margin-left: 0.2rem;
   width: 15rem;
 }
-.form-label-units{
-  margin-left: .2rem;
+.form-label-units {
+  margin-left: 0.2rem;
 }
 
 .form-footer-container {
@@ -615,6 +614,44 @@ input:hover {
 
 .full-view-height {
   height: 100vh;
+}
+
+.reset-page-wrap {
+  min-height: 100vh;
+  background-image: linear-gradient(290deg,  var(--orange), var(--dark-gray));
+}
+
+.confirm-reset-pass-container {
+  display: flex;
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.308);
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+  top: 10rem;
+  position: relative;
+  height: 30rem;
+  width: 30rem;
+  background-color: var(--light);
+  justify-content: center;
+  padding: 5rem;
+  border-radius: 10px;
+}
+
+.confirm-reset-pass-container > h3 {
+  color: var(--sections);
+}
+
+.confirm-reset-pass-btn {
+  width: 200px;
+  color: var(--text);
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  margin: 0 auto;
+  background-color: var(--orange);
+}
+.confirm-reset-pass-btn:hover {
+  background-color: rgb(218, 124, 1);
 }
 
 /*=============================================
