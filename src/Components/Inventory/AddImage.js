@@ -5,16 +5,23 @@ import { FaCamera } from "react-icons/fa";
 
 const AddImage = () => {
   const handleTakeImage = () => {
-      console.log("Handle Take Image Triggered")
+    console.log("Handle Take Image Triggered");
     camera.startCamera();
     camera.takeSnapshot();
+    // return (
+    //   <input
+    //     accept="image/*"
+    //     id="icon-button-file"
+    //     type="file"
+    //     capture="environment"
+    //   />
+    // );
   };
-
   return (
     <div>
       <Button className="add-image-btn" onClick={handleTakeImage}>
-        <FaCamera /> 
-         Take Image
+        <FaCamera />
+        Take Image
       </Button>
     </div>
   );
