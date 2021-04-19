@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Row, Col, Carousel, InputGroup, Image } from "react-bootstrap";
+import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { useAuthContext } from "../../auth";
 import { inventoryURL } from "../../Pages/urls";
 import { inventoryPATH } from "../../Pages/paths";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import undo from "../../img/undo.svg";
 
@@ -11,9 +11,13 @@ const UpdateTruckForm = ({
   handleSubmit,
   oldManifestIds,
   setOldManifestIds,
+  oldImageIds,
+  setOldImageIds,
   redirect,
 }) => {
   const [manifestsCount, setManifestsCount] = useState(0);
+  const [tempImages, setTempImages] = useState([]);
+  const [tempImageCount, setTempImageCount] = useState(0);
 
   const {
     source: [source, setSource],
@@ -32,7 +36,17 @@ const UpdateTruckForm = ({
     commission: [commission, setCommission],
     lane: [lane, setLane],
     fileCount: [fileCount, setFileCount],
+    imageCount, setImageCount,
+    imageIds, setImageIds,
+    images, setImages
   } = useTruckContext();
+
+  const removeImage = index => {
+    const list = [...tempImages];
+    list[index] = -1;
+    setTempImages(list);
+    setImageCount(imageCount - 1);
+  };
 
   return (
     <>
@@ -334,7 +348,7 @@ const UpdateTruckForm = ({
                   <Form.Control
                     defaultValue={manifestName}
                     readOnly
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", margin: "0px 0px 14px" }}
                     onClick={
                       () =>
                         window.open(manifest, "_blank") ||
@@ -380,6 +394,120 @@ const UpdateTruckForm = ({
                 </Col>
               </Form.Row>
               {oldManifestIds.includes(id) && (
+                <Form.Text style={{ color: "red" }}>
+                  Marked for deletion
+                </Form.Text>
+              )}
+            </>
+          );
+        })}
+
+        <Form.Group>
+          {/* //^ ------------------------- IMAGES ---------------------------- */}
+          <Form.Label className="form-label">Images</Form.Label>
+          <Button
+            onClick={() => {
+              setTempImages([...tempImages, tempImageCount]);
+              setTempImageCount(tempImageCount + 1);
+              setImageCount(imageCount + 1);
+            }}
+            className="form-button"
+            block
+            style={{
+              width: "150px",
+              backgroundColor: "#000",
+              margin: "0px",
+            }}
+          >
+            Add images
+          </Button>
+
+          {tempImages.map((item, index) => {
+            if (item == index) {
+              return (
+                <Row key={index} className="flex-start-center" style={{ margin: "10px auto 0px" }}>
+                  <Col sm={10}>
+                    <Form.Control
+                      id={`form-image-${item}`}
+                      type="file"
+                      required
+                      name="images"
+                      style={{ fontSize: "1rem", color: "black" }}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please add an image.
+                    </Form.Control.Feedback>
+                  </Col>
+                  <Col sm={2}>
+                    <Image
+                      id={`form-image-cancel-${index}`}
+                      src={cancel}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => removeImage(index)}
+                    />
+                  </Col>
+                </Row>
+              );
+            }
+          })}
+        </Form.Group>
+
+        {images.map((item, index) => {
+          const id = imageIds[index];
+          const { image, imageName } = item;
+          return (
+            <>
+              <Form.Row key={id}>
+                <Col sm={11}>
+                  <Form.Control
+                    defaultValue={imageName}
+                    readOnly
+                    style={{ cursor: "pointer" }}
+                    onClick={
+                      () =>
+                        window.open(image, "_blank") ||
+                        window.location.replace(image) //Opens in new tab || Opens in same tab if pop ups are blocked
+                    }
+                  />
+                </Col>
+                <Col sm={1}>
+                  <button
+                    type="button"
+                    style={{
+                      background: "transparent",
+                      borderColor: "transparent",
+                      height: "100%",
+                    }}
+                  >
+                    {oldImageIds.includes(id) ? (
+                      <img
+                        src={undo}
+                        alt="undo"
+                        onClick={() => {
+                          console.log("id to be added back", id);
+                          setOldImageIds(
+                            oldImageIds.filter((item) => item !== id)
+                          );
+                          setImageCount(imageCount + 1);
+                          console.log("old image id", oldImageIds);
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={cancel}
+                        alt="remove"
+                        onClick={() => {
+                          console.log("id to be deleted", id);
+                          setOldImageIds([...oldImageIds, id]);
+                          setImageCount(imageCount - 1);
+                          console.log("old image id", oldImageIds);
+                        }}
+                      />
+                    )}
+                  </button>
+                </Col>
+              </Form.Row>
+              {oldImageIds.includes(id) && (
                 <Form.Text style={{ color: "red" }}>
                   Marked for deletion
                 </Form.Text>

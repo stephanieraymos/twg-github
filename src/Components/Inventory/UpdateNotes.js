@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth";
-import { getByIdURL, inventoryURL, manifestURL } from "../../Pages/urls";
+import { getByIdURL, inventoryURL, manifestURL, imageURL } from "../../Pages/urls";
 import UpdateNotesForm from "./UpdateNotesForm";
 import { useTruckContext } from "../../truckContext";
 
@@ -46,6 +46,9 @@ const UpdateNotes = () => {
     accounting: [accounting, setAccounting],
     logistics: [logistics, setLogistics],
     fileCount: [fileCount, setFileCount],
+    imageCount, setImageCount,
+    imageIds, setImageIds,
+    images, setImages
   } = useTruckContext();
 
   const redirect = () => {
@@ -87,6 +90,28 @@ const UpdateNotes = () => {
     }
   };
 
+  const getImages = () => {
+    setImageCount(imageIds.length);
+    if (imageIds.length > 0) {
+      const data = new FormData();
+      imageIds.map((id) => data.append("imageIds", id));
+      fetch(imageURL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken()}`,
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((images) => setImages(images))
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setImages([]);
+    }
+  };
+
   const getTruck = () => {
     fetch(`${getByIdURL}${id}`, {
       method: "GET",
@@ -115,6 +140,7 @@ const UpdateNotes = () => {
             sales,
             accounting,
             logistics,
+            imageIds,
           } = data[0];
 
           setIsEmpty(false);
@@ -135,6 +161,7 @@ const UpdateNotes = () => {
           setSales(sales);
           setAccounting(accounting);
           setLogistics(logistics);
+          setImageIds(imageIds);
         }
       })
       .catch((error) => {
@@ -151,6 +178,10 @@ const UpdateNotes = () => {
   useEffect(() => {
     getManifest();
   }, [manifestIds]);
+
+  useEffect(() => {
+    getImages();
+  }, [imageIds]);
 
   // Return true or false to indicate if fetch was successful
   const updateNotes = () => {
