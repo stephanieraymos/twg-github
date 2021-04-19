@@ -1,4 +1,4 @@
-export const url = "https://api.thewholesalegroup.com/v1/inventory/";
+let url = "https://api.thewholesalegroup.com/v1/inventory/";
 
 export const getByIdURL = "https://api.thewholesalegroup.com/v1/inventory/?id=";
 export const getByUserIdURL = "https://api.thewholesalegroup.com/v1/inventory/?userId=";
@@ -29,6 +29,7 @@ let manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
 if (development) {
     inventoryURL = "https://api.thewholesalegroup.com/test/v1/inventory/edit/";
     manifestURL = "https://api.thewholesalegroup.com/test/v1/inventory/manifest/";
+    url = "https://api.thewholesalegroup.com/test/v1/inventory/";
 }
 
-export {inventoryURL, manifestURL}
+export {inventoryURL, manifestURL, url}
