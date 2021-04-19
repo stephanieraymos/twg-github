@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import logo from "../../img/w-logo.png";
-import {
-  Card,
-  Accordion,
-  Carousel,
-  Button,
-  Image,
-  Form,
-} from "react-bootstrap";
+import { Card, Accordion, Carousel, Image, Form } from "react-bootstrap";
 import { FaAngleDoubleDown, FaEdit } from "react-icons/fa";
 import { useParams, Link } from "react-router-dom";
 import { inventoryPATH } from "../../Pages/paths";
 import { useTruckContext } from "../../truckContext";
 import { useAuthContext } from "../../auth";
+import { useNotesContext } from "../../notes";
 
 const TruckDetailsCard = ({ id, current }) => {
+
   const { isSeller, isAdmin } = useAuthContext();
   const {
     isEmpty: [isEmpty, setIsEmpty],
@@ -44,14 +39,26 @@ const TruckDetailsCard = ({ id, current }) => {
     setImageIds,
     images,
     setImages,
+    salesForm
   } = useTruckContext();
-
-  const [salesReadMore, setSalesReadMore] = useState(false);
-  const [accountingReadMore, setAccountingReadMore] = useState(false);
-  const [logisticsReadMore, setLogisticsReadMore] = useState(false);
-  const [isEditingSales, setIsEditingSales] = useState(false);
-  const [isEditingLogi, setIsEditingLogi] = useState(false);
-  const [isEditingAct, setIsEditingAct] = useState(false);
+  const {
+    isEditingLogi,
+    setIsEditingLogi,
+    isEditingAct,
+    setIsEditingAct,
+    isEditingSales,
+    setIsEditingSales,
+    salesReadMore,
+    setSalesReadMore,
+    accountingReadMore,
+    setAccountingReadMore,
+    logisticsReadMore,
+    setLogisticsReadMore,
+    setValidated,
+    updateSalesNotes,
+    salesNotes, setSalesNotes,
+    setOriginalValues
+  } = useNotesContext();
 
   const cancelLogi = () => {
     setIsEditingLogi(false);
@@ -62,6 +69,39 @@ const TruckDetailsCard = ({ id, current }) => {
   const cancelSales = () => {
     setIsEditingSales(false);
   };
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+    if (salesForm.checkValidity() === true) {
+      setValidated(false);
+      performSalesNotesUpdate();
+    } else {
+      setValidated(true);
+    }
+  };
+  
+
+  const performSalesNotesUpdate = () => {
+    const data = new FormData(salesForm.current);
+    var object = {};
+    data.forEach((value, key) => {
+      object[key] = value;
+    });
+    updateSalesNotes(object)
+      .then((user) => {
+        setIsEditingSales(false);
+        setSalesNotes((prevState) => ({
+          ...prevState,
+          [id]: object,
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <section className="truck-section">
@@ -86,7 +126,7 @@ const TruckDetailsCard = ({ id, current }) => {
             {(isSeller() || isAdmin()) && (
               <>
                 {/* //^ SALES NOTES */}
-                <Form style={{ border: "none" }}>
+                <Form ref="salesForm" style={{ border: "none" }}>
                   <div className="all-accordions">
                     <p className="notes-header-wrapper">
                       <span className="truck-data-title">Sales Notes: </span>
