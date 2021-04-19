@@ -8,3 +8,4 @@ export const emailVerificationPATH = "/register/verify";
 export const passwordResetPATH = "/password/reset";
 export const passwordChangePATH = "/password/update";
 export const superuserPATH = "/superuser";
+
