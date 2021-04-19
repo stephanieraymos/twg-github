@@ -16,7 +16,6 @@ import { useTruckContext } from "../../truckContext";
 import { Button } from "react-bootstrap";
 
 import { inventoryPATH } from "../../Pages/paths";
-import AddImage from "./AddImage";
 
 const TruckDetails = () => {
   const { id } = useParams();
@@ -207,7 +206,6 @@ const TruckDetails = () => {
         >
           <FaEdit /> Edit Notes
         </Button>
-        <AddImage />
       </div>
 
       <TruckDetailsCard id={id} current={location.pathname} />

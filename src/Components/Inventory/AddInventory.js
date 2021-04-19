@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import AddInventoryModal from "./AddInventoryModal";
+import AddInventoryModal from "./AddInventoryPage";
 import cancel from "../../img/cancel.svg";
+import {
+  useHistory,
+  useRouteMatch,
+} from "react-router-dom";
 
-const AddInventory = ({ addNewTrucks }) => {
+const AddInventory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  let history = useHistory();
+  let { url } = useRouteMatch();
 
   document.title = "Add Inventory";
   const openModal = () => {
@@ -18,18 +25,14 @@ const AddInventory = ({ addNewTrucks }) => {
         <Button
           className="boot-button"
           style={{ margin: "1rem 0 -.75rem 0" }}
-          onClick={openModal}
+          onClick={(e) => {
+            e.preventDefault();
+            history.push(`${url}/add`)
+          }}
         >
           Add Load
         </Button>
       </div>
-      {/* //^ ---- ADD LOAD MODAL START ---- */}
-      <AddInventoryModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        cancel={cancel}
-        addNewTrucks={addNewTrucks}
-      />
     </>
   );
 };

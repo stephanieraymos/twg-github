@@ -154,7 +154,7 @@ const SuperuserDetails = () => {
                 <Navigation />
             </div>
 
-            <div className="account-details-wrapper">
+            <div>
                 <div
                     className="form-label"
                     style={{ width: "85%", color: "black", fontSize: "36px", margin: "24px auto" }}

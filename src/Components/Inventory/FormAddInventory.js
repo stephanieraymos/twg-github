@@ -1,17 +1,24 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Carousel, InputGroup, Image } from "react-bootstrap";
 import { useAuthContext } from "../../auth";
 import { inventoryURL } from "../../Pages/urls";
+import { inventoryPATH } from "../../Pages/paths";
+import {
+  useHistory,
+} from "react-router-dom";
+import { image } from "d3-fetch";
+import cancel from "../../img/cancel.svg";
 
 const FormAddInventory = ({
-  manifestsCount,
-  setManifestsCount,
-  closeModal,
   userId,
   addNewTrucks,
 }) => {
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
+  const [images, setImages] = useState([]);
+  const [manifestsCount, setManifestsCount] = useState(0);
+  const [imageCount, setImageCount] = useState(0);
+  let history = useHistory();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -24,6 +31,16 @@ const FormAddInventory = ({
     } else {
       setValidated(true);
     }
+  };
+
+  const back = () => {
+    history.replace(inventoryPATH);
+  }
+
+  const removeImage = index => {
+    const list = [...images];
+    list[index] = -1;
+    setImages(list);
   };
 
   const { accessToken } = useAuthContext();
@@ -45,7 +62,7 @@ const FormAddInventory = ({
       });
       const newTruck = await response.json();
       addNewTrucks([newTruck]);
-      closeModal();
+      back();
     } catch (error) {
       console.log(error);
     }
@@ -58,7 +75,7 @@ const FormAddInventory = ({
         noValidate
         validated={validated}
         onSubmit={handleSubmit}
-        style={{ width: "85%", margin: "0% 5% 5%" }}
+        style={{ width: "85%", margin: "24px auto" }}
       >
         {/* //^ ------------------- PROGRAM / SOURCE ---------------------- */}
         <Form.Group>
@@ -246,6 +263,55 @@ const FormAddInventory = ({
               </Form.Control.Feedback>
             </Col>
           </Row>
+        </Form.Group>
+
+        <Form.Group>
+          {/* //^ ------------------------- IMAGES ---------------------------- */}
+          <Form.Label className="form-label">Images</Form.Label>
+          <Button
+            onClick={() => {
+              setImages([...images, imageCount]);
+              setImageCount(imageCount + 1);
+            }}
+            className="form-button"
+            block
+            style={{
+              width: "150px",
+              backgroundColor: "#000",
+              margin: "0rem",
+            }}
+          >
+            Add images
+          </Button>
+
+          {images.map((item, index) => {
+            if (item == index) {
+              return (
+                <Row key={index} className="image-center" style={{ margin: "10px auto 0px" }}>
+                  <Col sm={10}>
+                    <Form.Control
+                      id={`form-image-${item}`}
+                      type="file"
+                      required
+                      name="images"
+                      style={{ fontSize: "1rem", color: "black" }}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please add an image.
+                    </Form.Control.Feedback>
+                  </Col>
+                  <Col sm={2}>
+                    <Image
+                      id={`form-image-cancel-${index}`}
+                      src={cancel}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => removeImage(index)}
+                    />
+                  </Col>
+                </Row>
+              );
+            }
+          })}
         </Form.Group>
 
         <div className="form-footer-container">
