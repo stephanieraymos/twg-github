@@ -22,18 +22,42 @@ const Dashboard = () => {
     return <OrderDetails />;
   };
 
+  //GROSS MARGIN
+
   const grossMarginCalc = trucks.map(function (truck) {
-    return (truck.price - truck.cost)
+    return truck.price - truck.cost;
   });
 
-  function getArraySum(a){
-    var total=0;
-    for(var i in a) { 
-        total += a[i];
+  function getArraySum(a) {
+    var total = 0;
+    for (var i in a) {
+      total += a[i];
     }
     return total;
-}
-  const grossMargin = getArraySum(grossMarginCalc)
+  }
+  const grossMargin = getArraySum(grossMarginCalc);
+
+  //Sold 24 hrs
+  // const soldDay = () => {
+  //   if (trucks[0].status === 0) {
+  //     // return trucks.status(0).length;
+  //     console.log(trucks[0].status)
+  //   }
+  // };
+  // console.log(soldDay())
+  const availStatus = trucks.map(function (truck) {
+    return truck.status[2]
+  })
+  const soldStatus = trucks.map((truck) => {
+    return truck.status[0]
+  })
+
+  if (availStatus) {
+    console.log("Available")
+  }
+  if (soldStatus) {
+    console.log("Sold")
+  }
 
   return (
     <>
@@ -41,7 +65,6 @@ const Dashboard = () => {
         <Navigation />
       </div>
       <article className="admin-dashboard-content">
-
         <h1 className="dashboard-heading">Dashboard</h1>
 
         <div className="section-container">
@@ -51,7 +74,7 @@ const Dashboard = () => {
           </div>
           <div className="trucks-needing-approval section-items">
             <p className="section-items-desc">Sold 24 hrs</p>
-            <p className="dash-count">14</p>
+            <p className="dash-count"></p>
           </div>
           <div className="trucks-sold-30days section-items">
             <p className="section-items-desc">Gross Margin 24 hrs</p>
