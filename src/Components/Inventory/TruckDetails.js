@@ -47,7 +47,7 @@ const TruckDetails = () => {
     images, setImages
   } = useTruckContext();
 
-  const { accessToken } = useAuthContext();
+  const { accessToken, isSeller, isAdmin } = useAuthContext();
 
   let history = useHistory();
   let location = useLocation();
@@ -205,38 +205,44 @@ const TruckDetails = () => {
           <FaAngleDoubleLeft /> Back to inventory
         </Button>
 
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            deleteTruck();
-          }}
-          className="delete-truck-btn"
-        >
-          <FaTimes /> Delete truck
-        </Button>
+        {(isSeller() || isAdmin()) &&
+          <>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                deleteTruck();
+              }}
+              className="delete-truck-btn"
+            >
+              <FaTimes /> Delete truck
+            </Button>
 
-        <Button
-          className="edit-truck-btn"
-          onClick={(e) => {
-            e.preventDefault();
-            history.push(`${inventoryPATH}/edit/${id}`, {
-              from: location.pathname,
-            });
-          }}
-        >
-          <FaEdit /> Edit truck
-        </Button>
-        <Button
-          className="edit-notes-btn"
-          onClick={(e) => {
-            e.preventDefault();
-            history.push(`${inventoryPATH}/edit/notes/${id}`, {
-              from: location.pathname,
-            });
-          }}
-        >
-          <FaEdit /> Edit Notes
-        </Button>
+            <Button
+              className="edit-truck-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                history.push(`${inventoryPATH}/edit/${id}`, {
+                  from: location.pathname,
+                });
+              }}
+            >
+              <FaEdit /> Edit truck
+            </Button>
+            <Button
+              className="edit-notes-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                history.push(`${inventoryPATH}/edit/notes/${id}`, {
+                  from: location.pathname,
+                });
+              }}
+            >
+              <FaEdit /> Edit Notes
+            </Button>
+          </>
+        }
+
+
       </div>
 
       <TruckDetailsCard id={id} current={location.pathname} />

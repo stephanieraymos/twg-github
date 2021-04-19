@@ -6,12 +6,14 @@ import {
   useHistory,
   useRouteMatch,
 } from "react-router-dom";
+import { useAuthContext } from "../../auth";
 
 const AddInventory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   let history = useHistory();
   let { url } = useRouteMatch();
+  const { isSeller, isAdmin } = useAuthContext();
 
   document.title = "Add Inventory";
   const openModal = () => {
@@ -21,18 +23,20 @@ const AddInventory = () => {
   return (
     <>
       {/* //^ ---- ADD LOAD BUTTON ---- */}
-      <div className="btn-container">
-        <Button
-          className="boot-button"
-          style={{ margin: "1rem 0 -.75rem 0" }}
-          onClick={(e) => {
-            e.preventDefault();
-            history.push(`${url}/add`)
-          }}
-        >
-          Add Load
-        </Button>
-      </div>
+      {(isSeller() || isAdmin()) &&
+        <div className="btn-container">
+          <Button
+            className="boot-button"
+            style={{ margin: "1rem 0 -.75rem 0" }}
+            onClick={(e) => {
+              e.preventDefault();
+              history.push(`${url}/add`)
+            }}
+          >
+            Add Load
+          </Button>
+        </div>
+      }
     </>
   );
 };
