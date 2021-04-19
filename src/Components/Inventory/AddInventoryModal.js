@@ -26,7 +26,7 @@ const AddInventoryModal = ({
       <Modal show={isModalOpen} onHide={closeModal} centered>
         <div
           className="form-body-container"
-          style={{ width: "40rem", alignSelf: "center" }}
+          style={{ width: "100%", alignSelf: "center" }}
         >
           {/* //^ MODAL HEADER */}
           <div
