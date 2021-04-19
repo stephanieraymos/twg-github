@@ -35,6 +35,7 @@ const SuperuserProvider = ({ children }) => {
     const { accessToken } = useAuthContext();
 
     ////////////////////// &&--FUNCTIONS--&& /////////////////////////
+    //^ FETCH USER
     useEffect(() => {
         fetch(superuserURL, {
             method: "GET",
@@ -64,6 +65,7 @@ const SuperuserProvider = ({ children }) => {
             });
     }, []);
 
+    //^ ---- GET USER BY ID ----
     const getUserById = (id) => {
         return new Promise((resolve, reject) => {
             fetch(`${superuserURL}?id=${id}`, {
@@ -104,6 +106,7 @@ const SuperuserProvider = ({ children }) => {
 
     const boolToString = (value) => (value ? 1 : 0).toString();
 
+    //^ ---- CREATE USER ----
     const createUser = (data) => {
         const formatedData = {};
 
@@ -137,6 +140,7 @@ const SuperuserProvider = ({ children }) => {
         });
     };
 
+    //^ ---- UPDATE USER ----
     const updateUser = (data) => {
         const formatedData = {};
 

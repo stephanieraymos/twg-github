@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../img/w-logo.png";
-import { Card, Accordion } from "react-bootstrap";
+import { Card, Button, Accordion, Form } from "react-bootstrap";
 import { FaAngleDoubleDown, FaEdit } from "react-icons/fa";
 import { useParams, Link } from "react-router-dom";
 import { inventoryPATH } from "../../Pages/paths";
@@ -36,7 +36,19 @@ const TruckDetailsCard = ({ id, current }) => {
   const [salesReadMore, setSalesReadMore] = useState(false);
   const [accountingReadMore, setAccountingReadMore] = useState(false);
   const [logisticsReadMore, setLogisticsReadMore] = useState(false);
+  const [isEditingSales, setIsEditingSales] = useState(false);
+  const [isEditingLogi, setIsEditingLogi] = useState(false);
+  const [isEditingAct, setIsEditingAct] = useState(false);
 
+  const cancelLogi = () => {
+    setIsEditingLogi(false);
+  };
+  const cancelAct = () => {
+    setIsEditingAct(false);
+  };
+  const cancelSales = () => {
+    setIsEditingSales(false);
+  };
   return (
     <>
       <section className="truck-section">
@@ -47,23 +59,51 @@ const TruckDetailsCard = ({ id, current }) => {
             {isSeller() || isAdmin() ? (
               <>
                 {/* //^ SALES NOTES */}
-                <Card style={{ border: "none" }}>
-                  <Card.Header className="all-accordions">
+                <Form style={{ border: "none" }}>
+                  <div className="all-accordions">
                     <p className="notes-header-wrapper">
                       <span className="truck-data-title">Sales Notes: </span>
 
-                      <Link
-                        className="edit-notes-btn edit-notes-header-btn"
-                        to={{
-                          pathname: `${inventoryPATH}/edit/notes/${id}`,
-                          state: { from: current },
-                        }}
-                      >
-                        <FaEdit /> Edit Notes
-                      </Link>
+                      {/* //^ EDIT NOTES LINKS */}
+                      <div className="edit-notes-links">
+                        <Link
+                          key={isEditingSales ? "button-submit" : "button-edit"}
+                          type={isEditingSales ? "submit" : "button"}
+                          onClick={
+                            isEditingSales
+                              ? null
+                              : () => setIsEditingSales(true)
+                          }
+                          className="edit-notes-btn edit-notes-header-btn"
+                        >
+                          {isEditingSales ? (
+                            "Update"
+                          ) : (
+                            <>
+                              <FaEdit /> <span>Edit Notes</span>
+                            </>
+                          )}
+                        </Link>
+
+                        {isEditingSales && (
+                          <Link
+                            type="button"
+                            onClick={
+                              isEditingSales
+                                ? () => cancelSales()
+                                : (e) => {
+                                    e.preventDefault();
+                                  }
+                            }
+                            className="cancel-update-notes"
+                          >
+                            Cancel
+                          </Link>
+                        )}
+                      </div>
                     </p>
-                  </Card.Header>
-                  <Card.Body
+                  </div>
+                  <div
                     style={{ color: "black", backgroundColor: "transparent" }}
                   >
                     {sales.length < 115 && sales.length !== 0 ? (
@@ -85,28 +125,54 @@ const TruckDetailsCard = ({ id, current }) => {
                     ) : (
                       <p>No Notes yet</p>
                     )}
-                  </Card.Body>
-                </Card>
+                  </div>
+                </Form>
                 {/* //^ ACCOUNTING NOTES */}
-                <Card style={{ border: "none" }}>
-                  <Card.Header className="all-accordions">
+                <Form style={{ border: "none" }}>
+                  <div className="all-accordions">
                     <p className="notes-header-wrapper">
                       <span className="truck-data-title">
                         Accounting Notes:{" "}
                       </span>
 
-                      <Link
-                        className="edit-notes-btn edit-notes-header-btn"
-                        to={{
-                          pathname: `${inventoryPATH}/edit/notes/${id}`,
-                          state: { from: current },
-                        }}
-                      >
-                        <FaEdit /> Edit Notes
-                      </Link>
+                      {/* //^ EDIT NOTES LINKS */}
+                      <div className="edit-notes-links">
+                        <Link
+                          key={isEditingAct ? "button-submit" : "button-edit"}
+                          type={isEditingAct ? "submit" : "button"}
+                          onClick={
+                            isEditingAct ? null : () => setIsEditingAct(true)
+                          }
+                          className="edit-notes-btn edit-notes-header-btn"
+                        >
+                          {isEditingAct ? (
+                            "Update"
+                          ) : (
+                            <>
+                              <FaEdit /> <span>Edit Notes</span>
+                            </>
+                          )}
+                        </Link>
+
+                        {isEditingAct && (
+                          <Link
+                            type="button"
+                            onClick={
+                              isEditingAct
+                                ? () => cancelAct()
+                                : (e) => {
+                                    e.preventDefault();
+                                  }
+                            }
+                            className="cancel-update-notes"
+                          >
+                            Cancel
+                          </Link>
+                        )}
+                      </div>
                     </p>
-                  </Card.Header>
-                  <Card.Body
+                  </div>
+                  <div
                     style={{ color: "black", backgroundColor: "transparent" }}
                   >
                     {accounting.length < 115 && accounting.length !== 0 ? (
@@ -128,27 +194,53 @@ const TruckDetailsCard = ({ id, current }) => {
                     ) : (
                       <p>No Notes yet</p>
                     )}
-                  </Card.Body>
-                </Card>
+                  </div>
+                </Form>
                 {/* //^ LOGISTICS NOTES */}
-                <Card style={{ border: "none" }}>
-                  <Card.Header className="all-accordions">
+                <Form style={{ border: "none" }}>
+                  <div className="all-accordions">
                     <p className="notes-header-wrapper">
                       <span className="truck-data-title">
                         Logistics Notes:{" "}
                       </span>
-                      <Link
-                        className="edit-notes-btn edit-notes-header-btn"
-                        to={{
-                          pathname: `${inventoryPATH}/edit/notes/${id}`,
-                          state: { from: current },
-                        }}
-                      >
-                        <FaEdit /> Edit Notes
-                      </Link>
+                      {/* //^ EDIT NOTES LINKS */}
+                      <div className="edit-notes-links">
+                        <Link
+                          key={isEditingLogi ? "button-submit" : "button-edit"}
+                          type={isEditingLogi ? "submit" : "button"}
+                          onClick={
+                            isEditingLogi ? null : () => setIsEditingLogi(true)
+                          }
+                          className="edit-notes-btn edit-notes-header-btn"
+                        >
+                          {isEditingLogi ? (
+                            "Update"
+                          ) : (
+                            <>
+                              <FaEdit /> <span>Edit Notes</span>
+                            </>
+                          )}
+                        </Link>
+
+                        {isEditingLogi && (
+                          <Link
+                            type="button"
+                            onClick={
+                              isEditingLogi
+                                ? () => cancelLogi()
+                                : (e) => {
+                                    e.preventDefault();
+                                  }
+                            }
+                            className="cancel-update-notes"
+                          >
+                            Cancel
+                          </Link>
+                        )}
+                      </div>
                     </p>
-                  </Card.Header>
-                  <Card.Body
+                  </div>
+                  <div
                     style={{ color: "black", backgroundColor: "transparent" }}
                   >
                     {logistics.length < 115 && logistics.length !== 0 ? (
@@ -170,8 +262,8 @@ const TruckDetailsCard = ({ id, current }) => {
                     ) : (
                       <p>No Notes yet</p>
                     )}
-                  </Card.Body>
-                </Card>
+                  </div>
+                </Form>
               </>
             ) : null}
           </div>
