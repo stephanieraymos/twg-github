@@ -287,7 +287,7 @@ const FormAddInventory = ({
           {images.map((item, index) => {
             if (item == index) {
               return (
-                <Row key={index} className="image-center" style={{ margin: "10px auto 0px" }}>
+                <Row key={index} className="flex-start-center" style={{ margin: "10px auto 0px" }}>
                   <Col sm={10}>
                     <Form.Control
                       id={`form-image-${item}`}
