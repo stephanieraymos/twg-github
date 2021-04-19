@@ -21,14 +21,14 @@ export const resetPasswordURL = "https://api.thewholesalegroup.com/v1/account/pa
 
 export const superuserURL = "https://api.thewholesalegroup.com/v1/superuser/users/"
 
-export const development = true 
+const development = true 
+
+let inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/edit/";
+let manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
 
 if (development) {
-    const inventoryURL = "https://api.thewholesalegroup.com/test/v1/inventory/edit/";
-    const manifestURL = "https://api.thewholesalegroup.com/test/v1/inventory/manifest/";
-} else {
-    const inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/edit/";
-    const manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
+    inventoryURL = "https://api.thewholesalegroup.com/test/v1/inventory/edit/";
+    manifestURL = "https://api.thewholesalegroup.com/test/v1/inventory/manifest/";
 }
 
-export const {inventoryURL, manifestURL}
+export {inventoryURL, manifestURL}
