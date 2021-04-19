@@ -76,6 +76,11 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem(isSuperuserKey);
     };
 
+    const resetAuthContext = () => {
+        removeTokens();
+        resetLocalStorage();
+    }
+
     const setAccessToken = (token) => {
         setCookie(accessTokenKey, token, {
             path: "/",
@@ -215,13 +220,11 @@ const AuthProvider = ({ children }) => {
                 }),
             })
                 .then((response) => {
-                    removeTokens();
-                    resetLocalStorage();
+                    resetAuthContext();
                     resolve(true);
                 })
                 .catch((error) => {
-                    removeTokens();
-                    resetLocalStorage();
+                    resetAuthContext();
                     reject(error);
                 });
         });
@@ -498,6 +501,8 @@ const AuthProvider = ({ children }) => {
         setAccessToken,
         setRefreshToken,
         removeTokens,
+        resetLocalStorage,
+        resetAuthContext,
 
         userId,
         isSeller,

@@ -9,14 +9,13 @@ import {
 } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { useAuthContext } from "../../auth";
-import { getByIdURL, inventoryURL, manifestURL } from "../../Pages/urls";
+import { getByIdURL, inventoryURL, manifestURL, imageURL } from "../../Pages/urls";
 import TruckDetailsCard from "./TruckDetailsCard";
 import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
 import { useTruckContext } from "../../truckContext";
 import { Button } from "react-bootstrap";
 
 import { inventoryPATH } from "../../Pages/paths";
-import AddImage from "./AddImage";
 
 const TruckDetails = () => {
   const { id } = useParams();
@@ -43,6 +42,9 @@ const TruckDetails = () => {
     logistics: [logistics, setLogistics],
     lane: [lane, setLane],
     fileCount: [fileCount, setFileCount],
+    imageCount, setImageCount,
+    imageIds, setImageIds,
+    images, setImages
   } = useTruckContext();
 
   const { accessToken, isSeller, isAdmin } = useAuthContext();
@@ -72,6 +74,28 @@ const TruckDetails = () => {
         });
     } else {
       setFiles([]);
+    }
+  };
+
+  const getImages = () => {
+    setImageCount(imageIds.length);
+    if (imageIds.length > 0) {
+      const data = new FormData();
+      imageIds.map((id) => data.append("imageIds", id));
+      fetch(imageURL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken()}`,
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((images) => setImages(images))
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setImages([]);
     }
   };
 
@@ -117,6 +141,7 @@ const TruckDetails = () => {
             sales,
             accounting,
             logistics,
+            imageIds
           } = data[0];
 
           setIsEmpty(false);
@@ -138,6 +163,7 @@ const TruckDetails = () => {
           setAccounting(accounting);
           setLogistics(logistics);
           setLane(lane);
+          setImageIds(imageIds)
         }
       })
       .catch((error) => {
@@ -146,7 +172,7 @@ const TruckDetails = () => {
   };
 
   useEffect(() => {
-    if (isEmpty || manifestIds.length != fileCount) {
+    if (isEmpty || manifestIds.length != fileCount || imageIds.length != imageCount) {
       getTruck();
     }
   }, []);
@@ -154,6 +180,10 @@ const TruckDetails = () => {
   useEffect(() => {
     getManifest();
   }, [manifestIds]);
+
+  useEffect(() => {
+    getImages();
+  }, [imageIds]);
 
   if (!loadId) {
     return <h2>No truck to display</h2>;
@@ -175,7 +205,7 @@ const TruckDetails = () => {
           <FaAngleDoubleLeft /> Back to inventory
         </Button>
 
-        {isSeller() || isAdmin() ? (
+        {(isSeller() || isAdmin()) &&
           <>
             <Button
               onClick={(e) => {
@@ -210,7 +240,7 @@ const TruckDetails = () => {
               <FaEdit /> Edit Notes
             </Button>
           </>
-        ) : null}
+        }
 
 
       </div>

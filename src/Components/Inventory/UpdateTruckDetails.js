@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth";
-import { getByIdURL, manifestURL, inventoryURL } from "../../Pages/urls";
+import { getByIdURL, manifestURL, inventoryURL, imageURL } from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
 import { useTruckContext } from "../../truckContext";
 
@@ -11,6 +11,7 @@ import { inventoryPATH } from "../../Pages/paths";
 const UpdateTruckDetails = () => {
   const { id } = useParams();
   const [oldManifestIds, setOldManifestIds] = useState([]);
+  const [oldImageIds, setOldImageIds] = useState([]);
   const [validated, setValidated] = useState(false);
 
   const {
@@ -35,6 +36,9 @@ const UpdateTruckDetails = () => {
     logistics: [logistics, setLogistics],
     lane: [lane, setLane],
     fileCount: [fileCount, setFileCount],
+    imageCount, setImageCount,
+    imageIds, setImageIds,
+    images, setImages
   } = useTruckContext();
 
   const { accessToken } = useAuthContext();
@@ -86,6 +90,28 @@ const UpdateTruckDetails = () => {
     }
   };
 
+  const getImages = () => {
+    setImageCount(imageIds.length);
+    if (imageIds.length > 0) {
+      const data = new FormData();
+      imageIds.map((id) => data.append("imageIds", id));
+      fetch(imageURL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken()}`,
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((images) => setImages(images))
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setImages([]);
+    }
+  };
+
   const getTruck = () => {
     fetch(`${getByIdURL}${id}`, {
       method: "GET",
@@ -115,6 +141,7 @@ const UpdateTruckDetails = () => {
             accounting,
             logistics,
             lane,
+            imageIds,
           } = data[0];
 
           setIsEmpty(false);
@@ -136,6 +163,7 @@ const UpdateTruckDetails = () => {
           setAccounting(accounting);
           setLogistics(logistics);
           setLane(lane);
+          setImageIds(imageIds);
         } else {
           throw new Error("Truck does not exist.");
         }
@@ -155,6 +183,10 @@ const UpdateTruckDetails = () => {
     getManifest();
   }, [manifestIds]);
 
+  useEffect(() => {
+    getImages();
+  }, [imageIds]);
+
   // Return true or false to indicate if fetch was successful
   const updateTruck = () => {
     const data = new FormData(form.current);
@@ -167,6 +199,7 @@ const UpdateTruckDetails = () => {
     tempContents.map((item) => data.append("contents", item));
 
     oldManifestIds.map((id) => data.append("manifestIds", id));
+    oldImageIds.map((id) => data.append("imageIds", id));
     fetch(inventoryURL, {
       method: "PUT",
       headers: {
@@ -199,6 +232,8 @@ const UpdateTruckDetails = () => {
           handleSubmit={handleSubmit}
           oldManifestIds={oldManifestIds}
           setOldManifestIds={setOldManifestIds}
+          oldImageIds={oldImageIds}
+          setOldImageIds={setOldImageIds}
           redirect={redirect}
         />
       </div>

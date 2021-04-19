@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../img/w-logo.png";
-import { Card, Accordion } from "react-bootstrap";
+import { Card, Accordion, Carousel, Image } from "react-bootstrap";
 import { FaAngleDoubleDown, FaEdit } from "react-icons/fa";
 import { useParams, Link } from "react-router-dom";
 import { inventoryPATH } from "../../Pages/paths";
@@ -31,6 +31,9 @@ const TruckDetailsCard = ({ id, current }) => {
     logistics: [logistics, setLogistics],
     lane: [lane, setLane],
     fileCount: [fileCount, setFileCount],
+    imageCount, setImageCount,
+    imageIds, setImageIds,
+    images, setImages,
   } = useTruckContext();
 
   const [salesReadMore, setSalesReadMore] = useState(false);
@@ -43,15 +46,32 @@ const TruckDetailsCard = ({ id, current }) => {
         <h2 className="truck-details-header">{source}</h2>
         <div className="truck">
           <div className="truck-info">
-            <img src={logo} alt={source} style={{ size: "10rem" }} />
-            {isSeller() || isAdmin() ? (
+            {/* <img src={logo} alt={source} style={{ size: "10rem" }} /> */}
+            {images.length > 0 ? (
+                <Carousel style={{margin: "0px 0px 24px"}} interval={null}>
+                  {images.map((item, index) => {
+                    const { image, imageName } = item;
+                    return (
+                      <Carousel.Item>
+                        <Image
+                          src={image}
+                          style={{ cursor: "pointer" }}
+                        />
+                      </Carousel.Item>
+                    );
+                  })}
+                </Carousel>
+              ) : (
+                <img src={logo} alt={source} style={{ size: "10rem" }} />
+              )
+            }
+            {(isSeller() || isAdmin()) &&
               <>
                 {/* //^ SALES NOTES */}
                 <Card style={{ border: "none" }}>
                   <Card.Header className="all-accordions">
                     <p className="notes-header-wrapper">
                       <span className="truck-data-title">Sales Notes: </span>
-
                       <Link
                         className="edit-notes-btn edit-notes-header-btn"
                         to={{
@@ -173,7 +193,7 @@ const TruckDetailsCard = ({ id, current }) => {
                   </Card.Body>
                 </Card>
               </>
-            ) : null}
+            }
           </div>
 
           <div className="truck-info">

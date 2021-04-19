@@ -12,6 +12,7 @@ import TruckDetails from "./TruckDetails";
 import UpdateTruckDetails from "./UpdateTruckDetails";
 import UpdateNotes from "./UpdateNotes";
 import { TruckProvider } from "../../truckContext";
+import AddInventoryPage from "./AddInventoryPage";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -29,12 +30,15 @@ const InventoryAllTrucks = () => {
           </div>
           <Container fluid>
             <div className="table-top-container">
-              <AddInventory addNewTrucks={addTruck} />
+              <AddInventory />
               <TableLegend />
             </div>
           </Container>
           <TableInventory trucks={trucks} />
         </>
+      </PrivateRoute>
+      <PrivateRoute exact path={`${path}/add`}>
+        <AddInventoryPage addNewTrucks={addTruck} />
       </PrivateRoute>
       <TruckProvider>
         <PrivateRoute exact path={`${path}/:id`}>
