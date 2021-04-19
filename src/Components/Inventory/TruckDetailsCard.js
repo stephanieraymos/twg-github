@@ -5,8 +5,10 @@ import { FaAngleDoubleDown, FaEdit } from "react-icons/fa";
 import { useParams, Link } from "react-router-dom";
 import { inventoryPATH } from "../../Pages/paths";
 import { useTruckContext } from "../../truckContext";
+import { useAuthContext } from "../../auth";
 
 const TruckDetailsCard = ({ id, current }) => {
+  const { isSeller, isAdmin } = useAuthContext();
   const {
     isEmpty: [isEmpty, setIsEmpty],
     loadId: [loadId, setLoadId],
@@ -42,127 +44,138 @@ const TruckDetailsCard = ({ id, current }) => {
         <div className="truck">
           <div className="truck-info">
             <img src={logo} alt={source} style={{ size: "10rem" }} />
-            {/* //^ SALES NOTES */}
-            <Card style={{ border: "none" }}>
-              <Card.Header className="all-accordions">
-                <p className="notes-header-wrapper">
-                  <span className="truck-data-title">Sales Notes: </span>
+            {isSeller() || isAdmin() ? (
+              <>
+                {/* //^ SALES NOTES */}
+                <Card style={{ border: "none" }}>
+                  <Card.Header className="all-accordions">
+                    <p className="notes-header-wrapper">
+                      <span className="truck-data-title">Sales Notes: </span>
 
-                  <Link
-                    className="edit-notes-btn edit-notes-header-btn"
-                    to={{
-                      pathname: `${inventoryPATH}/edit/notes/${id}`,
-                      state: { from: current }
-                    }}
+                      <Link
+                        className="edit-notes-btn edit-notes-header-btn"
+                        to={{
+                          pathname: `${inventoryPATH}/edit/notes/${id}`,
+                          state: { from: current },
+                        }}
+                      >
+                        <FaEdit /> Edit Notes
+                      </Link>
+                    </p>
+                  </Card.Header>
+                  <Card.Body
+                    style={{ color: "black", backgroundColor: "transparent" }}
                   >
-                    <FaEdit /> Edit Notes
-                  </Link>
-                </p>
-              </Card.Header>
-              <Card.Body
-                style={{ color: "black", backgroundColor: "transparent" }}
-              >
-                {sales.length < 115 && sales.length !== 0 ? (
-                  `${sales}`
-                ) : sales.length > 115 ? (
-                  <span>
-                    {salesReadMore ? sales : `${sales.substring(0, 115)}...`}
-                    <button
-                      className="show-more-btn"
-                      onClick={() => {
-                        setSalesReadMore(!salesReadMore);
-                      }}
-                    >
-                      {salesReadMore ? "show less" : "read more"}
-                    </button>
-                  </span>
-                ) : (
-                  <p>No Notes yet</p>
-                )}
-              </Card.Body>
-            </Card>
-            {/* //^ ACCOUNTING NOTES */}
-            <Card style={{ border: "none" }}>
-              <Card.Header className="all-accordions">
-                <p className="notes-header-wrapper">
-                  <span className="truck-data-title">Accounting Notes: </span>
+                    {sales.length < 115 && sales.length !== 0 ? (
+                      `${sales}`
+                    ) : sales.length > 115 ? (
+                      <span>
+                        {salesReadMore
+                          ? sales
+                          : `${sales.substring(0, 115)}...`}
+                        <button
+                          className="show-more-btn"
+                          onClick={() => {
+                            setSalesReadMore(!salesReadMore);
+                          }}
+                        >
+                          {salesReadMore ? "show less" : "read more"}
+                        </button>
+                      </span>
+                    ) : (
+                      <p>No Notes yet</p>
+                    )}
+                  </Card.Body>
+                </Card>
+                {/* //^ ACCOUNTING NOTES */}
+                <Card style={{ border: "none" }}>
+                  <Card.Header className="all-accordions">
+                    <p className="notes-header-wrapper">
+                      <span className="truck-data-title">
+                        Accounting Notes:{" "}
+                      </span>
 
-                  <Link
-                    className="edit-notes-btn edit-notes-header-btn"
-                    to={{
-                      pathname: `${inventoryPATH}/edit/notes/${id}`,
-                      state: { from: current }
-                    }}
+                      <Link
+                        className="edit-notes-btn edit-notes-header-btn"
+                        to={{
+                          pathname: `${inventoryPATH}/edit/notes/${id}`,
+                          state: { from: current },
+                        }}
+                      >
+                        <FaEdit /> Edit Notes
+                      </Link>
+                    </p>
+                  </Card.Header>
+                  <Card.Body
+                    style={{ color: "black", backgroundColor: "transparent" }}
                   >
-                    <FaEdit /> Edit Notes
-                  </Link>
-                </p>
-              </Card.Header>
-              <Card.Body
-                style={{ color: "black", backgroundColor: "transparent" }}
-              >
-                {accounting.length < 115 && accounting.length !== 0 ? (
-                  `${accounting}`
-                ) : accounting.length > 115 ? (
-                  <span>
-                    {accountingReadMore
-                      ? accounting
-                      : `${accounting.substring(0, 115)}...`}
-                    <button
-                      className="show-more-btn"
-                      onClick={() => {
-                        setAccountingReadMore(!accountingReadMore);
-                      }}
-                    >
-                      {accountingReadMore ? "show less" : "read more"}
-                    </button>
-                  </span>
-                ) : (
-                  <p>No Notes yet</p>
-                )}
-              </Card.Body>
-            </Card>
-            {/* //^ LOGISTICS NOTES */}
-            <Card style={{ border: "none" }}>
-              <Card.Header className="all-accordions">
-                <p className="notes-header-wrapper">
-                  <span className="truck-data-title">Logistics Notes: </span>
-                  <Link
-                    className="edit-notes-btn edit-notes-header-btn"
-                    to={{
-                      pathname: `${inventoryPATH}/edit/notes/${id}`,
-                      state: { from: current }
-                    }}
+                    {accounting.length < 115 && accounting.length !== 0 ? (
+                      `${accounting}`
+                    ) : accounting.length > 115 ? (
+                      <span>
+                        {accountingReadMore
+                          ? accounting
+                          : `${accounting.substring(0, 115)}...`}
+                        <button
+                          className="show-more-btn"
+                          onClick={() => {
+                            setAccountingReadMore(!accountingReadMore);
+                          }}
+                        >
+                          {accountingReadMore ? "show less" : "read more"}
+                        </button>
+                      </span>
+                    ) : (
+                      <p>No Notes yet</p>
+                    )}
+                  </Card.Body>
+                </Card>
+                {/* //^ LOGISTICS NOTES */}
+                <Card style={{ border: "none" }}>
+                  <Card.Header className="all-accordions">
+                    <p className="notes-header-wrapper">
+                      <span className="truck-data-title">
+                        Logistics Notes:{" "}
+                      </span>
+                      <Link
+                        className="edit-notes-btn edit-notes-header-btn"
+                        to={{
+                          pathname: `${inventoryPATH}/edit/notes/${id}`,
+                          state: { from: current },
+                        }}
+                      >
+                        <FaEdit /> Edit Notes
+                      </Link>
+                    </p>
+                  </Card.Header>
+                  <Card.Body
+                    style={{ color: "black", backgroundColor: "transparent" }}
                   >
-                    <FaEdit /> Edit Notes
-                  </Link>
-                </p>
-              </Card.Header>
-              <Card.Body
-                style={{ color: "black", backgroundColor: "transparent" }}
-              >
-                {logistics.length < 115 && logistics.length !== 0 ? (
-                  `${logistics}`
-                ) : logistics.length > 115 ? (
-                  <span>
-                    {logisticsReadMore
-                      ? logistics
-                      : `${logistics.substring(0, 115)}...`}
-                    <button
-                      className="show-more-btn"
-                      onClick={() => {
-                        setLogisticsReadMore(!logisticsReadMore);
-                      }}
-                    >
-                      {logisticsReadMore ? "show less" : "read more"}
-                    </button>
-                  </span>
-                ) : (
-                  <p>No Notes yet</p>
-                )}
-              </Card.Body>
-            </Card>
+                    {logistics.length < 115 && logistics.length !== 0 ? (
+                      `${logistics}`
+                    ) : logistics.length > 115 ? (
+                      <span>
+                        {logisticsReadMore
+                          ? logistics
+                          : `${logistics.substring(0, 115)}...`}
+                        <button
+                          className="show-more-btn"
+                          onClick={() => {
+                            setLogisticsReadMore(!logisticsReadMore);
+                          }}
+                        >
+                          {logisticsReadMore ? "show less" : "read more"}
+                        </button>
+                      </span>
+                    ) : (
+                      <p>No Notes yet</p>
+                    )}
+                  </Card.Body>
+                </Card>
+              </>
+            ) : null}
           </div>
+
           <div className="truck-info">
             {/* //^ TRUCK ID CARD */}
             <Card style={{ border: "none" }}>
@@ -232,7 +245,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 </p>
               </Card.Header>
             </Card>
-           
+
             {/* //^ TRUCK RETAIL PRICE CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
@@ -250,8 +263,8 @@ const TruckDetailsCard = ({ id, current }) => {
                 </p>
               </Card.Header>
             </Card>
-             {/* //^ COMMISSION CARD */}
-             <Card style={{ border: "none" }}>
+            {/* //^ COMMISSION CARD */}
+            <Card style={{ border: "none" }}>
               <Card.Header
                 style={{
                   padding: 0,

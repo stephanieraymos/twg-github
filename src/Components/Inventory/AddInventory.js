@@ -7,7 +7,7 @@ import { useAuthContext } from "../../auth";
 const AddInventory = ({ addNewTrucks }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { isSeller } = useAuthContext();
+  const { isSeller, isAdmin } = useAuthContext();
 
   document.title = "Add Inventory";
   const openModal = () => {
@@ -16,7 +16,7 @@ const AddInventory = ({ addNewTrucks }) => {
 
   return (
     <>
-      {isSeller() && (
+      {isSeller() || isAdmin() ? (
         <div className="btn-container">
           <Button
             className="boot-button"
@@ -26,7 +26,7 @@ const AddInventory = ({ addNewTrucks }) => {
             Add Load
           </Button>
         </div>
-      )}
+      ) : null}
       <AddInventoryModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
