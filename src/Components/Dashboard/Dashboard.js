@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "../../context";
+import React from "react";
 import { useTruck } from "../../truckContext";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
@@ -15,18 +13,7 @@ import Navigation from "../Navigation/Navigation";
 const Dashboard = () => {
   document.title = "Dashboard";
   const { userId } = useAuthContext();
-  const {
-    openSidebar,
-    isSidebarOpen,
-    setUserId,
-    setEmail,
-    setFirstName,
-    setLastName,
-    setCompany,
-    setPhoneNumber,
-    setBillingAddress
-  } = useGlobalContext();
-  // const { getData } = useTruckContext();
+
   const [trucks, loading] = useTruck();
 
   let history = useHistory();
@@ -35,35 +22,40 @@ const Dashboard = () => {
     return <OrderDetails />;
   };
 
+  const grossMarginCalc = trucks.map(function (truck) {
+    return (truck.price - truck.cost)
+  });
+
+  function getArraySum(a){
+    var total=0;
+    for(var i in a) { 
+        total += a[i];
+    }
+    return total;
+}
+  const grossMargin = getArraySum(grossMarginCalc)
+
   return (
     <>
       <div>
         <Navigation />
       </div>
       <article className="admin-dashboard-content">
-        {/* <button
-          className={`${
-            isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"
-          }`}
-          onClick={openSidebar}
-        >
-          <FaBars />
-        </button> */}
 
         <h1 className="dashboard-heading">Dashboard</h1>
 
         <div className="section-container">
           <div className="trucks-available section-items">
-            <p className="section-items-desc">Trucks Available</p>
+            <p className="section-items-desc">Available</p>
             <p className="dash-count">{trucks.length}</p>
           </div>
           <div className="trucks-needing-approval section-items">
-            <p className="section-items-desc">Needing Approval</p>
+            <p className="section-items-desc">Sold 24 hrs</p>
             <p className="dash-count">14</p>
           </div>
           <div className="trucks-sold-30days section-items">
-            <p className="section-items-desc">Sold Last 30 Days</p>
-            <p className="dash-count">100</p>
+            <p className="section-items-desc">Gross Margin 24 hrs</p>
+            <p className="dash-count">{grossMargin}</p>
           </div>
           <div className="trucks-contacts section-items">
             <p className="section-items-desc">Contacts</p>
