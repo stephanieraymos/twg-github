@@ -60,7 +60,8 @@ const NotesForm = (id) => {
     event.stopPropagation();
     if (actForm.checkValidity() === true) {
       setValidated(false);
-      performActNotesUpdate();
+      //   performActNotesUpdate();
+      updateActNotes();
     } else {
       setValidated(true);
     }
@@ -71,7 +72,8 @@ const NotesForm = (id) => {
     event.stopPropagation();
     if (logiForm.checkValidity() === true) {
       setValidated(false);
-      performLogiNotesUpdate();
+      //   performLogiNotesUpdate();
+      updateLogiNotes();
     } else {
       setValidated(true);
     }
@@ -98,57 +100,98 @@ const NotesForm = (id) => {
         console.log(error);
       });
   };
-
-  const performSalesNotesUpdate = () => {
-    const data = new FormData(salesForm.current);
-    // var object = {};
-    // data.forEach((value, key) => {
-    //   object[key] = value;
-    // });
-    setSalesNotes(data);
-    setIsEditingSales(false);
-    setSalesNotes((prevState) => ({
-      ...prevState,
-      //   [id]: object,
-      [id]: data,
-    }));
-  };
-  const performActNotesUpdate = () => {
+  const updateActNotes = () => {
     const data = new FormData(actForm.current);
-    var object = {};
-    data.forEach((value, key) => {
-      object[key] = value;
-    });
-    setActNotes(object)
-      .then((object) => {
-        setIsEditingAct(false);
-        setActNotes((prevState) => ({
-          ...prevState,
-          [id]: object,
-        }));
+    data.append("id", id);
+
+    fetch(inventoryURL, {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + accessToken(),
+      },
+      body: data,
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.ok) {
+          return true;
+        } else return false;
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const performLogiNotesUpdate = () => {
+  const updateLogiNotes = () => {
     const data = new FormData(logiForm.current);
-    var object = {};
-    data.forEach((value, key) => {
-      object[key] = value;
-    });
-    setLogiNotes(object)
-      .then((logiNotes) => {
-        setIsEditingLogi(false);
-        setLogiNotes((prevState) => ({
-          ...prevState,
-          [id]: object,
-        }));
+    data.append("id", id);
+
+    fetch(inventoryURL, {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + accessToken(),
+      },
+      body: data,
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.ok) {
+          return true;
+        } else return false;
       })
       .catch((error) => {
         console.log(error);
       });
   };
+  //   const performSalesNotesUpdate = () => {
+  //     const data = new FormData(salesForm.current);
+  //     // var object = {};
+  //     // data.forEach((value, key) => {
+  //     //   object[key] = value;
+  //     // });
+  //     setSalesNotes(data);
+  //     setIsEditingSales(false);
+  //     setSalesNotes((prevState) => ({
+  //       ...prevState,
+  //       //   [id]: object,
+  //       [id]: data,
+  //     }));
+  //   };
+  //   const performActNotesUpdate = () => {
+  //     const data = new FormData(actForm.current);
+  //     var object = {};
+  //     data.forEach((value, key) => {
+  //       object[key] = value;
+  //     });
+  //     setActNotes(object)
+  //       .then((object) => {
+  //         setIsEditingAct(false);
+  //         setActNotes((prevState) => ({
+  //           ...prevState,
+  //           [id]: object,
+  //         }));
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   };
+  //   const performLogiNotesUpdate = () => {
+  //     const data = new FormData(logiForm.current);
+  //     var object = {};
+  //     data.forEach((value, key) => {
+  //       object[key] = value;
+  //     });
+  //     setLogiNotes(object)
+  //       .then((logiNotes) => {
+  //         setIsEditingLogi(false);
+  //         setLogiNotes((prevState) => ({
+  //           ...prevState,
+  //           [id]: object,
+  //         }));
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   };
   return (
     <>
       {(isSeller() || isAdmin()) && (
