@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Loading from "../../Pages/Loading";
 import { useSuperuserContext } from "../../superuser";
-import { useAuthContext } from "../../auth";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { userURL } from "../../Pages/urls";
 import Navigation from "../Navigation/Navigation";

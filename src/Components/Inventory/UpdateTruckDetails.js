@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useHistory, useParams, useLocation } from "react-router-dom";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 import { getByIdURL, manifestURL, inventoryURL, imageURL } from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
 import { useTruckContext } from "../../truckContext";
@@ -41,8 +41,6 @@ const UpdateTruckDetails = () => {
     images, setImages
   } = useTruckContext();
 
-  const { accessToken } = useAuthContext();
-
   let history = useHistory();
   let location = useLocation();
 
@@ -76,7 +74,7 @@ const UpdateTruckDetails = () => {
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken()}`,
+          "Authorization": `Bearer ${authService.getAccessToken()}`,
         },
         body: data,
       })
@@ -98,7 +96,7 @@ const UpdateTruckDetails = () => {
       fetch(imageURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken()}`,
+          "Authorization": `Bearer ${authService.getAccessToken()}`,
         },
         body: data,
       })
@@ -203,7 +201,7 @@ const UpdateTruckDetails = () => {
     fetch(inventoryURL, {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + accessToken(),
+        "Authorization": `Bearer ${authService.getAccessToken()}`,
       },
       body: data,
     })

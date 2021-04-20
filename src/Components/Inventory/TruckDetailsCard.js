@@ -12,10 +12,10 @@ import { FaAngleDoubleDown, FaEdit } from "react-icons/fa";
 import { useParams, Link } from "react-router-dom";
 import { inventoryPATH } from "../../Pages/paths";
 import { useTruckContext } from "../../truckContext";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 
 const TruckDetailsCard = ({ id, current }) => {
-  const { isSeller, isAdmin } = useAuthContext();
+  const { is_seller, is_admin } = authService.getUser();
   const {
     isEmpty: [isEmpty, setIsEmpty],
     loadId: [loadId, setLoadId],
@@ -83,7 +83,7 @@ const TruckDetailsCard = ({ id, current }) => {
             ) : (
               <img src={logo} alt={source} style={{ size: "10rem" }} />
             )}
-            {(isSeller() || isAdmin()) && (
+            {(is_seller || is_admin) && (
               <>
                 {/* //^ SALES NOTES */}
                 <Form style={{ border: "none" }}>

@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Loading from "../../Pages/Loading";
-import { logoutURL } from "../../Pages/urls";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 
 const Logout = () => {
   document.title = "Logout";
   let history = useHistory();
 
-  const {
-    logout
-  } = useAuthContext();
-
   useEffect(() => {
-    logout()
+    authService.logout()
       .then(() => {
         history.push("/login");
       })

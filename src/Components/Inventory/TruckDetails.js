@@ -8,7 +8,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import Loading from "../../Pages/Loading";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 import { getByIdURL, inventoryURL, manifestURL, imageURL } from "../../Pages/urls";
 import TruckDetailsCard from "./TruckDetailsCard";
 import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
@@ -47,7 +47,7 @@ const TruckDetails = () => {
     images, setImages
   } = useTruckContext();
 
-  const { accessToken, isSeller, isAdmin } = useAuthContext();
+  const { is_seller, is_admin } = authService.getUser();
 
   let history = useHistory();
   let location = useLocation();
@@ -63,7 +63,7 @@ const TruckDetails = () => {
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken()}`,
+          "Authorization": `Bearer ${authService.getAccessToken()}`,
         },
         body: data,
       })
@@ -85,7 +85,7 @@ const TruckDetails = () => {
       fetch(imageURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken()}`,
+          "Authorization": `Bearer ${authService.getAccessToken()}`,
         },
         body: data,
       })
@@ -106,7 +106,7 @@ const TruckDetails = () => {
     fetch(inventoryURL, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${accessToken()}`,
+        "Authorization": `Bearer ${authService.getAccessToken()}`,
       },
       body: data,
     }).then(history.replace(inventoryPATH));
@@ -205,7 +205,7 @@ const TruckDetails = () => {
           <FaAngleDoubleLeft /> Back to inventory
         </Button>
 
-        {(isSeller() || isAdmin()) &&
+        {(is_seller || is_admin) &&
           <>
             <Button
               onClick={(e) => {

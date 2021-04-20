@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import { useGlobalContext } from "../../context";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 import mail from "../../img/mail.svg";
 
 //Values from FormLogin:
@@ -21,8 +21,6 @@ const ResetPasswordModal = ({
 
   const [validated, setValidated] = useState(false);
 
-  const { resetPassword, resetPasswordEmail } = useAuthContext();
-
   const closeModal = () => {
     setValidated(false);
     setIsResetModalOpen(false);
@@ -40,7 +38,7 @@ const ResetPasswordModal = ({
       const data = new FormData(resetForm.current);
       var object = {};
       data.forEach((value, key) => (object[key] = value));
-      resetPasswordEmail(JSON.stringify(object))
+      authService.resetPasswordEmail(JSON.stringify(object))
         .then(() => {
           // success
           setIsResetEmailSuccess(true);

@@ -6,14 +6,14 @@ import {
   useHistory,
   useRouteMatch,
 } from "react-router-dom";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 
 const AddInventory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   let history = useHistory();
   let { url } = useRouteMatch();
-  const { isSeller, isAdmin } = useAuthContext();
+  const { is_seller, is_admin } = authService.getUser();
 
   document.title = "Add Inventory";
   const openModal = () => {
@@ -23,7 +23,7 @@ const AddInventory = () => {
   return (
     <>
       {/* //^ ---- ADD LOAD BUTTON ---- */}
-      {(isSeller() || isAdmin()) &&
+      {(is_seller || is_admin) &&
         <div className="btn-container">
           <Button
             className="boot-button"

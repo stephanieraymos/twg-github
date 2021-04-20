@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
-import { useAuthContext } from "../../auth";
 import { Form, Button, Image, InputGroup } from "react-bootstrap";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
 import { useParams } from "react-router-dom";
+import { authService } from "../../authService";
 
 const ResetPasswordPage = () => {
   const { id, token } = useParams();
@@ -13,8 +13,6 @@ const ResetPasswordPage = () => {
     false
   );
   const [errors, setErrors] = useState({});
-
-  const { resetPassword } = useAuthContext();
 
   const handleFinalResetSubmit = (event) => {
     const form = event.currentTarget;
@@ -28,7 +26,7 @@ const ResetPasswordPage = () => {
       const data = new FormData(finalResetForm.current);
       var object = {};
       data.forEach((value, key) => (object[key] = value));
-      resetPassword(id, token, JSON.stringify(object))
+      authService.resetPassword(id, token, JSON.stringify(object))
         .then(() => {
           // success
           console.log("success");
