@@ -31,6 +31,8 @@ const AppProvider = ({ children }) => {
   const [isEditingLogi, setIsEditingLogi] = useState(false);
   const [isEditingAct, setIsEditingAct] = useState(false);
   const [salesNotes, setSalesNotes] = useState("");
+  const [actNotes, setActNotes] = useState("");
+  const [logiNotes, setLogiNotes] = useState("");
   const [validated, setValidated] = useState(false);
   const [originalValues, setOriginalValues] = useState({});
 
@@ -131,6 +133,10 @@ const AppProvider = ({ children }) => {
         setIsEditingAct: setIsEditingAct,
         salesNotes: salesNotes,
         setSalesNotes: setSalesNotes,
+        actNotes: actNotes,
+        setActNotes: setActNotes,
+        logiNotes: logiNotes,
+        setLogiNotes: setLogiNotes,
         validated: validated,
         setValidated: setValidated,
         originalValues: originalValues,
