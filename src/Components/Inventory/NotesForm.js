@@ -81,7 +81,14 @@ const NotesForm = (id) => {
   // Return true or false to indicate if fetch was successful
   const updateSalesNotes = () => {
     const data = new FormData(salesForm.current);
-    data.append("id", id);
+        var object = {};
+        data.forEach((value, key) => {
+            object[key] = value
+        });
+
+        object["id"] = id;
+        object["sales"] = salesNotes;
+        setSalesNotes(object)
 
     fetch(inventoryURL, {
       method: "PUT",
@@ -103,6 +110,18 @@ const NotesForm = (id) => {
       });
     setSalesNotes(data);
   };
+//   const updateSalesNotes = () => {
+//     const data = new FormData(salesForm.current);
+//         var object = {};
+//         data.forEach((value, key) => {
+//             object[key] = value
+//         });
+
+//         object["id"] = id;
+//         object["sales"] = salesNotes;
+//         setSalesNotes(object)
+          
+//   };
   const updateActNotes = () => {
     const data = new FormData(actForm.current);
     data.append("id", id);
