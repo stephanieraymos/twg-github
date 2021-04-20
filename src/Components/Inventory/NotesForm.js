@@ -29,32 +29,8 @@ const NotesForm = (id) => {
     setActNotes,
     logiNotes,
     setLogiNotes,
-    setOriginalValues,
   } = useGlobalContext();
   const { isSeller, isAdmin, accessToken } = useAuthContext();
-
-  // Return true or false to indicate if fetch was successful
-  const updateSalesNotes = () => {
-    const data = new FormData(salesForm.current);
-    data.append("id", id);
-
-    fetch(inventoryURL, {
-      method: "PUT",
-      headers: {
-        Authorization: "Bearer " + accessToken(),
-      },
-      body: data,
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.ok) {
-          return true;
-        } else return false;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const cancelLogi = () => {
     setIsEditingLogi(false);
@@ -67,12 +43,13 @@ const NotesForm = (id) => {
   };
 
   const handleSalesSubmit = (event) => {
+    console.log(salesNotes);
     const salesForm = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
     if (salesForm.checkValidity() === true) {
       setValidated(false);
-      performSalesNotesUpdate();
+      updateSalesNotes();
     } else {
       setValidated(true);
     }
@@ -99,6 +76,28 @@ const NotesForm = (id) => {
       setValidated(true);
     }
   };
+  // Return true or false to indicate if fetch was successful
+  const updateSalesNotes = () => {
+    const data = new FormData(salesForm.current);
+    data.append("id", id);
+
+    fetch(inventoryURL, {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + accessToken(),
+      },
+      body: data,
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.ok) {
+          return true;
+        } else return false;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const performSalesNotesUpdate = () => {
     const data = new FormData(salesForm.current);
@@ -106,18 +105,13 @@ const NotesForm = (id) => {
     // data.forEach((value, key) => {
     //   object[key] = value;
     // });
-    setSalesNotes(data)
-      .then((data) => {
-        setIsEditingSales(false);
-        setSalesNotes((prevState) => ({
-          ...prevState,
-        //   [id]: object,
-          [id]: data,
-        }));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setSalesNotes(data);
+    setIsEditingSales(false);
+    setSalesNotes((prevState) => ({
+      ...prevState,
+      //   [id]: object,
+      [id]: data,
+    }));
   };
   const performActNotesUpdate = () => {
     const data = new FormData(actForm.current);
@@ -126,7 +120,7 @@ const NotesForm = (id) => {
       object[key] = value;
     });
     setActNotes(object)
-      .then((actNotes) => {
+      .then((object) => {
         setIsEditingAct(false);
         setActNotes((prevState) => ({
           ...prevState,
@@ -160,7 +154,11 @@ const NotesForm = (id) => {
       {(isSeller() || isAdmin()) && (
         <>
           {/* //^ SALES NOTES */}
-          <Form ref={salesForm} style={{ border: "none" }}  onSubmit={handleSalesSubmit}>
+          <Form
+            ref={salesForm}
+            style={{ border: "none" }}
+            onSubmit={handleSalesSubmit}
+          >
             <Form.Group as={Row}>
               <Form.Label column sm={4} className="truck-data-title">
                 Sales Notes:
@@ -200,6 +198,7 @@ const NotesForm = (id) => {
 
                 {isEditingSales ? (
                   <Form.Control
+                    as="textarea"
                     type="salesNotes"
                     required
                     value={salesNotes}
@@ -208,8 +207,8 @@ const NotesForm = (id) => {
                   />
                 ) : (
                   <Form.Control
+                    as="textarea"
                     type="text"
-                    required
                     readOnly
                     value={
                       salesNotes.length < 115 && salesNotes.length !== 0 ? (
@@ -244,7 +243,7 @@ const NotesForm = (id) => {
           <Form
             ref={actForm}
             style={{ border: "none" }}
-            handleSubmit={handleActSubmit}
+            onSubmit={handleActSubmit}
           >
             <Form.Group as={Row}>
               <Form.Label column sm={4} className="truck-data-title">
@@ -284,14 +283,16 @@ const NotesForm = (id) => {
 
                 {isEditingAct ? (
                   <Form.Control
+                    as="textarea"
                     required
                     value={actNotes}
                     onChange={(e) => setActNotes(e.target.value)}
                     name="actNotes"
+                    onSubmit={handleActSubmit}
                   />
                 ) : (
                   <Form.Control
-                    required
+                    as="textarea"
                     readOnly
                     value={
                       actNotes.length < 115 && actNotes.length !== 0 ? (
@@ -365,6 +366,7 @@ const NotesForm = (id) => {
 
                 {isEditingLogi ? (
                   <Form.Control
+                    as="textarea"
                     required
                     value={logiNotes}
                     onChange={(e) => setLogiNotes(e.target.value)}
@@ -372,7 +374,7 @@ const NotesForm = (id) => {
                   />
                 ) : (
                   <Form.Control
-                    required
+                    as="textarea"
                     readOnly
                     value={
                       logiNotes.length < 115 && logiNotes.length !== 0 ? (
