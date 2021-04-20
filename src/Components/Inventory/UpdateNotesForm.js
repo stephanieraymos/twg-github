@@ -9,6 +9,7 @@ const UpdateTruckForm = ({ form, validated, handleSubmit, redirect }) => {
     logistics: [logistics, setLogistics],
   } = useTruckContext();
 
+  
   return (
     <>
       <Form
