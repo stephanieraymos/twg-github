@@ -74,13 +74,14 @@ const refreshAccessToken = () => {
                     }
                 })
                 .then((token) => {
-                    console.log("token", token);
                     setAccessToken(token["access"]);
                     resolve(true);
                 })
                 .catch((error) => {
                     reject(error);
                 });
+        } else {
+            reject("No Refresh Token");
         }
     });
 };
@@ -126,7 +127,6 @@ const checkToken = () => {
                     })
                     .catch((error) => {
                         // if we get here, then refresh token is  invalid as well
-                        logout();
                         console.log("refresh token is invalid")
                         reject(error);
                     });
@@ -181,27 +181,31 @@ const login = (data) => {
 };
 
 const logout = () => {
-    const accessToken = getAccessToken();
-    const refreshToken = getRefreshToken();
     return new Promise((resolve, reject) => {
-        setIsAuth(false);
-        resetLocalStorage();
-        fetch(logoutURL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify({
-                refresh: refreshToken,
-            }),
-        })
-            .then((response) => {
-                resolve(response);
+        checkToken()
+            .then(() => {
+                const accessToken = getAccessToken();
+                const refreshToken = getRefreshToken();
+                setIsAuth(false);
+                resetLocalStorage();
+                fetch(logoutURL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${accessToken}`,
+                    },
+                    body: JSON.stringify({
+                        refresh: refreshToken,
+                    }),
+                })
+                    .then((response) => {
+                        resolve(response);
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
             })
-            .catch((error) => {
-                reject(error);
-            });
+            .catch(() => reject("logout"))
     });
 };
 
@@ -253,26 +257,30 @@ const emailVerification = (id, token) => {
 };
 
 const changePassword = (oldPassword, newPassword, confirmNewPassword) => {
-    const accessToken = getAccessToken();
     return new Promise((resolve, reject) => {
-        fetch(passwordChangeURL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify({
-                "old_password": oldPassword,
-                "new_password": newPassword,
-                "confirm_new_password": confirmNewPassword
-            }),
-        })
-            .then((response) => {
-                resolve(true);
+        checkToken()
+            .then(() => {
+                const accessToken = getAccessToken();
+                fetch(passwordChangeURL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${accessToken}`,
+                    },
+                    body: JSON.stringify({
+                        "old_password": oldPassword,
+                        "new_password": newPassword,
+                        "confirm_new_password": confirmNewPassword
+                    }),
+                })
+                    .then((response) => {
+                        resolve(true);
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
             })
-            .catch((error) => {
-                reject(error);
-            });
+            .catch(() => reject("logout"));
     });
 };
 
@@ -321,56 +329,64 @@ const resetPassword = (id, token, data) => {
 };
 
 const fetchUser = () => {
-    const accessToken = getAccessToken();
     return new Promise((resolve, reject) => {
-        fetch(userURL, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${accessToken}`,
-            },
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    reject(response);
-                }
+        checkToken()
+            .then(() => {
+                const accessToken = getAccessToken();
+                fetch(userURL, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${accessToken}`,
+                    },
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            reject(response);
+                        }
+                    })
+                    .then((user) => {
+                        setUser(user);
+                        resolve(true);
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
             })
-            .then((user) => {
-                setUser(user);
-                resolve(true);
-            })
-            .catch((error) => {
-                reject(error);
-            });
+            .catch(() => reject("logout"));
     });
 };
 
 const updateUser = (data) => {
-    const accessToken = getAccessToken();
     return new Promise((resolve, reject) => {
-        fetch(userUpdateURL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${accessToken}`,
-            },
-            body: data,
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    reject(response);
-                }
+        checkToken()
+            .then(() => {
+                const accessToken = getAccessToken();
+                fetch(userUpdateURL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${accessToken}`,
+                    },
+                    body: data,
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            reject(response);
+                        }
+                    })
+                    .then((user) => {
+                        setUser(user)
+                        resolve(true);
+                      })
+                    .catch((error) => {
+                        reject(error);
+                    });
             })
-            .then((user) => {
-                setUser(user)
-                resolve(true);
-              })
-            .catch((error) => {
-                reject(error);
-            });
+            .catch(() => reject("logout"));
     });
 };
 

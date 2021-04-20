@@ -4,6 +4,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { userURL } from "../../Pages/urls";
 import Navigation from "../Navigation/Navigation";
 import { authService } from "../../authService";
+import { useHistory } from "react-router-dom";
 
 const AccountDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -14,6 +15,8 @@ const AccountDetails = () => {
   const form = useRef(null);
 
   document.title = "Account Details";
+
+  let history = useHistory();
 
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -60,13 +63,17 @@ const AccountDetails = () => {
       .catch((error) => {
         console.log(error);
         setIsEditing(false);
+        if (error && error === "logout")
+          history.push("/logout")
       });
   }
 
   useEffect(() => {
-    authService.checkToken()
-      .then(() => authService.fetchUser())
-      .catch(() => console.log("no valid token"))
+    authService.fetchUser()
+      .catch((error) => {
+        if (error && error === "logout")
+          history.push("/logout")
+      })
   }, []);
 
   return (
