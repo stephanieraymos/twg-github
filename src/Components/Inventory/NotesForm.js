@@ -201,6 +201,15 @@ const NotesForm = (id) => {
                   <Form.Control
                     type="salesNotes"
                     required
+                    value={salesNotes}
+                    onChange={(e) => setSalesNotes(e.target.value)}
+                    name="salesNotes"
+                  />
+                ) : (
+                  <Form.Control
+                    type="text"
+                    required
+                    readOnly
                     value={
                       salesNotes.length < 115 && salesNotes.length !== 0 ? (
                         `${salesNotes}`
@@ -222,15 +231,6 @@ const NotesForm = (id) => {
                         <p>No Notes yet</p>
                       )
                     }
-                    onChange={(e) => setSalesNotes(e.target.value)}
-                    name="salesNotes"
-                  />
-                ) : (
-                  <Form.Control
-                    type="text"
-                    required
-                    readOnly
-                    value={salesNotes}
                     onChange={(e) => setSalesNotes(e.target.value)}
                     name="salesNotes"
                   />
