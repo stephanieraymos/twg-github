@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
-import {
-  useParams,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { useAuthContext } from "../../auth";
-import { getByIdURL, inventoryURL, manifestURL, imageURL } from "../../Pages/urls";
+import {
+  getByIdURL,
+  inventoryURL,
+  manifestURL,
+  imageURL,
+} from "../../Pages/urls";
 import TruckDetailsCard from "./TruckDetailsCard";
 import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
 import { useTruckContext } from "../../truckContext";
@@ -40,9 +41,12 @@ const TruckDetails = () => {
     logistics: [logistics, setLogistics],
     lane: [lane, setLane],
     fileCount: [fileCount, setFileCount],
-    imageCount, setImageCount,
-    imageIds, setImageIds,
-    images, setImages
+    imageCount,
+    setImageCount,
+    imageIds,
+    setImageIds,
+    images,
+    setImages,
   } = useTruckContext();
 
   const { accessToken, isSeller, isAdmin } = useAuthContext();
@@ -139,7 +143,7 @@ const TruckDetails = () => {
             sales,
             accounting,
             logistics,
-            imageIds
+            imageIds,
           } = data[0];
 
           setIsEmpty(false);
@@ -161,7 +165,7 @@ const TruckDetails = () => {
           setAccounting(accounting);
           setLogistics(logistics);
           setLane(lane);
-          setImageIds(imageIds)
+          setImageIds(imageIds);
         }
       })
       .catch((error) => {
@@ -170,7 +174,11 @@ const TruckDetails = () => {
   };
 
   useEffect(() => {
-    if (isEmpty || manifestIds.length != fileCount || imageIds.length != imageCount) {
+    if (
+      isEmpty ||
+      manifestIds.length != fileCount ||
+      imageIds.length != imageCount
+    ) {
       getTruck();
     }
   }, []);
@@ -203,7 +211,7 @@ const TruckDetails = () => {
           <FaAngleDoubleLeft /> Back to inventory
         </Button>
 
-        {(isSeller() || isAdmin()) &&
+        {(isSeller() || isAdmin()) && (
           <>
             <Button
               onClick={(e) => {
@@ -226,21 +234,8 @@ const TruckDetails = () => {
             >
               <FaEdit /> Edit truck
             </Button>
-            <Button
-              className="edit-notes-btn"
-              onClick={(e) => {
-                e.preventDefault();
-                history.push(`${inventoryPATH}/edit/notes/${id}`, {
-                  from: location.pathname,
-                });
-              }}
-            >
-              <FaEdit /> Edit Notes
-            </Button>
           </>
-        }
-
-
+        )}
       </div>
 
       <TruckDetailsCard id={id} current={location.pathname} />
