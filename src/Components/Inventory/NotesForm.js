@@ -108,7 +108,7 @@ const NotesForm = (id) => {
       .catch((error) => {
         console.log(error);
       });
-    setSalesNotes(data);
+    setSalesNotes(object);
   };
 //   const updateSalesNotes = () => {
 //     const data = new FormData(salesForm.current);
