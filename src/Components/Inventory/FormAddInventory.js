@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 import { inventoryURL } from "../../Pages/urls";
 import { inventoryPATH } from "../../Pages/paths";
 import {
@@ -43,8 +43,6 @@ const FormAddInventory = ({
     setImages(list);
   };
 
-  const { accessToken } = useAuthContext();
-
   //^---- POST (ADD INVENTORY) ----
   const postTrucks = async () => {
     const data = new FormData(form.current);
@@ -56,7 +54,7 @@ const FormAddInventory = ({
       const response = await fetch(inventoryURL, {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + accessToken(),
+          "Authorization": `Bearer ${authService.getAccessToken()}`,
         },
         body: data,
       });

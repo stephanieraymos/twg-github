@@ -6,7 +6,7 @@ import React, {
     createContext,
 } from "react";
 import { superuserURL } from "./Pages/urls";
-import { useAuthContext } from "./auth";
+import { authService } from "./authService";
 import { superuserPATH } from "./Pages/paths";
 import { json } from "d3-fetch";
 
@@ -32,15 +32,13 @@ const SuperuserProvider = ({ children }) => {
     const [dateJoined, setDateJoined] = useState("");
     const [lastLogin, setLastLogin] = useState("");
 
-    const { accessToken } = useAuthContext();
-
     ////////////////////// &&--FUNCTIONS--&& /////////////////////////
     //^ FETCH USER
     useEffect(() => {
         fetch(superuserURL, {
             method: "GET",
             headers: {
-                Authorization: "Bearer " + accessToken(),
+                "Authorization": `Bearer ${authService.getAccessToken()}`,
             },
         })
             .then((response) => {
@@ -71,7 +69,7 @@ const SuperuserProvider = ({ children }) => {
             fetch(`${superuserURL}?id=${id}`, {
                 method: "GET",
                 headers: {
-                    Authorization: "Bearer " + accessToken(),
+                    "Authorization": `Bearer ${authService.getAccessToken()}`,
                 },
             })
                 .then((response) => {
@@ -123,7 +121,7 @@ const SuperuserProvider = ({ children }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${accessToken()}`,
+                    "Authorization": `Bearer ${authService.getAccessToken()}`,
                 },
                 body: JSON.stringify(formatedData),
             })
@@ -157,7 +155,7 @@ const SuperuserProvider = ({ children }) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${accessToken()}`,
+                    "Authorization": `Bearer ${authService.getAccessToken()}`,
                 },
                 body: JSON.stringify(formatedData),
             })

@@ -24,7 +24,7 @@ export const resetPasswordURL =
 export const superuserURL =
     "https://api.thewholesalegroup.com/v1/superuser/users/";
 
-const development = true;
+export const development = true;
 
 let url = "https://api.thewholesalegroup.com/v1/inventory/";
 let getByIdURL = "https://api.thewholesalegroup.com/v1/inventory/?id=";

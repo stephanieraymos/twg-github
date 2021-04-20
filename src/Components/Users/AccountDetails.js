@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Loading from "../../Pages/Loading";
 import { useGlobalContext } from "../../context";
-import { useAuthContext } from "../../auth";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { userURL } from "../../Pages/urls";
 import Navigation from "../Navigation/Navigation";
+import { authService } from "../../authService";
 
 const AccountDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -15,8 +15,6 @@ const AccountDetails = () => {
   const form = useRef(null);
 
   document.title = "Account Details";
-
-  const { accessToken, changePassword, updateUser } = useAuthContext();
 
   const {
     email,
@@ -49,7 +47,7 @@ const AccountDetails = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
-    updateUser(JSON.stringify(object))
+    authService.updateUser(JSON.stringify(object))
       .then((user) => {
         setEmail(user["email"]);
         setFirstName(user["first_name"]);
@@ -65,7 +63,7 @@ const AccountDetails = () => {
   }
 
   useEffect(() => {
-    getUser(accessToken());
+    getUser(authService.getAccessToken());
   }, []);
 
   return (
@@ -319,7 +317,7 @@ const AccountDetails = () => {
             <Button
               type="button"
               onClick={() => {
-                changePassword(currentPassword, newPassword, confirmNewPassword)
+                authService.changePassword(currentPassword, newPassword, confirmNewPassword)
                 setCurrentPassword("");
                 setNewPassword("");
                 setConfirmNewPassword("");

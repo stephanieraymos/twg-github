@@ -1,13 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, InputGroup, Image } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
 import { useGlobalContext } from "../../context";
-import { useAuthContext } from "../../auth";
 import users from "../../css/users.css";
 import ResetPasswordModal from "../Users/ResetPasswordModal";
 // import { toggleModal } from "toggle-modal";
+import { authService } from "../../authService";
 
 const FormLogin = () => {
   const form = useRef(null);
@@ -18,8 +18,6 @@ const FormLogin = () => {
   const [validated, setValidated] = useState(false);
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
-
-  const { login } = useAuthContext();
 
   const {
     email,
@@ -43,6 +41,28 @@ const FormLogin = () => {
     setIsLoginIncorrect(false);
   };
 
+  // useEffect(() => {
+  //   const subscription = authService.getUser().subscribe(user => {
+  //     resetValues();
+  //     if (user) {
+  //       if (Object.keys(user).length === 0) {
+  //         // user is not verified
+  //         openModal();
+  //         setIsSignUpSuccess(true);
+  //       } else {
+  //         // user is verified and good for login
+  //         let { from } = location.state || { from: { pathname: "/" } };
+  //         history.replace(from);
+  //       }
+  //     } else {
+  //       setIsLoginIncorrect(true);
+  //       setValidated(false);
+  //     }
+  //   })
+
+  //   return () => subscription.unsubscribe();
+  // }, []);
+
   const openResetModal = () => {
     console.log("openResetModal triggered");
     setIsResetModalOpen(true);
@@ -65,23 +85,16 @@ const FormLogin = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
-    login(JSON.stringify(object))
+    authService.login(JSON.stringify(object))
       .then((user) => {
         resetValues();
-        if (typeof user === "string") {
-          // user needs to verify email
-          // toggleModal.openModal();
-          openModal();
-          setIsSignUpSuccess(true);
-        } else {
-          setEmail(user["email"]);
-          setFirstName(user["first_name"]);
-          setLastName(user["last_name"]);
-          setCompany(user["company"]);
-          setPhoneNumber(user["phone_number"]);
-          setBillingAddress(user["billing_address"]);
+        if (user) {
           let { from } = location.state || { from: { pathname: "/" } };
           history.replace(from);
+        } else {
+          // user needs to verify email
+          openModal();
+          setIsSignUpSuccess(true);
         }
       })
       .catch((error) => {

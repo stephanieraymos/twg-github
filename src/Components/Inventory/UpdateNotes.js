@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useHistory, useParams, useLocation } from "react-router-dom";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 import { getByIdURL, inventoryURL, manifestURL, imageURL } from "../../Pages/urls";
 import UpdateNotesForm from "./UpdateNotesForm";
 import { useTruckContext } from "../../truckContext";
@@ -12,8 +12,6 @@ const UpdateNotes = () => {
   // const [logistics, setLogistics] = useState("");
   // const [accounting, setAccounting] = useState("");
   const [validated, setValidated] = useState(false);
-
-  const { accessToken } = useAuthContext();
 
   let history = useHistory();
 
@@ -76,7 +74,7 @@ const UpdateNotes = () => {
       fetch(manifestURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken()}`,
+          "Authorization": `Bearer ${authService.getAccessToken()}`,
         },
         body: data,
       })
@@ -98,7 +96,7 @@ const UpdateNotes = () => {
       fetch(imageURL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken()}`,
+          "Authorization": `Bearer ${authService.getAccessToken()}`,
         },
         body: data,
       })
@@ -191,7 +189,7 @@ const UpdateNotes = () => {
     fetch(inventoryURL, {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + accessToken(),
+        "Authorization": `Bearer ${authService.getAccessToken()}`,
       },
       body: data,
     })

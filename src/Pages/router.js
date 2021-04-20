@@ -3,17 +3,15 @@ import {
     Route,
     Redirect,
 } from "react-router-dom";
-import { useAuthContext } from "../auth";
+import { authService } from "../authService";
 
 
 export const PrivateRoute = ({ children, ...rest }) => {
-    const { isAuthenticated } = useAuthContext();
-
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                isAuthenticated() ? (
+                authService.getIsAuth() ? (
                     children
                 ) : (
                     <Redirect
@@ -29,13 +27,11 @@ export const PrivateRoute = ({ children, ...rest }) => {
 }
 
 export const SuperuserRoute = ({ children, ...rest }) => {
-    const { isAuthenticated, isSuperuser } = useAuthContext();
-
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                isAuthenticated() && isSuperuser() ? (
+                authService.getIsAuth() ? (
                     children
                 ) : (
                     <Redirect
@@ -51,13 +47,11 @@ export const SuperuserRoute = ({ children, ...rest }) => {
 }
 
 export const LoginRoute = ({ children, ...rest }) => {
-    const { isAuthenticated } = useAuthContext();
-
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                isAuthenticated() ? (
+                authService.getIsAuth() ? (
                     <Redirect
                         to={{
                             pathname: dashboardPATH,
