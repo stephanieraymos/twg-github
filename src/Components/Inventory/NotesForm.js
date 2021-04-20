@@ -114,11 +114,14 @@ const NotesForm = (id) => {
       .then((response) => {
         console.log(response);
         if (response.ok) {
+          console.log("OK");
+
           return true;
-        } else return false;
+        } else console.log("Not ok");
+        return false;
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error, Response.message);
       });
   };
   const updateLogiNotes = () => {
