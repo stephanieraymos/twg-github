@@ -44,26 +44,28 @@ const FormAddInventory = ({
   };
 
   //^---- POST (ADD INVENTORY) ----
-  const postTrucks = async () => {
+  const postTrucks = () => {
     const data = new FormData(form.current);
     data.append("userId", userId);
     const contents = data.get("contents").split(",");
     data.delete("contents");
     contents.map((item) => data.append("contents", item));
-    try {
-      const response = await fetch(inventoryURL, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${authService.getAccessToken()}`,
-        },
-        body: data,
-      });
-      const newTruck = await response.json();
-      addNewTrucks([newTruck]);
-      back();
-    } catch (error) {
-      console.log(error);
-    }
+    authService.checkToken()
+      .then(() => {
+        fetch(inventoryURL, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${authService.getAccessToken()}`,
+          },
+          body: data,
+        })
+          .then((response) => response.json())
+          .then((newTruck) => {
+            addNewTrucks([newTruck]);
+            back();
+          })
+      })
+      .catch(() => history.push("/logout"))
   };
 
   return (

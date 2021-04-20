@@ -60,18 +60,22 @@ const TruckDetails = () => {
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
-      fetch(manifestURL, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${authService.getAccessToken()}`,
-        },
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((manifest) => setFiles(manifest))
-        .catch((error) => {
-          console.log(error);
-        });
+      authService.checkToken()
+        .then(() => {
+          fetch(manifestURL, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${authService.getAccessToken()}`,
+            },
+            body: data,
+          })
+            .then((response) => response.json())
+            .then((manifest) => setFiles(manifest))
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch(() => history.push("/logout"))
     } else {
       setFiles([]);
     }
@@ -82,18 +86,22 @@ const TruckDetails = () => {
     if (imageIds.length > 0) {
       const data = new FormData();
       imageIds.map((id) => data.append("imageIds", id));
-      fetch(imageURL, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${authService.getAccessToken()}`,
-        },
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((images) => setImages(images))
-        .catch((error) => {
-          console.log(error);
-        });
+      authService.checkToken()
+        .then(() => {
+          fetch(imageURL, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${authService.getAccessToken()}`,
+            },
+            body: data,
+          })
+            .then((response) => response.json())
+            .then((images) => setImages(images))
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch(() => history.push("/logout"))
     } else {
       setImages([]);
     }
@@ -103,13 +111,18 @@ const TruckDetails = () => {
     const data = new FormData();
     data.append("id", id);
     manifestIds.map((id) => data.append("manifestIds", id));
-    fetch(inventoryURL, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${authService.getAccessToken()}`,
-      },
-      body: data,
-    }).then(history.replace(inventoryPATH));
+    authService.checkToken()
+      .then(() => {
+        fetch(inventoryURL, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${authService.getAccessToken()}`,
+          },
+          body: data,
+        })
+          .then(history.replace(inventoryPATH));
+      })
+      .catch(() => history.push("/logout"))
   };
 
   const getTruck = () => {

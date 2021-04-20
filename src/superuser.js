@@ -9,6 +9,7 @@ import { superuserURL } from "./Pages/urls";
 import { authService } from "./authService";
 import { superuserPATH } from "./Pages/paths";
 import { json } from "d3-fetch";
+import { useHistory } from "react-router-dom";
 
 // Generating context
 const SuperuserContext = createContext();
@@ -32,73 +33,83 @@ const SuperuserProvider = ({ children }) => {
     const [dateJoined, setDateJoined] = useState("");
     const [lastLogin, setLastLogin] = useState("");
 
+    let history = useHistory();
+
     ////////////////////// &&--FUNCTIONS--&& /////////////////////////
     //^ FETCH USER
     useEffect(() => {
-        fetch(superuserURL, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${authService.getAccessToken()}`,
-            },
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error(response);
-                }
+        authService.checkToken()
+            .then(() => {
+                fetch(superuserURL, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${authService.getAccessToken()}`,
+                    },
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error(response);
+                        }
+                    })
+                    .then((data) => {
+                        const newData = {}
+                        for (const user of data) {
+                            newData[user['id']] = user;
+                        }
+                        setUsers(prevState => ({
+                            ...prevState,
+                            ...newData
+                        }));
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
             })
-            .then((data) => {
-                const newData = {}
-                for (const user of data) {
-                    newData[user['id']] = user;
-                }
-                setUsers(prevState => ({
-                    ...prevState,
-                    ...newData
-                }));
-            })
-            .catch((error) => {
-                console.log(error)
-            });
+            .catch(() => history.push("/logout"))
     }, []);
 
     //^ ---- GET USER BY ID ----
     const getUserById = (id) => {
         return new Promise((resolve, reject) => {
-            fetch(`${superuserURL}?id=${id}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${authService.getAccessToken()}`,
-                },
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error(response);
-                    }
+            authService.checkToken()
+                .then(() => {
+                    fetch(`${superuserURL}?id=${id}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${authService.getAccessToken()}`,
+                        },
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error(response);
+                            }
+                        })
+                        .then((user) => {
+                            setId(user["id"])
+                            setEmail(user["email"]);
+                            setFirstName(user["first_name"]);
+                            setLastName(user["last_name"]);
+                            setCompany(user["company"]);
+                            setPhoneNumber(user["phone_number"]);
+                            setBillingAddress(user["billing_address"]);
+                            setIsActive(user["is_active"]);
+                            setIsVerified(user["is_verified"]);
+                            setIsSeller(user["is_seller"]);
+                            setIsAdmin(user["is_admin"]);
+                            setIsSuperuser(user["is_superuser"]);
+                            setDateJoined(user["date_joined"]);
+                            setLastLogin(user["last_login"]);
+                            resolve(user);
+                        })
+                        .catch((error) => {
+                            reject(error);
+                        });
                 })
-                .then((user) => {
-                    setId(user["id"])
-                    setEmail(user["email"]);
-                    setFirstName(user["first_name"]);
-                    setLastName(user["last_name"]);
-                    setCompany(user["company"]);
-                    setPhoneNumber(user["phone_number"]);
-                    setBillingAddress(user["billing_address"]);
-                    setIsActive(user["is_active"]);
-                    setIsVerified(user["is_verified"]);
-                    setIsSeller(user["is_seller"]);
-                    setIsAdmin(user["is_admin"]);
-                    setIsSuperuser(user["is_superuser"]);
-                    setDateJoined(user["date_joined"]);
-                    setLastLogin(user["last_login"]);
-                    resolve(user);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
+                .catch(() => history.push("/logout"))
         })
     };
 
@@ -117,24 +128,28 @@ const SuperuserProvider = ({ children }) => {
         }
         
         return new Promise((resolve, reject) => {
-            fetch(superuserURL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${authService.getAccessToken()}`,
-                },
-                body: JSON.stringify(formatedData),
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        resolve(response.json());
-                    } else {
-                        throw new Error(response);
-                    }
+            authService.checkToken()
+                .then(() => {
+                    fetch(superuserURL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${authService.getAccessToken()}`,
+                        },
+                        body: JSON.stringify(formatedData),
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                resolve(response.json());
+                            } else {
+                                throw new Error(response);
+                            }
+                        })
+                        .catch((error) => {
+                            reject(error);
+                        });
                 })
-                .catch((error) => {
-                    reject(error);
-                });
+                .catch(() => history.push("/logout"))
         });
     };
 
@@ -151,24 +166,28 @@ const SuperuserProvider = ({ children }) => {
         }
         
         return new Promise((resolve, reject) => {
-            fetch(superuserURL, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${authService.getAccessToken()}`,
-                },
-                body: JSON.stringify(formatedData),
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        resolve(response.json());
-                    } else {
-                        throw new Error(response);
-                    }
+            authService.checkToken()
+                .then(() => {
+                    fetch(superuserURL, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${authService.getAccessToken()}`,
+                        },
+                        body: JSON.stringify(formatedData),
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                resolve(response.json());
+                            } else {
+                                throw new Error(response);
+                            }
+                        })
+                        .catch((error) => {
+                            reject(error);
+                        });
                 })
-                .catch((error) => {
-                    reject(error);
-                });
+                .catch(() => history.push("/logout"))
         });
     };
 

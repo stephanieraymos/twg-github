@@ -71,18 +71,22 @@ const UpdateNotes = () => {
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
-      fetch(manifestURL, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${authService.getAccessToken()}`,
-        },
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((manifest) => setFiles(manifest))
-        .catch((error) => {
-          console.log(error);
-        });
+      authService.checkToken()
+        .then(() => {
+          fetch(manifestURL, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${authService.getAccessToken()}`,
+            },
+            body: data,
+          })
+            .then((response) => response.json())
+            .then((manifest) => setFiles(manifest))
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch(() => history.push("/logout"))
     } else {
       setFiles([]);
     }
@@ -93,18 +97,22 @@ const UpdateNotes = () => {
     if (imageIds.length > 0) {
       const data = new FormData();
       imageIds.map((id) => data.append("imageIds", id));
-      fetch(imageURL, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${authService.getAccessToken()}`,
-        },
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((images) => setImages(images))
-        .catch((error) => {
-          console.log(error);
-        });
+      authService.checkToken()
+        .then(() => {
+          fetch(imageURL, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${authService.getAccessToken()}`,
+            },
+            body: data,
+          })
+            .then((response) => response.json())
+            .then((images) => setImages(images))
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch(() => history.push("/logout"))
     } else {
       setImages([]);
     }
@@ -185,23 +193,26 @@ const UpdateNotes = () => {
   const updateNotes = () => {
     const data = new FormData(form.current);
     data.append("id", id);
-
-    fetch(inventoryURL, {
-      method: "PUT",
-      headers: {
-        "Authorization": `Bearer ${authService.getAccessToken()}`,
-      },
-      body: data,
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.ok) {
-          return true;
-        } else return false;
+    authService.checkToken()
+      .then(() => {
+        fetch(inventoryURL, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${authService.getAccessToken()}`,
+          },
+          body: data,
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.ok) {
+              return true;
+            } else return false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => history.push("/logout"))
   };
 
   return (
