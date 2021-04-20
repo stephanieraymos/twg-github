@@ -264,9 +264,30 @@ const TruckDetailsCard = ({ id, current }) => {
                         <Form.Control
                           type="salesNotes"
                           required
-                          value={salesNotes}
+                          value={
+                            salesNotes.length < 115 &&
+                            salesNotes.length !== 0 ? (
+                              `${salesNotes}`
+                            ) : salesNotes.length > 115 ? (
+                              <span>
+                                {salesReadMore
+                                  ? salesNotes
+                                  : `${salesNotes.substring(0, 115)}...`}
+                                <button
+                                  className="show-more-btn"
+                                  onClick={() => {
+                                    setSalesReadMore(!salesReadMore);
+                                  }}
+                                >
+                                  {salesReadMore ? "show less" : "read more"}
+                                </button>
+                              </span>
+                            ) : (
+                              <p>No Notes yet</p>
+                            )
+                          }
                           onChange={(e) => setSalesNotes(e.target.value)}
-                          name="saleNotes"
+                          name="salesNotes"
                         />
                       ) : (
                         <Form.Control
@@ -280,26 +301,6 @@ const TruckDetailsCard = ({ id, current }) => {
                       )}
                     </Col>
                   </Form.Group>
-
-                  {/* //^ EDIT NOTES LINKS */}
-
-                  {sales.length < 115 && sales.length !== 0 ? (
-                    `${sales}`
-                  ) : sales.length > 115 ? (
-                    <span>
-                      {salesReadMore ? sales : `${sales.substring(0, 115)}...`}
-                      <button
-                        className="show-more-btn"
-                        onClick={() => {
-                          setSalesReadMore(!salesReadMore);
-                        }}
-                      >
-                        {salesReadMore ? "show less" : "read more"}
-                      </button>
-                    </span>
-                  ) : (
-                    <p>No Notes yet</p>
-                  )}
                 </Form>
                 {/* //^ ACCOUNTING NOTES */}
 
@@ -357,36 +358,35 @@ const TruckDetailsCard = ({ id, current }) => {
                         <Form.Control
                           required
                           readOnly
-                          value={actNotes}
+                          value={
+                            actNotes.length < 115 && actNotes.length !== 0 ? (
+                              `${actNotes}`
+                            ) : actNotes.length > 115 ? (
+                              <span>
+                                {accountingReadMore
+                                  ? actNotes
+                                  : `${actNotes.substring(0, 115)}...`}
+                                <button
+                                  className="show-more-btn"
+                                  onClick={() => {
+                                    setAccountingReadMore(!accountingReadMore);
+                                  }}
+                                >
+                                  {accountingReadMore
+                                    ? "show less"
+                                    : "read more"}
+                                </button>
+                              </span>
+                            ) : (
+                              <p>No Notes yet</p>
+                            )
+                          }
                           onChange={(e) => setActNotes(e.target.value)}
                           name="actNotes"
                         />
                       )}
                     </Col>
                   </Form.Group>
-                  <div
-                    style={{ color: "black", backgroundColor: "transparent" }}
-                  >
-                    {accounting.length < 115 && accounting.length !== 0 ? (
-                      `${accounting}`
-                    ) : accounting.length > 115 ? (
-                      <span>
-                        {accountingReadMore
-                          ? accounting
-                          : `${accounting.substring(0, 115)}...`}
-                        <button
-                          className="show-more-btn"
-                          onClick={() => {
-                            setAccountingReadMore(!accountingReadMore);
-                          }}
-                        >
-                          {accountingReadMore ? "show less" : "read more"}
-                        </button>
-                      </span>
-                    ) : (
-                      <p>No Notes yet</p>
-                    )}
-                  </div>
                 </Form>
                 {/* //^ LOGISTICS NOTES */}
                 <Form
@@ -472,10 +472,6 @@ const TruckDetailsCard = ({ id, current }) => {
                       )}
                     </Col>
                   </Form.Group>
-
-                  <div
-                    style={{ color: "black", backgroundColor: "transparent" }}
-                  ></div>
                 </Form>
               </>
             )}
