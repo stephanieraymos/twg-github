@@ -102,16 +102,17 @@ const NotesForm = (id) => {
 
   const performSalesNotesUpdate = () => {
     const data = new FormData(salesForm.current);
-    var object = {};
-    data.forEach((value, key) => {
-      object[key] = value;
-    });
-    setSalesNotes(object)
-      .then((salesNotes) => {
+    // var object = {};
+    // data.forEach((value, key) => {
+    //   object[key] = value;
+    // });
+    setSalesNotes(data)
+      .then((data) => {
         setIsEditingSales(false);
         setSalesNotes((prevState) => ({
           ...prevState,
-          [id]: object,
+        //   [id]: object,
+          [id]: data,
         }));
       })
       .catch((error) => {
@@ -159,7 +160,7 @@ const NotesForm = (id) => {
       {(isSeller() || isAdmin()) && (
         <>
           {/* //^ SALES NOTES */}
-          <Form ref={salesForm} style={{ border: "none" }}>
+          <Form ref={salesForm} style={{ border: "none" }}  onSubmit={handleSalesSubmit}>
             <Form.Group as={Row}>
               <Form.Label column sm={4} className="truck-data-title">
                 Sales Notes:
