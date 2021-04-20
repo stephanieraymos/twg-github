@@ -87,8 +87,10 @@ const NotesForm = (id) => {
       method: "PUT",
       headers: {
         Authorization: "Bearer " + accessToken(),
+        // contentType: "application/json"
       },
-      body: data,
+      body: data
+    //   body: JSON.stringify(data),
     })
       .then((response) => {
         console.log(response);
@@ -99,6 +101,7 @@ const NotesForm = (id) => {
       .catch((error) => {
         console.log(error);
       });
+    setSalesNotes(data);
   };
   const updateActNotes = () => {
     const data = new FormData(actForm.current);
