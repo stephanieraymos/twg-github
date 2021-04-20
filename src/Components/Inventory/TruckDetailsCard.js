@@ -6,11 +6,34 @@ import { useParams, Link } from "react-router-dom";
 import { inventoryPATH } from "../../Pages/paths";
 import { useTruckContext } from "../../truckContext";
 import { useAuthContext } from "../../auth";
-import { useNotesContext } from "../../notes";
+import { useGlobalContext } from "../../context";
+import { inventoryURL } from "../../Pages/urls";
+
 
 const TruckDetailsCard = ({ id, current }) => {
 
-  const { isSeller, isAdmin } = useAuthContext();
+  const {
+    isEditingLogi,
+    setIsEditingLogi,
+    isEditingAct,
+    setIsEditingAct,
+    isEditingSales,
+    setIsEditingSales,
+    salesReadMore,
+    setSalesReadMore,
+    accountingReadMore,
+    setAccountingReadMore,
+    logisticsReadMore,
+    setLogisticsReadMore,
+    setValidated,
+    salesNotes,
+    setSalesNotes,
+    setOriginalValues,
+  } = useGlobalContext();
+
+  const salesForm = useRef(null);
+
+  const { isSeller, isAdmin, accessToken } = useAuthContext();
   const {
     isEmpty: [isEmpty, setIsEmpty],
     loadId: [loadId, setLoadId],
@@ -39,26 +62,49 @@ const TruckDetailsCard = ({ id, current }) => {
     setImageIds,
     images,
     setImages,
-    salesForm
   } = useTruckContext();
-  const {
-    isEditingLogi,
-    setIsEditingLogi,
-    isEditingAct,
-    setIsEditingAct,
-    isEditingSales,
-    setIsEditingSales,
-    salesReadMore,
-    setSalesReadMore,
-    accountingReadMore,
-    setAccountingReadMore,
-    logisticsReadMore,
-    setLogisticsReadMore,
-    setValidated,
-    updateSalesNotes,
-    salesNotes, setSalesNotes,
-    setOriginalValues
-  } = useNotesContext();
+
+  // Return true or false to indicate if fetch was successful
+  const updateSalesNotes = () => {
+    const data = new FormData(salesForm.current);
+    data.append("id", id);
+
+    fetch(inventoryURL, {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + accessToken(),
+      },
+      body: data,
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.ok) {
+          return true;
+        } else return false;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // const {
+  //   isEditingLogi,
+  //   setIsEditingLogi,
+  //   isEditingAct,
+  //   setIsEditingAct,
+  //   isEditingSales,
+  //   setIsEditingSales,
+  //   salesReadMore,
+  //   setSalesReadMore,
+  //   accountingReadMore,
+  //   setAccountingReadMore,
+  //   logisticsReadMore,
+  //   setLogisticsReadMore,
+  //   setValidated,
+  //   updateSalesNotes,
+  //   salesNotes, setSalesNotes,
+  //   setOriginalValues
+  // } = useNotesContext();
 
   const cancelLogi = () => {
     setIsEditingLogi(false);
@@ -81,7 +127,6 @@ const TruckDetailsCard = ({ id, current }) => {
       setValidated(true);
     }
   };
-  
 
   const performSalesNotesUpdate = () => {
     const data = new FormData(salesForm.current);
@@ -126,14 +171,14 @@ const TruckDetailsCard = ({ id, current }) => {
             {(isSeller() || isAdmin()) && (
               <>
                 {/* //^ SALES NOTES */}
-                <Form ref="salesForm" style={{ border: "none" }}>
+                <Form ref={salesForm} style={{ border: "none" }}>
                   <div className="all-accordions">
                     <p className="notes-header-wrapper">
                       <span className="truck-data-title">Sales Notes: </span>
 
                       {/* //^ EDIT NOTES LINKS */}
                       <div className="edit-notes-links">
-                        <Link
+                        <button
                           key={isEditingSales ? "button-submit" : "button-edit"}
                           type={isEditingSales ? "submit" : "button"}
                           onClick={
@@ -150,10 +195,10 @@ const TruckDetailsCard = ({ id, current }) => {
                               <FaEdit /> <span>Edit Notes</span>
                             </>
                           )}
-                        </Link>
+                        </button>
 
                         {isEditingSales && (
-                          <Link
+                          <button
                             type="button"
                             onClick={
                               isEditingSales
@@ -165,7 +210,7 @@ const TruckDetailsCard = ({ id, current }) => {
                             className="cancel-update-notes"
                           >
                             Cancel
-                          </Link>
+                          </button>
                         )}
                       </div>
                     </p>
@@ -204,7 +249,7 @@ const TruckDetailsCard = ({ id, current }) => {
 
                       {/* //^ EDIT NOTES LINKS */}
                       <div className="edit-notes-links">
-                        <Link
+                        <button
                           key={isEditingAct ? "button-submit" : "button-edit"}
                           type={isEditingAct ? "submit" : "button"}
                           onClick={
@@ -219,10 +264,10 @@ const TruckDetailsCard = ({ id, current }) => {
                               <FaEdit /> <span>Edit Notes</span>
                             </>
                           )}
-                        </Link>
+                        </button>
 
                         {isEditingAct && (
-                          <Link
+                          <button
                             type="button"
                             onClick={
                               isEditingAct
@@ -234,7 +279,7 @@ const TruckDetailsCard = ({ id, current }) => {
                             className="cancel-update-notes"
                           >
                             Cancel
-                          </Link>
+                          </button>
                         )}
                       </div>
                     </p>
@@ -272,7 +317,7 @@ const TruckDetailsCard = ({ id, current }) => {
                       </span>
                       {/* //^ EDIT NOTES LINKS */}
                       <div className="edit-notes-links">
-                        <Link
+                        <button
                           key={isEditingLogi ? "button-submit" : "button-edit"}
                           type={isEditingLogi ? "submit" : "button"}
                           onClick={
@@ -287,10 +332,10 @@ const TruckDetailsCard = ({ id, current }) => {
                               <FaEdit /> <span>Edit Notes</span>
                             </>
                           )}
-                        </Link>
+                        </button>
 
                         {isEditingLogi && (
-                          <Link
+                          <button
                             type="button"
                             onClick={
                               isEditingLogi
@@ -302,7 +347,7 @@ const TruckDetailsCard = ({ id, current }) => {
                             className="cancel-update-notes"
                           >
                             Cancel
-                          </Link>
+                          </button>
                         )}
                       </div>
                     </p>

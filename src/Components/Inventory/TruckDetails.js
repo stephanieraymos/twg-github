@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import {
   useParams,
-  Link,
   useHistory,
-  useRouteMatch,
   useLocation,
 } from "react-router-dom";
 import Loading from "../../Pages/Loading";

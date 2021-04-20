@@ -7,14 +7,14 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CookiesProvider } from "react-cookie";
 import { AuthProvider } from "./auth";
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
       <AuthProvider>
         <AppProvider>
-          <App />
+            <App />
         </AppProvider>
       </AuthProvider>
     </CookiesProvider>

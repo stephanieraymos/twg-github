@@ -1,5 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { userURL } from "./Pages/urls"
+import { useAuthContext } from "./auth";
+import { useParams } from "react-router-dom";
 
 // Generating context
 const AppContext = React.createContext(null);
@@ -20,6 +22,17 @@ const AppProvider = ({ children }) => {
   const [billingAddress, setBillingAddress] = useState("");
   const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
   const [isResetEmailSuccess, setIsResetEmailSuccess] = useState(false);
+
+  // ---- NOTES ------- ////
+  const [salesReadMore, setSalesReadMore] = useState(false);
+  const [accountingReadMore, setAccountingReadMore] = useState(false);
+  const [logisticsReadMore, setLogisticsReadMore] = useState(false);
+  const [isEditingSales, setIsEditingSales] = useState(false);
+  const [isEditingLogi, setIsEditingLogi] = useState(false);
+  const [isEditingAct, setIsEditingAct] = useState(false);
+  const [salesNotes, setSalesNotes] = useState("");
+  const [validated, setValidated] = useState(false);
+  const [originalValues, setOriginalValues] = useState({});
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
   const openSidebar = () => {
@@ -66,6 +79,7 @@ const AppProvider = ({ children }) => {
     });
 };
 
+
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
     <AppContext.Provider
@@ -103,6 +117,24 @@ const AppProvider = ({ children }) => {
         isResetEmailSuccess,
         setIsResetEmailSuccess,
         getUser,
+
+
+
+        salesReadMore: salesReadMore,
+        accountingReadMore: accountingReadMore,
+        logisticsReadMore: logisticsReadMore,
+        isEditingSales: isEditingSales,
+        setIsEditingSales: setIsEditingSales,
+        isEditingLogi: isEditingLogi,
+        setIsEditingLogi: setIsEditingLogi,
+        isEditingAct: isEditingAct,
+        setIsEditingAct: setIsEditingAct,
+        salesNotes: salesNotes,
+        setSalesNotes: setSalesNotes,
+        validated: validated,
+        setValidated: setValidated,
+        originalValues: originalValues,
+        setOriginalValues: setOriginalValues,
       }}
     >
       {children}
