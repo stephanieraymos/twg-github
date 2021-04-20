@@ -12,7 +12,6 @@ import {
     resetPasswordURL,
     emailVerificationURL,
 } from "./Pages/urls";
-import React, { useState } from "react";
 
 // CONSTANT
 const userKey = "user";     // stores the user data
@@ -22,10 +21,11 @@ const refreshTokenKey = "refresh_token";
 
 
 // SUBJECTS
+const userSubject = new Subject();
 const authSubject = new Subject();
 
 // USER
-// const getUser = () => userSubject.asObservable();
+const getUserSubscriber = () => userSubject.asObservable();
 const getUser = () => {
     const user = localStorage.getItem(userKey);
     if (user)
@@ -33,7 +33,10 @@ const getUser = () => {
     else
         return null;
 };
-const setUser = (user) =>  localStorage.setItem(userKey, JSON.stringify(user));
+const setUser = (user) =>  {
+    localStorage.setItem(userKey, JSON.stringify(user));
+    userSubject.next(user)
+};
 
 
 // AUTH
@@ -65,13 +68,15 @@ const refreshAccessToken = () => {
                 .then((response) => {
                     if (response.ok) {
                         // user is logged in again
-                        const token = response.json();
-                        console.log("token", token);
-                        setAccessToken(token["access"]);
-                        resolve(true);
+                        return response.json();
                     } else {
                         reject(response);
                     }
+                })
+                .then((token) => {
+                    console.log("token", token);
+                    setAccessToken(token["access"]);
+                    resolve(true);
                 })
                 .catch((error) => {
                     reject(error);
@@ -82,40 +87,47 @@ const refreshAccessToken = () => {
 const checkAccessToken = () => {
     const accessToken = getAccessToken();
     return new Promise((resolve, reject) => {
-        fetch(tokenVerifyURL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                token: accessToken,
-            }),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    // access token is valid
-                    resolve(response);
-                } else {
-                    reject(response);
-                }
+        if (accessToken) {
+            fetch(tokenVerifyURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    token: accessToken,
+                }),
             })
-            .catch((error) => {
-                reject(error);
-            });
+                .then((response) => {
+                    if (response.ok) {
+                        // access token is valid
+                        resolve(response);
+                    } else {
+                        reject(response);
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        } else {
+            reject("No Access Token");
+        }
     });
 };
 const checkToken = () => {
     return new Promise((resolve, reject) => {
         checkAccessToken()
             .then(() => {
+                console.log("access token is still valid")
                 resolve(true);
             })
             .catch(() => {
                 refreshAccessToken()
                     .then(() => {
+                        console.log("refresh token got us a new access token")
                         resolve(true);
                     })
                     .catch((error) => {
                         // if we get here, then refresh token is  invalid as well
                         logout();
+                        console.log("refresh token is invalid")
                         reject(error);
                     });
             });
@@ -308,7 +320,7 @@ const resetPassword = (id, token, data) => {
     });
 };
 
-const getUserDetails = () => {
+const fetchUser = () => {
     const accessToken = getAccessToken();
     return new Promise((resolve, reject) => {
         fetch(userURL, {
@@ -347,11 +359,15 @@ const updateUser = (data) => {
         })
             .then((response) => {
                 if (response.ok) {
-                    resolve(response.json());
+                    return response.json();
                 } else {
                     reject(response);
                 }
             })
+            .then((user) => {
+                setUser(user)
+                resolve(true);
+              })
             .catch((error) => {
                 reject(error);
             });
@@ -361,6 +377,7 @@ const updateUser = (data) => {
 export const authService = {
     // USER
     getUser,
+    getUserSubscriber,
     //AUTH
     setIsAuth,
     getIsAuth,
@@ -377,6 +394,6 @@ export const authService = {
     changePassword,
     resetPasswordEmail,
     resetPassword,
-    getUserDetails,
+    fetchUser,
     updateUser,
 }

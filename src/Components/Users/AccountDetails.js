@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import Loading from "../../Pages/Loading";
-import { useGlobalContext } from "../../context";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { userURL } from "../../Pages/urls";
 import Navigation from "../Navigation/Navigation";
@@ -16,21 +15,28 @@ const AccountDetails = () => {
 
   document.title = "Account Details";
 
-  const {
-    email,
-    setEmail,
-    firstName,
-    setFirstName,
-    lastName,
-    setLastName,
-    company,
-    setCompany,
-    phoneNumber,
-    setPhoneNumber,
-    billingAddress,
-    setBillingAddress,
-    getUser,
-  } = useGlobalContext();
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [company, setCompany] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [billingAddress, setBillingAddress] = useState("");
+
+  useEffect(() => {
+    const subscription = authService.getUserSubscriber().subscribe(user => {
+      if (user) {
+        const { email, first_name, last_name, company, phone_number, billing_address } = user;
+        setEmail(email);
+        setFirstName(first_name);
+        setLastName(last_name);
+        setCompany(company);
+        setPhoneNumber(phone_number);
+        setBillingAddress(billing_address);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [])
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -48,22 +54,19 @@ const AccountDetails = () => {
     var object = {};
     data.forEach((value, key) => (object[key] = value));
     authService.updateUser(JSON.stringify(object))
-      .then((user) => {
-        setEmail(user["email"]);
-        setFirstName(user["first_name"]);
-        setLastName(user["last_name"]);
-        setCompany(user["company"]);
-        setPhoneNumber(user["phone_number"]);
-        setBillingAddress(user["billing_address"]);
+      .then(() => {
         setIsEditing(false);
       })
       .catch((error) => {
         console.log(error);
+        setIsEditing(false);
       });
   }
 
   useEffect(() => {
-    getUser(authService.getAccessToken());
+    authService.checkToken()
+      .then(() => authService.fetchUser())
+      .catch(() => console.log("no valid token"))
   }, []);
 
   return (

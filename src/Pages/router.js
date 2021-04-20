@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import { authService } from "../authService";
 
-
 export const PrivateRoute = ({ children, ...rest }) => {
     return (
         <Route

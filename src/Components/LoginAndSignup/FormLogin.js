@@ -14,19 +14,13 @@ const FormLogin = () => {
   const [togglePasswordVisibility, setTogglePasswordVisibility] = useState(
     false
   );
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
   const {
-    email,
-    setEmail,
-    setFirstName,
-    setLastName,
-    setCompany,
-    setPhoneNumber,
-    setBillingAddress,
     setIsSignUpSuccess,
     openModal,
   } = useGlobalContext();
@@ -35,33 +29,12 @@ const FormLogin = () => {
   let location = useLocation();
 
   const resetValues = () => {
+    setEmail("");
     setPassword("");
     setTogglePasswordVisibility(false);
     setValidated(false);
     setIsLoginIncorrect(false);
   };
-
-  // useEffect(() => {
-  //   const subscription = authService.getUser().subscribe(user => {
-  //     resetValues();
-  //     if (user) {
-  //       if (Object.keys(user).length === 0) {
-  //         // user is not verified
-  //         openModal();
-  //         setIsSignUpSuccess(true);
-  //       } else {
-  //         // user is verified and good for login
-  //         let { from } = location.state || { from: { pathname: "/" } };
-  //         history.replace(from);
-  //       }
-  //     } else {
-  //       setIsLoginIncorrect(true);
-  //       setValidated(false);
-  //     }
-  //   })
-
-  //   return () => subscription.unsubscribe();
-  // }, []);
 
   const openResetModal = () => {
     console.log("openResetModal triggered");
