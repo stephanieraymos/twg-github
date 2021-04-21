@@ -317,7 +317,7 @@ const NotesForm = ({ id }) => {
             <Form.Group>
               <div className="form-label-and-button-container">
                 <Form.Label column sm={4} className="truck-data-title">
-                  Accounting Notes:
+                  Logistics Notes:
                 </Form.Label>
                 <div className="form-header-buttons-container">
                   <button
