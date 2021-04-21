@@ -94,10 +94,10 @@ const NotesForm = (id) => {
       method: "PUT",
       headers: {
         Authorization: "Bearer " + accessToken(),
-        contentType: "application/json"
+        // contentType: "application/json"
       },
-      // body: data
-      body: JSON.stringify(data),
+      body: data
+    //   body: JSON.stringify(data),
     })
       .then((response) => {
         console.log(response);
