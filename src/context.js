@@ -22,19 +22,6 @@ const AppProvider = ({ children }) => {
   const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
   const [isResetEmailSuccess, setIsResetEmailSuccess] = useState(false);
 
-  // ---- NOTES ------- ////
-  const [salesReadMore, setSalesReadMore] = useState(false);
-  const [accountingReadMore, setAccountingReadMore] = useState(false);
-  const [logisticsReadMore, setLogisticsReadMore] = useState(false);
-  const [isEditingSales, setIsEditingSales] = useState(false);
-  const [isEditingLogi, setIsEditingLogi] = useState(false);
-  const [isEditingAct, setIsEditingAct] = useState(false);
-  const [salesNotes, setSalesNotes] = useState("");
-  const [actNotes, setActNotes] = useState("");
-  const [logiNotes, setLogiNotes] = useState("");
-  const [validated, setValidated] = useState(false);
-  const [originalValues, setOriginalValues] = useState({});
-
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
   const openSidebar = () => {
     setIsSidebarOpen(true);
