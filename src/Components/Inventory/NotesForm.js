@@ -46,6 +46,7 @@ const NotesForm = ({ id }) => {
     if (salesForm.checkValidity() === true) {
       setValidated(false);
       updateSalesNotes();
+      setIsEditingSales(false);
     } else {
       setValidated(true);
     }
@@ -57,6 +58,7 @@ const NotesForm = ({ id }) => {
     if (actForm.checkValidity() === true) {
       setValidated(false);
       updateAccountingNotes();
+      setIsEditingAct(false);
     } else {
       setValidated(true);
     }
@@ -68,6 +70,7 @@ const NotesForm = ({ id }) => {
     if (logiForm.checkValidity() === true) {
       setValidated(false);
       updateLogisticsNotes();
+      setIsEditingLogi(false);
     } else {
       setValidated(true);
     }
