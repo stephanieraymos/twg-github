@@ -210,6 +210,7 @@ const NotesForm = ({ id }) => {
                     onChange={(e) => setSalesNotes(e.target.value)}
                     name="sales"
                     className="notes-text-area"
+                    rows={6}
                   />
                 ) : (
                   <Form.Control
@@ -221,6 +222,7 @@ const NotesForm = ({ id }) => {
                     }
                     onChange={(e) => setSalesNotes(e.target.value)}
                     name="sales"
+                    rows={4}
                   />
                 )}
               </Col>
@@ -278,6 +280,7 @@ const NotesForm = ({ id }) => {
                     onChange={(e) => setAccountingNotes(e.target.value)}
                     name="accounting"
                     onSubmit={handleActSubmit}
+                    rows={6}
                   />
                 ) : (
                   <Form.Control
@@ -290,6 +293,7 @@ const NotesForm = ({ id }) => {
                     }
                     onChange={(e) => setAccountingNotes(e.target.value)}
                     name="accounting"
+                    rows={4}
                   />
                 )}
               </Col>
@@ -344,6 +348,7 @@ const NotesForm = ({ id }) => {
                     value={logisticsNotes}
                     onChange={(e) => setLogisticsNotes(e.target.value)}
                     name="logistics"
+                    rows={6}
                   />
                 ) : (
                   <Form.Control
@@ -356,6 +361,7 @@ const NotesForm = ({ id }) => {
                     }
                     onChange={(e) => setLogisticsNotes(e.target.value)}
                     name="logistics"
+                    rows={4}
                   />
                 )}
               </Col>
