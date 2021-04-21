@@ -4,9 +4,9 @@ import { useTruckContext } from "../../truckContext";
 
 const UpdateTruckForm = ({ form, validated, handleSubmit, redirect }) => {
   const {
-    sales: [sales, setSales],
-    accounting: [accounting, setAccounting],
-    logistics: [logistics, setLogistics],
+    salesNotes, setSalesNotes,
+    accountingNotes, setAccountingNotes,
+    logisticsNotes, setLogisticsNotes,
   } = useTruckContext();
 
   
@@ -24,9 +24,9 @@ const UpdateTruckForm = ({ form, validated, handleSubmit, redirect }) => {
           <Form.Label className="form-label">Sales Notes</Form.Label>
           <Form.Control
             type="text"
-            defaultValue={sales}
+            defaultValue={salesNotes}
             name="sales"
-            onChange={(e) => setSales(e.target.value)}
+            onChange={(e) => setSalesNotes(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Make sure your notes include no numbers.
@@ -37,9 +37,9 @@ const UpdateTruckForm = ({ form, validated, handleSubmit, redirect }) => {
           <Form.Label className="form-label">Accounting Notes</Form.Label>
           <Form.Control
             type="text"
-            defaultValue={accounting}
+            defaultValue={accountingNotes}
             name="accounting"
-            onChange={(e) => setAccounting(e.target.value)}
+            onChange={(e) => setAccountingNotes(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Make sure your notes include no numbers.
@@ -50,9 +50,9 @@ const UpdateTruckForm = ({ form, validated, handleSubmit, redirect }) => {
           <Form.Label className="form-label">Logistics Notes</Form.Label>
           <Form.Control
             type="text"
-            defaultValue={logistics}
+            defaultValue={logisticsNotes}
             name="logistics"
-            onChange={(e) => setLogistics(e.target.value)}
+            onChange={(e) => setLogisticsNotes(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Make sure your notes include no numbers.

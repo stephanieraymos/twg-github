@@ -8,9 +8,6 @@ import { useTruckContext } from "../../truckContext";
 
 const UpdateNotes = () => {
   const { id } = useParams();
-  // const [sales, setSales] = useState("");
-  // const [logistics, setLogistics] = useState("");
-  // const [accounting, setAccounting] = useState("");
   const [validated, setValidated] = useState(false);
 
   let history = useHistory();
@@ -24,29 +21,30 @@ const UpdateNotes = () => {
   let { from } = location.state || { from: { pathname: "/" } };
 
   const {
-    isEmpty: [isEmpty, setIsEmpty],
-    loadId: [loadId, setLoadId],
-    source: [source, setSource],
-    retailPrice: [retailPrice, setRetailPrice],
-    price: [price, setPrice],
-    status: [status, setStatus],
-    contents: [contents, setContents],
-    category: [category, setCategory],
-    units: [units, setUnits],
-    palletCount: [palletCount, setPalletCount],
-    fob: [fob, setFob],
-    manifestIds: [manifestIds, setManifestIds],
-    files: [files, setFiles],
-    owner: [owner, setOwner],
-    cost: [cost, setCost],
-    commission: [commission, setCommission],
-    sales: [sales, setSales],
-    accounting: [accounting, setAccounting],
-    logistics: [logistics, setLogistics],
-    fileCount: [fileCount, setFileCount],
-    imageCount, setImageCount,
+    isEmpty, setIsEmpty,
+    setId,
+    setLoadId,
+    setSource,
+    setRetailPrice,
+    setPrice,
+    setStatus,
+    setContents,
+    setCategory,
+    setUnits,
+    setPalletCount,
+    setFob,
+    manifestIds, setManifestIds,
+    setFiles,
+    setOwner,
+    setCost,
+    setCommission,
+    setSalesNotes,
+    setAccountingNotes,
+    setLogisticsNotes,
+    setFileCount,
+    setImageCount,
     imageIds, setImageIds,
-    images, setImages
+    setImages
   } = useTruckContext();
 
   const redirect = () => {
@@ -149,6 +147,7 @@ const UpdateNotes = () => {
             imageIds,
           } = data[0];
 
+          setId(id);
           setIsEmpty(false);
           setLoadId(loadId);
           setSource(source);
@@ -164,9 +163,9 @@ const UpdateNotes = () => {
           setFob(fob);
           setStatus(status);
           setOwner(owner);
-          setSales(sales);
-          setAccounting(accounting);
-          setLogistics(logistics);
+          setSalesNotes(sales);
+          setAccountingNotes(accounting);
+          setLogisticsNotes(logistics);
           setImageIds(imageIds);
         }
       })
