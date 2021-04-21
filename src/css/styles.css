@@ -618,7 +618,7 @@ input:hover {
 
 .reset-page-wrap {
   min-height: 100vh;
-  background-image: linear-gradient(290deg,  var(--orange), var(--dark-gray));
+  background-image: linear-gradient(290deg, var(--orange), var(--dark-gray));
 }
 
 .confirm-reset-pass-container {
@@ -684,4 +684,14 @@ input:hover {
 
 textarea.form-control {
   height: 40rem;
+}
+
+.col-sm-8 {
+  max-width: 100% !important;
+}
+
+.form-label-and-button-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1rem;
 }
