@@ -28,8 +28,8 @@ export const development = true;
 
 let url = "https://api.thewholesalegroup.com/v1/inventory/";
 let getByIdURL = "https://api.thewholesalegroup.com/v1/inventory/?id=";
-let getByUserIdURL = "https://api.thewholesalegroup.com/v1/inventory/?userId=";
-let getByLoadIdURL = "https://api.thewholesalegroup.com/v1/inventory/?loadId=";
+let getBySellerIdURL = "https://api.thewholesalegroup.com/v1/inventory/?sellerId=";
+let getByBuyerIdURL = "https://api.thewholesalegroup.com/v1/inventory/?buyerId=";
 let inventoryURL = "https://api.thewholesalegroup.com/v1/inventory/edit/";
 let manifestURL = "https://api.thewholesalegroup.com/v1/inventory/manifest/";
 let imageURL = "https://api.thewholesalegroup.com/v1/inventory/image/";
@@ -39,10 +39,10 @@ if (development) {
     manifestURL = "https://api.thewholesalegroup.com/test/v1/inventory/manifest/";
     url = "https://api.thewholesalegroup.com/test/v1/inventory/";
     getByIdURL = "https://api.thewholesalegroup.com/test/v1/inventory/?id=";
-    getByUserIdURL =
-        "https://api.thewholesalegroup.com/test/v1/inventory/?userId=";
-    getByLoadIdURL =
-        "https://api.thewholesalegroup.com/test/v1/inventory/?loadId=";
+    getBySellerIdURL =
+        "https://api.thewholesalegroup.com/test/v1/inventory/?sellerId=";
+    getByBuyerIdURL =
+        "https://api.thewholesalegroup.com/test/v1/inventory/?buyerId=";
     imageURL = "https://api.thewholesalegroup.com/test/v1/inventory/image/";
 }
 
@@ -51,7 +51,7 @@ export {
     manifestURL,
     url,
     getByIdURL,
-    getByUserIdURL,
-    getByLoadIdURL,
+    getBySellerIdURL,
+    getByBuyerIdURL,
     imageURL,
 };
