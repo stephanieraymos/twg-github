@@ -15,30 +15,31 @@ const UpdateTruckDetails = () => {
   const [validated, setValidated] = useState(false);
 
   const {
-    isEmpty: [isEmpty, setIsEmpty],
-    loadId: [loadId, setLoadId],
-    source: [source, setSource],
-    retailPrice: [retailPrice, setRetailPrice],
-    price: [price, setPrice],
-    status: [status, setStatus],
-    contents: [contents, setContents],
-    category: [category, setCategory],
-    units: [units, setUnits],
-    palletCount: [palletCount, setPalletCount],
-    fob: [fob, setFob],
-    manifestIds: [manifestIds, setManifestIds],
-    files: [files, setFiles],
-    owner: [owner, setOwner],
-    cost: [cost, setCost],
-    commission: [commission, setCommission],
-    sales: [sales, setSales],
-    accounting: [accounting, setAccounting],
-    logistics: [logistics, setLogistics],
-    lane: [lane, setLane],
-    fileCount: [fileCount, setFileCount],
-    imageCount, setImageCount,
+    isEmpty, setIsEmpty,
+    setId,
+    setLoadId,
+    setSource,
+    setRetailPrice,
+    setPrice,
+    status, setStatus,
+    setContents,
+    setCategory,
+    setUnits,
+    setPalletCount,
+    setFob,
+    manifestIds, setManifestIds,
+    setFiles,
+    setOwner,
+    setCost,
+    setCommission,
+    setSalesNotes,
+    setAccountingNotes,
+    setLogisticsNotes,
+    setLane,
+    setFileCount,
+    setImageCount,
     imageIds, setImageIds,
-    images, setImages
+    setImages
   } = useTruckContext();
 
   let history = useHistory();
@@ -150,6 +151,7 @@ const UpdateTruckDetails = () => {
             imageIds,
           } = data[0];
 
+          setId(id);
           setIsEmpty(false);
           setLoadId(loadId);
           setSource(source);
@@ -165,9 +167,9 @@ const UpdateTruckDetails = () => {
           setFob(fob);
           setStatus(status);
           setOwner(owner);
-          setSales(sales);
-          setAccounting(accounting);
-          setLogistics(logistics);
+          setSalesNotes(sales);
+          setAccountingNotes(accounting);
+          setLogisticsNotes(logistics);
           setLane(lane);
           setImageIds(imageIds);
         } else {

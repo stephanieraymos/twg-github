@@ -1,36 +1,51 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useGlobalContext } from "../../context";
 import { Form, Col, Row } from "react-bootstrap";
 import { inventoryURL } from "../../Pages/urls";
 import { FaEdit } from "react-icons/fa";
 import { authService } from "../../authService";
 import { useHistory } from "react-router-dom";
+import { useTruckContext } from "../../truckContext";
 
-const NotesForm = (id) => {
+const NotesForm = ({ id }) => {
   const salesForm = useRef(null);
   const logiForm = useRef(null);
   const actForm = useRef(null);
+  // const {
+  //   isEditingLogi,
+  //   setIsEditingLogi,
+  //   isEditingAct,
+  //   setIsEditingAct,
+  //   isEditingSales,
+  //   setIsEditingSales,
+  //   salesReadMore,
+  //   setSalesReadMore,
+  //   accountingReadMore,
+  //   setAccountingReadMore,
+  //   logisticsReadMore,
+  //   setLogisticsReadMore,
+  //   setValidated,
+  //   salesNotes,
+  //   setSalesNotes,
+  //   accountingNotes,
+  //   setAccountingNotes,
+  //   logisticsNotes,
+  //   setLogisticsNotes,
+  // } = useGlobalContext();
+
   const {
-    isEditingLogi,
-    setIsEditingLogi,
-    isEditingAct,
-    setIsEditingAct,
-    isEditingSales,
-    setIsEditingSales,
-    salesReadMore,
-    setSalesReadMore,
-    accountingReadMore,
-    setAccountingReadMore,
-    logisticsReadMore,
-    setLogisticsReadMore,
-    setValidated,
-    salesNotes,
-    setSalesNotes,
-    actNotes,
-    setActNotes,
-    logiNotes,
-    setLogiNotes,
-  } = useGlobalContext();
+    salesNotes, setSalesNotes,
+    accountingNotes, setAccountingNotes,
+    logisticsNotes, setLogisticsNotes,
+  } = useTruckContext();
+
+  const [validated, setValidated] = useState(false);
+  const [isEditingLogi, setIsEditingLogi] = useState(false);
+  const [isEditingAct, setIsEditingAct] = useState(false);
+  const [isEditingSales, setIsEditingSales] = useState(false);
+  const [salesReadMore, setSalesReadMore] = useState(false);
+  const [accountingReadMore, setAccountingReadMore] = useState(false);
+  const [logisticsReadMore, setLogisticsReadMore] = useState(false);
 
   const { is_seller, is_admin } = authService.getUser();
   let history = useHistory();
@@ -46,7 +61,6 @@ const NotesForm = (id) => {
   };
 
   const handleSalesSubmit = (event) => {
-    console.log(salesNotes);
     const salesForm = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
@@ -63,8 +77,8 @@ const NotesForm = (id) => {
     event.stopPropagation();
     if (actForm.checkValidity() === true) {
       setValidated(false);
-      //   performActNotesUpdate();
-      updateActNotes();
+      //   performaccountingNotesUpdate();
+      updateAccountingNotes();
     } else {
       setValidated(true);
     }
@@ -75,8 +89,8 @@ const NotesForm = (id) => {
     event.stopPropagation();
     if (logiForm.checkValidity() === true) {
       setValidated(false);
-      //   performLogiNotesUpdate();
-      updateLogiNotes();
+      //   performlogisticsNotesUpdate();
+      updateLogisticsNotes();
     } else {
       setValidated(true);
     }
@@ -84,25 +98,16 @@ const NotesForm = (id) => {
   // Return true or false to indicate if fetch was successful
   const updateSalesNotes = () => {
     const data = new FormData(salesForm.current);
-    var object = {};
-    data.forEach((value, key) => {
-        object[key] = value
-    });
-
-    object["id"] = id;
-    object["sales"] = salesNotes;
-    setSalesNotes(object)
-
+    data.append("id", id)
+    
     authService.checkToken()
       .then(() => {
         fetch(inventoryURL, {
           method: "PUT",
           headers: {
             "Authorization": `Bearer ${authService.getAccessToken()}`,
-            // contentType: "application/json"
           },
           body: data
-        //   body: JSON.stringify(data),
         })
           .then((response) => {
             console.log(response);
@@ -115,7 +120,6 @@ const NotesForm = (id) => {
           });
       })
       .catch(() => history.push("/logout"))
-    setSalesNotes(object);
   };
 //   const updateSalesNotes = () => {
 //     const data = new FormData(salesForm.current);
@@ -129,58 +133,58 @@ const NotesForm = (id) => {
 //         setSalesNotes(object)
           
 //   };
-  const updateActNotes = () => {
+  const updateAccountingNotes = () => {
     const data = new FormData(actForm.current);
     data.append("id", id);
 
-    authService.checkToken()
-      .then(() => {
-        fetch(inventoryURL, {
-          method: "PUT",
-          headers: {
-            "Authorization": `Bearer ${authService.getAccessToken()}`,
-          },
-          body: data,
-        })
-          .then((response) => {
-            console.log(response);
-            if (response.ok) {
-              console.log("OK");
+    // authService.checkToken()
+    //   .then(() => {
+    //     fetch(inventoryURL, {
+    //       method: "PUT",
+    //       headers: {
+    //         "Authorization": `Bearer ${authService.getAccessToken()}`,
+    //       },
+    //       body: data,
+    //     })
+    //       .then((response) => {
+    //         console.log(response);
+    //         if (response.ok) {
+    //           console.log("OK");
 
-              return true;
-            } else console.log("Not ok");
-            return false;
-          })
-          .catch((error) => {
-            console.log(error, Response.message);
-          });
-      })
-      .catch(() => history.push("/logout"))
+    //           return true;
+    //         } else console.log("Not ok");
+    //         return false;
+    //       })
+    //       .catch((error) => {
+    //         console.log(error, Response.message);
+    //       });
+    //   })
+    //   .catch(() => history.push("/logout"))
   };
-  const updateLogiNotes = () => {
+  const updateLogisticsNotes = () => {
     const data = new FormData(logiForm.current);
     data.append("id", id);
 
-    authService.checkToken()
-      .then(() => {
-        fetch(inventoryURL, {
-          method: "PUT",
-          headers: {
-            "Authorization": `Bearer ${authService.getAccessToken()}`,
-          },
-          body: data,
-        })
-          .then((response) => {
-            console.log(response);
-            if (response.ok) {
-              return true;
-            } else return false;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch(() => history.push("/logout"))
+    // authService.checkToken()
+    //   .then(() => {
+    //     fetch(inventoryURL, {
+    //       method: "PUT",
+    //       headers: {
+    //         "Authorization": `Bearer ${authService.getAccessToken()}`,
+    //       },
+    //       body: data,
+    //     })
+    //       .then((response) => {
+    //         console.log(response);
+    //         if (response.ok) {
+    //           return true;
+    //         } else return false;
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   })
+    //   .catch(() => history.push("/logout"))
   };
   //   const performSalesNotesUpdate = () => {
   //     const data = new FormData(salesForm.current);
@@ -196,16 +200,16 @@ const NotesForm = (id) => {
   //       [id]: data,
   //     }));
   //   };
-  //   const performActNotesUpdate = () => {
+  //   const performaccountingNotesUpdate = () => {
   //     const data = new FormData(actForm.current);
   //     var object = {};
   //     data.forEach((value, key) => {
   //       object[key] = value;
   //     });
-  //     setActNotes(object)
+  //     setAccountingNotes(object)
   //       .then((object) => {
   //         setIsEditingAct(false);
-  //         setActNotes((prevState) => ({
+  //         setAccountingNotes((prevState) => ({
   //           ...prevState,
   //           [id]: object,
   //         }));
@@ -214,16 +218,16 @@ const NotesForm = (id) => {
   //         console.log(error);
   //       });
   //   };
-  //   const performLogiNotesUpdate = () => {
+  //   const performlogisticsNotesUpdate = () => {
   //     const data = new FormData(logiForm.current);
   //     var object = {};
   //     data.forEach((value, key) => {
   //       object[key] = value;
   //     });
-  //     setLogiNotes(object)
-  //       .then((logiNotes) => {
+  //     setLogisticsNotes(object)
+  //       .then((logisticsNotes) => {
   //         setIsEditingLogi(false);
-  //         setLogiNotes((prevState) => ({
+  //         setLogisticsNotes((prevState) => ({
   //           ...prevState,
   //           [id]: object,
   //         }));
@@ -286,7 +290,7 @@ const NotesForm = (id) => {
                     required
                     value={salesNotes}
                     onChange={(e) => setSalesNotes(e.target.value)}
-                    name="salesNotes"
+                    name="sales"
                   />
                 ) : (
                   <Form.Control
@@ -294,9 +298,7 @@ const NotesForm = (id) => {
                     type="text"
                     readOnly
                     value={
-                      salesNotes.length < 115 && salesNotes.length !== 0 ? (
-                        `${salesNotes}`
-                      ) : salesNotes.length > 115 ? (
+                      salesNotes.length < 115 && salesNotes.length !== 0 ? salesNotes : salesNotes.length > 115 ? (
                         <span>
                           {salesReadMore
                             ? salesNotes
@@ -310,12 +312,10 @@ const NotesForm = (id) => {
                             {salesReadMore ? "show less" : "read more"}
                           </button>
                         </span>
-                      ) : (
-                        <p>No Notes yet</p>
-                      )
+                      ) : "No Notes yet"
                     }
                     onChange={(e) => setSalesNotes(e.target.value)}
-                    name="salesNotes"
+                    name="sales"
                   />
                 )}
               </Col>
@@ -368,9 +368,9 @@ const NotesForm = (id) => {
                   <Form.Control
                     as="textarea"
                     required
-                    value={actNotes}
-                    onChange={(e) => setActNotes(e.target.value)}
-                    name="actNotes"
+                    value={accountingNotes}
+                    onChange={(e) => setAccountingNotes(e.target.value)}
+                    name="accountingNotes"
                     onSubmit={handleActSubmit}
                   />
                 ) : (
@@ -378,13 +378,13 @@ const NotesForm = (id) => {
                     as="textarea"
                     readOnly
                     value={
-                      actNotes.length < 115 && actNotes.length !== 0 ? (
-                        `${actNotes}`
-                      ) : actNotes.length > 115 ? (
+                      accountingNotes.length < 115 && accountingNotes.length !== 0 ? (
+                        `${accountingNotes}`
+                      ) : accountingNotes.length > 115 ? (
                         <span>
                           {accountingReadMore
-                            ? actNotes
-                            : `${actNotes.substring(0, 115)}...`}
+                            ? accountingNotes
+                            : `${accountingNotes.substring(0, 115)}...`}
                           <button
                             className="show-more-btn"
                             onClick={() => {
@@ -398,8 +398,8 @@ const NotesForm = (id) => {
                         <p>No Notes yet</p>
                       )
                     }
-                    onChange={(e) => setActNotes(e.target.value)}
-                    name="actNotes"
+                    onChange={(e) => setAccountingNotes(e.target.value)}
+                    name="accountingNotes"
                   />
                 )}
               </Col>
@@ -451,22 +451,22 @@ const NotesForm = (id) => {
                   <Form.Control
                     as="textarea"
                     required
-                    value={logiNotes}
-                    onChange={(e) => setLogiNotes(e.target.value)}
-                    name="logiNotes"
+                    value={logisticsNotes}
+                    onChange={(e) => setLogisticsNotes(e.target.value)}
+                    name="logisticsNotes"
                   />
                 ) : (
                   <Form.Control
                     as="textarea"
                     readOnly
                     value={
-                      logiNotes.length < 115 && logiNotes.length !== 0 ? (
-                        `${logiNotes}`
-                      ) : logiNotes.length > 115 ? (
+                      logisticsNotes.length < 115 && logisticsNotes.length !== 0 ? (
+                        `${logisticsNotes}`
+                      ) : logisticsNotes.length > 115 ? (
                         <span>
                           {logisticsReadMore
-                            ? logiNotes
-                            : `${logiNotes.substring(0, 115)}...`}
+                            ? logisticsNotes
+                            : `${logisticsNotes.substring(0, 115)}...`}
                           <button
                             className="show-more-btn"
                             onClick={() => {
@@ -480,8 +480,8 @@ const NotesForm = (id) => {
                         <span>No Notes</span>
                       )
                     }
-                    onChange={(e) => setLogiNotes(e.target.value)}
-                    name="logiNotes"
+                    onChange={(e) => setLogisticsNotes(e.target.value)}
+                    name="logisticsNotes"
                   />
                 )}
               </Col>
