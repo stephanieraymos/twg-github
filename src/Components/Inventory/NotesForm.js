@@ -25,9 +25,6 @@ const NotesForm = ({ id }) => {
   const [isEditingLogi, setIsEditingLogi] = useState(false);
   const [isEditingAct, setIsEditingAct] = useState(false);
   const [isEditingSales, setIsEditingSales] = useState(false);
-  const [salesReadMore, setSalesReadMore] = useState(false);
-  const [accountingReadMore, setAccountingReadMore] = useState(false);
-  const [logisticsReadMore, setLogisticsReadMore] = useState(false);
 
   const { is_seller, is_admin } = authService.getUser();
   let history = useHistory();
@@ -219,25 +216,7 @@ const NotesForm = ({ id }) => {
                     type="text"
                     readOnly
                     value={
-                      salesNotes.length < 115 && salesNotes.length !== 0 ? (
-                        salesNotes
-                      ) : salesNotes.length > 115 ? (
-                        <span>
-                          {salesReadMore
-                            ? salesNotes
-                            : `${salesNotes.substring(0, 115)}...`}
-                          <button
-                            className="show-more-btn"
-                            onClick={() => {
-                              setSalesReadMore(!salesReadMore);
-                            }}
-                          >
-                            {salesReadMore ? "show less" : "read more"}
-                          </button>
-                        </span>
-                      ) : (
-                        "No Notes yet"
-                      )
+                      salesNotes.length !== 0 ? salesNotes : "No Notes yet"
                     }
                     onChange={(e) => setSalesNotes(e.target.value)}
                     name="sales"
@@ -304,26 +283,9 @@ const NotesForm = ({ id }) => {
                     as="textarea"
                     readOnly
                     value={
-                      accountingNotes.length < 115 &&
-                      accountingNotes.length !== 0 ? (
-                        accountingNotes
-                      ) : accountingNotes.length > 115 ? (
-                        <span>
-                          {accountingReadMore
-                            ? accountingNotes
-                            : `${accountingNotes.substring(0, 115)}...`}
-                          <button
-                            className="show-more-btn"
-                            onClick={() => {
-                              setAccountingReadMore(!accountingReadMore);
-                            }}
-                          >
-                            {accountingReadMore ? "show less" : "read more"}
-                          </button>
-                        </span>
-                      ) : (
-                        "No Notes Yet"
-                      )
+                      accountingNotes.length !== 0
+                        ? accountingNotes
+                        : "No Notes Yet"
                     }
                     onChange={(e) => setAccountingNotes(e.target.value)}
                     name="accounting"
@@ -387,24 +349,9 @@ const NotesForm = ({ id }) => {
                     as="textarea"
                     readOnly
                     value={
-                      logisticsNotes.length < 115 &&
-                      logisticsNotes.length !== 0 ? (
-                        `${logisticsNotes}`
-                      ) : logisticsNotes.length > 115 ? (
-                        <span>
-                          {logisticsReadMore
-                            ? logisticsNotes
-                            : `${logisticsNotes.substring(0, 115)}...`}
-                          <button
-                            className="show-more-btn"
-                            onClick={() => {
-                              setLogisticsReadMore(!logisticsReadMore);
-                            }}
-                          >
-                            {logisticsReadMore ? "show less" : "read more"}
-                          </button>
-                        </span>
-                      ) : "No Notes Yet"
+                      logisticsNotes.length !== 0
+                        ? logisticsNotes
+                        : "No Notes Yet"
                     }
                     onChange={(e) => setLogisticsNotes(e.target.value)}
                     name="logistics"
