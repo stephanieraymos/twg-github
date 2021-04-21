@@ -20,25 +20,25 @@ const UpdateTruckForm = ({
   const [tempImageCount, setTempImageCount] = useState(0);
 
   const {
-    source: [source, setSource],
-    retailPrice: [retailPrice, setRetailPrice],
-    price: [price, setPrice],
-    status: [status, setStatus],
-    contents: [contents, setContents],
-    category: [category, setCategory],
-    units: [units, setUnits],
-    palletCount: [palletCount, setPalletCount],
-    fob: [fob, setFob],
-    manifestIds: [manifestIds, setManifestIds],
-    files: [files, setFiles],
-    owner: [owner, setOwner],
-    cost: [cost, setCost],
-    commission: [commission, setCommission],
-    lane: [lane, setLane],
-    fileCount: [fileCount, setFileCount],
+    source, setSource,
+    retailPrice, setRetailPrice,
+    price, setPrice,
+    status, setStatus,
+    contents, setContents,
+    category, setCategory,
+    units, setUnits,
+    palletCount, setPalletCount,
+    fob, setFob,
+    manifestIds,
+    files,
+    owner, setOwner,
+    cost, setCost,
+    commission, setCommission,
+    lane, setLane,
+    fileCount, setFileCount,
     imageCount, setImageCount,
-    imageIds, setImageIds,
-    images, setImages
+    imageIds,
+    images
   } = useTruckContext();
 
   const removeImage = index => {
