@@ -26,11 +26,14 @@ export const PrivateRoute = ({ children, ...rest }) => {
 }
 
 export const SuperuserRoute = ({ children, ...rest }) => {
+
+    const { is_superuser } = authService.getUser();
+
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                authService.getIsAuth() ? (
+                (authService.getIsAuth() && is_superuser) ? (
                     children
                 ) : (
                     <Redirect

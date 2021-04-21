@@ -194,11 +194,11 @@ input:hover::placeholder {
 .file-accordion {
   background: rgba(194, 192, 192, 0.199);
 }
-.all-accordions {
+/* .all-accordions {
   padding: 0;
   border-bottom: none;
   border-radius: 0.4rem;
-}
+} */
 .truck-details-header {
   font-size: 2rem;
   text-transform: capitalize;

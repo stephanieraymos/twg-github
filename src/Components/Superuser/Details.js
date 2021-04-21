@@ -4,7 +4,7 @@ import { useSuperuserContext } from "../../superuser";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { userURL } from "../../Pages/urls";
 import Navigation from "../Navigation/Navigation";
-import { useParams, Link, useHistory, useRouteMatch, useLocation } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { superuserPATH } from "../../Pages/paths";
 
 const SuperuserDetails = () => {
