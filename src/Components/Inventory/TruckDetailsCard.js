@@ -4,6 +4,7 @@ import { Card, Accordion, Carousel, Image } from "react-bootstrap";
 import { FaAngleDoubleDown } from "react-icons/fa";
 import { useTruckContext } from "../../truckContext";
 import { authService } from "../../authService";
+import NotesForm from "./NotesForm";
 
 const TruckDetailsCard = ({ id, current }) => {
   const { is_seller, is_admin } = authService.getUser();
