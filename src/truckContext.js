@@ -33,9 +33,9 @@ const TruckProvider = ({ children }) => {
   const [owner, setOwner] = useState("");
   const [cost, setCost] = useState("");
   const [commission, setCommission] = useState("");
-  const [sales, setSales] = useState("");
-  const [accounting, setAccounting] = useState("");
-  const [logistics, setLogistics] = useState("");
+  const [salesNotes, setSalesNotes] = useState("");
+  const [accountingNotes, setAccountingNotes] = useState("");
+  const [logisticsNotes, setLogisticsNotes] = useState("");
   const [lane, setLane] = useState("");
   const [fileCount, setFileCount] = useState(0);
   const [imageCount, setImageCount] = useState(0);
@@ -91,29 +91,29 @@ const TruckProvider = ({ children }) => {
   return (
     <TruckContext.Provider
       value={{
-        isEmpty: [isEmpty, setIsEmpty],
-        id: [id, setId],
-        loading: [loading, setLoading],
-        loadId: [loadId, setLoadId],
-        source: [source, setSource],
-        retailPrice: [retailPrice, setRetailPrice],
-        price: [price, setPrice],
-        status: [status, setStatus],
-        contents: [contents, setContents],
-        category: [category, setCategory],
-        units: [units, setUnits],
-        palletCount: [palletCount, setPalletCount],
-        fob: [fob, setFob],
-        manifestIds: [manifestIds, setManifestIds],
-        files: [files, setFiles],
-        owner: [owner, setOwner],
-        cost: [cost, setCost],
-        commission: [commission, setCommission],
-        sales: [sales, setSales],
-        accounting: [accounting, setAccounting],
-        logistics: [logistics, setLogistics],
-        lane: [lane, setLane],
-        fileCount: [fileCount, setFileCount],
+        isEmpty, setIsEmpty,
+        id, setId,
+        loading, setLoading,
+        loadId, setLoadId,
+        source, setSource,
+        retailPrice, setRetailPrice,
+        price, setPrice,
+        status, setStatus,
+        contents, setContents,
+        category, setCategory,
+        units, setUnits,
+        palletCount, setPalletCount,
+        fob, setFob,
+        manifestIds, setManifestIds,
+        files, setFiles,
+        owner, setOwner,
+        cost, setCost,
+        commission, setCommission,
+        salesNotes, setSalesNotes,
+        accountingNotes, setAccountingNotes,
+        logisticsNotes, setLogisticsNotes,
+        lane, setLane,
+        fileCount, setFileCount,
         imageCount, setImageCount,
         imageIds, setImageIds,
         images, setImages
