@@ -20,7 +20,6 @@ import Logout from "./Components/LoginAndSignup/Logout";
 
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
 import AdminDashboard from "./Components/Dashboard/AdminDashboard";
-import UserDb from "./Components/Users/UserDb";
 import AccountDetails from "./Components/Users/AccountDetails";
 import EmailVerification from "./Components/LoginAndSignup/EmailVerification";
 import SuperuserHome from "./Components/Superuser/Home";
@@ -58,10 +57,6 @@ const App = () => {
               <SuperuserHome />
             </SuperuserRoute>
           </SuperuserProvider>
-          
-          {/* <Route exact path={usersPATH}>
-            <UserDb />
-          </Route> */}
         </Switch>
       </Router>
     </>
