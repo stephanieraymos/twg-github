@@ -1,6 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
 import { userURL } from "./Pages/urls"
-import { useAuthContext } from "./auth";
 import { useParams } from "react-router-dom";
 
 // Generating context
