@@ -209,6 +209,7 @@ const NotesForm = ({ id }) => {
                     value={salesNotes}
                     onChange={(e) => setSalesNotes(e.target.value)}
                     name="sales"
+                    className="notes-text-area"
                   />
                 ) : (
                   <Form.Control

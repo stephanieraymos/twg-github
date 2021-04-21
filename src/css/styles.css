@@ -681,3 +681,7 @@ input:hover {
   justify-content: flex-start;
   align-items: center;
 }
+
+textarea.form-control {
+  height: 40rem;
+}

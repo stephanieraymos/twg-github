@@ -3,7 +3,12 @@ import Navigation from "../Navigation/Navigation";
 import { useParams, useHistory, useLocation } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { authService } from "../../authService";
-import { getByIdURL, inventoryURL, manifestURL, imageURL } from "../../Pages/urls";
+import {
+  getByIdURL,
+  inventoryURL,
+  manifestURL,
+  imageURL,
+} from "../../Pages/urls";
 import TruckDetailsCard from "./TruckDetailsCard";
 import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
 import { useTruckContext } from "../../truckContext";
@@ -15,9 +20,11 @@ const TruckDetails = () => {
   const { id } = useParams();
 
   const {
-    isEmpty, setIsEmpty,
+    isEmpty,
+    setIsEmpty,
     setId,
-    loadId, setLoadId,
+    loadId,
+    setLoadId,
     setSource,
     setRetailPrice,
     setPrice,
@@ -27,7 +34,8 @@ const TruckDetails = () => {
     setUnits,
     setPalletCount,
     setFob,
-    manifestIds, setManifestIds,
+    manifestIds,
+    setManifestIds,
     setFiles,
     setOwner,
     setCost,
@@ -36,13 +44,17 @@ const TruckDetails = () => {
     setAccountingNotes,
     setLogisticsNotes,
     setLane,
-    fileCount, setFileCount,
-    imageCount, setImageCount,
-    imageIds, setImageIds,
+    fileCount,
+    setFileCount,
+    imageCount,
+    setImageCount,
+    imageIds,
+    setImageIds,
     setImages,
 
-
-    salesNotes, accountingNotes, logisticsNotes
+    salesNotes,
+    accountingNotes,
+    logisticsNotes,
   } = useTruckContext();
 
   const { is_seller, is_admin } = authService.getUser();
@@ -58,12 +70,13 @@ const TruckDetails = () => {
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
-      authService.checkToken()
+      authService
+        .checkToken()
         .then(() => {
           fetch(manifestURL, {
             method: "POST",
             headers: {
-              "Authorization": `Bearer ${authService.getAccessToken()}`,
+              Authorization: `Bearer ${authService.getAccessToken()}`,
             },
             body: data,
           })
@@ -73,7 +86,7 @@ const TruckDetails = () => {
               console.log(error);
             });
         })
-        .catch(() => history.push("/logout"))
+        .catch(() => history.push("/logout"));
     } else {
       setFiles([]);
     }
@@ -84,12 +97,13 @@ const TruckDetails = () => {
     if (imageIds.length > 0) {
       const data = new FormData();
       imageIds.map((id) => data.append("imageIds", id));
-      authService.checkToken()
+      authService
+        .checkToken()
         .then(() => {
           fetch(imageURL, {
             method: "POST",
             headers: {
-              "Authorization": `Bearer ${authService.getAccessToken()}`,
+              Authorization: `Bearer ${authService.getAccessToken()}`,
             },
             body: data,
           })
@@ -99,7 +113,7 @@ const TruckDetails = () => {
               console.log(error);
             });
         })
-        .catch(() => history.push("/logout"))
+        .catch(() => history.push("/logout"));
     } else {
       setImages([]);
     }
@@ -109,18 +123,18 @@ const TruckDetails = () => {
     const data = new FormData();
     data.append("id", id);
     manifestIds.map((id) => data.append("manifestIds", id));
-    authService.checkToken()
+    authService
+      .checkToken()
       .then(() => {
         fetch(inventoryURL, {
           method: "DELETE",
           headers: {
-            "Authorization": `Bearer ${authService.getAccessToken()}`,
+            Authorization: `Bearer ${authService.getAccessToken()}`,
           },
           body: data,
-        })
-          .then(history.replace(inventoryPATH));
+        }).then(history.replace(inventoryPATH));
       })
-      .catch(() => history.push("/logout"))
+      .catch(() => history.push("/logout"));
   };
 
   const getTruck = () => {
@@ -221,7 +235,7 @@ const TruckDetails = () => {
           <FaAngleDoubleLeft /> Back to inventory
         </Button>
 
-        {(is_seller || is_admin) &&
+        {(is_seller || is_admin) && (
           <>
             <Button
               onClick={(e) => {
@@ -245,7 +259,7 @@ const TruckDetails = () => {
               <FaEdit /> Edit truck
             </Button>
           </>
-        }
+        )}
       </div>
 
       <TruckDetailsCard id={id} current={location.pathname} />
