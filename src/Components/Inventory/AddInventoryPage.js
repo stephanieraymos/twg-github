@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import FormAddInventory from "./FormAddInventory";
 import { Image } from "react-bootstrap";
-import { authService } from "../../authService";
 import Navigation from "../Navigation/Navigation";
 import {
   useHistory,
@@ -10,10 +9,6 @@ import back from "../../img/back.svg";
 import { inventoryPATH } from "../../Pages/paths";
 
 const AddInventoryModal = ({ addNewTrucks }) => {
-
-  const {
-    user_id,
-  } = authService.getUser();
 
   let history = useHistory();
 
@@ -40,7 +35,6 @@ const AddInventoryModal = ({ addNewTrucks }) => {
 
         {/* //^ MODAL BODY */}
         <FormAddInventory
-          userId={user_id}
           addNewTrucks={addNewTrucks}
         />
       </div>
