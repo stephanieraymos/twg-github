@@ -37,7 +37,7 @@ const AdminDashboard = () => {
     }
   };
   console.log("trucks", trucks)
-  console.log("status of first truck in array", trucks[0].status)
+  // console.log("status of first truck in array", trucks[0].status)
 
   return (
     <>
