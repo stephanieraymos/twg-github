@@ -4,6 +4,8 @@ import { useAuthContext } from "../../auth";
 import { Form, Col, Row } from "react-bootstrap";
 import { inventoryURL } from "../../Pages/urls";
 import { FaEdit } from "react-icons/fa";
+import { authService } from "../../authService";
+import { useHistory } from "react-router-dom";
 
 const NotesForm = (id) => {
   const salesForm = useRef(null);
@@ -30,7 +32,9 @@ const NotesForm = (id) => {
     logiNotes,
     setLogiNotes,
   } = useGlobalContext();
-  const { isSeller, isAdmin, accessToken } = useAuthContext();
+
+  const { is_seller, is_admin } = authService.getUser();
+  let history = useHistory();
 
   const cancelLogi = () => {
     setIsEditingLogi(false);
@@ -81,33 +85,37 @@ const NotesForm = (id) => {
   // Return true or false to indicate if fetch was successful
   const updateSalesNotes = () => {
     const data = new FormData(salesForm.current);
-        var object = {};
-        data.forEach((value, key) => {
-            object[key] = value
-        });
+    var object = {};
+    data.forEach((value, key) => {
+        object[key] = value
+    });
 
-        object["id"] = id;
-        object["sales"] = salesNotes;
-        setSalesNotes(object)
+    object["id"] = id;
+    object["sales"] = salesNotes;
+    setSalesNotes(object)
 
-    fetch(inventoryURL, {
-      method: "PUT",
-      headers: {
-        Authorization: "Bearer " + accessToken(),
-        // contentType: "application/json"
-      },
-      body: data
-    //   body: JSON.stringify(data),
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.ok) {
-          return true;
-        } else return false;
+    authService.checkToken()
+      .then(() => {
+        fetch(inventoryURL, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${authService.getAccessToken()}`,
+            // contentType: "application/json"
+          },
+          body: data
+        //   body: JSON.stringify(data),
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.ok) {
+              return true;
+            } else return false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => history.push("/logout"))
     setSalesNotes(object);
   };
 //   const updateSalesNotes = () => {
@@ -126,46 +134,54 @@ const NotesForm = (id) => {
     const data = new FormData(actForm.current);
     data.append("id", id);
 
-    fetch(inventoryURL, {
-      method: "PUT",
-      headers: {
-        Authorization: "Bearer " + accessToken(),
-      },
-      body: data,
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.ok) {
-          console.log("OK");
+    authService.checkToken()
+      .then(() => {
+        fetch(inventoryURL, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${authService.getAccessToken()}`,
+          },
+          body: data,
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.ok) {
+              console.log("OK");
 
-          return true;
-        } else console.log("Not ok");
-        return false;
+              return true;
+            } else console.log("Not ok");
+            return false;
+          })
+          .catch((error) => {
+            console.log(error, Response.message);
+          });
       })
-      .catch((error) => {
-        console.log(error, Response.message);
-      });
+      .catch(() => history.push("/logout"))
   };
   const updateLogiNotes = () => {
     const data = new FormData(logiForm.current);
     data.append("id", id);
 
-    fetch(inventoryURL, {
-      method: "PUT",
-      headers: {
-        Authorization: "Bearer " + accessToken(),
-      },
-      body: data,
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.ok) {
-          return true;
-        } else return false;
+    authService.checkToken()
+      .then(() => {
+        fetch(inventoryURL, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${authService.getAccessToken()}`,
+          },
+          body: data,
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.ok) {
+              return true;
+            } else return false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => history.push("/logout"))
   };
   //   const performSalesNotesUpdate = () => {
   //     const data = new FormData(salesForm.current);
@@ -219,7 +235,7 @@ const NotesForm = (id) => {
   //   };
   return (
     <>
-      {(isSeller() || isAdmin()) && (
+      {(is_seller || is_admin) && (
         <>
           {/* //^ SALES NOTES */}
           <Form

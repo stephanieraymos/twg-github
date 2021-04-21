@@ -6,8 +6,7 @@ import cancel from "../../img/cancel.svg";
 import mail from "../../img/mail.svg";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
-import { registerURL } from "../../Pages/urls";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 
 const Signup2 = () => {
   document.title = "Sign up";
@@ -26,8 +25,6 @@ const Signup2 = () => {
     isSignUpSuccess,
     setIsSignUpSuccess
   } = useGlobalContext();
-
-  const { register } = useAuthContext();
 
   const form = useRef(null);
 
@@ -83,7 +80,7 @@ const Signup2 = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
-    register(JSON.stringify(object))
+    authService.register(JSON.stringify(object))
       .then(() => {
         setIsSignUpSuccess(true);
         resetValues();

@@ -50,38 +50,6 @@ const AppProvider = ({ children }) => {
     setIsModalOpen(false);
   };
 
-  const getUser = (token) => {
-    return new Promise((resolve, reject) => {
-      fetch(userURL, {
-          method: "GET",
-          headers: {
-              Authorization: "Bearer " + token, 
-          },
-        })
-          .then((response) => {
-            const res = response.json();
-            if (response.ok) {
-              return res;
-            } else {
-              throw new Error(res.message);
-            }
-          })
-          .then((user) => {
-            setEmail(user["email"]);
-            setFirstName(user["first_name"]);
-            setLastName(user["last_name"]);
-            setCompany(user["company"]);
-            setPhoneNumber(user["phone_number"]);
-            setBillingAddress(user["billing_address"]);
-            resolve(true)
-          })
-          .catch((error) => {
-            reject(error)
-          });
-    });
-};
-
-
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
     <AppContext.Provider
@@ -118,29 +86,6 @@ const AppProvider = ({ children }) => {
         setIsSignUpSuccess,
         isResetEmailSuccess,
         setIsResetEmailSuccess,
-        getUser,
-
-
-
-        salesReadMore: salesReadMore,
-        accountingReadMore: accountingReadMore,
-        logisticsReadMore: logisticsReadMore,
-        isEditingSales: isEditingSales,
-        setIsEditingSales: setIsEditingSales,
-        isEditingLogi: isEditingLogi,
-        setIsEditingLogi: setIsEditingLogi,
-        isEditingAct: isEditingAct,
-        setIsEditingAct: setIsEditingAct,
-        salesNotes: salesNotes,
-        setSalesNotes: setSalesNotes,
-        actNotes: actNotes,
-        setActNotes: setActNotes,
-        logiNotes: logiNotes,
-        setLogiNotes: setLogiNotes,
-        validated: validated,
-        setValidated: setValidated,
-        originalValues: originalValues,
-        setOriginalValues: setOriginalValues,
       }}
     >
       {children}

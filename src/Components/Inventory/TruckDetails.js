@@ -2,13 +2,8 @@ import React, { useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useParams, useHistory, useLocation } from "react-router-dom";
 import Loading from "../../Pages/Loading";
-import { useAuthContext } from "../../auth";
-import {
-  getByIdURL,
-  inventoryURL,
-  manifestURL,
-  imageURL,
-} from "../../Pages/urls";
+import { authService } from "../../authService";
+import { getByIdURL, inventoryURL, manifestURL, imageURL } from "../../Pages/urls";
 import TruckDetailsCard from "./TruckDetailsCard";
 import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
 import { useTruckContext } from "../../truckContext";
@@ -49,7 +44,7 @@ const TruckDetails = () => {
     setImages,
   } = useTruckContext();
 
-  const { accessToken, isSeller, isAdmin } = useAuthContext();
+  const { is_seller, is_admin } = authService.getUser();
 
   let history = useHistory();
   let location = useLocation();
@@ -62,18 +57,22 @@ const TruckDetails = () => {
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
-      fetch(manifestURL, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken()}`,
-        },
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((manifest) => setFiles(manifest))
-        .catch((error) => {
-          console.log(error);
-        });
+      authService.checkToken()
+        .then(() => {
+          fetch(manifestURL, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${authService.getAccessToken()}`,
+            },
+            body: data,
+          })
+            .then((response) => response.json())
+            .then((manifest) => setFiles(manifest))
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch(() => history.push("/logout"))
     } else {
       setFiles([]);
     }
@@ -84,18 +83,22 @@ const TruckDetails = () => {
     if (imageIds.length > 0) {
       const data = new FormData();
       imageIds.map((id) => data.append("imageIds", id));
-      fetch(imageURL, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken()}`,
-        },
-        body: data,
-      })
-        .then((response) => response.json())
-        .then((images) => setImages(images))
-        .catch((error) => {
-          console.log(error);
-        });
+      authService.checkToken()
+        .then(() => {
+          fetch(imageURL, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${authService.getAccessToken()}`,
+            },
+            body: data,
+          })
+            .then((response) => response.json())
+            .then((images) => setImages(images))
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch(() => history.push("/logout"))
     } else {
       setImages([]);
     }
@@ -105,13 +108,18 @@ const TruckDetails = () => {
     const data = new FormData();
     data.append("id", id);
     manifestIds.map((id) => data.append("manifestIds", id));
-    fetch(inventoryURL, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${accessToken()}`,
-      },
-      body: data,
-    }).then(history.replace(inventoryPATH));
+    authService.checkToken()
+      .then(() => {
+        fetch(inventoryURL, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${authService.getAccessToken()}`,
+          },
+          body: data,
+        })
+          .then(history.replace(inventoryPATH));
+      })
+      .catch(() => history.push("/logout"))
   };
 
   const getTruck = () => {
@@ -211,7 +219,7 @@ const TruckDetails = () => {
           <FaAngleDoubleLeft /> Back to inventory
         </Button>
 
-        {(isSeller() || isAdmin()) && (
+        {(is_seller || is_admin) &&
           <>
             <Button
               onClick={(e) => {
@@ -235,7 +243,7 @@ const TruckDetails = () => {
               <FaEdit /> Edit truck
             </Button>
           </>
-        )}
+        }
       </div>
 
       <TruckDetailsCard id={id} current={location.pathname} />

@@ -3,9 +3,10 @@ import logo from "../../img/w-logo.png";
 import { Card, Accordion, Carousel, Image } from "react-bootstrap";
 import { FaAngleDoubleDown } from "react-icons/fa";
 import { useTruckContext } from "../../truckContext";
-import NotesForm from "./NotesForm";
+import { authService } from "../../authService";
 
 const TruckDetailsCard = ({ id, current }) => {
+  const { is_seller, is_admin } = authService.getUser();
   const {
     isEmpty: [isEmpty, setIsEmpty],
     loadId: [loadId, setLoadId],

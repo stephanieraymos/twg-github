@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormAddInventory from "./FormAddInventory";
 import { Image } from "react-bootstrap";
-import { useGlobalContext } from "../../context";
+import { authService } from "../../authService";
 import Navigation from "../Navigation/Navigation";
 import {
   useHistory,
@@ -12,9 +12,8 @@ import { inventoryPATH } from "../../Pages/paths";
 const AddInventoryModal = ({ addNewTrucks }) => {
 
   const {
-    userId,
-    setUserId,
-  } = useGlobalContext();
+    user_id,
+  } = authService.getUser();
 
   let history = useHistory();
 
@@ -41,7 +40,7 @@ const AddInventoryModal = ({ addNewTrucks }) => {
 
         {/* //^ MODAL BODY */}
         <FormAddInventory
-          userId={userId}
+          userId={user_id}
           addNewTrucks={addNewTrucks}
         />
       </div>

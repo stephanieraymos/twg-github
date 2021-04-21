@@ -4,18 +4,18 @@ import { links, social, logoLink } from "./nav-data";
 import logo from "../../img/logo-blue.svg";
 import nav from "../../css/nav.css";
 import { useHistory, Link } from "react-router-dom";
-import { useAuthContext } from "../../auth";
+import { authService } from "../../authService";
 
 const Navigation = () => {
   const [showLinks, setShowLinks] = useState(false);
   const linksContainerRef = useRef(null); //For DIV
   const linksRef = useRef(null); //For UL
-  const { isSuperuser } = useAuthContext();
+  const { is_superuser } = authService.getUser();
   const [filteredLinks, setFilteredLinks] = useState(links);
 
   // {params != Home ? <Navigation /> : null}
   useEffect(() => {
-    if (!isSuperuser()) {
+    if (!is_superuser) {
       setFilteredLinks(filteredLinks.filter(item => item.text !== "Superuser"))
     }
   }, []);

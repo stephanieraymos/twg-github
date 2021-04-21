@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Loading from "../../Pages/Loading";
-import { useGlobalContext } from "../../context";
-import { useAuthContext } from "../../auth";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { userURL } from "../../Pages/urls";
 import Navigation from "../Navigation/Navigation";
+import { authService } from "../../authService";
+import { useHistory } from "react-router-dom";
 
 const AccountDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -16,23 +16,30 @@ const AccountDetails = () => {
 
   document.title = "Account Details";
 
-  const { accessToken, changePassword, updateUser } = useAuthContext();
+  let history = useHistory();
 
-  const {
-    email,
-    setEmail,
-    firstName,
-    setFirstName,
-    lastName,
-    setLastName,
-    company,
-    setCompany,
-    phoneNumber,
-    setPhoneNumber,
-    billingAddress,
-    setBillingAddress,
-    getUser,
-  } = useGlobalContext();
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [company, setCompany] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [billingAddress, setBillingAddress] = useState("");
+
+  useEffect(() => {
+    const subscription = authService.getUserSubscriber().subscribe(user => {
+      if (user) {
+        const { email, first_name, last_name, company, phone_number, billing_address } = user;
+        setEmail(email);
+        setFirstName(first_name);
+        setLastName(last_name);
+        setCompany(company);
+        setPhoneNumber(phone_number);
+        setBillingAddress(billing_address);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [])
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -49,23 +56,24 @@ const AccountDetails = () => {
     const data = new FormData(form.current);
     var object = {};
     data.forEach((value, key) => (object[key] = value));
-    updateUser(JSON.stringify(object))
-      .then((user) => {
-        setEmail(user["email"]);
-        setFirstName(user["first_name"]);
-        setLastName(user["last_name"]);
-        setCompany(user["company"]);
-        setPhoneNumber(user["phone_number"]);
-        setBillingAddress(user["billing_address"]);
+    authService.updateUser(JSON.stringify(object))
+      .then(() => {
         setIsEditing(false);
       })
       .catch((error) => {
         console.log(error);
+        setIsEditing(false);
+        if (error && error === "logout")
+          history.push("/logout")
       });
   }
 
   useEffect(() => {
-    getUser(accessToken());
+    authService.fetchUser()
+      .catch((error) => {
+        if (error && error === "logout")
+          history.push("/logout")
+      })
   }, []);
 
   return (
@@ -319,7 +327,7 @@ const AccountDetails = () => {
             <Button
               type="button"
               onClick={() => {
-                changePassword(currentPassword, newPassword, confirmNewPassword)
+                authService.changePassword(currentPassword, newPassword, confirmNewPassword)
                 setCurrentPassword("");
                 setNewPassword("");
                 setConfirmNewPassword("");
