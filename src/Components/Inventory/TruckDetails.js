@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
-import {
-  useParams,
-  Link,
-  useHistory,
-  useRouteMatch,
-  useLocation,
-} from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import Loading from "../../Pages/Loading";
 import { authService } from "../../authService";
 import { getByIdURL, inventoryURL, manifestURL, imageURL } from "../../Pages/urls";
@@ -42,9 +36,12 @@ const TruckDetails = () => {
     logistics: [logistics, setLogistics],
     lane: [lane, setLane],
     fileCount: [fileCount, setFileCount],
-    imageCount, setImageCount,
-    imageIds, setImageIds,
-    images, setImages
+    imageCount,
+    setImageCount,
+    imageIds,
+    setImageIds,
+    images,
+    setImages,
   } = useTruckContext();
 
   const { is_seller, is_admin } = authService.getUser();
@@ -154,7 +151,7 @@ const TruckDetails = () => {
             sales,
             accounting,
             logistics,
-            imageIds
+            imageIds,
           } = data[0];
 
           setIsEmpty(false);
@@ -176,7 +173,7 @@ const TruckDetails = () => {
           setAccounting(accounting);
           setLogistics(logistics);
           setLane(lane);
-          setImageIds(imageIds)
+          setImageIds(imageIds);
         }
       })
       .catch((error) => {
@@ -185,7 +182,11 @@ const TruckDetails = () => {
   };
 
   useEffect(() => {
-    if (isEmpty || manifestIds.length != fileCount || imageIds.length != imageCount) {
+    if (
+      isEmpty ||
+      manifestIds.length != fileCount ||
+      imageIds.length != imageCount
+    ) {
       getTruck();
     }
   }, []);
@@ -241,21 +242,8 @@ const TruckDetails = () => {
             >
               <FaEdit /> Edit truck
             </Button>
-            <Button
-              className="edit-notes-btn"
-              onClick={(e) => {
-                e.preventDefault();
-                history.push(`${inventoryPATH}/edit/notes/${id}`, {
-                  from: location.pathname,
-                });
-              }}
-            >
-              <FaEdit /> Edit Notes
-            </Button>
           </>
         }
-
-
       </div>
 
       <TruckDetailsCard id={id} current={location.pathname} />
