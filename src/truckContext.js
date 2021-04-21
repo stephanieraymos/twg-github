@@ -42,41 +42,64 @@ const TruckProvider = ({ children }) => {
   const [imageIds, setImageIds] = useState([]);
   const [images, setImages] = useState([]);
 
-
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
-
-
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
     <TruckContext.Provider
       value={{
-        isEmpty, setIsEmpty,
-        id, setId,
-        loading, setLoading,
-        loadId, setLoadId,
-        source, setSource,
-        retailPrice, setRetailPrice,
-        price, setPrice,
-        status, setStatus,
-        contents, setContents,
-        category, setCategory,
-        units, setUnits,
-        palletCount, setPalletCount,
-        fob, setFob,
-        manifestIds, setManifestIds,
-        files, setFiles,
-        owner, setOwner,
-        cost, setCost,
-        commission, setCommission,
-        salesNotes, setSalesNotes,
-        accountingNotes, setAccountingNotes,
-        logisticsNotes, setLogisticsNotes,
-        lane, setLane,
-        fileCount, setFileCount,
-        imageCount, setImageCount,
-        imageIds, setImageIds,
-        images, setImages
+        isEmpty,
+        setIsEmpty,
+        id,
+        setId,
+        loading,
+        setLoading,
+        loadId,
+        setLoadId,
+        source,
+        setSource,
+        retailPrice,
+        setRetailPrice,
+        price,
+        setPrice,
+        status,
+        setStatus,
+        contents,
+        setContents,
+        category,
+        setCategory,
+        units,
+        setUnits,
+        palletCount,
+        setPalletCount,
+        fob,
+        setFob,
+        manifestIds,
+        setManifestIds,
+        files,
+        setFiles,
+        owner,
+        setOwner,
+        cost,
+        setCost,
+        commission,
+        setCommission,
+        salesNotes,
+        setSalesNotes,
+        accountingNotes,
+        setAccountingNotes,
+        logisticsNotes,
+        setLogisticsNotes,
+        lane,
+        setLane,
+        fileCount,
+        setFileCount,
+        imageCount,
+        setImageCount,
+        imageIds,
+        setImageIds,
+        images,
+        setImages,
       }}
     >
       {children}
@@ -115,7 +138,8 @@ export const useTruck = () => {
 
     const fetchTrucks = async () => {
       try {
-        const response = await fetch(url,
+        const response = await fetch(
+          url,
           {
             method: "GET",
             headers: {
