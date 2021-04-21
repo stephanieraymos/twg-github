@@ -1,14 +1,11 @@
 import React, {
     useState,
     useEffect,
-    useReducer,
     useContext,
     createContext,
 } from "react";
 import { superuserURL } from "./Pages/urls";
 import { authService } from "./authService";
-import { superuserPATH } from "./Pages/paths";
-import { json } from "d3-fetch";
 import { useHistory } from "react-router-dom";
 
 // Generating context

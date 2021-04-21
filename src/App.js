@@ -19,7 +19,7 @@ import Login2 from "./Components/LoginAndSignup/Login_2";
 import Logout from "./Components/LoginAndSignup/Logout";
 
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
-import Dashboard from "./Components/Dashboard/Dashboard";
+import AdminDashboard from "./Components/Dashboard/AdminDashboard";
 import UserDb from "./Components/Users/UserDb";
 import AccountDetails from "./Components/Users/AccountDetails";
 import EmailVerification from "./Components/LoginAndSignup/EmailVerification";
@@ -36,7 +36,7 @@ const App = () => {
             <Login2 />
           </LoginRoute>
           <PrivateRoute exact path={dashboardPATH}>
-            <Dashboard />
+            <AdminDashboard />
           </PrivateRoute>
           <PrivateRoute path={inventoryPATH}>
             <InventoryAllTrucks />

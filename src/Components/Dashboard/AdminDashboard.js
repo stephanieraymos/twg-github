@@ -2,19 +2,13 @@ import React from "react";
 import { useTruck } from "../../truckContext";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
-import D3 from "../D3";
-import Loading from "../../Pages/Loading";
-import { useHistory, Link } from "react-router-dom";
-import { userURL } from "../../Pages/urls";
 
 import Navigation from "../Navigation/Navigation";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   document.title = "Dashboard";
 
   const [trucks, loading] = useTruck();
-
-  let history = useHistory();
 
   const handleViewDetails = () => {
     return <OrderDetails />;
@@ -152,6 +146,6 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;
 
 // TP-21
