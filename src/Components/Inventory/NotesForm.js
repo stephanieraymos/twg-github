@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { useGlobalContext } from "../../context";
-import { useAuthContext } from "../../auth";
 import { Form, Col, Row } from "react-bootstrap";
 import { inventoryURL } from "../../Pages/urls";
 import { FaEdit } from "react-icons/fa";
