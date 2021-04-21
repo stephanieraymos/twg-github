@@ -57,10 +57,6 @@ const App = () => {
               <SuperuserHome />
             </SuperuserRoute>
           </SuperuserProvider>
-          
-          {/* <Route exact path={usersPATH}>
-            <UserDb />
-          </Route> */}
         </Switch>
       </Router>
     </>

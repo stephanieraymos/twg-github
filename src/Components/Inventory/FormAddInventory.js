@@ -10,7 +10,6 @@ import { image } from "d3-fetch";
 import cancel from "../../img/cancel.svg";
 
 const FormAddInventory = ({
-  userId,
   addNewTrucks,
 }) => {
   const form = useRef(null);
@@ -19,6 +18,10 @@ const FormAddInventory = ({
   const [manifestsCount, setManifestsCount] = useState(0);
   const [imageCount, setImageCount] = useState(0);
   let history = useHistory();
+
+  const {
+    id,
+  } = authService.getUser();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -46,7 +49,7 @@ const FormAddInventory = ({
   //^---- POST (ADD INVENTORY) ----
   const postTrucks = () => {
     const data = new FormData(form.current);
-    data.append("userId", userId);
+    data.append("seller_id", id);
     const contents = data.get("contents").split(",");
     data.delete("contents");
     contents.map((item) => data.append("contents", item));
