@@ -205,7 +205,11 @@ const logout = () => {
                         reject(error);
                     });
             })
-            .catch(() => reject("logout"))
+            .catch(() => {
+                setIsAuth(false);
+                resetLocalStorage();
+                reject("logout");
+            })
     });
 };
 
