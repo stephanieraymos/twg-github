@@ -44,9 +44,6 @@ const AdminDashboard = () => {
   //@TODO status is false when changing above conditional statement parameter to status ===0 , but once I refresh the page, the status is true
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
       <article className="admin-dashboard-content">
         <div className="section-container">
           <div className="trucks-available section-items">

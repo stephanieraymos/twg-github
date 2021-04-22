@@ -4,35 +4,36 @@ import { PrivateRoute } from "../../Pages/router";
 import { Switch, useRouteMatch } from "react-router-dom";
 
 import BuyerDashboard from "./BuyerDashboard";
+import AdminDashboard from "./AdminDashboard";
 import { InventoryProvider } from "../../inventory";
 import { authService } from "../../authService";
 
 const Dashboard = () => {
-    document.title = "Dashboard";
+  document.title = "Dashboard";
 
-    let { path } = useRouteMatch();
+  let { path } = useRouteMatch();
 
-    const { is_seller, is_admin } = authService.getUser();
+  const { is_seller, is_admin } = authService.getUser();
 
-    return (
-        <Switch>
-            <InventoryProvider>
-                <PrivateRoute exact path={path}>
-                    <>
-                        <div>
-                            <Navigation />
-                        </div>
-                        {is_admin ? (
-                            <BuyerDashboard />
-                        ) : is_seller ? (
-                            <BuyerDashboard />
-                        ) : (
-                            <BuyerDashboard />
-                        )}
-                    </>
-                </PrivateRoute>
-            </InventoryProvider>
-        </Switch>
-    );
+  return (
+    <Switch>
+      <InventoryProvider>
+        <PrivateRoute exact path={path}>
+          <>
+            <div>
+              <Navigation />
+            </div>
+            {is_admin ? (
+              <AdminDashboard />
+            ) : is_seller ? (
+              <BuyerDashboard />
+            ) : (
+              <BuyerDashboard />
+            )}
+          </>
+        </PrivateRoute>
+      </InventoryProvider>
+    </Switch>
+  );
 };
 export default Dashboard;
