@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useTruck } from "../../truckContext";
+import { useInventoryContext } from "../../inventory";
 import { usePersistedState } from "../../usePersistedState";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
 
-import Navigation from "../Navigation/Navigation";
-
 const AdminDashboard = () => {
   document.title = "Dashboard";
   const [soldDay, setSoldDay] = useState(0);
-  const [isSold, setIsSold] = useState(false);
-  const [trucks, loading, status, price, cost, sold] = useTruck();
+  const [trucks] = useTruck();
 
   const handleViewDetails = () => {
     return <OrderDetails />;
@@ -31,24 +29,20 @@ const AdminDashboard = () => {
   }
   const grossMargin = getArraySum(grossMarginCalc);
 
-  // Sold 24 hrs
+  const { inventory } = useInventoryContext();
+  const [availableInventory, setAvailableInventory] = useState([]);
 
-  //  {status === 0 && setSoldDay(status.length)}
-  if (status === 0) {
-    setIsSold(true);
-  }
   useEffect(() => {
-    console.log("isSold", isSold);
-    console.log("status", status);
-  }, []);
-  //@TODO status is false when changing above conditional statement parameter to status ===0 , but once I refresh the page, the status is true
+    setAvailableInventory(inventory.filter((item) => item.status === 2));
+  }, [inventory]);
+
   return (
     <>
       <article className="admin-dashboard-content">
         <div className="section-container">
           <div className="trucks-available section-items">
             <p className="section-items-desc">Available</p>
-            <p className="dash-count">{trucks.length}</p>
+            <p className="dash-count">{availableInventory.length}</p>
           </div>
           <div className="trucks-needing-approval section-items">
             <p className="section-items-desc">Sold 24 hrs</p>
