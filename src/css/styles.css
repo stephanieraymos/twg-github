@@ -682,10 +682,6 @@ input:hover {
   align-items: center;
 }
 
-textarea.form-control {
-  height: 40rem;
-}
-
 .col-sm-8 {
   max-width: 100% !important;
 }
