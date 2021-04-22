@@ -25,6 +25,7 @@ import EmailVerification from "./Components/LoginAndSignup/EmailVerification";
 import SuperuserHome from "./Components/Superuser/Home";
 import { SuperuserProvider } from "./superuser";
 import ResetPasswordPage from "./Components/Users/ResetPasswordPage";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 const App = () => {
   return (
@@ -35,7 +36,7 @@ const App = () => {
             <Login2 />
           </LoginRoute>
           <PrivateRoute exact path={dashboardPATH}>
-            <AdminDashboard />
+            <Dashboard />
           </PrivateRoute>
           <PrivateRoute path={inventoryPATH}>
             <InventoryAllTrucks />
