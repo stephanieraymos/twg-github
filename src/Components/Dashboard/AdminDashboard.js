@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTruck } from "../../truckContext";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
@@ -7,20 +7,19 @@ import Navigation from "../Navigation/Navigation";
 
 const AdminDashboard = () => {
   document.title = "Dashboard";
-
-  const [trucks, loading, status, price, cost] = useTruck();
+  const [soldDay, setSoldDay] = useState(0);
+  const [isSold, setIsSold] = useState(false);
+  const [trucks, loading, status, price, cost, sold] = useTruck();
 
   const handleViewDetails = () => {
     return <OrderDetails />;
   };
 
   //GROSS MARGIN
-
   const grossMarginCalc = trucks.map(function (truck) {
     const { price, cost } = truck;
     return price - cost;
   });
-  console.log(price);
 
   function getArraySum(a) {
     var total = 0;
@@ -32,14 +31,16 @@ const AdminDashboard = () => {
   const grossMargin = getArraySum(grossMarginCalc);
 
   // Sold 24 hrs
-  const soldDay = () => {
-    if (status === 0) {
-      // return trucks.status(0).length;
-      console.log(status);
-    }
-  };
-  console.log("status of first truck in array", status);
 
+  //  {status === 0 && setSoldDay(status.length)}
+  if (status === 0) {
+    setIsSold(true);
+  }
+  useEffect(() => {
+    console.log("isSold", isSold);
+    console.log("status", status);
+  }, []);
+  //@TODO status is false when changing above conditional statement parameter to status ===0 , but once I refresh the page, the status is true
   return (
     <>
       <div>
@@ -53,7 +54,7 @@ const AdminDashboard = () => {
           </div>
           <div className="trucks-needing-approval section-items">
             <p className="section-items-desc">Sold 24 hrs</p>
-            <p className="dash-count"></p>
+            <p className="dash-count">{soldDay}</p>
           </div>
           <div className="trucks-sold-30days section-items">
             <p className="section-items-desc">Gross Margin 24 hrs</p>
