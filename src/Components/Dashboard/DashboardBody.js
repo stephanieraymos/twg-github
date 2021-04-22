@@ -9,15 +9,6 @@ const DashboardBody = () => {
 
   return (
     <article className="admin-dashboard-content">
-      <button
-        className={`${isSidebarOpen ? "sidebar-toggle-dis" : "sidebar-toggle"}`}
-        onClick={openSidebar}
-      >
-        <FaBars />
-      </button>
-
-      <h1 className="dashboard-heading">Dashboard</h1>
-
       <div className="section-container">
         <div className="trucks-available section-items">
           <p className="section-items-desc">Trucks Available</p>

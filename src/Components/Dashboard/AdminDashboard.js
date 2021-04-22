@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTruck } from "../../truckContext";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
@@ -8,7 +8,7 @@ import Navigation from "../Navigation/Navigation";
 const AdminDashboard = () => {
   document.title = "Dashboard";
 
-  const [trucks, loading] = useTruck();
+  const [trucks, loading, status, price, cost] = useTruck();
 
   const handleViewDetails = () => {
     return <OrderDetails />;
@@ -17,8 +17,10 @@ const AdminDashboard = () => {
   //GROSS MARGIN
 
   const grossMarginCalc = trucks.map(function (truck) {
-    return truck.price - truck.cost;
+    const { price, cost } = truck;
+    return price - cost;
   });
+  console.log(price);
 
   function getArraySum(a) {
     var total = 0;
@@ -31,13 +33,12 @@ const AdminDashboard = () => {
 
   // Sold 24 hrs
   const soldDay = () => {
-    if (trucks[0].status === 0) {
+    if (status === 0) {
       // return trucks.status(0).length;
-      console.log(trucks[0].status)
+      console.log(status);
     }
   };
-  console.log("trucks", trucks)
-  // console.log("status of first truck in array", trucks[0].status)
+  console.log("status of first truck in array", status);
 
   return (
     <>
@@ -45,8 +46,6 @@ const AdminDashboard = () => {
         <Navigation />
       </div>
       <article className="admin-dashboard-content">
-        <h1 className="dashboard-heading">Dashboard</h1>
-
         <div className="section-container">
           <div className="trucks-available section-items">
             <p className="section-items-desc">Available</p>
