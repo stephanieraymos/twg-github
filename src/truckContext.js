@@ -41,6 +41,11 @@ const TruckProvider = ({ children }) => {
   const [imageCount, setImageCount] = useState(0);
   const [imageIds, setImageIds] = useState([]);
   const [images, setImages] = useState([]);
+  const [sold, setSold] = useState("");
+  const [created, setCreated] = useState("");
+  const [paid, setPaid] = useState(false);
+  const [buyerId, setBuyerId] = useState("");
+  const [sellerId, setSellerId] = useState("");
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
 
@@ -100,6 +105,16 @@ const TruckProvider = ({ children }) => {
         setImageIds,
         images,
         setImages,
+        sold,
+        setSold,
+        created,
+        setCreated,
+        paid,
+        setPaid,
+        buyerId,
+        setBuyerId,
+        sellerId,
+        setSellerId,
       }}
     >
       {children}
