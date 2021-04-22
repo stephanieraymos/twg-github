@@ -1,11 +1,11 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "../../context";
+import { useTruckContext } from "../../truckContext";
 import { useTruck } from "../../truckContext";
 
 const DashboardBody = () => {
-    const { openSidebar, isSidebarOpen } = useGlobalContext();
-    const [trucks, loading] = useTruck();
+    const [trucks, loading,] = useTruck();
+    const {status} = useTruckContext();
 
   return (
     <article className="admin-dashboard-content">
