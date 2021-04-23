@@ -13,12 +13,28 @@ const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 60;
 
 const attributes = [
-  { value: "sold", label: "Date Sold" },
   { value: "cost", label: "Our Cost" },
   { value: "price", label: "Our Price" },
   { value: "retail_price", label: "Retail Price" },
   { value: "program", label: "program" },
 ];
+//^ GETTING CURRENT MONTH
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const d = new Date();
+const monthName = months[d.getMonth()]; // "July" (or current month)
 
 // FUNCTION TO GET LABEL
 const getLabel = (value) => {
@@ -32,10 +48,8 @@ const getLabel = (value) => {
 const LineChart = () => {
   const data = useData();
 
-  const initialXAttribute = "sold";
-  const [xAttribute, setXAttribute] = useState(initialXAttribute);
-  const xValue = (d) => d[xAttribute];
-  const xAxisLabel = getLabel(xAttribute);
+  const xValue = (d) => monthName;
+  const xAxisLabel = "Date";
 
   const initialYAttribute = "cost";
   const [yAttribute, setYAttribute] = useState(initialYAttribute);
@@ -49,7 +63,7 @@ const LineChart = () => {
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
-  const xAxisTickFormat = timeFormat("%a");
+  const xAxisTickFormat = timeFormat("%B %d, %Y");
 
   const xScale = scaleTime()
     .domain(extent(data, xValue))
@@ -61,38 +75,14 @@ const LineChart = () => {
     .range([innerHeight, 0])
     .nice();
 
-  //^ GETTING CURRENT MONTH
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const d = new Date();
-  const monthName = months[d.getMonth()]; // "July" (or current month)
-
   return (
     <>
       <div className="sales-graph-container">
         <div className="sales-graph">
           <p className="sales-graph-date-range">{monthName} 2021 insights</p>
           <div className="dropdown-container">
-            <label for="x-select">Change x value:</label>
-            <Dropdown
-              options={attributes}
-              id="x-select"
-              selectedValue={xAttribute}
-              onSelectedValueChange={setXAttribute}
-            />
-            <label for="y-select">Change y value:</label>
+
+            <label htmlFor="y-select">Y:</label>
             <Dropdown
               options={attributes}
               id="y-select"

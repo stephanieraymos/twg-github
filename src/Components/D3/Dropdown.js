@@ -9,7 +9,7 @@ const Dropdown = ({ options, id, onSelectedValueChange, selectedValue }) => {
       >
         {options.map(({ value, label }) => {
           return (
-            <option value={value} selected={value === selectedValue}>
+            <option key={value} value={value} defaultValue={value === selectedValue}>
               {label}
             </option>
           );

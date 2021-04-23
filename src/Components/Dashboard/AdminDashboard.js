@@ -4,7 +4,7 @@ import { useInventoryContext } from "../../inventory";
 import { usePersistedState } from "../../usePersistedState";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
-import LineChart from "../D3/LineChart";
+import Chart from "../D3/Chart";
 
 const AdminDashboard = () => {
   document.title = "Dashboard";
@@ -77,7 +77,7 @@ const AdminDashboard = () => {
         </div>
         {/* //* ---- GRAPH ---- */}
 
-        <LineChart />
+        <Chart />
 
         {/* //* ---- FOOTER CONTENT ---- */}
         <div className="bottom-content">
