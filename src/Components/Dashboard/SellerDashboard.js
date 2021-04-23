@@ -48,59 +48,62 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function BuyerDashboard() {
+export default function SellerDashboard() {
     const classes = useStyles();
 
-    const { inventory, getInventoryByBuyerId } = useInventoryContext();
+    const { inventory, getInventoryBySellerId } = useInventoryContext();
     const { id } = authService.getUser();
+    const [sellerInventory, setSellerInventory] = useState([]);
     const [availableInventory, setAvailableInventory] = useState([]);
-    const [purchasedInventory, setPurchasedInventory] = useState([]);
-    const [unpaidInventory, setUnpaidInventory] = useState([]);
-    const [amountDue, setAmountDue] = useState(0.0);
-    const [avgCostPerItem, setAvgCostPerItem] = useState(0.0);
-    const [purchaseByCategory, setPurchaseByCategory] = useState([
-        {
-            name: "A",
-            value: 1
-        },
-        {
-            name: "B",
-            value: 2
-        },
-        {
-            name: "C",
-            value: 3
-        },
-        {
-            name: "D",
-            value: 4
-        },
-        {
-            name: "E",
-            value: 5
-        },
-        {
-            name: "F",
-            value: 6
-        },
-        {
-            name: "G",
-            value: 7
-        },
-        {
-            name: "H",
-            value: 8
-        },
-        {
-            name: "I",
-            value: 9
-        },
-        {
-            name: "J",
-            value: 10
-        },
-    ]);
+    const [soldInventory, setSoldInventory] = useState([]);
     const [awaitingShipment, setAwaitingShipment] = useState(0);
+    const [income, setIncome] = useState(0.0);
+    const [pendingIncome, setPendingIncome] = useState(0.0);
+    // const [unpaidInventory, setUnpaidInventory] = useState([]);
+    // const [amountDue, setAmountDue] = useState(0.0);
+    // const [avgCostPerItem, setAvgCostPerItem] = useState(0.0);
+    // const [purchaseByCategory, setPurchaseByCategory] = useState([
+    //     {
+    //         name: "A",
+    //         value: 1
+    //     },
+    //     {
+    //         name: "B",
+    //         value: 2
+    //     },
+    //     {
+    //         name: "C",
+    //         value: 3
+    //     },
+    //     {
+    //         name: "D",
+    //         value: 4
+    //     },
+    //     {
+    //         name: "E",
+    //         value: 5
+    //     },
+    //     {
+    //         name: "F",
+    //         value: 6
+    //     },
+    //     {
+    //         name: "G",
+    //         value: 7
+    //     },
+    //     {
+    //         name: "H",
+    //         value: 8
+    //     },
+    //     {
+    //         name: "I",
+    //         value: 9
+    //     },
+    //     {
+    //         name: "J",
+    //         value: 10
+    //     },
+    // ]);
 
     // table data
     const [data, setData] = useState([]);
@@ -117,6 +120,7 @@ export default function BuyerDashboard() {
             setBarplotWidth(barplotRef.current.offsetWidth);
       }, [barplotRef]);
 
+    // width to make view responsive
     const [width, setWidth] = useState(window.innerWidth);
     useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
@@ -125,58 +129,69 @@ export default function BuyerDashboard() {
         return () => window.removeEventListener("resize", handleResize);
       }, []);
 
+    // set the available inventory to sell
     useEffect(() => {
-        getInventoryByBuyerId(id)
+        getInventoryBySellerId(id)
             .then((data) => {
-                setPurchasedInventory(data);
+                setSellerInventory(data);
             })
             .catch((error) => {
-                console.log("getInventoryByBuyerId Error:", error)
+                console.log("getInventoryBySellerId Error:", error)
             })
     }, []);
 
+    // set the sold inventory
     useEffect(() => {
-        setAvailableInventory(inventory.filter(item => item.status === 2));
-    }, [inventory]);
+        setAvailableInventory(sellerInventory.filter(item => item.sold === null))
+        setSoldInventory(sellerInventory.filter(item => item.sold !== null))
+    }, [sellerInventory]);
+
+    useEffect(() => {
+        const paidInventory = soldInventory.filter(item => item.paid)
+        const unpaidInventory = soldInventory.filter(item => !item.paid)
+        setIncome(paidInventory.map(item => item.price).reduce((a, b) => a + b, 0));
+        setPendingIncome(unpaidInventory.map(item => item.price).reduce((a, b) => a + b, 0));
+        setAwaitingShipment(soldInventory.filter(item => item.shippingStatus === 0).length)
+    }, [soldInventory])
 
     useEffect(() => {
         setSelectedTable(0);
     }, [availableInventory]);
 
-    useEffect(() => {
-        // get the unpaid inventory list
-        setUnpaidInventory(purchasedInventory.filter(item => !item.paid));
+    // useEffect(() => {
+    //     // get the unpaid inventory list
+    //     setUnpaidInventory(purchasedInventory.filter(item => !item.paid));
 
-        // Calculate avg cost per item
-        const units = purchasedInventory.map(item => item.units)
-        const totalUnits = units.reduce((a, b) => a + b, 0);
-        const prices = purchasedInventory.map(item => item.price)
-        const totalPrices = prices.reduce((a, b) => a + b, 0);
-        setAvgCostPerItem((totalPrices / totalUnits).toFixed(2));
+    //     // Calculate avg cost per item
+    //     const units = purchasedInventory.map(item => item.units)
+    //     const totalUnits = units.reduce((a, b) => a + b, 0);
+    //     const prices = purchasedInventory.map(item => item.price)
+    //     const totalPrices = prices.reduce((a, b) => a + b, 0);
+    //     setAvgCostPerItem((totalPrices / totalUnits).toFixed(2));
 
-        // Calculate number of trucks awaiting shipment
-        setAwaitingShipment(purchasedInventory.filter(item => item.shippingStatus === 0).length)
+    //     // Calculate number of trucks awaiting shipment
+    //     setAwaitingShipment(purchasedInventory.filter(item => item.shippingStatus === 0).length)
 
-        const categories = {};
-        purchasedInventory.map(value => {
-            const category = value.category;
-            if (category in categories) {
-                categories[category] += 1;
-            } else {
-                categories[category] = 1;
-            }
-        });
-        setPurchaseByCategory(Object.entries(categories).map(([key, value]) => {
-            return { name: key, value: value };
-        }));
-    }, [purchasedInventory]);
+    //     // const categories = {};
+    //     // purchasedInventory.map(value => {
+    //     //     const category = value.category;
+    //     //     if (category in categories) {
+    //     //         categories[category] += 1;
+    //     //     } else {
+    //     //         categories[category] = 1;
+    //     //     }
+    //     // })
+    //     // setPurchaseByCategory(Object.entries(categories).map(([key, value]) => {
+    //     //     return { name: key, value: value };
+    //     // }));
+    // }, [purchasedInventory]);
 
-    useEffect(() => {
-        // Calculate the unpaid amount
-        const unpaidAmount = unpaidInventory.map(item => item.price)
-        const totalUnpaidAmount = unpaidAmount.reduce((a, b) => a + b, 0);
-        setAmountDue(totalUnpaidAmount);
-    }, [unpaidInventory]);
+    // useEffect(() => {
+    //     // Calculate the unpaid amount
+    //     const unpaidAmount = unpaidInventory.map(item => item.price)
+    //     const totalUnpaidAmount = unpaidAmount.reduce((a, b) => a + b, 0);
+    //     setAmountDue(totalUnpaidAmount);
+    // }, [unpaidInventory]);
 
     const numberWithCommas = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -186,7 +201,7 @@ export default function BuyerDashboard() {
         switch (value) {
             case 0:
                 // View Available Inventory
-                setTitle("Available Inventories");
+                setTitle("Your Available Inventories");
                 setData(availableInventory);
                 setHeaders([
                     { id: 'loadId', numeric: false, label: 'Load ID' },
@@ -201,9 +216,9 @@ export default function BuyerDashboard() {
                 setFilterBy('created');
                 break;
             case 1:
-                // View Unpaid Inventory
-                setTitle("Unpaid Inventories");
-                setData(unpaidInventory);
+                // View Sold Inventory
+                setTitle("Your Sold Inventories");
+                setData(soldInventory);
                 setHeaders([
                     { id: 'loadId', numeric: false, label: 'Load ID' },
                     { id: 'source', numeric: false, label: 'Program' },
@@ -213,13 +228,14 @@ export default function BuyerDashboard() {
                     { id: 'fob', numeric: false, label: 'DOB' },
                     { id: 'retailPrice', numeric: true, label: 'Retail (USD)' },
                     { id: 'price', numeric: true, label: 'Price (USD)' },
+                    { id: 'paid', numeric: true, label: 'Payment Status' },
                 ]);
                 setFilterBy('sold');
                 break;
             default:
-                // View Purchased Inventory
-                setTitle("Purchased Inventories");
-                setData(purchasedInventory);
+                // View All Inventory
+                setTitle("All Your Inventories");
+                setData(sellerInventory);
                 setHeaders([
                     { id: 'loadId', numeric: false, label: 'Load ID' },
                     { id: 'source', numeric: false, label: 'Program' },
@@ -231,7 +247,7 @@ export default function BuyerDashboard() {
                     { id: 'price', numeric: true, label: 'Price (USD)' },
                     { id: 'shippingStatus', numeric: true, label: 'Shipping Status' },
                 ]);
-                setFilterBy('sold');
+                setFilterBy('created');
         }
     }
 
@@ -242,7 +258,7 @@ export default function BuyerDashboard() {
                     <Card className={classes.card} variant="outlined">
                         <CardContent>
                             <Typography className={classes.title_centered} gutterBottom>
-                                Available Inventories
+                                Your Available Inventories
                             </Typography>
                             <Typography className={classes.body_centered} variant="h5" component="h2">
                                 {availableInventory.length}
@@ -250,7 +266,7 @@ export default function BuyerDashboard() {
                         </CardContent>
                         <CardActions>
                             <Button className={classes.button} variant="outlined" color="primary"
-                                onClick={() => setSelectedTable(0)}>View Available Inventories</Button>
+                                onClick={() => setSelectedTable(0)}>View Your Available Inventories</Button>
                         </CardActions>
                     </Card>
                 </Grid>
@@ -258,15 +274,15 @@ export default function BuyerDashboard() {
                     <Card className={classes.card} variant="outlined">
                         <CardContent>
                             <Typography className={classes.title_centered} gutterBottom>
-                                Amount Due
+                                Income (Pending Income)
                             </Typography>
                             <Typography className={classes.body_centered} variant="h5" component="h2">
-                                ${numberWithCommas(amountDue)}
+                                ${numberWithCommas(income)} (${numberWithCommas(pendingIncome)})
                             </Typography>
                         </CardContent>
                         <CardActions>
                             <Button className={classes.button} variant="outlined" color="primary"
-                                onClick={() => setSelectedTable(1)}>View Unpaid Orders</Button>
+                                onClick={() => setSelectedTable(1)}>View Sold Inventories</Button>
                         </CardActions>
                     </Card>
                 </Grid>
@@ -282,19 +298,18 @@ export default function BuyerDashboard() {
                         </CardContent>
                         <CardActions>
                             <Button className={classes.button} variant="outlined" color="primary"
-                                onClick={() => setSelectedTable(2)}>View Purchased Inventories</Button>
+                                onClick={() => setSelectedTable(2)}>View All Your Inventories</Button>
                         </CardActions>
                     </Card>
                 </Grid>
                 <Grid item xs={12}>
-                    <CustomTable 
-                        data={data}
+                    <CustomTable data={data}
                         defaultOrderBy={defaultOrderBy}
                         title={title}
                         headers={headers}
                         filterBy={filterBy} />
                 </Grid>
-                {purchaseByCategory.length > 0 &&
+                {/* {purchaseByCategory.length > 0 &&
                     <Grid item xs={8}>
                         <Card className={classes.card} variant="outlined">
                             <CardContent ref={barplotRef}>
@@ -324,7 +339,7 @@ export default function BuyerDashboard() {
                             </Typography>
                         </CardContent>
                     </Card>
-                </Grid>
+                </Grid> */}
             </Grid>
         </div>
     );

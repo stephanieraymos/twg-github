@@ -4,6 +4,7 @@ import { PrivateRoute } from "../../Pages/router";
 import { Switch, useRouteMatch } from "react-router-dom";
 
 import BuyerDashboard from "./BuyerDashboard";
+import SellerDashboard from "./SellerDashboard";
 import { InventoryProvider } from "../../inventory";
 import { authService } from "../../authService";
 
@@ -23,7 +24,7 @@ const Dashboard = () => {
                             <Navigation />
                         </div>
                         {is_admin ? (
-                            <BuyerDashboard />
+                            <SellerDashboard />
                         ) : is_seller ? (
                             <BuyerDashboard />
                         ) : (

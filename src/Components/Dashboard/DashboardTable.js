@@ -14,6 +14,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
+import DeleteIcon from '@material-ui/icons/Delete';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import TextField from '@material-ui/core/TextField';
+import { FilterDrama } from "@material-ui/icons";
+import { filter } from "d3-array";
+
+const capitalizeFirstLetter = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1)
+}
 
 const descendingComparator = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
@@ -82,6 +93,91 @@ CustomTableHead.propTypes = {
     headers: PropTypes.array.isRequired,
 };
 
+const useToolbarStyles = makeStyles((theme) => ({
+    root: {
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(1),
+    },
+    highlight:
+        theme.palette.type === 'light'
+            ? {
+                color: theme.palette.secondary.main,
+                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+            }
+            : {
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.secondary.dark,
+            },
+    title: {
+        flex: '1 1',
+        fontFamily: 'Montserrat, sans-serif',
+        fontWeight: 700,
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 250,
+    },
+}));
+
+const TableToolbar = (props) => {
+    const classes = useToolbarStyles();
+    const { data, title, isFiltered, setIsFiltered, setStartDateTime, setEndDateTime, filterBy } = props;
+
+    return (
+        <Toolbar className={classes.root} >
+            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                {title}
+            </Typography>
+
+            <TextField
+                id="start-datetime"
+                label={`Start ${capitalizeFirstLetter(filterBy)} Date & Time`}
+                type="datetime-local"
+                className={classes.textField}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                inputProps={{
+                    step: 300, // 5 min
+                }}
+                onChange={(e) => setStartDateTime(e.target.value)}
+            />
+            <TextField
+                id="end-datetime"
+                label={`End ${capitalizeFirstLetter(filterBy)} Date & Time`}
+                type="datetime-local"
+                className={classes.textField}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                inputProps={{
+                    step: 300, // 5 min
+                }}
+                onChange={(e) => setEndDateTime(e.target.value)}
+            />
+
+            {isFiltered ? (
+                <Tooltip title="Delete" title="Remove Filter">
+                    <IconButton aria-label="delete" onClick={() => setIsFiltered(false)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+            ) : (
+                <Tooltip title="Filter list">
+                    <IconButton aria-label="filter list" onClick={() => setIsFiltered(true)}>
+                        <FilterListIcon />
+                    </IconButton>
+                </Tooltip>
+            )}
+        </Toolbar>
+    );
+};
+
+TableToolbar.propTypes = {
+    numSelected: PropTypes.number.isRequired,
+};
+
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -104,14 +200,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomTable(props) {
-    const { data, defaultOrderBy, title, headers } = props;
+    const { data, defaultOrderBy, title, headers, filterBy } = props;
     const classes = useStyles();
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState(defaultOrderBy);
-    const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [filteredData, setFilteredData] = useState([]);
+    const [isFiltered, setIsFiltered] = useState(false);
+    const [startDateTime, setStartDateTime] = useState("");
+    const [endDateTime, setEndDateTime] = useState("");
 
     const handleRequestSort = (event, property) => {
         // swich order if we're sorting by the same value
@@ -154,7 +252,22 @@ export default function CustomTable(props) {
     useEffect(() => {
         // reset page on data change
         setPage(0);
+        setFilteredData(data);
     }, [data])
+
+    useEffect(() => {
+        if (isFiltered) {
+            const start = new Date(startDateTime);
+            const end = new Date(endDateTime);
+            // filter by the start and end date time
+            setFilteredData(data.filter(item => {
+                var date = new Date(item[filterBy]);
+                return start <= date && end >= date;
+            }))
+        } else {
+            setFilteredData(data);
+        }
+    }, [isFiltered])
 
     const getShippingStatus = (status) => {
         switch (status) {
@@ -178,12 +291,20 @@ export default function CustomTable(props) {
         }
     }
 
+    const numberWithCommas = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                    {title}
-                </Typography>
+                <TableToolbar 
+                    title={title} 
+                    isFiltered={isFiltered} 
+                    setIsFiltered={setIsFiltered} 
+                    setStartDateTime={setStartDateTime}
+                    setEndDateTime={setEndDateTime}
+                    filterBy={filterBy} />
                 <TableContainer>
                     <Table
                         aria-labelledby={title}
@@ -198,7 +319,7 @@ export default function CustomTable(props) {
                             headers={headers}
                         />
                         <TableBody>
-                            {stableSort(data, getComparator(order, orderBy))
+                            {stableSort(filteredData, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const labelId = `custom-table-${index}`;
@@ -216,8 +337,24 @@ export default function CustomTable(props) {
                                                             // shippingStatus: 0 = Awaiting Shipment, 1 = Shipped, 2 = Delivered
                                                             <TableCell key={`custom-table-cell-${cellIndex}`} align='right'>
                                                                 <Chip label={getShippingStatus(row[item.id])}
-                                                                    style={{ backgroundColor: getShippingStatusColor(row[item.id]),
-                                                                            color: "white" }} />
+                                                                    style={{
+                                                                        backgroundColor: getShippingStatusColor(row[item.id]),
+                                                                        color: "white"
+                                                                    }} />
+                                                            </TableCell>
+                                                        );
+                                                    else if (item.id === 'retailPrice' || item.id === 'price')
+                                                        return (
+                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>${numberWithCommas(row[item.id])}</TableCell>
+                                                        );
+                                                    else if (item.id === 'paid')
+                                                        return (
+                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>
+                                                                <Chip label={row[item.id] ? "Paid" : "Unpaid"}
+                                                                    style={{
+                                                                        backgroundColor: row[item.id] ? "#4caf50" : "#f44336",
+                                                                        color: "white"
+                                                                    }} />
                                                             </TableCell>
                                                         );
                                                     else
@@ -235,7 +372,7 @@ export default function CustomTable(props) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 15]}
                     component="div"
-                    count={data.length}
+                    count={filteredData.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}
