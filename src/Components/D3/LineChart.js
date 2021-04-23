@@ -14,10 +14,16 @@ const yAxisLabelOffset = 60;
 
 const LineChart = () => {
   const data = useData();
+
   const initialXAttribute = "sold";
   const [xAttribute, setXAttribute] = useState(initialXAttribute);
   const xValue = (d) => d[xAttribute];
   const xAxisLabel = "Date";
+
+  const initialYAttribute = "cost";
+  const [yAttribute, setYAttribute] = useState(initialYAttribute);
+  const yValue = (d) => d[yAttribute];
+  const yAxisLabel = "Sales";
 
   if (!data) {
     return <pre>Loading...</pre>;
@@ -33,9 +39,6 @@ const LineChart = () => {
     { value: "retail_price", label: "Retail Price" },
     { value: "program", label: "program" },
   ];
-
-  const yValue = (d) => d.cost;
-  const yAxisLabel = "Sales";
 
   const xAxisTickFormat = timeFormat("%a");
 
@@ -78,6 +81,13 @@ const LineChart = () => {
             id="x-select"
             selectedValue={xAttribute}
             onSelectedValueChange={setXAttribute}
+          />
+          <label for="y-select">Change y value:</label>
+          <Dropdown
+            options={attributes}
+            id="y-select"
+            selectedValue={yAttribute}
+            onSelectedValueChange={setYAttribute}
           />
           <svg width={width} height={height}>
             <g transform={`translate(${margin.left},${margin.top})`}>
