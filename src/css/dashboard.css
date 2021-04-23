@@ -1,6 +1,20 @@
 /*=============================================
 =                GLOBAL STYLES               =
 =============================================*/
+*,
+:root {
+
+  --green: rgb(15, 177, 50);
+  --turquoise: #137b80;
+
+  --tick-lines: #c0c0bb;
+  --tick-text: #635f5d;
+
+  --sphere-bg: #0034538c;
+  --countries: #034b0dbb;
+  --country-lines: rgb(73, 117, 93);
+  --graticules: #537c948c;
+}
 
 body {
   background-color: var(--light);
@@ -95,7 +109,6 @@ body {
   margin: 0 auto;
   background-color: white;
   width: 80%;
-  height: 45%;
   min-width: none;
   border: #cccccc 1px solid;
   border-radius: var(--radius);
@@ -106,11 +119,6 @@ body {
     width: 97%;
     margin: 0.5rem;
     margin-bottom: -1rem;
-  }
-}
-@media only screen and (min-width: 1250px) {
-  .sales-graph-container {
-    height: 50%;
   }
 }
 
@@ -212,4 +220,31 @@ body {
 .lead-item:hover {
     background: var(--light-purple);
     color: black;
+}
+
+/*=============================================
+=                 LINE CHART                 =
+=============================================*/
+
+.tick line {
+  stroke: var(--tick-lines);
+}
+.tick text {
+  fill: var(--tick-text);
+}
+.mark {
+  fill: var(--turquoise);
+}
+.axis-label {
+  font-size: 1.5em;
+  fill: var(--tick-text);
+}
+.marks circle {
+  fill: var(--turquoise);
+}
+.marks path {
+  stroke: var(--turquoise);
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
 }

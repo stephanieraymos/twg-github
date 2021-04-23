@@ -4,6 +4,7 @@ import { useInventoryContext } from "../../inventory";
 import { usePersistedState } from "../../usePersistedState";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
+import LineChart from "../D3/LineChart";
 
 const AdminDashboard = () => {
   document.title = "Dashboard";
@@ -19,6 +20,24 @@ const AdminDashboard = () => {
   //& -------- VARIABLES --------
 
   //& -------- FUNCTIONS --------
+
+  //^ GETTING CURRENT MONTH
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const d = new Date();
+  const monthName = months[d.getMonth()]; // "July" (or current month)
 
   //^ GROSS MARGIN
   const grossMarginCalc = trucks.map(function (truck) {
@@ -78,8 +97,8 @@ const AdminDashboard = () => {
         <div className="sales-graph-container">
           <div className="sales-graph">
             <p className="sales-graph-heading">Sales</p>
-            <p className="sales-graph-date-range">March 2021 insights</p>
-            <p className="graph">GRAPH CONTENTS</p>
+            <p className="sales-graph-date-range">{monthName} 2021 insights</p>
+            <LineChart />
           </div>
         </div>
         {/* <D3 /> */}
