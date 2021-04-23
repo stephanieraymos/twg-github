@@ -3,7 +3,6 @@
 =============================================*/
 *,
 :root {
-
   --green: rgb(15, 177, 50);
   --turquoise: #137b80;
 
@@ -129,6 +128,7 @@ body {
 
 .sales-graph-date-range {
   color: rgb(187, 184, 184);
+  padding-top: 1rem;
 }
 
 .sales-graph-date-range,
@@ -218,8 +218,8 @@ body {
 }
 
 .lead-item:hover {
-    background: var(--light-purple);
-    color: black;
+  background: var(--light-purple);
+  color: black;
 }
 
 /*=============================================

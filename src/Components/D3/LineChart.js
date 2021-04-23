@@ -6,11 +6,11 @@ import { AxisLeft } from "./AxisLeft";
 import { Marks } from "./Marks";
 import Dropdown from "./Dropdown";
 
-const width = 960;
+const width = 1000;
 const height = 500;
 const margin = { top: 20, right: 30, bottom: 65, left: 90 };
 const xAxisLabelOffset = 50;
-const yAxisLabelOffset = 45;
+const yAxisLabelOffset = 60;
 
 const LineChart = () => {
   const data = useData();
@@ -49,53 +49,78 @@ const LineChart = () => {
     .range([innerHeight, 0])
     .nice();
 
+  //^ GETTING CURRENT MONTH
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const d = new Date();
+  const monthName = months[d.getMonth()]; // "July" (or current month)
+
   return (
     <>
-      <div>
-        <label for="x-select">Change x value:</label>
-        <Dropdown
-          options={attributes}
-          id="x-select"
-          selectedValue={xAttribute}
-          onSelectedValueChange={setXAttribute}
-        />
-        <svg width={width} height={height}>
-          <g transform={`translate(${margin.left},${margin.top})`}>
-            <AxisBottom
-              xScale={xScale}
-              innerHeight={innerHeight}
-              tickFormat={xAxisTickFormat}
-              tickOffset={6}
-            />
-            <text
-              className="axis-label"
-              textAnchor="middle"
-              transform={`translate(${-yAxisLabelOffset},${
-                innerHeight / 2
-              }) rotate(-90)`}
-            >
-              {yAxisLabel}
-            </text>
-            <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={5} />
-            <text
-              className="axis-label"
-              x={innerWidth / 2}
-              y={innerHeight + xAxisLabelOffset}
-              textAnchor="middle"
-            >
-              {xAxisLabel}
-            </text>
-            <Marks
-              data={data}
-              xScale={xScale}
-              yScale={yScale}
-              xValue={xValue}
-              yValue={yValue}
-              tooltipFormat={xAxisTickFormat}
-              circleRadius={3}
-            />
-          </g>
-        </svg>
+      <div className="sales-graph-container">
+        <div className="sales-graph">
+          <p className="sales-graph-date-range">{monthName} 2021 insights</p>
+          <label for="x-select">Change x value:</label>
+          <Dropdown
+            options={attributes}
+            id="x-select"
+            selectedValue={xAttribute}
+            onSelectedValueChange={setXAttribute}
+          />
+          <svg width={width} height={height}>
+            <g transform={`translate(${margin.left},${margin.top})`}>
+              <AxisBottom
+                xScale={xScale}
+                innerHeight={innerHeight}
+                tickFormat={xAxisTickFormat}
+                tickOffset={6}
+              />
+              <text
+                className="axis-label"
+                textAnchor="middle"
+                transform={`translate(${-yAxisLabelOffset},${
+                  innerHeight / 2
+                }) rotate(-90)`}
+              >
+                {yAxisLabel}
+              </text>
+              <AxisLeft
+                yScale={yScale}
+                innerWidth={innerWidth}
+                tickOffset={5}
+              />
+              <text
+                className="axis-label"
+                x={innerWidth / 2}
+                y={innerHeight + xAxisLabelOffset}
+                textAnchor="middle"
+              >
+                {xAxisLabel}
+              </text>
+              <Marks
+                data={data}
+                xScale={xScale}
+                yScale={yScale}
+                xValue={xValue}
+                yValue={yValue}
+                tooltipFormat={xAxisTickFormat}
+                circleRadius={3}
+              />
+            </g>
+          </svg>
+        </div>
       </div>
     </>
   );

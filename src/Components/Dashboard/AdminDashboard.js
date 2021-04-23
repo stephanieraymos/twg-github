@@ -21,24 +21,6 @@ const AdminDashboard = () => {
 
   //& -------- FUNCTIONS --------
 
-  //^ GETTING CURRENT MONTH
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const d = new Date();
-  const monthName = months[d.getMonth()]; // "July" (or current month)
-
   //^ GROSS MARGIN
   const grossMarginCalc = trucks.map(function (truck) {
     const { price, cost } = truck;
@@ -94,14 +76,9 @@ const AdminDashboard = () => {
           </div>
         </div>
         {/* //* ---- GRAPH ---- */}
-        <div className="sales-graph-container">
-          <div className="sales-graph">
-            <p className="sales-graph-heading">Sales</p>
-            <p className="sales-graph-date-range">{monthName} 2021 insights</p>
-            <LineChart />
-          </div>
-        </div>
-        {/* <D3 /> */}
+
+        <LineChart />
+
         {/* //* ---- FOOTER CONTENT ---- */}
         <div className="bottom-content">
           {/* //* ---- NEW LEADS ---- */}
