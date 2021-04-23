@@ -84,20 +84,22 @@ const LineChart = () => {
       <div className="sales-graph-container">
         <div className="sales-graph">
           <p className="sales-graph-date-range">{monthName} 2021 insights</p>
-          <label for="x-select">Change x value:</label>
-          <Dropdown
-            options={attributes}
-            id="x-select"
-            selectedValue={xAttribute}
-            onSelectedValueChange={setXAttribute}
-          />
-          <label for="y-select">Change y value:</label>
-          <Dropdown
-            options={attributes}
-            id="y-select"
-            selectedValue={yAttribute}
-            onSelectedValueChange={setYAttribute}
-          />
+          <div className="dropdown-container">
+            <label for="x-select">Change x value:</label>
+            <Dropdown
+              options={attributes}
+              id="x-select"
+              selectedValue={xAttribute}
+              onSelectedValueChange={setXAttribute}
+            />
+            <label for="y-select">Change y value:</label>
+            <Dropdown
+              options={attributes}
+              id="y-select"
+              selectedValue={yAttribute}
+              onSelectedValueChange={setYAttribute}
+            />
+          </div>
           <svg width={width} height={height}>
             <g transform={`translate(${margin.left},${margin.top})`}>
               <AxisBottom

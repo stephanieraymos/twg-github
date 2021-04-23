@@ -248,3 +248,12 @@ body {
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+
+.dropdown-container {
+  display: flex;
+  justify-content: center;
+}
+.dropdown-container > *{
+  padding-left: .25rem;
+
+}
