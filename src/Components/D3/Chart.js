@@ -59,30 +59,6 @@ const ScatterPlot = () => {
   const yValue = (d) => d[yAttribute];
   const yAxisLabel = getLabel(yAttribute);
 
-  // const today = new Date();
-  // const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  // const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  // const dateValue = () => date+' '+time;
-
-  // Date.prototype.addDays = function(days) {
-  //     const date = new Date(this.valueOf());
-  //     date.setDate(date.getDate() + days);
-  //     return date;
-  // }
-
-  // function getDates(startDate, stopDate) {
-  //     const dateArray = new Array();
-  //     const currentDate = startDate;
-  //     while (currentDate <= stopDate) {
-  //         dateArray.push(new Date (currentDate));
-  //         currentDate = currentDate.addDays(1);
-  //     }
-  //     return dateArray;
-  // }
-
-  // const dateValue = () => date;
-  // console.log(dateValue);
-  // console.log(initialXAttribute);
 
   if (!data) {
     return <pre>Loading...</pre>;
