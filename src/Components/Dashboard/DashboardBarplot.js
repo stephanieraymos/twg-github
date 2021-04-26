@@ -40,7 +40,7 @@ export default function PieChart(props) {
         yAxis.call(d3.axisLeft(y))
             .selectAll("text")
             .style("font-family", "Montserrat")
-            .style("font-size", "14px");;
+            .style("font-size", "14px");
 
         // Bars
         let bars = svg.selectAll('.bar')

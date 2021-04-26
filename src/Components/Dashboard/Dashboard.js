@@ -24,7 +24,7 @@ const Dashboard = () => {
                             <Navigation />
                         </div>
                         {is_admin ? (
-                            <BuyerDashboard />
+                            <AdminDashboard />
                         ) : is_seller ? (
                             <SellerDashboard />
                         ) : (
