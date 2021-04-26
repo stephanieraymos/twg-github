@@ -71,7 +71,9 @@ export default function PieChart(props) {
     }, [data]);
 
     return (
-        <svg width={width + margin.left + margin.right} height={height + margin.top + margin.bottom}>
+        <svg 
+            viewBox={`0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`}
+        >
             <g
                 ref={ref}
                 transform={`translate(${margin.left}, ${margin.top})`}
