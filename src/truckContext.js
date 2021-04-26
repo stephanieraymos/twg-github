@@ -42,95 +42,64 @@ const TruckProvider = ({ children }) => {
   const [imageIds, setImageIds] = useState([]);
   const [images, setImages] = useState([]);
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [editId, setEditId] = useState(null);
-  const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
-
-  // if (truckLoad.source === "") {
-  //   console.log("The truck name is empty but printing");
-  // }
-
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
-
-  //showAlert function, when called the values for each param are passed in as arguments
-  const showAlert = (show = false, type = "", msg = "") => {
-    setAlert({ show, type, msg });
-  };
-
-  //clearList function. Once list is cleared an alert confirms this to the user + truckLoad is set back to empty array
-  // const clearList = () => {
-  //   showAlert(true, "danger", "Trucks cleared successfully");
-  //   setTruckLoad([]);
-  // };
-
-  //removeItem grabs the id of the item to be removed, shows an alert to the user confirming
-  //deletion + filters through the truckLoad to keep only the trucks whose id doesn't match the removed truck
-  // const removeItem = (id) => {
-  //   showAlert(true, "danger", "Truck Removed");
-  //   setTruckLoad(truckLoad.filter((truck) => truck.id !== id)); //If truck id does not match then it will be added to new array, if it does match; i won't get returned + won't be displayed
-  // };
-
-  //editItem grabs the id of the item to be edited, sets the item and sets all required values
-  // const editItem = (id) => {
-  //   const specificItem = truckLoad.find((truck) => truck.id === id);
-  //   setIsEditing(true);
-  //   setEditId(id);
-  //   setSource(specificItem.source);
-  //   setPrice(specificItem.price);
-  //   setRetailPrice(specificItem.retailPrice);
-  //   setUnits(specificItem.units);
-  //   setPalletCount(specificItem.palletCount);
-  //   setCategory(specificItem.category);
-  //   setFob(specificItem.fob);
-  //   setStatus(specificItem.status);
-  //   setContents(specificItem.contents);
-  //   setManifests(specificItem.manifests);
-  // };
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
     <TruckContext.Provider
       value={{
-        isEmpty, setIsEmpty,
-        id, setId,
-        loading, setLoading,
-        loadId, setLoadId,
-        source, setSource,
-        retailPrice, setRetailPrice,
-        price, setPrice,
-        status, setStatus,
-        contents, setContents,
-        category, setCategory,
-        units, setUnits,
-        palletCount, setPalletCount,
-        fob, setFob,
-        manifestIds, setManifestIds,
-        files, setFiles,
-        owner, setOwner,
-        cost, setCost,
-        commission, setCommission,
-        salesNotes, setSalesNotes,
-        accountingNotes, setAccountingNotes,
-        logisticsNotes, setLogisticsNotes,
-        lane, setLane,
-        fileCount, setFileCount,
-        imageCount, setImageCount,
-        imageIds, setImageIds,
-        images, setImages
-
-
-        // clearList,
-        // showAlert,
-        // editItem,
-        // removeItem,
-
-        // // getData,
-        // alert,
-        // isEditing,
-        // editId,
-        // setAlert,
-        // setIsEditing,
-        // setEditId,
+        isEmpty,
+        setIsEmpty,
+        id,
+        setId,
+        loading,
+        setLoading,
+        loadId,
+        setLoadId,
+        source,
+        setSource,
+        retailPrice,
+        setRetailPrice,
+        price,
+        setPrice,
+        status,
+        setStatus,
+        contents,
+        setContents,
+        category,
+        setCategory,
+        units,
+        setUnits,
+        palletCount,
+        setPalletCount,
+        fob,
+        setFob,
+        manifestIds,
+        setManifestIds,
+        files,
+        setFiles,
+        owner,
+        setOwner,
+        cost,
+        setCost,
+        commission,
+        setCommission,
+        salesNotes,
+        setSalesNotes,
+        accountingNotes,
+        setAccountingNotes,
+        logisticsNotes,
+        setLogisticsNotes,
+        lane,
+        setLane,
+        fileCount,
+        setFileCount,
+        imageCount,
+        setImageCount,
+        imageIds,
+        setImageIds,
+        images,
+        setImages,
       }}
     >
       {children}
@@ -169,7 +138,8 @@ export const useTruck = () => {
 
     const fetchTrucks = async () => {
       try {
-        const response = await fetch(url,
+        const response = await fetch(
+          url,
           {
             method: "GET",
             headers: {

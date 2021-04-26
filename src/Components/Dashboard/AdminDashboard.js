@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTruck } from "../../truckContext";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
@@ -29,27 +29,15 @@ const AdminDashboard = () => {
   }
   const grossMargin = getArraySum(grossMarginCalc);
 
-  //Sold 24 hrs
-  // const soldDay = () => {
-  //   if (trucks[0].status === 0) {
-  //     // return trucks.status(0).length;
-  //     console.log(trucks[0].status)
-  //   }
-  // };
-  // console.log(soldDay())
-  const availStatus = trucks.map(function (truck) {
-    return truck.status[2]
-  })
-  const soldStatus = trucks.map((truck) => {
-    return truck.status[0]
-  })
-
-  if (availStatus) {
-    console.log("Available")
-  }
-  if (soldStatus) {
-    console.log("Sold")
-  }
+  // Sold 24 hrs
+  const soldDay = () => {
+    if (trucks[0].status === 0) {
+      // return trucks.status(0).length;
+      console.log(trucks[0].status)
+    }
+  };
+  console.log("trucks", trucks)
+  // console.log("status of first truck in array", trucks[0].status)
 
   return (
     <>

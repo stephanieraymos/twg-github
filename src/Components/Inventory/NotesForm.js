@@ -46,6 +46,7 @@ const NotesForm = ({ id }) => {
     if (salesForm.checkValidity() === true) {
       setValidated(false);
       updateSalesNotes();
+      setIsEditingSales(false);
     } else {
       setValidated(true);
     }
@@ -57,6 +58,7 @@ const NotesForm = ({ id }) => {
     if (actForm.checkValidity() === true) {
       setValidated(false);
       updateAccountingNotes();
+      setIsEditingAct(false);
     } else {
       setValidated(true);
     }
@@ -68,6 +70,7 @@ const NotesForm = ({ id }) => {
     if (logiForm.checkValidity() === true) {
       setValidated(false);
       updateLogisticsNotes();
+      setIsEditingLogi(false);
     } else {
       setValidated(true);
     }
@@ -164,43 +167,46 @@ const NotesForm = ({ id }) => {
             style={{ border: "none" }}
             onSubmit={handleSalesSubmit}
           >
-            <Form.Group as={Row}>
-              <Form.Label column sm={4} className="truck-data-title">
-                Sales Notes:
-              </Form.Label>
-              <Col sm={8}>
-                <button
-                  key={isEditingSales ? "button-submit" : "button-edit"}
-                  type={isEditingSales ? "submit" : "button"}
-                  onClick={
-                    isEditingSales ? null : () => setIsEditingSales(true)
-                  }
-                  className="edit-notes-btn edit-notes-header-btn"
-                >
-                  {isEditingSales ? (
-                    "Update"
-                  ) : (
-                    <>
-                      <FaEdit /> <span>Edit Notes</span>
-                    </>
-                  )}
-                </button>
-                {isEditingSales && (
+            <Form.Group>
+              <div className="form-label-and-button-container">
+                <Form.Label column sm={4} className="truck-data-title">
+                  Sales Notes:
+                </Form.Label>
+                <div className="form-header-buttons-container">
                   <button
-                    type="button"
+                    key={isEditingSales ? "button-submit" : "button-edit"}
+                    type={isEditingSales ? "submit" : "button"}
                     onClick={
-                      isEditingSales
-                        ? () => cancelSales()
-                        : (e) => {
-                            e.preventDefault();
-                          }
+                      isEditingSales ? null : () => setIsEditingSales(true)
                     }
-                    className="cancel-update-notes"
+                    className="edit-notes-btn edit-notes-header-btn"
                   >
-                    Cancel
+                    {isEditingSales ? (
+                      "Update"
+                    ) : (
+                      <>
+                        <FaEdit /> <span>Edit Notes</span>
+                      </>
+                    )}
                   </button>
-                )}
-
+                  {isEditingSales && (
+                    <button
+                      type="button"
+                      onClick={
+                        isEditingSales
+                          ? () => cancelSales()
+                          : (e) => {
+                              e.preventDefault();
+                            }
+                      }
+                      className="cancel-update-notes"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </div>
+              <Col sm={8}>
                 {isEditingSales ? (
                   <Form.Control
                     as="textarea"
@@ -218,7 +224,7 @@ const NotesForm = ({ id }) => {
                     type="text"
                     readOnly
                     value={
-                      salesNotes.length !== 0 ? salesNotes : "No Notes yet"
+                      salesNotes.length !== 0 ? salesNotes : "No Notes Yet"
                     }
                     onChange={(e) => setSalesNotes(e.target.value)}
                     name="sales"
@@ -235,42 +241,45 @@ const NotesForm = ({ id }) => {
             style={{ border: "none" }}
             onSubmit={handleActSubmit}
           >
-            <Form.Group as={Row}>
-              <Form.Label column sm={4} className="truck-data-title">
-                Accounting Notes:
-              </Form.Label>
-              <Col sm={8}>
-                <button
-                  key={isEditingAct ? "button-submit" : "button-edit"}
-                  type={isEditingAct ? "submit" : "button"}
-                  onClick={isEditingAct ? null : () => setIsEditingAct(true)}
-                  className="edit-notes-btn edit-notes-header-btn"
-                >
-                  {isEditingAct ? (
-                    "Update"
-                  ) : (
-                    <>
-                      <FaEdit /> <span>Edit Notes</span>
-                    </>
-                  )}
-                </button>
-
-                {isEditingAct && (
+            <Form.Group>
+              <div className="form-label-and-button-container">
+                <Form.Label column sm={4} className="truck-data-title">
+                  Accounting Notes:
+                </Form.Label>
+                <div className="form-header-buttons-container">
                   <button
-                    type="button"
-                    onClick={
-                      isEditingAct
-                        ? () => cancelAct()
-                        : (e) => {
-                            e.preventDefault();
-                          }
-                    }
-                    className="cancel-update-notes"
+                    key={isEditingAct ? "button-submit" : "button-edit"}
+                    type={isEditingAct ? "submit" : "button"}
+                    onClick={isEditingAct ? null : () => setIsEditingAct(true)}
+                    className="edit-notes-btn edit-notes-header-btn"
                   >
-                    Cancel
+                    {isEditingAct ? (
+                      "Update"
+                    ) : (
+                      <>
+                        <FaEdit /> <span>Edit Notes</span>
+                      </>
+                    )}
                   </button>
-                )}
 
+                  {isEditingAct && (
+                    <button
+                      type="button"
+                      onClick={
+                        isEditingAct
+                          ? () => cancelAct()
+                          : (e) => {
+                              e.preventDefault();
+                            }
+                      }
+                      className="cancel-update-notes"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </div>
+              <Col sm={8}>
                 {isEditingAct ? (
                   <Form.Control
                     as="textarea"
@@ -305,42 +314,47 @@ const NotesForm = ({ id }) => {
             onSubmit={handleLogiSubmit}
             ref={logiForm}
           >
-            <Form.Group as={Row}>
-              <Form.Label column sm={4} className="truck-data-title">
-                Logistics Notes:
-              </Form.Label>
-              <Col sm={8}>
-                <button
-                  key={isEditingLogi ? "button-submit" : "button-edit"}
-                  type={isEditingLogi ? "submit" : "button"}
-                  onClick={isEditingLogi ? null : () => setIsEditingLogi(true)}
-                  className="edit-notes-btn edit-notes-header-btn"
-                >
-                  {isEditingLogi ? (
-                    "Update"
-                  ) : (
-                    <>
-                      <FaEdit /> <span>Edit Notes</span>
-                    </>
-                  )}
-                </button>
-
-                {isEditingLogi && (
+            <Form.Group>
+              <div className="form-label-and-button-container">
+                <Form.Label column sm={4} className="truck-data-title">
+                  Logistics Notes:
+                </Form.Label>
+                <div className="form-header-buttons-container">
                   <button
-                    type="button"
+                    key={isEditingLogi ? "button-submit" : "button-edit"}
+                    type={isEditingLogi ? "submit" : "button"}
                     onClick={
-                      isEditingLogi
-                        ? () => cancelLogi()
-                        : (e) => {
-                            e.preventDefault();
-                          }
+                      isEditingLogi ? null : () => setIsEditingLogi(true)
                     }
-                    className="cancel-update-notes"
+                    className="edit-notes-btn edit-notes-header-btn"
                   >
-                    Cancel
+                    {isEditingLogi ? (
+                      "Update"
+                    ) : (
+                      <>
+                        <FaEdit /> <span>Edit Notes</span>
+                      </>
+                    )}
                   </button>
-                )}
 
+                  {isEditingLogi && (
+                    <button
+                      type="button"
+                      onClick={
+                        isEditingLogi
+                          ? () => cancelLogi()
+                          : (e) => {
+                              e.preventDefault();
+                            }
+                      }
+                      className="cancel-update-notes"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </div>
+              <Col sm={8}>
                 {isEditingLogi ? (
                   <Form.Control
                     as="textarea"
