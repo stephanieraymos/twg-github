@@ -417,62 +417,72 @@ export default function CustomTable(props) {
                             headers={headers}
                         />
                         <TableBody>
-                            {stableSort(filteredData, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const labelId = `custom-table-${index}`;
+                            {filteredData.length > 0 ? (
+                                <>
+                                    {stableSort(filteredData, getComparator(order, orderBy))
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map((row, index) => {
+                                            const labelId = `custom-table-${index}`;
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row.id)}
-                                            key={row.id}
-                                        >
-                                            {
-                                                headers.map((item, cellIndex) => {
-                                                    if (item.id === 'shippingStatus')
-                                                        return (
-                                                            // shippingStatus: 0 = Awaiting Shipment, 1 = Shipped, 2 = Delivered
-                                                            <TableCell key={`custom-table-cell-${cellIndex}`} align='right'>
-                                                                <Chip label={getShippingStatus(row[item.id])}
-                                                                    style={{
-                                                                        backgroundColor: getShippingStatusColor(row[item.id]),
-                                                                        color: "white"
-                                                                    }} />
-                                                            </TableCell>
-                                                        );
-                                                    else if (item.id === 'paid')
-                                                        return (
-                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>
-                                                                <Chip label={row[item.id] ? "Paid" : "Unpaid"}
-                                                                    style={{
-                                                                        backgroundColor: row[item.id] ? "#4caf50" : "#f44336",
-                                                                        color: "white"
-                                                                    }} />
-                                                            </TableCell>
-                                                        );
-                                                    else if (item.type === 'money')
-                                                        return (
-                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>${numberWithCommas(row[item.id], true)}</TableCell>
-                                                        );
-                                                    else if (item.type === 'percent')
-                                                        return (
-                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>{row[item.id].toFixed(2)}%</TableCell>
-                                                        );
-                                                    else if (item.type === 'date') {
-                                                        const date = new Date(row[item.id]);
-                                                        return (
-                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='left'>{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</TableCell>
-                                                        );
-                                                    } else
-                                                        return (
-                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align={typeof row[item.id] === 'string' ? 'left' : 'right'}>{typeof row[item.id] === 'string' ? row[item.id] : numberWithCommas(row[item.id])}</TableCell>
-                                                        );
-                                                })
-                                            }
-                                        </TableRow>
-                                    );
-                                })}
+                                            return (
+                                                <TableRow
+                                                    hover
+                                                    onClick={(event) => handleClick(event, row.id)}
+                                                    key={row.id}
+                                                >
+                                                    {
+                                                        headers.map((item, cellIndex) => {
+                                                            if (item.id === 'shippingStatus')
+                                                                return (
+                                                                    // shippingStatus: 0 = Awaiting Shipment, 1 = Shipped, 2 = Delivered
+                                                                    <TableCell key={`custom-table-cell-${cellIndex}`} align='right'>
+                                                                        <Chip label={getShippingStatus(row[item.id])}
+                                                                            style={{
+                                                                                backgroundColor: getShippingStatusColor(row[item.id]),
+                                                                                color: "white"
+                                                                            }} />
+                                                                    </TableCell>
+                                                                );
+                                                            else if (item.id === 'paid')
+                                                                return (
+                                                                    <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>
+                                                                        <Chip label={row[item.id] ? "Paid" : "Unpaid"}
+                                                                            style={{
+                                                                                backgroundColor: row[item.id] ? "#4caf50" : "#f44336",
+                                                                                color: "white"
+                                                                            }} />
+                                                                    </TableCell>
+                                                                );
+                                                            else if (item.type === 'money')
+                                                                return (
+                                                                    <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>${numberWithCommas(row[item.id], true)}</TableCell>
+                                                                );
+                                                            else if (item.type === 'percent')
+                                                                return (
+                                                                    <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>{row[item.id].toFixed(2)}%</TableCell>
+                                                                );
+                                                            else if (item.type === 'date') {
+                                                                const date = new Date(row[item.id]);
+                                                                return (
+                                                                    <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='left'>{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</TableCell>
+                                                                );
+                                                            } else
+                                                                return (
+                                                                    <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align={typeof row[item.id] === 'string' ? 'left' : 'right'}>{typeof row[item.id] === 'string' ? row[item.id] : numberWithCommas(row[item.id])}</TableCell>
+                                                                );
+                                                        })
+                                                    }
+                                                </TableRow>
+                                            );
+                                    })}
+                                </>
+                            ) : (
+                                <>
+                                    <TableRow>
+                                        <TableCell className={classes.body} align="center" colSpan={headers.length}>No data to display</TableCell>
+                                    </TableRow>
+                                </>
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>

@@ -153,7 +153,7 @@ export default function BuyerDashboard() {
         const totalUnits = units.reduce((a, b) => a + b, 0);
         const prices = purchasedInventory.map(item => item.price)
         const totalPrices = prices.reduce((a, b) => a + b, 0);
-        setAvgCostPerItem((totalPrices / totalUnits));
+        setAvgCostPerItem(totalUnits > 0 ? (totalPrices / totalUnits) : 0);
 
         // Calculate number of trucks awaiting shipment
         setAwaitingShipment(purchasedInventory.filter(item => item.shippingStatus === 0).length)
@@ -413,7 +413,7 @@ export default function BuyerDashboard() {
                         filterBy={filterBy}
                         width={width} />
                 </Grid>
-                {width < 1000 ? (
+                {width < 1250 ? (
                     <>
                         <Grid item xs={12}>
                             <Card className={classes.card} variant="outlined">
