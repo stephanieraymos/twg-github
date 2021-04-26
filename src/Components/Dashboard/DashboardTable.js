@@ -19,21 +19,42 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
-import { FilterDrama } from "@material-ui/icons";
-import { filter } from "d3-array";
+import { useHistory, useLocation } from "react-router-dom";
 
 const capitalizeFirstLetter = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
 const descendingComparator = (a, b, orderBy) => {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
+    if (orderBy === 'date') {
+        const aDate = a[orderBy].split(' ');
+        const first = new Date(Date.parse(`${aDate[0]} 1, ${aDate[1]}`));
+
+        const bDate = b[orderBy].split(' ');
+        const second = new Date(Date.parse(`${bDate[0]} 1, ${bDate[1]}`));
+        
+        return first - second;
+    } else if (orderBy === 'created' || orderBy === 'sold') {
+        const first = new Date(a[orderBy]);
+        const second = new Date(b[orderBy]);
+        return second - first;
+    } else if (orderBy === 'year') {
+        if (b[orderBy] < a[orderBy]) {
+            return 1;
+        }
+        if (b[orderBy] > a[orderBy]) {
+            return -1;
+        }
+        return 0;
+    } else {
+        if (b[orderBy] < a[orderBy]) {
+            return -1;
+        }
+        if (b[orderBy] > a[orderBy]) {
+            return 1;
+        }
+        return 0;
     }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
 }
 
 const getComparator = (order, orderBy) => {
@@ -113,69 +134,152 @@ const useToolbarStyles = makeStyles((theme) => ({
         fontFamily: 'Montserrat, sans-serif',
         fontWeight: 700,
     },
+    text: {
+        fontFamily: 'Montserrat, sans-serif',
+        fontWeight: 500,
+        fontSize: "14px",
+    },
     textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
         width: 250,
     },
 }));
 
 const TableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { data, title, isFiltered, setIsFiltered, setStartDateTime, setEndDateTime, filterBy } = props;
+    const { title, isFiltered, setIsFiltered, setStartDateTime, setEndDateTime, filterBy, showDateFilter, width } = props;
 
     return (
-        <Toolbar className={classes.root} >
-            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                {title}
-            </Typography>
+        <>
+            {width < 1200 ? (
+                <>
+                    <Toolbar className={classes.root} >
+                        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                            {title}
+                        </Typography>
+                    </Toolbar>
+                    {showDateFilter && 
+                        <Toolbar className={classes.root} >
+                            <Typography className={classes.text} variant="h6" id="tableTitle" component="div">
+                                {capitalizeFirstLetter(filterBy)} Between
+                            </Typography>
 
-            <TextField
-                id="start-datetime"
-                label={`Start ${capitalizeFirstLetter(filterBy)} Date & Time`}
-                type="datetime-local"
-                className={classes.textField}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                inputProps={{
-                    step: 300, // 5 min
-                }}
-                onChange={(e) => setStartDateTime(e.target.value)}
-            />
-            <TextField
-                id="end-datetime"
-                label={`End ${capitalizeFirstLetter(filterBy)} Date & Time`}
-                type="datetime-local"
-                className={classes.textField}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                inputProps={{
-                    step: 300, // 5 min
-                }}
-                onChange={(e) => setEndDateTime(e.target.value)}
-            />
+                            <TextField
+                                id="start-datetime"
+                                type="datetime-local"
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                inputProps={{
+                                    step: 300, // 5 min
+                                }}
+                                onChange={(e) => setStartDateTime(e.target.value)}
+                            />
 
-            {isFiltered ? (
-                <Tooltip title="Delete" title="Remove Filter">
-                    <IconButton aria-label="delete" onClick={() => setIsFiltered(false)}>
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
+                            <Typography className={classes.text} variant="h6" id="tableTitle" component="div">
+                                And
+                            </Typography>
+
+                            <TextField
+                                id="end-datetime"
+                                type="datetime-local"
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                inputProps={{
+                                    step: 300, // 5 min
+                                }}
+                                onChange={(e) => setEndDateTime(e.target.value)}
+                            />
+
+                            {isFiltered ? (
+                                <Tooltip title="Delete" title="Remove Filter">
+                                    <IconButton aria-label="delete" onClick={() => setIsFiltered(false)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            ) : (
+                                <Tooltip title="Filter list">
+                                    <IconButton aria-label="filter list" onClick={() => setIsFiltered(true)}>
+                                        <FilterListIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                        </Toolbar>
+                    }   
+                </>
             ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list" onClick={() => setIsFiltered(true)}>
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
+                <>
+                    <Toolbar className={classes.root} >
+                        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                            {title}
+                        </Typography>
+
+                        {showDateFilter &&
+                            <>
+                                <Typography className={classes.text} variant="h6" id="tableTitle" component="div">
+                                    {capitalizeFirstLetter(filterBy)} Between
+                                </Typography>
+
+                                <TextField
+                                    id="start-datetime"
+                                    type="datetime-local"
+                                    className={classes.textField}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    inputProps={{
+                                        step: 300, // 5 min
+                                    }}
+                                    onChange={(e) => setStartDateTime(e.target.value)}
+                                />
+
+                                <Typography className={classes.text} variant="h6" id="tableTitle" component="div">
+                                    And
+                                </Typography>
+
+                                <TextField
+                                    id="end-datetime"
+                                    type="datetime-local"
+                                    className={classes.textField}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    inputProps={{
+                                        step: 300, // 5 min
+                                    }}
+                                    onChange={(e) => setEndDateTime(e.target.value)}
+                                />
+
+                                {isFiltered ? (
+                                    <Tooltip title="Delete" title="Remove Filter">
+                                        <IconButton aria-label="delete" onClick={() => setIsFiltered(false)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                ) : (
+                                    <Tooltip title="Filter list">
+                                        <IconButton aria-label="filter list" onClick={() => setIsFiltered(true)}>
+                                            <FilterListIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                )}
+                            </>
+                        }
+
+                        
+                    </Toolbar>
+                </>
             )}
-        </Toolbar>
+        </>
     );
 };
 
 TableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
+    
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -200,16 +304,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomTable(props) {
-    const { data, defaultOrderBy, title, headers, filterBy } = props;
+    const { data, defaultOrderBy, title, headers, filterBy=null, showDateFilter=true, width } = props;
     const classes = useStyles();
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState(defaultOrderBy);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [filteredData, setFilteredData] = useState([]);
     const [isFiltered, setIsFiltered] = useState(false);
     const [startDateTime, setStartDateTime] = useState("");
     const [endDateTime, setEndDateTime] = useState("");
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let history = useHistory();
+    let location = useLocation();
 
     const handleRequestSort = (event, property) => {
         // swich order if we're sorting by the same value
@@ -219,25 +326,11 @@ export default function CustomTable(props) {
         setOrderBy(property);
     };
 
-    const handleClick = (event, name) => {
-        // const selectedIndex = selected.indexOf(name);
-        // let newSelected = [];
-
-        // if (selectedIndex === -1) {
-        //     newSelected = newSelected.concat(selected, name);
-        // } else if (selectedIndex === 0) {
-        //     newSelected = newSelected.concat(selected.slice(1));
-        // } else if (selectedIndex === selected.length - 1) {
-        //     newSelected = newSelected.concat(selected.slice(0, -1));
-        // } else if (selectedIndex > 0) {
-        //     newSelected = newSelected.concat(
-        //         selected.slice(0, selectedIndex),
-        //         selected.slice(selectedIndex + 1),
-        //     );
-        // }
-
-        // setSelected(newSelected);
-        console.log("selected", name)
+    const handleClick = (event, id) => {
+        event.preventDefault();
+        history.push(`inventory/${id}`, {
+            from: location.pathname,
+        })
     };
 
     const handleChangePage = (event, newPage) => {
@@ -256,7 +349,7 @@ export default function CustomTable(props) {
     }, [data])
 
     useEffect(() => {
-        if (isFiltered) {
+        if (isFiltered && filterBy) {
             const start = new Date(startDateTime);
             const end = new Date(endDateTime);
             // filter by the start and end date time
@@ -291,7 +384,10 @@ export default function CustomTable(props) {
         }
     }
 
-    const numberWithCommas = (number) => {
+    const numberWithCommas = (number, money=false) => {
+        if (money) {
+            return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
@@ -304,7 +400,9 @@ export default function CustomTable(props) {
                     setIsFiltered={setIsFiltered} 
                     setStartDateTime={setStartDateTime}
                     setEndDateTime={setEndDateTime}
-                    filterBy={filterBy} />
+                    filterBy={filterBy}
+                    showDateFilter={showDateFilter}
+                    width={width} />
                 <TableContainer>
                     <Table
                         aria-labelledby={title}
@@ -327,8 +425,8 @@ export default function CustomTable(props) {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.loadId)}
-                                            key={row.loadId}
+                                            onClick={(event) => handleClick(event, row.id)}
+                                            key={row.id}
                                         >
                                             {
                                                 headers.map((item, cellIndex) => {
@@ -343,10 +441,6 @@ export default function CustomTable(props) {
                                                                     }} />
                                                             </TableCell>
                                                         );
-                                                    else if (item.id === 'retailPrice' || item.id === 'price')
-                                                        return (
-                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>${numberWithCommas(row[item.id])}</TableCell>
-                                                        );
                                                     else if (item.id === 'paid')
                                                         return (
                                                             <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>
@@ -357,9 +451,22 @@ export default function CustomTable(props) {
                                                                     }} />
                                                             </TableCell>
                                                         );
-                                                    else
+                                                    else if (item.type === 'money')
                                                         return (
-                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align={typeof row[item.id] === 'string' ? 'left' : 'right'}>{row[item.id]}</TableCell>
+                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>${numberWithCommas(row[item.id], true)}</TableCell>
+                                                        );
+                                                    else if (item.type === 'percent')
+                                                        return (
+                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>{row[item.id].toFixed(2)}%</TableCell>
+                                                        );
+                                                    else if (item.type === 'date') {
+                                                        const date = new Date(row[item.id]);
+                                                        return (
+                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='left'>{`${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`}</TableCell>
+                                                        );
+                                                    } else
+                                                        return (
+                                                            <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align={typeof row[item.id] === 'string' ? 'left' : 'right'}>{typeof row[item.id] === 'string' ? row[item.id] : numberWithCommas(row[item.id])}</TableCell>
                                                         );
                                                 })
                                             }

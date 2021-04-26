@@ -61,6 +61,7 @@ const TruckDetails = () => {
 
   let history = useHistory();
   let location = useLocation();
+  let { from } = location.state || { from: { pathname: inventoryPATH } };
 
   document.title = "Truck Details";
 
@@ -228,7 +229,7 @@ const TruckDetails = () => {
         <Button
           onClick={(e) => {
             e.preventDefault();
-            history.replace(inventoryPATH);
+            history.replace(from);
           }}
           className="back-to-link"
         >

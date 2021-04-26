@@ -26,7 +26,7 @@ const Dashboard = () => {
                         {is_admin ? (
                             <SellerDashboard />
                         ) : is_seller ? (
-                            <BuyerDashboard />
+                            <SellerDashboard />
                         ) : (
                             <BuyerDashboard />
                         )}
