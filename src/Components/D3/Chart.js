@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { scaleLinear, scaleTime, timeFormat, extent } from "d3";
+import { scaleLinear, scaleTime, timeFormat, extent, scaleOrdinal } from "d3";
 import { useData } from "./useData";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
@@ -59,6 +59,9 @@ const ScatterPlot = () => {
   const yValue = (d) => d[yAttribute];
   const yAxisLabel = getLabel(yAttribute);
 
+  // const colorValue = (d) => d.species;
+  const dateValue = (d) => d.date;
+
   if (!data) {
     return <pre>Loading...</pre>;
   }
@@ -68,15 +71,19 @@ const ScatterPlot = () => {
 
   // const xAxisTickFormat = timeFormat("%B %d, %Y");
 
-  const xScale = scaleTime()
-    .domain(extent(data, xValue))
-    .range([0, innerWidth])
-    .nice();
+  const xScale = scaleOrdinal().domain(
+    data.map(dateValue)
+  );
+  // .rangeRoundBands([0, width], 0.1);
 
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
     .range([innerHeight, 0])
     .nice();
+
+  // const colorScale = scaleOrdinal()
+  //   .domain(data.map(colorValue))
+  //   .range(["#e6842a", "#137b80", "#8e6c8a"]);
 
   return (
     <>
@@ -100,7 +107,11 @@ const ScatterPlot = () => {
           <div className="body-center">
             <svg width={width} height={height}>
               <g transform={`translate(${margin.left},${margin.top})`}>
-                <AxisBottom xScale={xScale} innerHeight={innerHeight} />
+                <AxisBottom
+                  xScale={xScale}
+                  innerHeight={innerHeight}
+                  dateValue={dateValue}
+                />
                 <text
                   className="axis-label"
                   textAnchor="middle"
@@ -124,9 +135,11 @@ const ScatterPlot = () => {
                 <Marks
                   data={data}
                   xScale={xScale}
-                  yScale={yScale}
                   xValue={xValue}
+                  yScale={yScale}
                   yValue={yValue}
+                  // colorScale={colorScale}
+                  // colorValue={colorValue}
                   circleRadius={7}
                 />
               </g>

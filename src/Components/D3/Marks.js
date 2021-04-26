@@ -34,12 +34,15 @@ export const Marks = ({
   xValue,
   yValue,
   circleRadius,
+  // colorScale,
+  // colorValue
 }) => {
   return data.map((d) => (
     <circle
       className="mark"
       cx={xScale(xValue(d))}
       cy={yScale(yValue(d))}
+      // fill={colorScale(colorValue(d))}
       r={circleRadius}
     >
       <title>{xValue(d)}</title>

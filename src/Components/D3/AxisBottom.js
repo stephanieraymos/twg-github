@@ -1,10 +1,10 @@
-export const AxisBottom = ({ xScale, innerHeight, tickOffset = 3 }) => {
+export const AxisBottom = ({ xScale, innerHeight, tickOffset = 3, dateValue }) => {
   //Tick offset defaults to 3 incase the value is not passed in
-  return xScale.ticks().map((tickValue) => (
+  return xScale.domain().map((dateValue) => (
     <g
       className="tick"
-      key={tickValue}
-      transform={`translate(${xScale(tickValue)}, 0)`}
+      key={dateValue}
+      transform={`translate(${xScale(dateValue)}, 0)`}
     >
       <line y2={innerHeight} />
       <text
@@ -12,7 +12,7 @@ export const AxisBottom = ({ xScale, innerHeight, tickOffset = 3 }) => {
         style={{ textAnchor: "middle" }}
         y={innerHeight + tickOffset}
       >
-        {tickValue}
+        {dateValue}
       </text>
     </g>
   ));
