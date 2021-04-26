@@ -19,9 +19,7 @@ const FormAddInventory = ({
   const [imageCount, setImageCount] = useState(0);
   let history = useHistory();
 
-  const {
-    id,
-  } = authService.getUser();
+  const { id } = authService.getUser();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
