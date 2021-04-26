@@ -17,7 +17,7 @@ const attributes = [
   { value: "price", label: "Our Price" },
   { value: "retailPrice", label: "Retail Price" },
   { value: "program", label: "program" },
-  { value: "date", label: "date" },
+  // { value: "date", label: "date" }, //Date is not in the db
 ];
 //^ GETTING CURRENT MONTH
 const months = [
@@ -59,8 +59,30 @@ const ScatterPlot = () => {
   const yValue = (d) => d[yAttribute];
   const yAxisLabel = getLabel(yAttribute);
 
-  // const colorValue = (d) => d.species;
-  const dateValue = (d) => d.date;
+  // const today = new Date();
+  // const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  // const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  // const dateValue = () => date+' '+time;
+
+  // Date.prototype.addDays = function(days) {
+  //     const date = new Date(this.valueOf());
+  //     date.setDate(date.getDate() + days);
+  //     return date;
+  // }
+
+  // function getDates(startDate, stopDate) {
+  //     const dateArray = new Array();
+  //     const currentDate = startDate;
+  //     while (currentDate <= stopDate) {
+  //         dateArray.push(new Date (currentDate));
+  //         currentDate = currentDate.addDays(1);
+  //     }
+  //     return dateArray;
+  // }
+
+  // const dateValue = () => date;
+  // console.log(dateValue);
+  // console.log(initialXAttribute);
 
   if (!data) {
     return <pre>Loading...</pre>;
@@ -69,12 +91,30 @@ const ScatterPlot = () => {
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
-  // const xAxisTickFormat = timeFormat("%B %d, %Y");
+  const xAxisTickFormat = timeFormat("%B %d, %Y");
 
-  const xScale = scaleOrdinal().domain(
-    data.map(dateValue)
-  );
-  // .rangeRoundBands([0, width], 0.1);
+  // if (xAttribute === "date") {
+  //   const xScale = scaleOrdinal().domain(data.map(dateValue));
+  //   return xScale;
+  // } else {
+  //   const xScale = scaleLinear()
+  //     .domain(extent(data, yValue))
+  //     .range([innerHeight, 0])
+  //     .nice();
+  //   return xScale;
+  // }
+
+  //   const xScale = scaleOrdinal()
+  //     .domain(data.map(dateValue))
+
+  const padding = 100;
+  const mindate = new Date(2021, 3, 1),
+    maxdate = new Date(2021, 3, 31);
+
+  const xScale = scaleTime()
+    .domain([mindate, maxdate]) // values between for month of january
+    .range([padding, width - padding * 2]); // map these the the chart width = total width minus padding at both
+    // var dateValue = () => xScale;
 
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
@@ -110,7 +150,7 @@ const ScatterPlot = () => {
                 <AxisBottom
                   xScale={xScale}
                   innerHeight={innerHeight}
-                  dateValue={dateValue}
+                  // dateValue={dateValue}
                 />
                 <text
                   className="axis-label"

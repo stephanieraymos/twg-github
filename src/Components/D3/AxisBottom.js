@@ -12,7 +12,7 @@ export const AxisBottom = ({ xScale, innerHeight, tickOffset = 3, dateValue }) =
         style={{ textAnchor: "middle" }}
         y={innerHeight + tickOffset}
       >
-        {dateValue}
+        {dateValue.toString()}
       </text>
     </g>
   ));
