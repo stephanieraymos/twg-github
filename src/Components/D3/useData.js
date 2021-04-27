@@ -15,10 +15,14 @@ export const useData = () => {
       d.retail_price = +d.retail_price;
       d.program = "d.program";
       d.created = new Date(d.created);
+      // d.created = +d.created
+
       return d;
     };
     json(url, row).then(setData);
   }, []);
-
+  if (data) {
+    console.log(data[0]);
+  }
   return data;
 };
