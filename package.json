@@ -4,10 +4,11 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
     "bootstrap": "^4.6.0",
-    "d3": "^6.6.1",
+    "d3": "^6.7.0",
     "jest-dom": "^4.0.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
