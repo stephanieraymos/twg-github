@@ -1,4 +1,9 @@
-// export const AxisBottom = ({ xScale, innerHeight, tickOffset = 3, dateValue }) => {
+// export const AxisBottom = ({
+//   xScale,
+//   innerHeight,
+//   tickOffset = 3,
+//   dateValue,
+// }) => {
 //   //Tick offset defaults to 3 incase the value is not passed in
 //   return xScale.domain().map((dateValue) => (
 //     <g
@@ -31,7 +36,6 @@
 //       </text>
 //     </g>
 //   ));
-
 
 export const AxisBottom = ({
   xScale,

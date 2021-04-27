@@ -16,7 +16,8 @@ const attributes = [
   { value: "cost", label: "Our Cost" },
   { value: "price", label: "Our Price" },
   { value: "retailPrice", label: "Retail Price" },
-  { value: "program", label: "program" },
+  { value: "program", label: "Program" },
+  { value: "created", label: "Date Created" },
   // { value: "date", label: "date" }, //Date is not in the db
 ];
 //^ GETTING CURRENT MONTH
@@ -49,7 +50,7 @@ const getLabel = (value) => {
 const ScatterPlot = () => {
   const data = useData();
 
-  const initialXAttribute = "date";
+  const initialXAttribute = "created";
   const [xAttribute, setXAttribute] = useState(initialXAttribute);
   const xValue = (d) => d[xAttribute];
   const xAxisLabel = getLabel(xAttribute);
@@ -68,13 +69,13 @@ const ScatterPlot = () => {
 
   const xAxisTickFormat = timeFormat("%m/%d");
 
-  const padding = 100;
+  const padding = 60;
   const mindate = new Date(2021, 3, 1),
     maxdate = new Date(2021, 3, 31);
 
   const xScale = scaleTime()
-    .domain([mindate, maxdate]) // values between for month of january
-    .range([padding, width - padding * 2]); // map these the the chart width = total width minus padding at both
+    .domain([mindate, maxdate])
+    .range([padding, width - padding]);
   // var dateValue = () => xScale;
 
   const yScale = scaleLinear()
@@ -92,12 +93,6 @@ const ScatterPlot = () => {
         <div className="sales-graph">
           <p className="sales-graph-date-range">{monthName} 2021 insights</p>
           <div className="menus-container">
-            <span className="dropdown-label">X</span>
-            <ReactDropdown
-              options={attributes}
-              value={xAttribute}
-              onChange={({ value }) => setXAttribute(value)}
-            />
             <span className="dropdown-label">Y</span>
             <ReactDropdown
               options={attributes}
@@ -120,7 +115,7 @@ const ScatterPlot = () => {
                   transform={`translate(${-yAxisLabelOffset},${
                     innerHeight / 2
                   }) rotate(-90)`}
-                  tickOffset={5}
+                  tickOffset={4}
                 >
                   {yAxisLabel}
                 </text>
@@ -143,7 +138,7 @@ const ScatterPlot = () => {
                   // colorScale={colorScale}
                   // colorValue={colorValue}
                   tooltipFormat={xAxisTickFormat}
-                  circleRadius={7}
+                  circleRadius={5}
                 />
               </g>
             </svg>
