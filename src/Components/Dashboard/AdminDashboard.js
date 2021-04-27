@@ -5,6 +5,7 @@ import { usePersistedState } from "../../usePersistedState";
 import dashboard from "../../css/dashboard.css";
 import OrderDetails from "../Orders/OrderDetails";
 import Chart from "../D3/Chart";
+import DashboardBarplot from "./DashboardBarplot";
 
 const AdminDashboard = () => {
   document.title = "Dashboard";
@@ -78,6 +79,7 @@ const AdminDashboard = () => {
         {/* //* ---- GRAPH ---- */}
 
         <Chart />
+        {/* <DashboardBarplot /> */}
 
         {/* //* ---- FOOTER CONTENT ---- */}
         <div className="bottom-content">
