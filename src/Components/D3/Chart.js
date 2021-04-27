@@ -59,7 +59,6 @@ const ScatterPlot = () => {
   const yValue = (d) => d[yAttribute];
   const yAxisLabel = getLabel(yAttribute);
 
-
   if (!data) {
     return <pre>Loading...</pre>;
   }
@@ -67,21 +66,7 @@ const ScatterPlot = () => {
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
-  const xAxisTickFormat = timeFormat("%B %d, %Y");
-
-  // if (xAttribute === "date") {
-  //   const xScale = scaleOrdinal().domain(data.map(dateValue));
-  //   return xScale;
-  // } else {
-  //   const xScale = scaleLinear()
-  //     .domain(extent(data, yValue))
-  //     .range([innerHeight, 0])
-  //     .nice();
-  //   return xScale;
-  // }
-
-  //   const xScale = scaleOrdinal()
-  //     .domain(data.map(dateValue))
+  const xAxisTickFormat = timeFormat("%m/%d");
 
   const padding = 100;
   const mindate = new Date(2021, 3, 1),
@@ -90,7 +75,7 @@ const ScatterPlot = () => {
   const xScale = scaleTime()
     .domain([mindate, maxdate]) // values between for month of january
     .range([padding, width - padding * 2]); // map these the the chart width = total width minus padding at both
-    // var dateValue = () => xScale;
+  // var dateValue = () => xScale;
 
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
@@ -126,6 +111,7 @@ const ScatterPlot = () => {
                 <AxisBottom
                   xScale={xScale}
                   innerHeight={innerHeight}
+                  tickFormat={xAxisTickFormat}
                   // dateValue={dateValue}
                 />
                 <text
@@ -156,6 +142,7 @@ const ScatterPlot = () => {
                   yValue={yValue}
                   // colorScale={colorScale}
                   // colorValue={colorValue}
+                  tooltipFormat={xAxisTickFormat}
                   circleRadius={7}
                 />
               </g>

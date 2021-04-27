@@ -27,25 +27,45 @@
 //   </>
 // );
 
+// export const Marks = ({
+//   data,
+//   xScale,
+//   yScale,
+//   xValue,
+//   yValue,
+//   circleRadius,
+//   // colorScale,
+//   // colorValue
+// }) => {
+//   return data.map((d) => (
+//     <circle
+//       className="mark"
+//       cx={xScale(xValue(d))}
+//       cy={yScale(yValue(d))}
+//       // fill={colorScale(colorValue(d))}
+//       r={circleRadius}
+//     >
+//       <title>{xValue(d)}</title>
+//     </circle>
+//   ));
+// };
+
 export const Marks = ({
   data,
   xScale,
   yScale,
   xValue,
   yValue,
+  tooltipFormat,
   circleRadius,
-  // colorScale,
-  // colorValue
-}) => {
-  return data.map((d) => (
+}) =>
+  data.map((d) => (
     <circle
       className="mark"
       cx={xScale(xValue(d))}
       cy={yScale(yValue(d))}
-      // fill={colorScale(colorValue(d))}
       r={circleRadius}
     >
-      <title>{xValue(d)}</title>
+      <title>{tooltipFormat(xValue(d))}</title>
     </circle>
   ));
-};
