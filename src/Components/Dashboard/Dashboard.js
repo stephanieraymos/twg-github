@@ -7,6 +7,7 @@ import BuyerDashboard from "./BuyerDashboard";
 import AdminDashboard from "./AdminDashboard";
 import { InventoryProvider } from "../../inventory";
 import { authService } from "../../authService";
+import { SuperuserProvider } from "../../superuser";
 
 const Dashboard = () => {
     document.title = "Dashboard";
@@ -24,7 +25,9 @@ const Dashboard = () => {
                             <Navigation />
                         </div>
                         {is_admin ? (
-                            <AdminDashboard />
+                            <SuperuserProvider>
+                                <AdminDashboard />
+                            </SuperuserProvider>
                         ) : is_seller ? (
                             <SellerDashboard />
                         ) : (
