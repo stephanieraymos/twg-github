@@ -103,3 +103,43 @@ export const useAllInventoryHeaders = [
     type: "normal",
   },
 ];
+
+export const useUnpaidHeaders = [
+  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "sold", numeric: false, label: "Purchased", type: "date" },
+  { id: "source", numeric: false, label: "Program", type: "normal" },
+  { id: "category", numeric: false, label: "Category", type: "normal" },
+  { id: "units", numeric: true, label: "Units", type: "normal" },
+  { id: "palletCount", numeric: true, label: "Pallets", type: "normal" },
+  { id: "fob", numeric: false, label: "DOB", type: "normal" },
+  { id: "retailPrice", numeric: true, label: "Retail (USD)", type: "money" },
+  { id: "price", numeric: true, label: "Price (USD)", type: "money" },
+];
+
+export const usePurchasedHeaders = [
+  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "sold", numeric: false, label: "Purchased", type: "date" },
+  { id: "source", numeric: false, label: "Program", type: "normal" },
+  { id: "category", numeric: false, label: "Category", type: "normal" },
+  { id: "units", numeric: true, label: "Units", type: "normal" },
+  {
+    id: "palletCount",
+    numeric: true,
+    label: "Pallets",
+    type: "normal",
+  },
+  { id: "fob", numeric: false, label: "DOB", type: "normal" },
+  {
+    id: "retailPrice",
+    numeric: true,
+    label: "Retail (USD)",
+    type: "money",
+  },
+  { id: "price", numeric: true, label: "Price (USD)", type: "money" },
+  {
+    id: "shippingStatus",
+    numeric: true,
+    label: "Shipping Status",
+    type: "normal",
+  },
+];
