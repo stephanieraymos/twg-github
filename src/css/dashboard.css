@@ -189,12 +189,12 @@ body {
   stroke-linecap: round;
 }
 .Dropdown-root {
-  width: 300px;
+  width: 15rem;
   display: inline-block;
-  font-size: 1.5em;
+  font-size: 1rem;
 }
 .Dropdown-menu {
-  max-height: 400px !important;
+  max-height: 20rem !important;
 }
 
 .Dropdown-root {
@@ -202,9 +202,9 @@ body {
 }
 .dropdown-label {
   color: var(--tick-text);
-  font-size: 1.5em;
-  margin-left: 20px;
-  margin-right: 5px;
+  font-size: 1rem;
+  margin-left: 1.5rem;
+  margin-right: .35rem;
 }
 
 .Dropdown-control {
@@ -217,7 +217,7 @@ body {
   color: #333;
   cursor: default;
   outline: none;
-  padding: 8px 52px 8px 10px;
+  padding: .5rem 3rem .5rem 1rem;
   transition: all 200ms ease;
 }
 
@@ -234,8 +234,8 @@ body {
   height: 0;
   margin-top: -ceil(2.5);
   position: absolute;
-  right: 10px;
-  top: 14px;
+  right: .75rem;
+  top: 1rem;
   width: 0;
 }
 

@@ -21,7 +21,7 @@ const width = 1000
 const height = 540;
 const margin = { top: 20, right: 30, bottom: 65, left: 90 };
 const xAxisLabelOffset = 50;
-const yAxisLabelOffset = 60;
+const yAxisLabelOffset = 70;
 
 const attributes = [
   { value: "cost", label: "Our Cost" },
