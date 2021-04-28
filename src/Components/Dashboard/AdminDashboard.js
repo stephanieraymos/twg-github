@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import CustomTable from "./DashboardTable";
 import Chart from "../D3/Chart";
 import { useSuperuserContext } from "../../superuser";
+import DashboardBarplot from "./DashboardBarplot";
 
 const useStyles = makeStyles((theme) => ({
     root: {
