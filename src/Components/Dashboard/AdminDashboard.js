@@ -130,8 +130,8 @@ export default function AdminDashboard() {
   // change grid size based on width
   useEffect(() => {
     if (width < 700) setGridSize(12);
-    else if (width < 1600) setGridSize(6);
-    else setGridSize(3);
+    else if (width < 1000) setGridSize(6);
+    else setGridSize(4);
   }, [width]);
 
   // set the available inventory to sell
