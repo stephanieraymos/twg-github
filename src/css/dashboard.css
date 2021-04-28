@@ -109,8 +109,6 @@ body {
   background-color: white;
   width: 80%;
   min-width: none;
-  border: #cccccc 1px solid;
-  border-radius: var(--radius);
 }
 
 @media only screen and (max-width: 800px) {
@@ -162,65 +160,7 @@ body {
   margin-bottom: 2rem;
 }
 
-@media only screen and (max-width: 800px) {
-  .bottom-content-items {
-    margin: 1rem, 0.5rem;
-    min-width: 58%;
-  }
-}
 
-.bottom-content-items:first-child {
-  margin-right: 1rem;
-}
-
-.top-leads-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 1.5rem;
-}
-
-@media only screen and (max-width: 800px) {
-  .top-leads-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.4rem;
-    text-align: left;
-  }
-  .leads-view-more {
-    text-align: right;
-  }
-}
-
-.lead-items-left {
-  text-align: left;
-}
-
-.leads-container-header {
-  color: black;
-  font-size: clamp(0.5rem, 1rem, 1.5rem);
-}
-
-.leads-view-more {
-  color: var(--sections);
-  cursor: pointer;
-}
-
-.lead-item {
-  display: flex;
-  justify-content: space-between;
-  padding: clamp(0.2rem, 0.5rem, 0.8rem);
-  font-size: clamp(0.5rem, 0.7rem, 1rem);
-  align-items: center;
-}
-
-.lead-item:not(:last-child) {
-  border-bottom: #cccccc 1px solid;
-}
-
-.lead-item:hover {
-  background: var(--light-purple);
-  color: black;
-}
 
 /*=============================================
 =                 LINE CHART                 =
@@ -370,4 +310,7 @@ body {
 .dropdown-container > *{
   padding-left: .25rem;
 
+}
+.chart-card {
+  justify-content: center;
 }

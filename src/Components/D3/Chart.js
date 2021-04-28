@@ -7,6 +7,7 @@ import {
   bin,
   timeMonths,
   sum,
+  // select,
 } from "d3";
 import { useData } from "./useData";
 import { AxisBottom } from "./AxisBottom";
@@ -14,8 +15,10 @@ import { AxisLeft } from "./AxisLeft";
 import { Marks } from "./Marks";
 import ReactDropdown from "react-dropdown";
 
-const width = 1000;
-const height = 500;
+// const svg = select("#graph-container").append("svg").attr("height", 200);
+
+const width = 1000 
+const height = 540;
 const margin = { top: 20, right: 30, bottom: 65, left: 90 };
 const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 60;
@@ -121,7 +124,7 @@ const ScatterPlot = () => {
 
   return (
     <>
-      <div className="sales-graph-container">
+      <div className="sales-graph-container" id="graph-container">
         <div className="sales-graph">
           <p className="sales-graph-date-range">{monthName} 2021 insights</p>
           <div className="menus-container">
@@ -133,7 +136,7 @@ const ScatterPlot = () => {
             />
           </div>
           <div className="body-center">
-            <svg width={width} height={height}>
+            <svg viewBox="0 0 1000 540">
               <g transform={`translate(${margin.left},${margin.top})`}>
                 <AxisBottom
                   xScale={xScale}

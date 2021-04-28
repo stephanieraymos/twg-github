@@ -10,9 +10,15 @@ import Typography from "@material-ui/core/Typography";
 import CustomTable from "./DashboardTable";
 import Chart from "../D3/Chart";
 import DashboardBarplot from "./DashboardBarplot";
+import dashboard from "../../css/dashboard.css"
 import { useStyles } from "./useStyles";
 // import { useSellerInventory } from "./useSellerInventory";
-import { useAvailableHeaders, useSoldHeaders, useSales24HoursHeaders, useAllInventoryHeaders } from "./useHeaders";
+import {
+  useAvailableHeaders,
+  useSoldHeaders,
+  useSales24HoursHeaders,
+  useAllInventoryHeaders,
+} from "./useHeaders";
 
 export default function AdminDashboard() {
   const classes = useStyles();
@@ -294,16 +300,10 @@ export default function AdminDashboard() {
         </Grid>
         <Grid item xs={12}>
           {/* //* ---- GRAPH ---- */}
-          <Chart />
+          <Card className="chart-card">
+            <Chart />
+          </Card>
         </Grid>
-        {/* <Grid item xs={12}>
-                    <CustomTable data={financialDataByYear}
-                        defaultOrderBy={financialDefaultOrderByYear}
-                        title={financialTitleByYear}
-                        headers={financialHeadersByYear}
-                        showDateFilter={false}
-                        width={width} />
-                </Grid> */}
       </Grid>
     </div>
   );
