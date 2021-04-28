@@ -127,10 +127,10 @@ export default function BuyerDashboard() {
 
     // change grid size based on width
     useEffect(() => {
-        if (width < 1000)
+        if (width < 600)
             setGridSize(12);
-        else if (width < 1250)
-            setGridSize(6);
+        else if (width < 800)
+            setGridSize(4);
         else
             setGridSize(4);
     }, [width])
@@ -261,7 +261,7 @@ export default function BuyerDashboard() {
 
     return (
         <div className={classes.root}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
                 <Grid item xs={gridSize}>
                     <Card className={classes.card} variant="outlined">
                         <CardContent>
