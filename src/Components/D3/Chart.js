@@ -27,7 +27,6 @@ const attributes = [
   { value: "cost", label: "Our Cost" },
   { value: "price", label: "Our Price" },
   { value: "retailPrice", label: "Retail Price" },
-  { value: "program", label: "Program" },
   { value: "created", label: "Date Created" },
   // { value: "date", label: "date" }, //Date is not in the db
 ];
