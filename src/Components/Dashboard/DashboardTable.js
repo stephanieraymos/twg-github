@@ -304,9 +304,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomTable(props) {
-    const { data, defaultOrderBy, title, headers, filterBy=null, showDateFilter=true, width } = props;
+    const { data, defaultOrderBy, defaultOrder='asc', title, headers, filterBy=null, showDateFilter=true, width } = props;
     const classes = useStyles();
-    const [order, setOrder] = useState('asc');
+    const [order, setOrder] = useState(defaultOrder);
     const [orderBy, setOrderBy] = useState(defaultOrderBy);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -326,11 +326,13 @@ export default function CustomTable(props) {
         setOrderBy(property);
     };
 
-    const handleClick = (event, id) => {
-        event.preventDefault();
-        history.push(`inventory/${id}`, {
-            from: location.pathname,
-        })
+    const handleClick = (event, id, clickable=true) => {
+        if (clickable) {
+            event.preventDefault();
+            history.push(`inventory/${id}`, {
+                from: location.pathname,
+            })
+        }
     };
 
     const handleChangePage = (event, newPage) => {
@@ -431,7 +433,7 @@ export default function CustomTable(props) {
                                             return (
                                                 <TableRow
                                                     hover
-                                                    onClick={(event) => handleClick(event, row.id)}
+                                                    onClick={(event) => handleClick(event, row.id, row.email == null)}
                                                     key={row.id}
                                                 >
                                                     {

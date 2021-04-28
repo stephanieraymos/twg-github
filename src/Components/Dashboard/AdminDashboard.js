@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CustomTable from "./DashboardTable";
 import Chart from "../D3/Chart";
+import { useSuperuserContext } from "../../superuser";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,6 +51,7 @@ export default function AdminDashboard() {
     const classes = useStyles();
 
     const tableRef = useRef(null);
+    const userTableRef = useRef(null);
     const { inventory, getInventoryBySellerId } = useInventoryContext();
     const { id } = authService.getUser();
     const [sellerInventory, setSellerInventory] = useState([]);
@@ -71,6 +73,64 @@ export default function AdminDashboard() {
     const [title, setTitle] = useState("");
     const [headers, setHeaders] = useState([]);
     const [filterBy, setFilterBy] = useState("");
+
+    // User Data
+    const { users } = useSuperuserContext();
+    const [buyers, setBuyers] = useState([]);
+    const [sellers, setSellers] = useState([]);
+    const [selectedUsersData, setSelectedUsersData] = useState([]);
+    const [selectedUsersDefaultOrderBy, setSelectedUsersDefaultOrderBy] = useState("");
+    const [selectedUsersTitle, setSelectedUsersTitle] = useState("");
+    const [selectedUsersHeaders, setSelectedUsersHeaders] = useState([]);
+
+    useEffect(() => {
+        const items = [];
+        Object.entries(users).map(([_, value]) => {
+            items.push(value);
+        });
+        // grab all the buyers and sellers
+        const allBuyers = items.filter(item => !item.is_seller);
+        const allSellers = items.filter(item => item.is_seller);
+
+        // keep count of purchases/sold count
+        const buyerPurchasedCount = {}
+        for (const buyer of allBuyers)
+            buyerPurchasedCount[buyer.id] = 0;
+        const sellerSoldCount = {}
+        for (const seller of allSellers)
+            sellerSoldCount[seller.id] = 0;
+
+        // add up numbers of purchased/sold
+        inventory.forEach(item => {
+            if (item.buyerId != null) {
+                buyerPurchasedCount[item.buyerId] += 1;
+            }
+
+            if (item.sellerId != null) {
+                sellerSoldCount[item.sellerId] += 1;
+            }
+        })
+
+        const finalBuyers = [];
+        const finalSellers = [];
+        // add the data to existing array
+        for (const buyer of allBuyers) {
+            buyer['count'] = buyerPurchasedCount[buyer.id];
+            finalBuyers.push(buyer);
+        }
+
+        for (const seller of allSellers) {
+            seller['count'] = sellerSoldCount[seller.id];
+            finalSellers.push(seller);
+        }
+
+        setBuyers(finalBuyers);
+        setSellers(finalSellers);
+    }, [inventory, users]);
+
+    useEffect(() => {
+        setSelectedTable(4);
+    }, [buyers])
 
     // width to make view responsive
     const [width, setWidth] = useState(window.innerWidth);
@@ -454,7 +514,7 @@ export default function AdminDashboard() {
                 setFilterBy('sold');
                 setDefaultOrderBy('sold');
                 break;
-            default:
+            case 3:
                 // View All Inventory
                 setTitle("All Your Inventories");
                 setData(sellerInventory);
@@ -472,12 +532,39 @@ export default function AdminDashboard() {
                 ]);
                 setFilterBy('created');
                 setDefaultOrderBy('created');
+                break;
+            case 4:
+                // View All Inventory
+                setSelectedUsersTitle("All Buyers");
+                setSelectedUsersData(buyers);
+                setSelectedUsersHeaders([
+                    { id: 'email', numeric: false, label: 'Email', type: 'normal' },
+                    { id: 'first_name', numeric: false, label: 'First Name', type: 'normal' },
+                    { id: 'last_name', numeric: false, label: 'Last Name', type: 'normal' },
+                    { id: 'count', numeric: true, label: 'Total Purchased', type: 'normal' },
+                ]);
+                setSelectedUsersDefaultOrderBy('count');
+                break;
+            default:
+                // View All Inventory
+                setSelectedUsersTitle("All Sellers");
+                setSelectedUsersData(sellers);
+                setSelectedUsersHeaders([
+                    { id: 'email', numeric: false, label: 'Email', type: 'normal' },
+                    { id: 'first_name', numeric: false, label: 'First Name', type: 'normal' },
+                    { id: 'last_name', numeric: false, label: 'Last Name', type: 'normal' },
+                    { id: 'count', numeric: true, label: 'Total Sales', type: 'normal' },
+                ]);
+                setSelectedUsersDefaultOrderBy('count');
         }
     }
 
     const updateTable = (index) => {
         setSelectedTable(index);
-        tableRef.current.scrollIntoView({ behavior: 'smooth' });
+        if (index < 4)
+            tableRef.current.scrollIntoView({ behavior: 'smooth' });
+        else
+            userTableRef.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     return (
@@ -547,6 +634,38 @@ export default function AdminDashboard() {
                         </CardActions>
                     </Card>
                 </Grid>
+                <Grid item xs={gridSize}>
+                    <Card className={classes.card} variant="outlined">
+                        <CardContent>
+                            <Typography className={classes.title_centered} gutterBottom>
+                                Total Buyers
+                            </Typography>
+                            <Typography className={classes.body_centered} variant="h5" component="h2">
+                                {buyers.length}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button className={classes.button} variant="outlined" color="primary"
+                                onClick={() => updateTable(4)}>View All Buyers</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+                <Grid item xs={gridSize}>
+                    <Card className={classes.card} variant="outlined">
+                        <CardContent>
+                            <Typography className={classes.title_centered} gutterBottom>
+                                Total Sellers
+                            </Typography>
+                            <Typography className={classes.body_centered} variant="h5" component="h2">
+                                {sellers.length}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button className={classes.button} variant="outlined" color="primary"
+                                onClick={() => updateTable(5)}>View All Sellers</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
                 <Grid item xs={12} ref={tableRef}>
                     <CustomTable data={data}
                         defaultOrderBy={defaultOrderBy}
@@ -555,18 +674,19 @@ export default function AdminDashboard() {
                         filterBy={filterBy}
                         width={width} />
                 </Grid>
-                 <Grid item xs={12}>
+                <Grid item xs={12} ref={userTableRef}>
+                    <CustomTable data={selectedUsersData}
+                        defaultOrderBy={selectedUsersDefaultOrderBy}
+                        defaultOrder='desc'
+                        title={selectedUsersTitle}
+                        headers={selectedUsersHeaders}
+                        showDateFilter={false}
+                        width={width} />
+                </Grid>
+                <Grid item xs={12}>
                     {/* //* ---- GRAPH ---- */}
                     <Chart />
                 </Grid>
-                {/* <Grid item xs={12}>
-                    <CustomTable data={financialDataByYear}
-                        defaultOrderBy={financialDefaultOrderByYear}
-                        title={financialTitleByYear}
-                        headers={financialHeadersByYear}
-                        showDateFilter={false}
-                        width={width} />
-                </Grid> */}
             </Grid>
         </div>
     );
