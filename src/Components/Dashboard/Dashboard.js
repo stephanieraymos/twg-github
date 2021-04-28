@@ -2,9 +2,9 @@ import React from "react";
 import Navigation from "../Navigation/Navigation";
 import { PrivateRoute } from "../../Pages/router";
 import { Switch, useRouteMatch } from "react-router-dom";
-import AdminDashboard from "./AdminDashboard";
 import SellerDashboard from "./SellerDashboard";
 import BuyerDashboard from "./BuyerDashboard";
+import AdminDashboard from "./AdminDashboard";
 import { InventoryProvider } from "../../inventory";
 import { authService } from "../../authService";
 

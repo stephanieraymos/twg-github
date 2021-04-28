@@ -380,8 +380,8 @@ export default function SellerDashboard() {
 
     useEffect(() => {
         // calculate the total price from inventories sold within 24 hrs
-        const prices = soldInventoryWithin24Hrs.map(item => item.price)
-        setSaleWithin24Hrs(prices.reduce((a, b) => a + b, 0));
+        const profit = soldInventoryWithin24Hrs.map(item => item.price - item.cost)
+        setSaleWithin24Hrs(profit.reduce((a, b) => a + b, 0));
     }, [soldInventoryWithin24Hrs])
 
     useEffect(() => {
@@ -628,7 +628,7 @@ export default function SellerDashboard() {
                     <Card className={classes.card} variant="outlined">
                         <CardContent>
                             <Typography className={classes.title_centered} gutterBottom>
-                                Total Revenue (USD) Within 24 Hrs
+                                Gross Profit (USD) Within 24 Hrs
                             </Typography>
                             <Typography className={classes.body_centered} variant="h5" component="h2">
                                 ${numberWithCommas(saleWithin24Hrs, true)}

@@ -37,7 +37,7 @@ const descendingComparator = (a, b, orderBy) => {
     } else if (orderBy === 'created' || orderBy === 'sold') {
         const first = new Date(a[orderBy]);
         const second = new Date(b[orderBy]);
-        return second - first;
+        return first - second;
     } else if (orderBy === 'year') {
         if (b[orderBy] < a[orderBy]) {
             return 1;
@@ -362,6 +362,10 @@ export default function CustomTable(props) {
         }
     }, [isFiltered])
 
+    useEffect(() => {
+        setOrderBy(defaultOrderBy);
+    }, [defaultOrderBy])
+
     const getShippingStatus = (status) => {
         switch (status) {
             case 0:
@@ -432,18 +436,19 @@ export default function CustomTable(props) {
                                                 >
                                                     {
                                                         headers.map((item, cellIndex) => {
-                                                            if (item.id === 'shippingStatus')
-                                                                return (
-                                                                    // shippingStatus: 0 = Awaiting Shipment, 1 = Shipped, 2 = Delivered
-                                                                    <TableCell key={`custom-table-cell-${cellIndex}`} align='right'>
-                                                                        <Chip label={getShippingStatus(row[item.id])}
-                                                                            style={{
-                                                                                backgroundColor: getShippingStatusColor(row[item.id]),
-                                                                                color: "white"
-                                                                            }} />
-                                                                    </TableCell>
-                                                                );
-                                                            else if (item.id === 'paid')
+                                                            if (item.id === 'shippingStatus') {
+                                                                if (row['sold'] != null)
+                                                                    return (
+                                                                        // shippingStatus: 0 = Awaiting Shipment, 1 = Shipped, 2 = Delivered
+                                                                        <TableCell key={`custom-table-cell-${cellIndex}`} align='right'>
+                                                                            <Chip label={getShippingStatus(row[item.id])}
+                                                                                style={{
+                                                                                    backgroundColor: getShippingStatusColor(row[item.id]),
+                                                                                    color: "white"
+                                                                                }} />
+                                                                        </TableCell>
+                                                                    );
+                                                            } else if (item.id === 'paid')
                                                                 return (
                                                                     <TableCell key={`custom-table-cell-${cellIndex}`} className={classes.body} align='right'>
                                                                         <Chip label={row[item.id] ? "Paid" : "Unpaid"}
