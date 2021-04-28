@@ -10,8 +10,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CustomTable from "./DashboardTable";
 import Barplot from "./DashboardBarplot";
-import { useAvailableHeaders, useUnpaidHeaders, usePurchasedHeaders } from "./useHeaders";
-import { useStyles } from "./useStyles";
+import { useAvailableHeaders, useUnpaidHeaders, usePurchasedHeaders } from "./Hooks/useHeaders";
+import { useStyles } from "./Hooks/useStyles";
 
 export default function BuyerDashboard() {
   const classes = useStyles();

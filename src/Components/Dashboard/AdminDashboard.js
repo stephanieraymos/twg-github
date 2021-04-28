@@ -12,14 +12,15 @@ import Chart from "../D3/Chart";
 import { useSuperuserContext } from "../../superuser";
 import DashboardBarplot from "./DashboardBarplot";
 import dashboard from "../../css/dashboard.css";
-import { useStyles } from "./useStyles";
+import { useStyles } from "./Hooks/useStyles";
 // import { useSellerInventory } from "./useSellerInventory";
 import {
   useAvailableHeaders,
   useSoldHeaders,
   useSales24HoursHeaders,
   useAllInventoryHeaders,
-} from "./useHeaders";
+} from "./Hooks/useHeaders";
+import { date, monthNames } from "./Hooks/useMonths";
 
 export default function AdminDashboard() {
   const classes = useStyles();
@@ -36,21 +37,6 @@ export default function AdminDashboard() {
   const [saleWithin24Hrs, setSaleWithin24Hrs] = useState(0);
   const [soldInventoryWithin24Hrs, setSoldInventoryWithin24Hrs] = useState([]);
   const [gridSize, setGridSize] = useState(0);
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const date = new Date();
 
   // table data
   const [data, setData] = useState([]);
