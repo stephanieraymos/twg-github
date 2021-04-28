@@ -10,13 +10,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CustomTable from "./DashboardTable";
 import Barplot from "./DashboardBarplot";
-import { inventoryPATH } from "../../Pages/paths";
-import * as d3 from "d3";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        margin: theme.spacing(5),
+        padding: theme.spacing(5),
         backgroundColor: '#f7f8fc',
     },
     card: {

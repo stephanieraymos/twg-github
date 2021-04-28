@@ -9,14 +9,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CustomTable from "./DashboardTable";
-import Barplot from "./DashboardBarplot";
-import { inventoryPATH } from "../../Pages/paths";
-import * as d3 from "d3";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        margin: theme.spacing(5),
+        padding: theme.spacing(5),
         backgroundColor: '#f7f8fc',
     },
     card: {
@@ -85,14 +82,6 @@ export default function SellerDashboard() {
     const financialDefaultOrderByMonth = 'date';
     const financialTitleByMonth = "Financial Report By Month";
     const [financialHeadersByMonth, setFinancialHeadersByMonth] = useState([]);
-
-    // table width
-    const barplotRef = useRef(null);
-    const [barplotWidth, setBarplotWidth] = useState(0);
-    useEffect(() => {
-        if (barplotRef.current)
-            setBarplotWidth(barplotRef.current.offsetWidth);
-      }, [barplotRef]);
 
     // width to make view responsive
     const [width, setWidth] = useState(window.innerWidth);
