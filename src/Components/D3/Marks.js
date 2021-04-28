@@ -33,7 +33,8 @@ export const Marks = ({
       x={xScale(xScale(d))} //Start date
       y={yScale(yScale(d))}
       width={xScale(maxdate) - xScale(mindate)} //Distance between x0 and x1 after being passed through the xScale
-      height={innerHeight - yScale(d.y)}
+      // height={innerHeight - yScale(d.y)}
+      height={40}
     >
       {/* Tooltip is sum (d.y) */}
       <title>{tooltipFormat(d.y)}</title>

@@ -112,6 +112,7 @@ const ScatterPlot = () => {
       // x1: array.maxdate, //End date range
     })); //return of this .map is assigned to binnedData
   console.log(start);
+  
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
     .range([innerHeight, 0])
