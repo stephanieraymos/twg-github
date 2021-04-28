@@ -39,6 +39,10 @@
   box-sizing: border-box;
 }
 
+#root {
+  background-color: var(--light);
+}
+
 p {
   margin: 0;
 }

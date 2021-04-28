@@ -10,13 +10,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CustomTable from "./DashboardTable";
 import Barplot from "./DashboardBarplot";
-import { inventoryPATH } from "../../Pages/paths";
-import * as d3 from "d3";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        margin: theme.spacing(5),
+        padding: theme.spacing(5),
         backgroundColor: '#f7f8fc',
     },
     card: {
@@ -52,6 +50,7 @@ export default function BuyerDashboard() {
     const classes = useStyles();
 
     const tableRef = useRef(null);
+    const [gridSize, setGridSize] = useState(0);
     const { inventory, getInventoryByBuyerId } = useInventoryContext();
     const { id } = authService.getUser();
     const [availableInventory, setAvailableInventory] = useState([]);
@@ -105,7 +104,7 @@ export default function BuyerDashboard() {
 
     // table data
     const [data, setData] = useState([]);
-    const defaultOrderBy = 'source';
+    const [defaultOrderBy, setDefaultOrderBy] = useState("");
     const [title, setTitle] = useState("");
     const [headers, setHeaders] = useState([]);
     const [filterBy, setFilterBy] = useState("");
@@ -124,7 +123,17 @@ export default function BuyerDashboard() {
         window.addEventListener("resize", handleResize);
         // clean up code
         return () => window.removeEventListener("resize", handleResize);
-      }, []);
+    }, []);
+
+    // change grid size based on width
+    useEffect(() => {
+        if (width < 1000)
+            setGridSize(12);
+        else if (width < 1250)
+            setGridSize(6);
+        else
+            setGridSize(4);
+    }, [width])
 
     useEffect(() => {
         getInventoryByBuyerId(id)
@@ -204,6 +213,7 @@ export default function BuyerDashboard() {
                     { id: 'price', numeric: true, label: 'Price (USD)', type: 'money' },
                 ]);
                 setFilterBy('created');
+                setDefaultOrderBy('created');
                 break;
             case 1:
                 // View Unpaid Inventory
@@ -221,6 +231,7 @@ export default function BuyerDashboard() {
                     { id: 'price', numeric: true, label: 'Price (USD)', type: 'money' },
                 ]);
                 setFilterBy('sold');
+                setDefaultOrderBy('sold');
                 break;
             default:
                 // View Purchased Inventory
@@ -239,6 +250,7 @@ export default function BuyerDashboard() {
                     { id: 'shippingStatus', numeric: true, label: 'Shipping Status', type: 'normal' },
                 ]);
                 setFilterBy('sold');
+                setDefaultOrderBy('sold');
         }
     }
 
@@ -250,160 +262,54 @@ export default function BuyerDashboard() {
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                {width < 1000 ? (
-                    <>
-                        <Grid item xs={12}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Available Inventories
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        {availableInventory.length}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(0)}>View Available Inventories</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Amount Due
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        ${numberWithCommas(amountDue, true)}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(1)}>View Unpaid Orders</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Awaiting Shipment
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        {awaitingShipment}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(2)}>View Purchased Inventories</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    </>
-                ) : width < 1250 ? (
-                    <>
-                        <Grid item xs={6}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Available Inventories
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        {availableInventory.length}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(0)}>View Available Inventories</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Amount Due
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        ${numberWithCommas(amountDue, true)}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(1)}>View Unpaid Orders</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Awaiting Shipment
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        {awaitingShipment}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(2)}>View Purchased Inventories</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    </>
-                ) : (
-                    <>
-                        <Grid item xs={4}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Available Inventories
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        {availableInventory.length}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(0)}>View Available Inventories</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Amount Due
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        ${numberWithCommas(amountDue, true)}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(1)}>View Unpaid Orders</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Card className={classes.card} variant="outlined">
-                                <CardContent>
-                                    <Typography className={classes.title_centered} gutterBottom>
-                                        Awaiting Shipment
-                                    </Typography>
-                                    <Typography className={classes.body_centered} variant="h5" component="h2">
-                                        {awaitingShipment}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button className={classes.button} variant="outlined" color="primary"
-                                        onClick={() => updateTable(2)}>View Purchased Inventories</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    </>
-                )}
+                <Grid item xs={gridSize}>
+                    <Card className={classes.card} variant="outlined">
+                        <CardContent>
+                            <Typography className={classes.title_centered} gutterBottom>
+                                Available Inventories
+                            </Typography>
+                            <Typography className={classes.body_centered} variant="h5" component="h2">
+                                {availableInventory.length}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button className={classes.button} variant="outlined" color="primary"
+                                onClick={() => updateTable(0)}>View Available Inventories</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+                <Grid item xs={gridSize}>
+                    <Card className={classes.card} variant="outlined">
+                        <CardContent>
+                            <Typography className={classes.title_centered} gutterBottom>
+                                Amount Due
+                            </Typography>
+                            <Typography className={classes.body_centered} variant="h5" component="h2">
+                                ${numberWithCommas(amountDue, true)}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button className={classes.button} variant="outlined" color="primary"
+                                onClick={() => updateTable(1)}>View Unpaid Orders</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+                <Grid item xs={gridSize}>
+                    <Card className={classes.card} variant="outlined">
+                        <CardContent>
+                            <Typography className={classes.title_centered} gutterBottom>
+                                Awaiting Shipment
+                            </Typography>
+                            <Typography className={classes.body_centered} variant="h5" component="h2">
+                                {awaitingShipment}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button className={classes.button} variant="outlined" color="primary"
+                                onClick={() => updateTable(2)}>View Purchased Inventories</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
                 <Grid item xs={12} ref={tableRef}>
                     <CustomTable 
                         data={data}
