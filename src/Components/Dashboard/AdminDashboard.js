@@ -463,6 +463,7 @@ export default function AdminDashboard() {
           {/* //* ---- GRAPH ---- */}
           <Card className="chart-card">
             <Chart />
+            {/* <DashboardBarplot /> */}
           </Card>
         </Grid>
       </Grid>

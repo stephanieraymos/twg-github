@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-export default function PieChart(props) {
+export default function Barplot(props) {
 
     const margin = {top: 30, right: 30, bottom: 70, left: 50};
     const { data, width, height } = props;
