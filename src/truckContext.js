@@ -43,7 +43,7 @@ const TruckProvider = ({ children }) => {
   const [images, setImages] = useState([]);
   const [sold, setSold] = useState("");
   const [created, setCreated] = useState("");
-  const [paid, setPaid] = useState(false);
+  const [paid, setPaid] = useState(0);
   const [buyerId, setBuyerId] = useState("");
   const [sellerId, setSellerId] = useState("");
   const [shippingStatus, setShippingStatus] = useState(0);

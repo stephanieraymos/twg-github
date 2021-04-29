@@ -51,10 +51,10 @@ const TruckDetails = () => {
     imageIds,
     setImageIds,
     setImages,
-
-    salesNotes,
-    accountingNotes,
-    logisticsNotes,
+    shippingStatus,
+    setShippingStatus,
+    paid,
+    setPaid,
   } = useTruckContext();
 
   const { is_seller, is_admin } = authService.getUser();
@@ -168,6 +168,8 @@ const TruckDetails = () => {
             accounting,
             logistics,
             imageIds,
+            shippingStatus,
+            paid,
           } = data[0];
 
           setId(id);
@@ -191,6 +193,8 @@ const TruckDetails = () => {
           setLogisticsNotes(logistics);
           setLane(lane);
           setImageIds(imageIds);
+          setShippingStatus(shippingStatus);
+          setPaid(paid);
         }
       })
       .catch((error) => {

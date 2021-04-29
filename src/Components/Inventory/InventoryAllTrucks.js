@@ -10,7 +10,6 @@ import { PrivateRoute } from "../../Pages/router";
 import { Switch, useRouteMatch } from "react-router-dom";
 import TruckDetails from "./TruckDetails";
 import UpdateTruckDetails from "./UpdateTruckDetails";
-import UpdateNotes from "./UpdateNotes";
 import { TruckProvider } from "../../truckContext";
 import AddInventoryPage from "./AddInventoryPage";
 
@@ -46,9 +45,6 @@ const InventoryAllTrucks = () => {
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/edit/:id`}>
           <UpdateTruckDetails />
-        </PrivateRoute>
-        <PrivateRoute exact path={`${path}/edit/notes/:id`}>
-          <UpdateNotes />
         </PrivateRoute>
       </TruckProvider>
     </Switch>
