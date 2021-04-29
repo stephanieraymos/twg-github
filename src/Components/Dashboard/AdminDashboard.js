@@ -36,7 +36,7 @@ export default function AdminDashboard() {
   const [grossProfit, setGrossProfit] = useState(0);
   const [saleWithin24Hrs, setSaleWithin24Hrs] = useState(0);
   const [soldInventoryWithin24Hrs, setSoldInventoryWithin24Hrs] = useState([]);
-  const [gridSize, setGridSize] = useState(0);
+  const [gridSize, setGridSize] = useState(1);
 
   // table data
   const [data, setData] = useState([]);
