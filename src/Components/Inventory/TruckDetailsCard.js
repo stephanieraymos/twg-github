@@ -393,6 +393,6 @@ const TruckDetailsCard = ({ id, current }) => {
 };
 
 
-// @todo Shipping status isn't updating on truckDetail page, but value is persisting to reflect the changes
+// @todo Shipping status isn't updating for "shipped (1) option" on truckDetail page, but value is persisting to reflect the changes
 
 export default TruckDetailsCard;
