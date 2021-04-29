@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import CustomTable from "./DashboardTable";
 import Chart from "../D3/Chart";
 import { useSuperuserContext } from "../../superuser";
-import DashboardBarplot from "./DashboardBarplot";
+import Barplot from "./DashboardBarplot";
 import dashboard from "../../css/dashboard.css";
 import { useStyles } from "./Hooks/useStyles";
 // import { useSellerInventory } from "./useSellerInventory";
@@ -21,9 +21,11 @@ import {
   useAllInventoryHeaders,
 } from "./Hooks/useHeaders";
 import { date, monthNames } from "./Hooks/useMonths";
+import { useAgingReport } from "./Hooks/useAgingReport";
 
 export default function AdminDashboard() {
   const classes = useStyles();
+  const agingReport = useAgingReport();
 
   const tableRef = useRef(null);
   const userTableRef = useRef(null);
@@ -56,6 +58,10 @@ export default function AdminDashboard() {
   ] = useState("");
   const [selectedUsersTitle, setSelectedUsersTitle] = useState("");
   const [selectedUsersHeaders, setSelectedUsersHeaders] = useState([]);
+  
+  useEffect(() => {
+    console.log(agingReport);
+  }, []);
 
   useEffect(() => {
     const items = [];
@@ -463,7 +469,7 @@ export default function AdminDashboard() {
           {/* //* ---- GRAPH ---- */}
           <Card className="chart-card">
             <Chart />
-            {/* <DashboardBarplot /> */}
+            {/* <Barplot /> */}
           </Card>
         </Grid>
       </Grid>
