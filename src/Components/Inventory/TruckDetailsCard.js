@@ -26,7 +26,7 @@ const TruckDetailsCard = ({ id, current }) => {
     lane,
     images,
     shippingStatus,
-    paid
+    paid,
   } = useTruckContext();
 
   return (
@@ -271,7 +271,13 @@ const TruckDetailsCard = ({ id, current }) => {
                 <p className="data-wrapper">
                   <span className="truck-data-title">Shipping Status: </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {shippingStatus}
+                    {`${
+                      shippingStatus === 0
+                        ? "Awaiting Shipment"
+                        : status === 1
+                        ? "Shipped"
+                        : "Delivered"
+                    }`}
                   </span>
                 </p>
               </Card.Header>
@@ -288,7 +294,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 <p className="data-wrapper">
                   <span className="truck-data-title">Paid? </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {paid}
+                    {`${paid === 0 ? "No" : "Yes"}`}
                   </span>
                 </p>
               </Card.Header>
