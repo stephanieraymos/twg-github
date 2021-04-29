@@ -26,6 +26,7 @@ import SuperuserHome from "./Components/Superuser/Home";
 import { SuperuserProvider } from "./superuser";
 import ResetPasswordPage from "./Components/Users/ResetPasswordPage";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import { InventoryProvider } from "./inventory";
 
 const App = () => {
   return (
@@ -38,9 +39,11 @@ const App = () => {
           <PrivateRoute exact path={dashboardPATH}>
             <Dashboard />
           </PrivateRoute>
-          <PrivateRoute path={inventoryPATH}>
-            <InventoryAllTrucks />
-          </PrivateRoute>
+          <InventoryProvider>
+            <PrivateRoute path={inventoryPATH}>
+              <InventoryAllTrucks />
+            </PrivateRoute>
+          </InventoryProvider>
           <PrivateRoute path={accountPATH}>
             <AccountDetails />
           </PrivateRoute>

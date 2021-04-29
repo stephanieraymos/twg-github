@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import undo from "../../img/undo.svg";
 
-import { useTruckContext } from "../../truckContext";
+import { useInventoryContext } from "../../inventory";
 
 const UpdateTruckForm = ({
   form,
   validated,
   handleSubmit,
-  oldManifestIds,
-  setOldManifestIds,
-  oldImageIds,
-  setOldImageIds,
+  deletedImages,
+  setDeletedImages,
+  deletedManifests,
+  setDeletedManifests,
   redirect,
 }) => {
   const [manifestsCount, setManifestsCount] = useState(0);
@@ -20,33 +20,43 @@ const UpdateTruckForm = ({
   const [tempImageCount, setTempImageCount] = useState(0);
 
   const {
-    source, setSource,
-    retailPrice, setRetailPrice,
-    price, setPrice,
-    status, setStatus,
-    contents, setContents,
+    id, setId,
+    sellerId, setSellerId,
+    buyerId, setBuyerId,
+    loadId, setLoadId,
     category, setCategory,
-    units, setUnits,
-    palletCount, setPalletCount,
-    fob, setFob,
-    manifestIds,
-    files,
-    owner, setOwner,
-    cost, setCost,
     commission, setCommission,
+    contents, setContents,
+    cost, setCost,
+    created, setCreated,
+    fob, setFob,
     lane, setLane,
-    fileCount, setFileCount,
-    imageCount, setImageCount,
-    imageIds,
-    images
-  } = useTruckContext();
+    owner, setOwner,
+    palletCount, setPalletCount,
+    price, setPrice,
+    retailPrice, setRetailPrice,
+    source, setSource,
+    units, setUnits,
+    paid, setPaid,
+    shippingStatus, setShippingStatus,
+    sold, setSold,
+    status, setStatus,
+    images, setImages,
+    manifests, setManifests,
+    imageObjects, setImageObjects,
+    manifestObjects, setManifestObjects
+  } = useInventoryContext();
 
   const removeImage = index => {
     const list = [...tempImages];
     list[index] = -1;
     setTempImages(list);
-    setImageCount(imageCount - 1);
   };
+
+  useEffect(() => {
+    console.log('imageObjects', imageObjects);
+    console.log('manifestObjects', manifestObjects);
+  }, [])
 
   return (
     <>
@@ -80,7 +90,7 @@ const UpdateTruckForm = ({
                 type="text"
                 required
                 defaultValue={retailPrice}
-                name="retailPrice"
+                name="retail_price"
                 onChange={(e) => setRetailPrice(e.target.value)}
               />
               <Form.Control.Feedback type="invalid">
@@ -206,7 +216,7 @@ const UpdateTruckForm = ({
                 type="text"
                 required
                 defaultValue={palletCount}
-                name="palletCount"
+                name="pallet_count"
                 onChange={(e) => setPalletCount(e.target.value)}
               />
               <Form.Control.Feedback type="invalid">
@@ -303,7 +313,6 @@ const UpdateTruckForm = ({
                 <Button
                   onClick={() => {
                     setManifestsCount(manifestsCount + 1);
-                    setFileCount(fileCount + 1);
                   }}
                   className="form-button"
                   block
@@ -320,7 +329,6 @@ const UpdateTruckForm = ({
                 <Button
                   onClick={() => {
                     setManifestsCount(manifestsCount - 1);
-                    setFileCount(fileCount - 1);
                   }}
                   className="form-button"
                   block
@@ -338,21 +346,20 @@ const UpdateTruckForm = ({
           </Row>
         </Form.Group>
 
-        {files.map((file, index) => {
-          const id = manifestIds[index];
-          const { manifest, manifestName } = file;
+        {manifestObjects.map((file, index) => {
+          const { name, url } = file;
           return (
             <>
-              <Form.Row key={id}>
+              <Form.Row key={index}>
                 <Col sm={11}>
                   <Form.Control
-                    defaultValue={manifestName}
+                    defaultValue={name}
                     readOnly
                     style={{ cursor: "pointer", margin: "0px 0px 14px" }}
                     onClick={
                       () =>
-                        window.open(manifest, "_blank") ||
-                        window.location.replace(manifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                        window.open(url, "_blank") ||
+                        window.location.replace(url) //Opens in new tab || Opens in same tab if pop ups are blocked
                     }
                   />
                 </Col>
@@ -365,17 +372,16 @@ const UpdateTruckForm = ({
                       height: "100%",
                     }}
                   >
-                    {oldManifestIds.includes(id) ? (
+                    {deletedManifests.includes(manifests[index]) ? (
                       <img
                         src={undo}
                         alt="undo"
                         onClick={() => {
-                          console.log("id to be added back", id);
-                          setOldManifestIds(
-                            oldManifestIds.filter((item) => item !== id)
+                          console.log("file to be added back", manifests[index]);
+                          setDeletedManifests(
+                            deletedManifests.filter((item) => item !== manifests[index])
                           );
-                          setFileCount(fileCount + 1);
-                          console.log("old manifest id", oldManifestIds);
+                          console.log("old manifest", deletedManifests);
                         }}
                       />
                     ) : (
@@ -383,17 +389,16 @@ const UpdateTruckForm = ({
                         src={cancel}
                         alt="remove"
                         onClick={() => {
-                          console.log("id to be deleted", id);
-                          setOldManifestIds([...oldManifestIds, id]);
-                          setFileCount(fileCount - 1);
-                          console.log("old manifest id", oldManifestIds);
+                          console.log("file to be deleted", manifests[index]);
+                          setDeletedManifests([...deletedManifests, manifests[index]]);
+                          console.log("old manifest", deletedManifests);
                         }}
                       />
                     )}
                   </button>
                 </Col>
               </Form.Row>
-              {oldManifestIds.includes(id) && (
+              {deletedManifests.includes(manifests[index]) && (
                 <Form.Text style={{ color: "red" }}>
                   Marked for deletion
                 </Form.Text>
@@ -409,7 +414,6 @@ const UpdateTruckForm = ({
             onClick={() => {
               setTempImages([...tempImages, tempImageCount]);
               setTempImageCount(tempImageCount + 1);
-              setImageCount(imageCount + 1);
             }}
             className="form-button"
             block
@@ -452,21 +456,20 @@ const UpdateTruckForm = ({
           })}
         </Form.Group>
 
-        {images.map((item, index) => {
-          const id = imageIds[index];
-          const { image, imageName } = item;
+        {imageObjects.map((file, index) => {
+          const { name, url } = file;
           return (
             <>
-              <Form.Row key={id}>
+              <Form.Row key={index}>
                 <Col sm={11}>
                   <Form.Control
-                    defaultValue={imageName}
+                    defaultValue={name}
                     readOnly
                     style={{ cursor: "pointer" }}
                     onClick={
                       () =>
-                        window.open(image, "_blank") ||
-                        window.location.replace(image) //Opens in new tab || Opens in same tab if pop ups are blocked
+                        window.open(url, "_blank") ||
+                        window.location.replace(url) //Opens in new tab || Opens in same tab if pop ups are blocked
                     }
                   />
                 </Col>
@@ -479,17 +482,16 @@ const UpdateTruckForm = ({
                       height: "100%",
                     }}
                   >
-                    {oldImageIds.includes(id) ? (
+                    {deletedImages.includes(images[index]) ? (
                       <img
                         src={undo}
                         alt="undo"
                         onClick={() => {
-                          console.log("id to be added back", id);
-                          setOldImageIds(
-                            oldImageIds.filter((item) => item !== id)
+                          console.log("image to be added back", images[index]);
+                          setDeletedImages(
+                            deletedImages.filter((item) => item !== images[index])
                           );
-                          setImageCount(imageCount + 1);
-                          console.log("old image id", oldImageIds);
+                          console.log("old image", deletedImages);
                         }}
                       />
                     ) : (
@@ -497,17 +499,16 @@ const UpdateTruckForm = ({
                         src={cancel}
                         alt="remove"
                         onClick={() => {
-                          console.log("id to be deleted", id);
-                          setOldImageIds([...oldImageIds, id]);
-                          setImageCount(imageCount - 1);
-                          console.log("old image id", oldImageIds);
+                          console.log("image to be deleted", images[index]);
+                          setDeletedImages([...deletedImages, images[index]]);
+                          console.log("old image", deletedImages);
                         }}
                       />
                     )}
                   </button>
                 </Col>
               </Form.Row>
-              {oldImageIds.includes(id) && (
+              {deletedImages.includes(images[index]) && (
                 <Form.Text style={{ color: "red" }}>
                   Marked for deletion
                 </Form.Text>

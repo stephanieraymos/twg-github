@@ -5,7 +5,7 @@ import { inventoryURL } from "../../Pages/urls";
 import { FaEdit } from "react-icons/fa";
 import { authService } from "../../authService";
 import { useHistory } from "react-router-dom";
-import { useTruckContext } from "../../truckContext";
+import { useInventoryContext } from "../../inventory"
 
 const NotesForm = ({ id }) => {
   const salesForm = useRef(null);
@@ -19,7 +19,11 @@ const NotesForm = ({ id }) => {
     setAccountingNotes,
     logisticsNotes,
     setLogisticsNotes,
-  } = useTruckContext();
+  } = useInventoryContext();
+
+  useEffect(() => {
+    console.log('salesNotes', salesNotes);
+  }, [])
 
   const [validated, setValidated] = useState(false);
   const [isEditingLogi, setIsEditingLogi] = useState(false);

@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { image } from "d3-fetch";
 import cancel from "../../img/cancel.svg";
+import { useInventoryContext } from "../../inventory";
 
 const FormAddInventory = ({
   addNewTrucks,
@@ -20,6 +21,8 @@ const FormAddInventory = ({
   let history = useHistory();
 
   const { id } = authService.getUser();
+
+  const { addInventory, inventory, setInventory } = useInventoryContext();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -51,22 +54,28 @@ const FormAddInventory = ({
     const contents = data.get("contents").split(",");
     data.delete("contents");
     contents.map((item) => data.append("contents", item));
-    authService.checkToken()
-      .then(() => {
-        fetch(inventoryURL, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${authService.getAccessToken()}`,
-          },
-          body: data,
-        })
-          .then((response) => response.json())
-          .then((newTruck) => {
-            addNewTrucks([newTruck]);
-            back();
-          })
+
+    addInventory(data)
+      .then(data => {
+        setInventory([...inventory, data])
+        back();
       })
-      .catch(() => history.push("/logout"))
+    // authService.checkToken()
+    //   .then(() => {
+    //     fetch(inventoryURL, {
+    //       method: "POST",
+    //       headers: {
+    //         "Authorization": `Bearer ${authService.getAccessToken()}`,
+    //       },
+    //       body: data,
+    //     })
+    //       .then((response) => response.json())
+    //       .then((newTruck) => {
+    //         addNewTrucks([newTruck]);
+    //         back();
+    //       })
+    //   })
+    //   .catch(() => history.push("/logout"))
   };
 
   return (
@@ -92,7 +101,7 @@ const FormAddInventory = ({
             {/* //^ ---------------------- RETAIL PRICE ------------------------- */}
             <Col>
               <Form.Label className="form-label">Retail Price</Form.Label>
-              <Form.Control type="text" required name="retailPrice" />
+              <Form.Control type="text" required name="retail_price" />
               <Form.Control.Feedback type="invalid">
                 Please enter retail price.
               </Form.Control.Feedback>
@@ -184,7 +193,7 @@ const FormAddInventory = ({
             {/* //^ ---------------------- PALLET COUNT ------------------------- */}
             <Col>
               <Form.Label className="form-label">Pallets</Form.Label>
-              <Form.Control type="text" required name="palletCount" />
+              <Form.Control type="text" required name="pallet_count" />
               <Form.Control.Feedback type="invalid">
                 Please enter # of pallets on truck.
               </Form.Control.Feedback>
