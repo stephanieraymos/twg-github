@@ -5,9 +5,9 @@ import { json } from "d3";
 export const useData = () => {
   const [data, setData] = useState(null);
   useEffect(() => {
-    if (data) {
-      console.log(data[0]);
-    }
+    // if (data) {
+    //   console.log(data[0]);
+    // }
     const row = (d) => {
       d.cost = +d.cost;
       // d.sold = new Date(d.sold);
@@ -21,8 +21,8 @@ export const useData = () => {
     };
     json(url, row).then(setData);
   }, []);
-  if (data) {
-    console.log(data[0]);
-  }
+  // if (data) {
+  //   console.log(data[0]);
+  // }
   return data;
 };
