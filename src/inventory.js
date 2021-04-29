@@ -251,7 +251,6 @@ const InventoryProvider = ({ children }) => {
                         }
                     })
                     .then(files => {
-                        console.log("files", files);
                         if ('images' in files)
                             setImageObjects(files['images']);
                         else

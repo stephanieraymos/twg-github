@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { authService } from "../../authService";
-import { inventoryURL } from "../../Pages/urls";
 import { inventoryPATH } from "../../Pages/paths";
 import {
   useHistory,
@@ -54,28 +53,11 @@ const FormAddInventory = ({
     const contents = data.get("contents").split(",");
     data.delete("contents");
     contents.map((item) => data.append("contents", item));
-
     addInventory(data)
       .then(data => {
         setInventory([...inventory, data])
         back();
       })
-    // authService.checkToken()
-    //   .then(() => {
-    //     fetch(inventoryURL, {
-    //       method: "POST",
-    //       headers: {
-    //         "Authorization": `Bearer ${authService.getAccessToken()}`,
-    //       },
-    //       body: data,
-    //     })
-    //       .then((response) => response.json())
-    //       .then((newTruck) => {
-    //         addNewTrucks([newTruck]);
-    //         back();
-    //       })
-    //   })
-    //   .catch(() => history.push("/logout"))
   };
 
   return (

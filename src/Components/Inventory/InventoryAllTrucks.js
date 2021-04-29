@@ -12,6 +12,7 @@ import TruckDetails from "./TruckDetails";
 import UpdateTruckDetails from "./UpdateTruckDetails";
 import { TruckProvider } from "../../truckContext";
 import AddInventoryPage from "./AddInventoryPage";
+import { InventoryProvider } from "../../inventory";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -21,31 +22,33 @@ const InventoryAllTrucks = () => {
   let { path } = useRouteMatch();
 
   return (
-    <Switch>
-      <PrivateRoute exact path={path}>
-        <>
-          <div>
-            <Navigation />
-          </div>
-          <Container fluid>
-            <div className="table-top-container">
-              <AddInventoryButton />
-              <TableLegend />
+    <InventoryProvider>
+      <Switch>
+        <PrivateRoute exact path={path}>
+          <>
+            <div>
+              <Navigation />
             </div>
-          </Container>
-          <TableInventory trucks={trucks} />
-        </>
-      </PrivateRoute>
-      <PrivateRoute exact path={`${path}/add`}>
-        <AddInventoryPage addNewTrucks={addTruck} />
-      </PrivateRoute>
-      <PrivateRoute exact path={`${path}/:id`}>
-        <TruckDetails />
-      </PrivateRoute>
-      <PrivateRoute exact path={`${path}/edit/:id`}>
-        <UpdateTruckDetails />
-      </PrivateRoute>
-    </Switch>
+            <Container fluid>
+              <div className="table-top-container">
+                <AddInventoryButton />
+                <TableLegend />
+              </div>
+            </Container>
+            <TableInventory trucks={trucks} />
+          </>
+        </PrivateRoute>
+        <PrivateRoute exact path={`${path}/add`}>
+          <AddInventoryPage addNewTrucks={addTruck} />
+        </PrivateRoute>
+        <PrivateRoute exact path={`${path}/:id`}>
+          <TruckDetails />
+        </PrivateRoute>
+        <PrivateRoute exact path={`${path}/edit/:id`}>
+          <UpdateTruckDetails />
+        </PrivateRoute>
+      </Switch>
+    </InventoryProvider>
   );
 };
 export default InventoryAllTrucks;

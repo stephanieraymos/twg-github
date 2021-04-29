@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { url } from "../../Pages/urls";
+import { inventoryV2GetURL } from "../../Pages/urls";
 import { json } from "d3";
 
 export const useData = () => {
@@ -19,7 +19,7 @@ export const useData = () => {
 
       return d;
     };
-    json(url, row).then(setData);
+    json(inventoryV2GetURL, row).then(setData);
   }, []);
   // if (data) {
   //   console.log(data[0]);

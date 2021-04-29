@@ -39,12 +39,10 @@ const App = () => {
           <PrivateRoute exact path={dashboardPATH}>
             <Dashboard />
           </PrivateRoute>
-          <InventoryProvider>
-            <PrivateRoute path={inventoryPATH}>
-              <InventoryAllTrucks />
-            </PrivateRoute>
-          </InventoryProvider>
-          <PrivateRoute path={accountPATH}>
+          <PrivateRoute path={inventoryPATH}>
+            <InventoryAllTrucks />
+          </PrivateRoute>
+          <PrivateRoute exact path={accountPATH}>
             <AccountDetails />
           </PrivateRoute>
           <Route exact path={logoutPATH}>
