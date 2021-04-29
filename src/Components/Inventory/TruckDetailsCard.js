@@ -274,7 +274,7 @@ const TruckDetailsCard = ({ id, current }) => {
                     {`${
                       shippingStatus === 0
                         ? "Awaiting Shipment"
-                        : status === 1
+                        : shippingStatus === 1
                         ? "Shipped"
                         : "Delivered"
                     }`}
@@ -392,7 +392,5 @@ const TruckDetailsCard = ({ id, current }) => {
   );
 };
 
-
-// @todo Shipping status isn't updating for "shipped (1) option" on truckDetail page, but value is persisting to reflect the changes
 
 export default TruckDetailsCard;
