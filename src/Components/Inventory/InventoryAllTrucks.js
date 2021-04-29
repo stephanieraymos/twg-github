@@ -1,7 +1,7 @@
 import React from "react";
 import Navigation from "../Navigation/Navigation";
 import { useTruck } from "../../truckContext";
-import AddInventory from "./AddInventory";
+import AddInventoryButton from "./AddInventoryButton";
 import { Container } from "react-bootstrap";
 import TableInventory from "./TableInventory";
 import TableLegend from "./TableLegend";
@@ -30,7 +30,7 @@ const InventoryAllTrucks = () => {
           </div>
           <Container fluid>
             <div className="table-top-container">
-              <AddInventory />
+              <AddInventoryButton />
               <TableLegend />
             </div>
           </Container>

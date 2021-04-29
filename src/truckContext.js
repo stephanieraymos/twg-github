@@ -47,7 +47,6 @@ const TruckProvider = ({ children }) => {
   const [buyerId, setBuyerId] = useState("");
   const [sellerId, setSellerId] = useState("");
   const [shippingStatus, setShippingStatus] = useState(0);
-  const [paid, setPaid] = useState(0);
 
   ////////////////////// &&--FUNCTIONS--&& /////////////////////////
 
@@ -119,8 +118,6 @@ const TruckProvider = ({ children }) => {
         setSellerId,
         shippingStatus,
         setShippingStatus,
-        paid,
-        setPaid,
       }}
     >
       {children}

@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { authService } from "../../authService";
 
-const AddInventory = () => {
+const AddInventoryButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   let history = useHistory();
@@ -42,4 +42,4 @@ const AddInventory = () => {
 };
 // TP-51
 
-export default AddInventory;
+export default AddInventoryButton;
