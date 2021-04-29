@@ -22,6 +22,8 @@ const TruckDetails = () => {
     getInventoryById,
     deleteInventory,
     loadId,
+    setInventory,
+    inventory,
   } = useInventoryContext();
 
   const { is_seller, is_admin } = authService.getUser();
@@ -36,8 +38,14 @@ const TruckDetails = () => {
     const data = new FormData();
     data.append("id", id);
     deleteInventory(data)
-      .then(response => history.replace(inventoryPATH))
-      .catch(error => history.replace(inventoryPATH));
+      .then(response => {
+        setInventory(inventory.filter(item => item.id !== id))
+        history.replace(inventoryPATH)
+      })
+      .catch(error => {
+        setInventory(inventory.filter(item => item.id !== id))
+        history.replace(inventoryPATH)
+      });
   };
 
   useEffect(() => {
