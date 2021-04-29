@@ -21,11 +21,9 @@ import {
   useAllInventoryHeaders,
 } from "./Hooks/useHeaders";
 import { date, monthNames } from "./Hooks/useMonths";
-import { useAgingReport } from "./Hooks/useAgingReport";
 
 export default function AdminDashboard() {
   const classes = useStyles();
-  const agingReport = useAgingReport();
 
   const tableRef = useRef(null);
   const userTableRef = useRef(null);
@@ -38,7 +36,7 @@ export default function AdminDashboard() {
   const [grossProfit, setGrossProfit] = useState(0);
   const [saleWithin24Hrs, setSaleWithin24Hrs] = useState(0);
   const [soldInventoryWithin24Hrs, setSoldInventoryWithin24Hrs] = useState([]);
-  const [gridSize, setGridSize] = useState(0);
+  const [gridSize, setGridSize] = useState(1);
 
   // table data
   const [data, setData] = useState([]);
@@ -58,27 +56,33 @@ export default function AdminDashboard() {
   ] = useState("");
   const [selectedUsersTitle, setSelectedUsersTitle] = useState("");
   const [selectedUsersHeaders, setSelectedUsersHeaders] = useState([]);
-  
-  useEffect(() => {
-    console.log(agingReport);
-  }, []);
+
+  // ^ INVENTORIES CREATED 30+ DAYS AGO
+  let today = new Date();
+  var priorDate = new Date().setDate(today.getDate() - 30); //Today 30 days ago
+
+
+  const oldItems = inventory.filter(
+    (item) => new Date(item.created) < priorDate
+  ); //Filtered array of all inv. items created 30 days ago or more.
+  //   console.log(oldItems);
 
   useEffect(() => {
     const items = [];
     Object.entries(users).map(([_, value]) => {
       items.push(value);
     });
-    // grab all the buyers and sellers
+    // ^ grab all the buyers and sellers
     const allBuyers = items.filter((item) => !item.is_seller);
     const allSellers = items.filter((item) => item.is_seller);
 
-    // keep count of purchases/sold count
+    // ^ keep count of purchases/sold count
     const buyerPurchasedCount = {};
     for (const buyer of allBuyers) buyerPurchasedCount[buyer.id] = 0;
     const sellerSoldCount = {};
     for (const seller of allSellers) sellerSoldCount[seller.id] = 0;
 
-    // add up numbers of purchased/sold
+    // ^ add up numbers of purchased/sold
     inventory.forEach((item) => {
       if (item.buyerId != null) {
         buyerPurchasedCount[item.buyerId] += 1;
@@ -91,7 +95,8 @@ export default function AdminDashboard() {
 
     const finalBuyers = [];
     const finalSellers = [];
-    // add the data to existing array
+
+    // ^ add the data to existing array
     for (const buyer of allBuyers) {
       buyer["count"] = buyerPurchasedCount[buyer.id];
       finalBuyers.push(buyer);
@@ -110,7 +115,7 @@ export default function AdminDashboard() {
     setSelectedTable(4);
   }, [buyers]);
 
-  // width to make view responsive
+  // ^ width to make view responsive
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -119,14 +124,14 @@ export default function AdminDashboard() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // change grid size based on width
+  // ^ change grid size based on width
   useEffect(() => {
     if (width < 700) setGridSize(12);
     else if (width < 1000) setGridSize(6);
     else setGridSize(4);
   }, [width]);
 
-  // set the available inventory to sell
+  //^  set the available inventory to sell
   useEffect(() => {
     getInventoryBySellerId(id)
       .then((data) => {
@@ -138,7 +143,7 @@ export default function AdminDashboard() {
       });
   }, []);
 
-  // set the sold inventory
+  // ^ set the sold inventory
   useEffect(() => {
     setAvailableInventory(sellerInventory.filter((item) => item.sold === null));
     setSoldInventory(sellerInventory.filter((item) => item.sold !== null));
@@ -149,7 +154,7 @@ export default function AdminDashboard() {
       soldInventory.filter((item) => item.shippingStatus === 0).length
     );
 
-    // set gross profit for the current month
+    //^ set gross profit for the current month
     const profit = soldInventory.map((item) => {
       const soldDate = new Date(item.sold);
       const month = soldDate.getMonth();
@@ -167,7 +172,7 @@ export default function AdminDashboard() {
     });
     setGrossProfit(profit.reduce((a, b) => a + b, 0));
 
-    // get inventories sold within 24 hrs
+    // ^ get inventories sold within 24 hrs
     setSoldInventoryWithin24Hrs(
       soldInventory.filter((item) => {
         const current = new Date();
@@ -396,6 +401,33 @@ export default function AdminDashboard() {
               >
                 View All Your Inventories
               </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+        <Grid item xs={gridSize}>
+          <Card className={classes.card} variant="outlined">
+            <CardContent>
+              <Typography className={classes.title_centered} gutterBottom>
+                Loads created 30+ days ago
+              </Typography>
+              <Typography
+                className={classes.body_centered}
+                variant="h5"
+                component="h2"
+              >
+                {oldItems.length}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <a href="/inventory" style={{ margin: "auto" }}>
+                <Button
+                  className={classes.button}
+                  variant="outlined"
+                  color="primary"
+                >
+                  View Old Inventories
+                </Button>
+              </a>
             </CardActions>
           </Card>
         </Grid>

@@ -1,7 +1,7 @@
 import React from "react";
 import Navigation from "../Navigation/Navigation";
 import { useTruck } from "../../truckContext";
-import AddInventory from "./AddInventory";
+import AddInventoryButton from "./AddInventoryButton";
 import { Container } from "react-bootstrap";
 import TableInventory from "./TableInventory";
 import TableLegend from "./TableLegend";
@@ -10,7 +10,6 @@ import { PrivateRoute } from "../../Pages/router";
 import { Switch, useRouteMatch } from "react-router-dom";
 import TruckDetails from "./TruckDetails";
 import UpdateTruckDetails from "./UpdateTruckDetails";
-import UpdateNotes from "./UpdateNotes";
 import { TruckProvider } from "../../truckContext";
 import AddInventoryPage from "./AddInventoryPage";
 
@@ -30,7 +29,7 @@ const InventoryAllTrucks = () => {
           </div>
           <Container fluid>
             <div className="table-top-container">
-              <AddInventory />
+              <AddInventoryButton />
               <TableLegend />
             </div>
           </Container>
@@ -46,9 +45,6 @@ const InventoryAllTrucks = () => {
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/edit/:id`}>
           <UpdateTruckDetails />
-        </PrivateRoute>
-        <PrivateRoute exact path={`${path}/edit/notes/:id`}>
-          <UpdateNotes />
         </PrivateRoute>
       </TruckProvider>
     </Switch>
