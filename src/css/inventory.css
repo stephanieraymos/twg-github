@@ -148,11 +148,11 @@ input:hover::placeholder {
 }
 
 .red {
-  background-color:var(--status-red);
+  background-color: var(--status-red);
 }
 
 .green {
-  background-color:var(--status-green);
+  background-color: var(--status-green);
 }
 
 .yellow {
@@ -191,14 +191,10 @@ input:hover::placeholder {
   background: rgba(194, 192, 192, 0.199);
 }
 
-.file-accordion {
+.contents-accordion {
   background: rgba(194, 192, 192, 0.199);
 }
-/* .all-accordions {
-  padding: 0;
-  border-bottom: none;
-  border-radius: 0.4rem;
-} */
+
 .truck-details-header {
   font-size: 2rem;
   text-transform: capitalize;
@@ -369,7 +365,6 @@ li {
   text-decoration: none;
 }
 
-
 .show-more-btn {
   padding: 0.1rem 0.2rem;
   margin-left: 0.25rem;
@@ -402,5 +397,6 @@ li {
   margin-top: 2rem;
 }
 
-
-
+.card-header {
+  padding: 0;
+}

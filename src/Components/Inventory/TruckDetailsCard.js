@@ -36,7 +36,6 @@ const TruckDetailsCard = ({ id, current }) => {
     imageObjects, setImageObjects,
     manifestObjects, setManifestObjects
   } = useInventoryContext();
-
   return (
     <>
       <section className="truck-section">
@@ -267,6 +266,46 @@ const TruckDetailsCard = ({ id, current }) => {
                 </p>
               </Card.Header>
             </Card>
+            {/* //^ SHIPPING STATUS CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Shipping Status: </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {`${
+                      shippingStatus === 0
+                        ? "Awaiting Shipment"
+                        : shippingStatus === 1
+                        ? "Shipped"
+                        : "Delivered"
+                    }`}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ PAID STATUS CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Paid? </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {`${paid === false ? "No" : "Yes"}`}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
             {/* //^ STATUS CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
@@ -292,7 +331,7 @@ const TruckDetailsCard = ({ id, current }) => {
             </Card>
             {/* //^ TRUCK CONTENTS ACCORDION */}
             <Accordion>
-              <Card style={{ border: "none" }}>
+              <Card style={{ border: "none" }} className="contents-accordion">
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"
@@ -316,7 +355,7 @@ const TruckDetailsCard = ({ id, current }) => {
             </Accordion>
             {/* //^ TRUCK FILES ACCORDION */}
             <Accordion>
-              <Card style={{ border: "none" }} className="file-accordion">
+              <Card style={{ border: "none" }}>
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"

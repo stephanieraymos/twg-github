@@ -2,7 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { authService } from "../../authService";
-import { getByIdURL, manifestURL, inventoryURL, imageURL } from "../../Pages/urls";
+import {
+  getByIdURL,
+  manifestURL,
+  inventoryURL,
+  imageURL,
+} from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
 import { useTruckContext } from "../../truckContext";
 
@@ -54,7 +59,6 @@ const UpdateTruckDetails = () => {
     const tempContents = data.get("contents").split(",");
     data.delete("contents");
     tempContents.map((item) => data.append("contents", item));
-
     deletedImages.map((item) => data.append("delete_images", item));
     deletedManifests.map((item) => data.append("delete_manifests", item));
     updateInventory(data)

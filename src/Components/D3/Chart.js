@@ -65,7 +65,7 @@ const ScatterPlot = () => {
   const xValue = (d) => d.created;
   const xAxisLabel = getLabel(xAttribute);
 
-  console.log(typeof d.created);
+  // console.log(typeof d.created);
   const initialYAttribute = "cost";
   const [yAttribute, setYAttribute] = useState(initialYAttribute);
   const yValue = (d) => d[yAttribute];
@@ -111,7 +111,7 @@ const ScatterPlot = () => {
       mindate: array.created, //Start date range
       // x1: array.maxdate, //End date range
     })); //return of this .map is assigned to binnedData
-  console.log(start);
+  // console.log(start);
   
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
@@ -150,7 +150,6 @@ const ScatterPlot = () => {
                   transform={`translate(${-yAxisLabelOffset},${
                     innerHeight / 2
                   }) rotate(-90)`}
-                  tickOffset={4}
                 >
                   {yAxisLabel}
                 </text>
@@ -160,7 +159,6 @@ const ScatterPlot = () => {
                   x={innerWidth / 2}
                   y={innerHeight + xAxisLabelOffset}
                   textAnchor="middle"
-                  tickOffset={5}
                 >
                   {xAxisLabel}
                 </text>

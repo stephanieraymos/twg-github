@@ -47,11 +47,12 @@ const UpdateTruckForm = ({
     manifestObjects, setManifestObjects
   } = useInventoryContext();
 
-  const removeImage = index => {
+  const removeImage = (index) => {
     const list = [...tempImages];
     list[index] = -1;
     setTempImages(list);
   };
+  console.log(paid, shippingStatus)
 
   useEffect(() => {
     console.log('imageObjects', imageObjects);
@@ -261,6 +262,33 @@ const UpdateTruckForm = ({
 
         <Form.Group>
           <Row>
+            {/* //^ ----------SHIPPING STATUS---------- */}
+            <Col>
+              <Form.Label className="form-label">Shipping Status</Form.Label>
+
+              <Form.Control
+                as="select"
+                required
+                name="shippingStatus"
+                custom
+                placeholder={shippingStatus}
+                onChange={(e) => {
+                  setShippingStatus(e.target.value);
+                }}
+                value={shippingStatus}
+              >
+                <option value="" disabled hidden>
+                  {shippingStatus === 0
+                    ? "Awaiting Shipment"
+                    : shippingStatus === 1
+                    ? "Shipped"
+                    : "Delivered"}
+                </option>
+                <option value="2">Delivered</option>
+                <option value="1">Shipped</option>
+                <option value="0">Awaiting Shipment</option>
+              </Form.Control>
+            </Col>
             {/* //^ ----------STATUS---------- */}
             <Col>
               <Form.Label className="form-label">Status</Form.Label>
@@ -288,7 +316,30 @@ const UpdateTruckForm = ({
                 <option value="0">Unavailable</option>
               </Form.Control>
             </Col>
+          </Row>
+          <Row>
+            {/* //^ ----------PAID---------- */}
+            <Col>
+              <Form.Label className="form-label">Paid</Form.Label>
 
+              <Form.Control
+                as="select"
+                required
+                name="paid"
+                custom
+                placeholder={paid}
+                onChange={(e) => {
+                  setPaid(e.target.value);
+                }}
+                value={paid}
+              >
+                <option value="" disabled hidden>
+                  {paid === false ? "No" : "Yes"}
+                </option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+              </Form.Control>
+            </Col>
             {/* //^ ----------FILES---------- */}
             <Col>
               <Form.Label className="form-label">Manifest</Form.Label>
@@ -429,7 +480,11 @@ const UpdateTruckForm = ({
           {tempImages.map((item, index) => {
             if (item == index) {
               return (
-                <Row key={index} className="flex-start-center" style={{ margin: "10px auto 0px" }}>
+                <Row
+                  key={index}
+                  className="flex-start-center"
+                  style={{ margin: "10px auto 0px" }}
+                >
                   <Col sm={10}>
                     <Form.Control
                       id={`form-image-${item}`}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import FormAddInventory from "./FormAddInventory";
 import { Image } from "react-bootstrap";
 import Navigation from "../Navigation/Navigation";
