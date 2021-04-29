@@ -66,6 +66,7 @@ const UpdateTruckForm = ({
     setTempImages(list);
     setImageCount(imageCount - 1);
   };
+  console.log(paid, shippingStatus)
 
   return (
     <>
@@ -292,9 +293,9 @@ const UpdateTruckForm = ({
                     ? "Shipped"
                     : "Delivered"}
                 </option>
-                <option value="0">Delivered</option>
+                <option value="2">Delivered</option>
                 <option value="1">Shipped</option>
-                <option value="2">Awaiting Shipment</option>
+                <option value="0">Awaiting Shipment</option>
               </Form.Control>
             </Col>
             {/* //^ ----------STATUS---------- */}
@@ -326,7 +327,7 @@ const UpdateTruckForm = ({
             </Col>
           </Row>
           <Row>
-            {/* //^ ----------STATUS---------- */}
+            {/* //^ ----------PAID---------- */}
             <Col>
               <Form.Label className="form-label">Paid</Form.Label>
 
@@ -342,7 +343,7 @@ const UpdateTruckForm = ({
                 value={paid}
               >
                 <option value="" disabled hidden>
-                  {paid === 0 ? "No" : "Yes"}
+                  {paid === false ? "No" : "Yes"}
                 </option>
                 <option value="0">No</option>
                 <option value="1">Yes</option>

@@ -2,7 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../Navigation/Navigation";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { authService } from "../../authService";
-import { getByIdURL, manifestURL, inventoryURL, imageURL } from "../../Pages/urls";
+import {
+  getByIdURL,
+  manifestURL,
+  inventoryURL,
+  imageURL,
+} from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
 import { useTruckContext } from "../../truckContext";
 
@@ -15,19 +20,22 @@ const UpdateTruckDetails = () => {
   const [validated, setValidated] = useState(false);
 
   const {
-    isEmpty, setIsEmpty,
+    isEmpty,
+    setIsEmpty,
     setId,
     setLoadId,
     setSource,
     setRetailPrice,
     setPrice,
-    status, setStatus,
+    status,
+    setStatus,
     setContents,
     setCategory,
     setUnits,
     setPalletCount,
     setFob,
-    manifestIds, setManifestIds,
+    manifestIds,
+    setManifestIds,
     setFiles,
     setOwner,
     setCost,
@@ -38,8 +46,11 @@ const UpdateTruckDetails = () => {
     setLane,
     setFileCount,
     setImageCount,
-    imageIds, setImageIds,
-    setImages
+    imageIds,
+    setImageIds,
+    setImages,
+    setShippingStatus,
+    setPaid,
   } = useTruckContext();
 
   let history = useHistory();
@@ -72,12 +83,13 @@ const UpdateTruckDetails = () => {
     if (manifestIds.length > 0) {
       const data = new FormData();
       manifestIds.map((id) => data.append("manifestIds", id));
-      authService.checkToken()
+      authService
+        .checkToken()
         .then(() => {
           fetch(manifestURL, {
             method: "POST",
             headers: {
-              "Authorization": `Bearer ${authService.getAccessToken()}`,
+              Authorization: `Bearer ${authService.getAccessToken()}`,
             },
             body: data,
           })
@@ -87,7 +99,7 @@ const UpdateTruckDetails = () => {
               console.log(error);
             });
         })
-        .catch(() => history.push("/logout"))
+        .catch(() => history.push("/logout"));
     } else {
       setFiles([]);
     }
@@ -98,12 +110,13 @@ const UpdateTruckDetails = () => {
     if (imageIds.length > 0) {
       const data = new FormData();
       imageIds.map((id) => data.append("imageIds", id));
-      authService.checkToken()
+      authService
+        .checkToken()
         .then(() => {
           fetch(imageURL, {
             method: "POST",
             headers: {
-              "Authorization": `Bearer ${authService.getAccessToken()}`,
+              Authorization: `Bearer ${authService.getAccessToken()}`,
             },
             body: data,
           })
@@ -113,7 +126,7 @@ const UpdateTruckDetails = () => {
               console.log(error);
             });
         })
-        .catch(() => history.push("/logout"))
+        .catch(() => history.push("/logout"));
     } else {
       setImages([]);
     }
@@ -149,6 +162,8 @@ const UpdateTruckDetails = () => {
             logistics,
             lane,
             imageIds,
+            shippingStatus,
+            paid,
           } = data[0];
 
           setId(id);
@@ -172,6 +187,8 @@ const UpdateTruckDetails = () => {
           setLogisticsNotes(logistics);
           setLane(lane);
           setImageIds(imageIds);
+          setShippingStatus(shippingStatus);
+          setPaid(paid);
         } else {
           throw new Error("Truck does not exist.");
         }
@@ -208,12 +225,13 @@ const UpdateTruckDetails = () => {
 
     oldManifestIds.map((id) => data.append("manifestIds", id));
     oldImageIds.map((id) => data.append("imageIds", id));
-    authService.checkToken()
+    authService
+      .checkToken()
       .then(() => {
         fetch(inventoryURL, {
           method: "PUT",
           headers: {
-            "Authorization": `Bearer ${authService.getAccessToken()}`,
+            Authorization: `Bearer ${authService.getAccessToken()}`,
           },
           body: data,
         })
@@ -227,7 +245,7 @@ const UpdateTruckDetails = () => {
             console.log(error);
           });
       })
-      .catch(() => history.push("/logout"))
+      .catch(() => history.push("/logout"));
   };
 
   return (

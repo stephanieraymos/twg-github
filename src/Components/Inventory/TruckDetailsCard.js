@@ -294,7 +294,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 <p className="data-wrapper">
                   <span className="truck-data-title">Paid? </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {`${paid === 0 ? "No" : "Yes"}`}
+                    {`${paid === false ? "No" : "Yes"}`}
                   </span>
                 </p>
               </Card.Header>
