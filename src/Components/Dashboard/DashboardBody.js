@@ -1,11 +1,9 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
-import { useTruckContext } from "../../truckContext";
 import { useTruck } from "../../truckContext";
 
 const DashboardBody = () => {
     const [trucks, loading,] = useTruck();
-    const {status} = useTruckContext();
 
   return (
     <article className="admin-dashboard-content">

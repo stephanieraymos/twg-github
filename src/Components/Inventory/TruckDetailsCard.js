@@ -1,34 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "../../img/w-logo.png";
 import { Card, Accordion, Carousel, Image } from "react-bootstrap";
 import { FaAngleDoubleDown } from "react-icons/fa";
-import { useTruckContext } from "../../truckContext";
-import { authService } from "../../authService";
 import NotesForm from "./NotesForm";
+import { useInventoryContext } from "../../inventory";
 
 const TruckDetailsCard = ({ id, current }) => {
+  
   const {
+    sellerId,
+    buyerId,
     loadId,
-    source,
-    retailPrice,
-    price,
-    status,
-    contents,
     category,
-    units,
-    palletCount,
-    fob,
-    manifestIds,
-    files,
-    owner,
-    cost,
     commission,
+    contents,
+    cost,
+    created,
+    fob,
     lane,
-    images,
-    shippingStatus,
+    owner,
+    palletCount,
+    price,
+    retailPrice,
+    source,
+    units,
     paid,
-  } = useTruckContext();
-
+    shippingStatus,
+    sold,
+    status,
+    accountingNotes,
+    logisticsNotes,
+    salesNotes,
+    images,
+    manifests,
+    imageObjects, setImageObjects,
+    manifestObjects, setManifestObjects
+  } = useInventoryContext();
   return (
     <>
       <section className="truck-section">
@@ -36,13 +43,13 @@ const TruckDetailsCard = ({ id, current }) => {
         <div className="truck">
           <div className="truck-info">
             {/* <img src={logo} alt={source} style={{ size: "10rem" }} /> */}
-            {images.length > 0 ? (
+            {imageObjects.length > 0 ? (
               <Carousel style={{ margin: "0px 0px 24px" }} interval={null}>
-                {images.map((item, index) => {
-                  const { image, imageName } = item;
+                {imageObjects.map((item, index) => {
+                  const { name, url } = item;
                   return (
                     <Carousel.Item>
-                      <Image src={image} style={{ cursor: "pointer" }} />
+                      <Image src={url} style={{ cursor: "pointer" }} />
                     </Carousel.Item>
                   );
                 })}
@@ -363,19 +370,19 @@ const TruckDetailsCard = ({ id, current }) => {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body style={{ backgroundColor: "transparent" }}>
-                    {files.map((file, index) => {
-                      const { manifest, manifestName } = file;
+                    {manifestObjects.map((file, index) => {
+                      const { name, url } = file;
                       return (
-                        <ul key={manifestIds[index]}>
+                        <ul key={index}>
                           <li
                             onClick={
                               () =>
-                                window.open(manifest, "_blank") ||
-                                window.location.replace(manifest) //Opens in new tab || Opens in same tab if pop ups are blocked
+                                window.open(url, "_blank") ||
+                                window.location.replace(url) //Opens in new tab || Opens in same tab if pop ups are blocked
                             }
                           >
                             <span style={{ cursor: "pointer", color: "black" }}>
-                              {manifestName}
+                              {name}
                             </span>
                           </li>
                         </ul>

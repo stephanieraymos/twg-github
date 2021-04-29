@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { sorttable } from "sorttable";
 
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { useInventoryContext } from "../../inventory";
 
 const TableInventory = ({ trucks }) => {
   let history = useHistory();
@@ -15,6 +16,8 @@ const TableInventory = ({ trucks }) => {
     };
   }
   trucks.sort(dynamicSort("status"));
+
+  const { inventory } = useInventoryContext();
 
   return (
     <>
@@ -36,19 +39,19 @@ const TableInventory = ({ trucks }) => {
             </tr>
           </thead>
           <tbody>
-            {trucks.map((truck) => {
+            {inventory.map((item) => {
               let {
                 id,
-                loadId,
+                load_id,
                 price,
                 source,
                 category,
                 units,
-                palletCount,
+                pallet_count,
                 fob,
-                retailPrice,
+                retail_price,
                 status,
-              } = truck;
+              } = item;
 
               return (
                 <tr
@@ -63,15 +66,15 @@ const TableInventory = ({ trucks }) => {
                 >
                   <td>
                     <Link className="table-id-link" to={`${url}/${id}`}>
-                      {loadId}
+                      {load_id}
                     </Link>
                   </td>
                   <td>{source}</td>
                   <td>{category}</td>
                   <td>{units}</td>
-                  <td>{palletCount}</td>
+                  <td>{pallet_count}</td>
                   <td>{fob}</td>
-                  <td>${retailPrice}</td>
+                  <td>${retail_price}</td>
                   <td>${price}</td>
                   <td style={{ fontSize: "10px", textAlign: "center" }}>{`${
                     status === 0

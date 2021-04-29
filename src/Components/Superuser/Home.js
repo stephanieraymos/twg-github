@@ -26,9 +26,6 @@ const SuperuserHome = () => {
         </SuperuserRoute>
         {/* <SuperuserRoute exact path={`${path}/edit/:id`}>
           <UpdateTruckDetails />
-        </SuperuserRoute>
-        <SuperuserRoute exact path={`${path}/edit/notes/:id`}>
-          <UpdateNotes />
         </SuperuserRoute> */}
       </Switch>
     );

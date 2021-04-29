@@ -39,14 +39,12 @@ const InventoryAllTrucks = () => {
       <PrivateRoute exact path={`${path}/add`}>
         <AddInventoryPage addNewTrucks={addTruck} />
       </PrivateRoute>
-      <TruckProvider>
-        <PrivateRoute exact path={`${path}/:id`}>
-          <TruckDetails />
-        </PrivateRoute>
-        <PrivateRoute exact path={`${path}/edit/:id`}>
-          <UpdateTruckDetails />
-        </PrivateRoute>
-      </TruckProvider>
+      <PrivateRoute exact path={`${path}/:id`}>
+        <TruckDetails />
+      </PrivateRoute>
+      <PrivateRoute exact path={`${path}/edit/:id`}>
+        <UpdateTruckDetails />
+      </PrivateRoute>
     </Switch>
   );
 };
