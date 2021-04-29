@@ -151,6 +151,10 @@ export default function AdminDashboard() {
       const currentMonth = date.getMonth();
       const currentYear = date.getFullYear();
       if (month == currentMonth && year == currentYear) {
+        // if the truck is not ours, the profit is only the commission
+        if (item.owner !== "RL Liquidators")
+          return item.price * (item.commission / 100);
+
         return item.price - item.cost;
       }
       return 0;
@@ -170,9 +174,13 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     // calculate the total price from inventories sold within 24 hrs
-    const profit = soldInventoryWithin24Hrs.map(
-      (item) => item.price - item.cost
-    );
+    const profit = soldInventoryWithin24Hrs.map((item) => {
+      // if the truck is not ours, the profit is only the commission
+      if (item.owner !== "RL Liquidators")
+        return item.price * (item.commission / 100);
+
+      return item.price - item.cost;
+    });
     setSaleWithin24Hrs(profit.reduce((a, b) => a + b, 0));
   }, [soldInventoryWithin24Hrs]);
 
