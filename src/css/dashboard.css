@@ -160,8 +160,6 @@ body {
   margin-bottom: 2rem;
 }
 
-
-
 /*=============================================
 =                 LINE CHART                 =
 =============================================*/
@@ -204,7 +202,7 @@ body {
   color: var(--tick-text);
   font-size: 1rem;
   margin-left: 1.5rem;
-  margin-right: .35rem;
+  margin-right: 0.35rem;
 }
 
 .Dropdown-control {
@@ -212,12 +210,12 @@ body {
   overflow: hidden;
   background-color: white;
   border: 1px solid #ccc;
-  border-radius: 2px;
+  border-radius: 15px;
   box-sizing: border-box;
   color: #333;
   cursor: default;
   outline: none;
-  padding: .5rem 3rem .5rem 1rem;
+  padding: 0.5rem 3rem 0.5rem 1rem;
   transition: all 200ms ease;
 }
 
@@ -234,7 +232,7 @@ body {
   height: 0;
   margin-top: -ceil(2.5);
   position: absolute;
-  right: .75rem;
+  right: 0.75rem;
   top: 1rem;
   width: 0;
 }
@@ -247,6 +245,7 @@ body {
 .Dropdown-menu {
   background-color: white;
   border: 1px solid #ccc;
+  border-radius: 15px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
   margin-top: -1px;
@@ -302,15 +301,17 @@ body {
   align-items: center;
 }
 
-
 .dropdown-container {
   display: flex;
   justify-content: center;
 }
-.dropdown-container > *{
-  padding-left: .25rem;
-
+.dropdown-container > * {
+  padding-left: 0.25rem;
 }
 .chart-card {
   justify-content: center;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  border-radius: 15px !important;
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
