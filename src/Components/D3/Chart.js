@@ -150,7 +150,6 @@ const ScatterPlot = () => {
                   transform={`translate(${-yAxisLabelOffset},${
                     innerHeight / 2
                   }) rotate(-90)`}
-                  tickOffset={4}
                 >
                   {yAxisLabel}
                 </text>
@@ -160,7 +159,6 @@ const ScatterPlot = () => {
                   x={innerWidth / 2}
                   y={innerHeight + xAxisLabelOffset}
                   textAnchor="middle"
-                  tickOffset={5}
                 >
                   {xAxisLabel}
                 </text>
