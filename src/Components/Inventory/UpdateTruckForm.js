@@ -20,28 +20,47 @@ const UpdateTruckForm = ({
   const [tempImageCount, setTempImageCount] = useState(0);
 
   const {
-    source, setSource,
-    retailPrice, setRetailPrice,
-    price, setPrice,
-    status, setStatus,
-    contents, setContents,
-    category, setCategory,
-    units, setUnits,
-    palletCount, setPalletCount,
-    fob, setFob,
+    source,
+    setSource,
+    retailPrice,
+    setRetailPrice,
+    price,
+    setPrice,
+    status,
+    setStatus,
+    contents,
+    setContents,
+    category,
+    setCategory,
+    units,
+    setUnits,
+    palletCount,
+    setPalletCount,
+    fob,
+    setFob,
     manifestIds,
     files,
-    owner, setOwner,
-    cost, setCost,
-    commission, setCommission,
-    lane, setLane,
-    fileCount, setFileCount,
-    imageCount, setImageCount,
+    owner,
+    setOwner,
+    cost,
+    setCost,
+    commission,
+    setCommission,
+    lane,
+    setLane,
+    fileCount,
+    setFileCount,
+    imageCount,
+    setImageCount,
     imageIds,
-    images
+    images,
+    shippingStatus,
+    setShippingStatus,
+    paid,
+    setPaid,
   } = useTruckContext();
 
-  const removeImage = index => {
+  const removeImage = (index) => {
     const list = [...tempImages];
     list[index] = -1;
     setTempImages(list);
@@ -251,6 +270,33 @@ const UpdateTruckForm = ({
 
         <Form.Group>
           <Row>
+            {/* //^ ----------SHIPPING STATUS---------- */}
+            <Col>
+              <Form.Label className="form-label">Shipping Status</Form.Label>
+
+              <Form.Control
+                as="select"
+                required
+                name="shippingStatus"
+                custom
+                placeholder={shippingStatus}
+                onChange={(e) => {
+                  setShippingStatus(e.target.value);
+                }}
+                value={shippingStatus}
+              >
+                <option value="" disabled hidden>
+                  {status === 0
+                    ? "Awaiting Shipment"
+                    : status === 1
+                    ? "Shipped"
+                    : "Delivered"}
+                </option>
+                <option value="0">Delivered</option>
+                <option value="1">Shipped</option>
+                <option value="2">Awaiting Shipment</option>
+              </Form.Control>
+            </Col>
             {/* //^ ----------STATUS---------- */}
             <Col>
               <Form.Label className="form-label">Status</Form.Label>
@@ -278,7 +324,30 @@ const UpdateTruckForm = ({
                 <option value="0">Unavailable</option>
               </Form.Control>
             </Col>
+          </Row>
+          <Row>
+            {/* //^ ----------STATUS---------- */}
+            <Col>
+              <Form.Label className="form-label">Paid</Form.Label>
 
+              <Form.Control
+                as="select"
+                required
+                name="paid"
+                custom
+                placeholder={paid}
+                onChange={(e) => {
+                  setPaid(e.target.value);
+                }}
+                value={paid}
+              >
+                <option value="" disabled hidden>
+                  {paid === 0 ? "No" : "Yes"}
+                </option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+              </Form.Control>
+            </Col>
             {/* //^ ----------FILES---------- */}
             <Col>
               <Form.Label className="form-label">Manifest</Form.Label>
@@ -425,7 +494,11 @@ const UpdateTruckForm = ({
           {tempImages.map((item, index) => {
             if (item == index) {
               return (
-                <Row key={index} className="flex-start-center" style={{ margin: "10px auto 0px" }}>
+                <Row
+                  key={index}
+                  className="flex-start-center"
+                  style={{ margin: "10px auto 0px" }}
+                >
                   <Col sm={10}>
                     <Form.Control
                       id={`form-image-${item}`}
