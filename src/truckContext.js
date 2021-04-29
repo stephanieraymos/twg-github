@@ -5,7 +5,7 @@ import React, {
   useContext,
   createContext,
 } from "react";
-import { url } from "./Pages/urls";
+import { inventoryV2GetURL } from "./Pages/urls";
 
 // Generating context
 const TruckContext = createContext();
@@ -157,7 +157,7 @@ export const useTruck = () => {
     const fetchTrucks = async () => {
       try {
         const response = await fetch(
-          url,
+          inventoryV2GetURL,
           {
             method: "GET",
             headers: {

@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useGlobalContext } from "../../context";
 import { Form, Col, Row } from "react-bootstrap";
-import { inventoryURL } from "../../Pages/urls";
 import { FaEdit } from "react-icons/fa";
 import { authService } from "../../authService";
 import { useHistory } from "react-router-dom";
@@ -13,6 +12,7 @@ const NotesForm = ({ id }) => {
   const actForm = useRef(null);
 
   const {
+    updateInventory,
     salesNotes,
     setSalesNotes,
     accountingNotes,
@@ -83,83 +83,20 @@ const NotesForm = ({ id }) => {
   const updateSalesNotes = () => {
     const data = new FormData(salesForm.current);
     data.append("id", id);
-
-    authService
-      .checkToken()
-      .then(() => {
-        fetch(inventoryURL, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${authService.getAccessToken()}`,
-          },
-          body: data,
-        })
-          .then((response) => {
-            console.log(response);
-            if (response.ok) {
-              return true;
-            } else return false;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch(() => history.push("/logout"));
+    updateInventory(data);
   };
 
   // Return true or false to indicate if fetch was successful
   const updateAccountingNotes = () => {
     const data = new FormData(actForm.current);
     data.append("id", id);
-
-    authService
-      .checkToken()
-      .then(() => {
-        fetch(inventoryURL, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${authService.getAccessToken()}`,
-          },
-          body: data,
-        })
-          .then((response) => {
-            console.log(response);
-            if (response.ok) {
-              return true;
-            } else return false;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch(() => history.push("/logout"));
+    updateInventory(data);
   };
   // Return true or false to indicate if fetch was successful
   const updateLogisticsNotes = () => {
     const data = new FormData(logiForm.current);
     data.append("id", id);
-
-    authService
-      .checkToken()
-      .then(() => {
-        fetch(inventoryURL, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${authService.getAccessToken()}`,
-          },
-          body: data,
-        })
-          .then((response) => {
-            console.log(response);
-            if (response.ok) {
-              return true;
-            } else return false;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch(() => history.push("/logout"));
+    updateInventory(data);
   };
   return (
     <>
