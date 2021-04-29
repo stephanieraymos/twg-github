@@ -324,7 +324,7 @@ const TruckDetailsCard = ({ id, current }) => {
             </Card>
             {/* //^ TRUCK CONTENTS ACCORDION */}
             <Accordion>
-              <Card style={{ border: "none" }}>
+              <Card style={{ border: "none" }} className="contents-accordion">
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"
@@ -348,7 +348,7 @@ const TruckDetailsCard = ({ id, current }) => {
             </Accordion>
             {/* //^ TRUCK FILES ACCORDION */}
             <Accordion>
-              <Card style={{ border: "none" }} className="file-accordion">
+              <Card style={{ border: "none" }}>
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey="0"
@@ -391,6 +391,5 @@ const TruckDetailsCard = ({ id, current }) => {
     </>
   );
 };
-
 
 export default TruckDetailsCard;
