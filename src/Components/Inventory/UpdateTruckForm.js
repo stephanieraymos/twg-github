@@ -287,9 +287,9 @@ const UpdateTruckForm = ({
                 value={shippingStatus}
               >
                 <option value="" disabled hidden>
-                  {status === 0
+                  {shippingStatus === 0
                     ? "Awaiting Shipment"
-                    : status === 1
+                    : shippingStatus === 1
                     ? "Shipped"
                     : "Delivered"}
                 </option>
