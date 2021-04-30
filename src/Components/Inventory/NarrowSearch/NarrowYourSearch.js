@@ -1,16 +1,24 @@
 import React from "react";
 import { Nav, Card } from "react-bootstrap";
 import NarrowSearchForm from "./NarrowSearchForm";
+import NarrowSearchFormMobile from "./NarrowSearchFormMobile";
 
 const NarrowYourSearch = () => {
   return (
     <>
-      <Card className="col-md-12 d-none d-md-block bg-light narrow-sidebar">
-        <Card.Title style={{borderBottom:"1px black solid"}}>Narrow your search</Card.Title>
-        <Card.Body>
-          <NarrowSearchForm />
-        </Card.Body>
-      </Card>
+      <div
+        className={`${
+          window.innerWidth >= 1024 ? "narrow-sidebar" : "narrow-sidebar-mobile"
+        }`}
+      >
+        <div>
+          {window.innerWidth >= 1024 ? (
+            <NarrowSearchForm />
+          ) : (
+            <NarrowSearchFormMobile />
+          )}
+        </div>
+      </div>
     </>
   );
 };

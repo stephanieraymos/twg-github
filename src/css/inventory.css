@@ -167,6 +167,21 @@ input:hover::placeholder {
 /*=============================================
 =           INVENTORY ALL TRUCKS             =
 =============================================*/
+.flex-parent-container {
+  display: flex;
+  flex-direction: column;
+}
+.table-and-sidebar-container {
+  display: flex;
+  height: 100%;
+}
+.table-and-sidebar-container-mobile {
+  flex-direction: column;
+}
+
+.inventory-table {
+  width: 100%;
+}
 
 .table-wrapper {
   display: flex;
@@ -180,23 +195,27 @@ th {
   cursor: pointer;
 }
 
-.inventory-table {
-  width: 100%;
+.narrow-sidebar {
+  display: flex;
+  padding: 2rem 1rem 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+.narrow-sidebar-mobile {
+  display: flex;
+  flex-wrap: wrap;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  justify-content: center;
 }
 
-.table-and-sidebar-container {
+.form-flex {
   display: flex;
-  flex-direction: column;
 }
-.narrow-sidebar {
-  position: fixed;
-  top: 12;
-  bottom: 0;
-  left: 0;
-  height: 88.3%;
-  width: 15%;
-  padding: 2rem 1rem 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+.form-flex > * {
+  padding-left: 0.5rem;
+}
+.form-label-styles {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 /*=============================================

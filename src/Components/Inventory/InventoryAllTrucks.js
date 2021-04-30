@@ -21,6 +21,7 @@ const InventoryAllTrucks = () => {
   const [trucks, addTruck] = useTruck();
 
   let { path } = useRouteMatch();
+  let width = window.innerWidth
 
   return (
     <InventoryProvider>
@@ -30,16 +31,17 @@ const InventoryAllTrucks = () => {
             <div>
               <Navigation />
             </div>
-            <Container fluid>
+            <Container className="flex-parent-container" fluid>
               <div className="table-top-container">
                 <AddInventoryButton />
                 <TableLegend />
               </div>
+              {/* <div className="table-and-sidebar-container"> */}
+              <div className={`${width >= 1024 ? "table-and-sidebar-container" : "table-and-sidebar-container-mobile"}`}>
+                <NarrowYourSearch />
+                <TableInventory trucks={trucks} />
+              </div>
             </Container>
-            <div className="table-and-sidebar-container">
-              <NarrowYourSearch />
-              <TableInventory trucks={trucks} />
-            </div>
           </>
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/add`}>

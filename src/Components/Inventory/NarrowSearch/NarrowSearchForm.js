@@ -4,8 +4,8 @@ import { Form, Row, Col } from "react-bootstrap";
 const NarrowSearchForm = () => {
   return (
     <>
-      <Form>
-        <Form.Group>
+      <Form className={`${window.innerWidth <= 1024 ? "form-flex" : null}`}>
+        <Form.Group >
           <Form.Label>Location</Form.Label>
           <Form.Check type="checkbox" label="Sacramento" />
           <Form.Check type="checkbox" label="Woodland" />
@@ -19,11 +19,11 @@ const NarrowSearchForm = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Size</Form.Label>
-          <Form.Check type="checkbox" label="100-1000 units" />
-          <Form.Check type="checkbox" label="1000-2500 units" />
-          <Form.Check type="checkbox" label="2500-5000 units" />
-          <Form.Check type="checkbox" label="5000-10000 units" />
-          <Form.Check type="checkbox" label="10000+ units" />
+          <Form.Check type="checkbox" label="100-1000" />
+          <Form.Check type="checkbox" label="1000-2500" />
+          <Form.Check type="checkbox" label="2500-5000" />
+          <Form.Check type="checkbox" label="5000-10000" />
+          <Form.Check type="checkbox" label="10000+" />
         </Form.Group>
         <Form.Group>
           <Form.Label>Price Range</Form.Label>
