@@ -197,6 +197,7 @@ th {
 
 .narrow-sidebar {
   display: flex;
+  max-width: 13rem;
   padding: 2rem 1rem 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
 }

@@ -1,24 +1,26 @@
 import React from "react";
 import { Nav, Card } from "react-bootstrap";
 import NarrowSearchForm from "./NarrowSearchForm";
-import NarrowSearchFormMobile from "./NarrowSearchFormMobile";
+import { InventoryProvider } from "../../../inventory";
 
 const NarrowYourSearch = () => {
   return (
     <>
-      <div
-        className={`${
-          window.innerWidth >= 1024 ? "narrow-sidebar" : "narrow-sidebar-mobile"
-        }`}
-      >
-        <div>
-          {window.innerWidth >= 1024 ? (
-            <NarrowSearchForm />
-          ) : (
-            <NarrowSearchFormMobile />
-          )}
+      <InventoryProvider>
+        <div
+          className={`${
+            window.innerWidth >= 1024
+              ? "narrow-sidebar"
+              : "narrow-sidebar-mobile"
+          }`}
+        >
+          <div>
+           
+              <NarrowSearchForm />
+
+          </div>
         </div>
-      </div>
+      </InventoryProvider>
     </>
   );
 };
