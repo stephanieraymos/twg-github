@@ -22,7 +22,7 @@ const TableInventory = ({ trucks }) => {
   return (
     <>
       <div className="table-wrapper">
-        <Table className="sortable" responsive>
+        <Table className="sortable inventory-table" responsive>
           <thead className="header-items">
             <tr>
               <th id="id">ID</th>

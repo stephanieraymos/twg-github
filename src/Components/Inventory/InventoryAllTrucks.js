@@ -13,6 +13,7 @@ import UpdateTruckDetails from "./UpdateTruckDetails";
 import { TruckProvider } from "../../truckContext";
 import AddInventoryPage from "./AddInventoryPage";
 import { InventoryProvider } from "../../inventory";
+import NarrowYourSearch from "./NarrowSearch/NarrowYourSearch";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -35,7 +36,10 @@ const InventoryAllTrucks = () => {
                 <TableLegend />
               </div>
             </Container>
-            <TableInventory trucks={trucks} />
+            <div className="table-and-sidebar-container">
+              <NarrowYourSearch />
+              <TableInventory trucks={trucks} />
+            </div>
           </>
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/add`}>

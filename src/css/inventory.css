@@ -176,6 +176,18 @@ input:hover::placeholder {
   margin: 0 auto;
 }
 
+th {
+  cursor: pointer;
+}
+
+.inventory-table {
+  width: 100%;
+}
+
+.table-and-sidebar-container {
+  display: flex;
+}
+
 /*=============================================
 =               TRUCK DETAILS               =
 =============================================*/
