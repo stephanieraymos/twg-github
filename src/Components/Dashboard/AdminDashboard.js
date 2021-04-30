@@ -61,7 +61,6 @@ export default function AdminDashboard() {
   let today = new Date();
   var priorDate = new Date().setDate(today.getDate() - 30); //Today 30 days ago
 
-
   const oldItems = inventory.filter(
     (item) => new Date(item.created) < priorDate
   ); //Filtered array of all inv. items created 30 days ago or more.
@@ -505,13 +504,13 @@ export default function AdminDashboard() {
           />
         </Grid>
 
-        <Grid item xs={12}>
-          {/* //* ---- GRAPH ---- */}
-          <Card className="chart-card">
-            <Chart />
-            {/* <Barplot /> */}
-          </Card>
-        </Grid>
+        {/* <Grid item xs={12}> */}
+        {/* //* ---- GRAPH ---- */}
+        {/* <Card className="chart-card"> */}
+        {/* <Chart /> */}
+        {/* <Barplot /> */}
+        {/* </Card> */}
+        {/* </Grid> */}
       </Grid>
     </div>
   );
