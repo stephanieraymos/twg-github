@@ -1,18 +1,18 @@
 export const useAvailableHeaders = [
-  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "load_id", numeric: false, label: "Load ID", type: "normal" },
   { id: "created", numeric: false, label: "Created", type: "date" },
   { id: "source", numeric: false, label: "Program", type: "normal" },
   { id: "category", numeric: false, label: "Category", type: "normal" },
   { id: "units", numeric: true, label: "Units", type: "normal" },
   {
-    id: "palletCount",
+    id: "pallet_count",
     numeric: true,
     label: "Pallets",
     type: "normal",
   },
   { id: "fob", numeric: false, label: "FOB", type: "normal" },
   {
-    id: "retailPrice",
+    id: "retail_price",
     numeric: true,
     label: "Retail (USD)",
     type: "money",
@@ -21,20 +21,20 @@ export const useAvailableHeaders = [
 ];
 
 export const useSoldHeaders = [
-  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "load_id", numeric: false, label: "Load ID", type: "normal" },
   { id: "sold", numeric: false, label: "Sold", type: "date" },
   { id: "source", numeric: false, label: "Program", type: "normal" },
   { id: "category", numeric: false, label: "Category", type: "normal" },
   { id: "units", numeric: true, label: "Units", type: "normal" },
   {
-    id: "palletCount",
+    id: "pallet_count",
     numeric: true,
     label: "Pallets",
     type: "normal",
   },
   { id: "fob", numeric: false, label: "FOB", type: "normal" },
   {
-    id: "retailPrice",
+    id: "retail_price",
     numeric: true,
     label: "Retail (USD)",
     type: "money",
@@ -49,20 +49,20 @@ export const useSoldHeaders = [
 ];
 
 export const useSales24HoursHeaders = [
-  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "load_id", numeric: false, label: "Load ID", type: "normal" },
   { id: "sold", numeric: false, label: "Sold", type: "date" },
   { id: "source", numeric: false, label: "Program", type: "normal" },
   { id: "category", numeric: false, label: "Category", type: "normal" },
   { id: "units", numeric: true, label: "Units", type: "normal" },
   {
-    id: "palletCount",
+    id: "pallet_count",
     numeric: true,
     label: "Pallets",
     type: "normal",
   },
   { id: "fob", numeric: false, label: "FOB", type: "normal" },
   {
-    id: "retailPrice",
+    id: "retail_price",
     numeric: true,
     label: "Retail (USD)",
     type: "money",
@@ -77,27 +77,27 @@ export const useSales24HoursHeaders = [
 ];
 
 export const useAllInventoryHeaders = [
-  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "load_id", numeric: false, label: "Load ID", type: "normal" },
   { id: "created", numeric: false, label: "Created", type: "date" },
   { id: "source", numeric: false, label: "Program", type: "normal" },
   { id: "category", numeric: false, label: "Category", type: "normal" },
   { id: "units", numeric: true, label: "Units", type: "normal" },
   {
-    id: "palletCount",
+    id: "pallet_count",
     numeric: true,
     label: "Pallets",
     type: "normal",
   },
   { id: "fob", numeric: false, label: "FOB", type: "normal" },
   {
-    id: "retailPrice",
+    id: "retail_price",
     numeric: true,
     label: "Retail (USD)",
     type: "money",
   },
   { id: "price", numeric: true, label: "Price (USD)", type: "money" },
   {
-    id: "shippingStatus",
+    id: "shipping_status",
     numeric: true,
     label: "Shipping Status",
     type: "normal",
@@ -105,39 +105,39 @@ export const useAllInventoryHeaders = [
 ];
 
 export const useUnpaidHeaders = [
-  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "load_id", numeric: false, label: "Load ID", type: "normal" },
   { id: "sold", numeric: false, label: "Purchased", type: "date" },
   { id: "source", numeric: false, label: "Program", type: "normal" },
   { id: "category", numeric: false, label: "Category", type: "normal" },
   { id: "units", numeric: true, label: "Units", type: "normal" },
-  { id: "palletCount", numeric: true, label: "Pallets", type: "normal" },
+  { id: "pallet_count", numeric: true, label: "Pallets", type: "normal" },
   { id: "fob", numeric: false, label: "DOB", type: "normal" },
-  { id: "retailPrice", numeric: true, label: "Retail (USD)", type: "money" },
+  { id: "retail_price", numeric: true, label: "Retail (USD)", type: "money" },
   { id: "price", numeric: true, label: "Price (USD)", type: "money" },
 ];
 
 export const usePurchasedHeaders = [
-  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "load_id", numeric: false, label: "Load ID", type: "normal" },
   { id: "sold", numeric: false, label: "Purchased", type: "date" },
   { id: "source", numeric: false, label: "Program", type: "normal" },
   { id: "category", numeric: false, label: "Category", type: "normal" },
   { id: "units", numeric: true, label: "Units", type: "normal" },
   {
-    id: "palletCount",
+    id: "pallet_count",
     numeric: true,
     label: "Pallets",
     type: "normal",
   },
   { id: "fob", numeric: false, label: "DOB", type: "normal" },
   {
-    id: "retailPrice",
+    id: "retail_price",
     numeric: true,
     label: "Retail (USD)",
     type: "money",
   },
   { id: "price", numeric: true, label: "Price (USD)", type: "money" },
   {
-    id: "shippingStatus",
+    id: "shipping_status",
     numeric: true,
     label: "Shipping Status",
     type: "normal",
@@ -203,27 +203,27 @@ export const useFinancialByMonthHeaders = [
 ];
 
 export const useSellerInventory = [
-  { id: "loadId", numeric: false, label: "Load ID", type: "normal" },
+  { id: "load_id", numeric: false, label: "Load ID", type: "normal" },
   { id: "created", numeric: false, label: "Created", type: "date" },
   { id: "source", numeric: false, label: "Program", type: "normal" },
   { id: "category", numeric: false, label: "Category", type: "normal" },
   { id: "units", numeric: true, label: "Units", type: "normal" },
   {
-    id: "palletCount",
+    id: "pallet_count",
     numeric: true,
     label: "Pallets",
     type: "normal",
   },
   { id: "fob", numeric: false, label: "FOB", type: "normal" },
   {
-    id: "retailPrice",
+    id: "retail_price",
     numeric: true,
     label: "Retail (USD)",
     type: "money",
   },
   { id: "price", numeric: true, label: "Price (USD)", type: "money" },
   {
-    id: "shippingStatus",
+    id: "shipping_status",
     numeric: true,
     label: "Shipping Status",
     type: "normal",
