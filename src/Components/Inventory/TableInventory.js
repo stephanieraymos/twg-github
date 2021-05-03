@@ -74,8 +74,20 @@ const TableInventory = ({ trucks }) => {
                   <td>{units}</td>
                   <td>{pallet_count}</td>
                   <td>{fob}</td>
-                  <td>${retail_price}</td>
-                  <td>${price}</td>
+                  <td>{`${
+                    status === 0
+                      ? "SOLD"
+                      : status === 1
+                      ? `${retail_price}`
+                      : `${retail_price}`
+                  }`}</td>{" "}
+                  <td>{`${
+                    status === 0
+                      ? "SOLD"
+                      : status === 1
+                      ? `${price}`
+                      : `${price}`
+                  }`}</td>
                   <td style={{ fontSize: "10px", textAlign: "center" }}>{`${
                     status === 0
                       ? "sold"
