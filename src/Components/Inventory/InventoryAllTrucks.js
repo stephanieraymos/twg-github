@@ -14,14 +14,16 @@ import { TruckProvider } from "../../truckContext";
 import AddInventoryPage from "./AddInventoryPage";
 import { InventoryProvider } from "../../inventory";
 import NarrowYourSearch from "./NarrowSearch/NarrowYourSearch";
+import { authService } from "../../authService";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
 
   const [trucks, addTruck] = useTruck();
+  const { is_seller, is_admin } = authService.getUser();
 
   let { path } = useRouteMatch();
-  let width = window.innerWidth
+  let width = window.innerWidth;
 
   return (
     <InventoryProvider>
@@ -32,12 +34,24 @@ const InventoryAllTrucks = () => {
               <Navigation />
             </div>
             <Container className="flex-parent-container" fluid>
-              <div className="table-top-container">
+              <div
+                className={`${
+                  is_seller || is_admin
+                    ? "table-top-container"
+                    : null
+                }`}
+              >
                 <AddInventoryButton />
                 <TableLegend />
               </div>
               {/* <div className="table-and-sidebar-container"> */}
-              <div className={`${width >= 1024 ? "table-and-sidebar-container" : "table-and-sidebar-container-mobile"}`}>
+              <div
+                className={`${
+                  width >= 1024
+                    ? "table-and-sidebar-container"
+                    : "table-and-sidebar-container-mobile"
+                }`}
+              >
                 <NarrowYourSearch />
                 <TableInventory trucks={trucks} />
               </div>
