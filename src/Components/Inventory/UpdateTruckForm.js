@@ -40,6 +40,8 @@ const UpdateTruckForm = ({
     setCreated,
     fob,
     setFob,
+    condition,
+    setCondition,
     lane,
     setLane,
     owner,
@@ -339,6 +341,9 @@ const UpdateTruckForm = ({
               </Form.Control>
             </Col>
           </Row>
+        </Form.Group>
+
+        <Form.Group>
           <Row>
             {/* //^ ----------PAID---------- */}
             <Col>
@@ -362,6 +367,46 @@ const UpdateTruckForm = ({
                 <option value="1">Yes</option>
               </Form.Control>
             </Col>
+            {/* //^ ----------CONDITION---------- */}
+            <Col>
+              <Form.Label className="form-label">Condition</Form.Label>
+
+              <Form.Control
+                as="select"
+                required
+                name="condition"
+                custom
+                placeholder={condition}
+                onChange={(e) => {
+                  setCondition(e.target.value);
+                }}
+                value={condition}
+              >
+                <option value="" disabled hidden>
+                  {`${
+                    condition === 0
+                      ? "returns"
+                      : condition === 1
+                      ? "overstock"
+                      : condition === 2
+                      ? "salvage"
+                      : condition === 3
+                      ? "shelf pulls"
+                      : "warehouse damage"
+                  }`}
+                </option>
+                <option value="0">Returns</option>
+                <option value="1">Overstock</option>
+                <option value="2">Salvage</option>
+                <option value="3">Shelf Pulls</option>
+                <option value="4">Warehouse Damage</option>
+              </Form.Control>
+            </Col>
+          </Row>
+        </Form.Group>
+
+        <Form.Group>
+          <Row>
             {/* //^ ----------MANIFESTS---------- */}
             <Col>
               <Form.Label className="form-label">Manifest</Form.Label>
@@ -416,131 +461,128 @@ const UpdateTruckForm = ({
                 </Button>
               )}
             </Col>
+
+            {manifestObjects.map((file, index) => {
+              const { name, url } = file;
+              return (
+                <>
+                  <Col key={index} sm={11}>
+                    <Form.Control
+                      defaultValue={name}
+                      readOnly
+                      style={{ cursor: "pointer", margin: "0px 0px 14px" }}
+                      onClick={
+                        () =>
+                          window.open(url, "_blank") ||
+                          window.location.replace(url) //Opens in new tab || Opens in same tab if pop ups are blocked
+                      }
+                    />
+                  </Col>
+                  <Col sm={1}>
+                    <button
+                      type="button"
+                      style={{
+                        background: "transparent",
+                        borderColor: "transparent",
+                        height: "100%",
+                      }}
+                    >
+                      {deletedManifests.includes(manifests[index]) ? (
+                        <img
+                          src={undo}
+                          alt="undo"
+                          onClick={() => {
+                            console.log(
+                              "file to be added back",
+                              manifests[index]
+                            );
+                            setDeletedManifests(
+                              deletedManifests.filter(
+                                (item) => item !== manifests[index]
+                              )
+                            );
+                            console.log("old manifest", deletedManifests);
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={cancel}
+                          alt="remove"
+                          onClick={() => {
+                            console.log("file to be deleted", manifests[index]);
+                            setDeletedManifests([
+                              ...deletedManifests,
+                              manifests[index],
+                            ]);
+                            console.log("old manifest", deletedManifests);
+                          }}
+                        />
+                      )}
+                    </button>
+                  </Col>
+                  {deletedManifests.includes(manifests[index]) && (
+                    <Form.Text style={{ color: "red" }}>
+                      Marked for deletion
+                    </Form.Text>
+                  )}
+                </>
+              );
+            })}
+
+            {/* //^ ------------------------- IMAGES ---------------------------- */}
+            <Col>
+              <Form.Label className="form-label">Images</Form.Label>
+              <Button
+                onClick={() => {
+                  setTempImages([...tempImages, tempImageCount]);
+                  setTempImageCount(tempImageCount + 1);
+                }}
+                className="form-button"
+                block
+                style={{
+                  width: "150px",
+                  backgroundColor: "#000",
+                  margin: "0px",
+                }}
+              >
+                Add images
+              </Button>
+            </Col>
+
+            {tempImages.map((item, index) => {
+              if (item == index) {
+                return (
+                  <Row
+                    key={index}
+                    className="flex-start-center"
+                    style={{ margin: "10px auto 0px" }}
+                  >
+                    <Col sm={10}>
+                      <Form.Control
+                        id={`form-image-${item}`}
+                        type="file"
+                        required
+                        name="images"
+                        style={{ fontSize: "1rem", color: "black" }}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please add an image.
+                      </Form.Control.Feedback>
+                    </Col>
+                    <Col sm={2}>
+                      <Image
+                        id={`form-image-cancel-${index}`}
+                        src={cancel}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => removeImage(index)}
+                      />
+                    </Col>
+                  </Row>
+                );
+              }
+            })}
           </Row>
         </Form.Group>
-
-        {manifestObjects.map((file, index) => {
-          const { name, url } = file;
-          return (
-            <>
-              <Form.Row key={index}>
-                <Col sm={11}>
-                  <Form.Control
-                    defaultValue={name}
-                    readOnly
-                    style={{ cursor: "pointer", margin: "0px 0px 14px" }}
-                    onClick={
-                      () =>
-                        window.open(url, "_blank") ||
-                        window.location.replace(url) //Opens in new tab || Opens in same tab if pop ups are blocked
-                    }
-                  />
-                </Col>
-                <Col sm={1}>
-                  <button
-                    type="button"
-                    style={{
-                      background: "transparent",
-                      borderColor: "transparent",
-                      height: "100%",
-                    }}
-                  >
-                    {deletedManifests.includes(manifests[index]) ? (
-                      <img
-                        src={undo}
-                        alt="undo"
-                        onClick={() => {
-                          console.log(
-                            "file to be added back",
-                            manifests[index]
-                          );
-                          setDeletedManifests(
-                            deletedManifests.filter(
-                              (item) => item !== manifests[index]
-                            )
-                          );
-                          console.log("old manifest", deletedManifests);
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src={cancel}
-                        alt="remove"
-                        onClick={() => {
-                          console.log("file to be deleted", manifests[index]);
-                          setDeletedManifests([
-                            ...deletedManifests,
-                            manifests[index],
-                          ]);
-                          console.log("old manifest", deletedManifests);
-                        }}
-                      />
-                    )}
-                  </button>
-                </Col>
-              </Form.Row>
-              {deletedManifests.includes(manifests[index]) && (
-                <Form.Text style={{ color: "red" }}>
-                  Marked for deletion
-                </Form.Text>
-              )}
-            </>
-          );
-        })}
-
-        <Form.Group>
-          {/* //^ ------------------------- IMAGES ---------------------------- */}
-          <Form.Label className="form-label">Images</Form.Label>
-          <Button
-            onClick={() => {
-              setTempImages([...tempImages, tempImageCount]);
-              setTempImageCount(tempImageCount + 1);
-            }}
-            className="form-button"
-            block
-            style={{
-              width: "150px",
-              backgroundColor: "#000",
-              margin: "0px",
-            }}
-          >
-            Add images
-          </Button>
-
-          {tempImages.map((item, index) => {
-            if (item == index) {
-              return (
-                <Row
-                  key={index}
-                  className="flex-start-center"
-                  style={{ margin: "10px auto 0px" }}
-                >
-                  <Col sm={10}>
-                    <Form.Control
-                      id={`form-image-${item}`}
-                      type="file"
-                      required
-                      name="images"
-                      style={{ fontSize: "1rem", color: "black" }}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please add an image.
-                    </Form.Control.Feedback>
-                  </Col>
-                  <Col sm={2}>
-                    <Image
-                      id={`form-image-cancel-${index}`}
-                      src={cancel}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => removeImage(index)}
-                    />
-                  </Col>
-                </Row>
-              );
-            }
-          })}
-        </Form.Group>
-
         {imageObjects.map((file, index) => {
           const { name, url } = file;
           return (
