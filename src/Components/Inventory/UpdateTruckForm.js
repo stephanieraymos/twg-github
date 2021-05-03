@@ -104,7 +104,7 @@ const UpdateTruckForm = ({
             onChange={(e) => setSource(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
-            Please enter a truck name.
+            Please enter the program name.
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group>
