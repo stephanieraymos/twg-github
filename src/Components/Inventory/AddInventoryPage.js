@@ -1,5 +1,5 @@
 import React from "react";
-import FormAddInventory from "./FormAddInventory";
+import AddInventoryForm from "./AddInventoryForm";
 import { Image } from "react-bootstrap";
 import Navigation from "../Navigation/Navigation";
 import {
@@ -34,7 +34,7 @@ const AddInventoryModal = ({ addNewTrucks }) => {
         </div>
 
         {/* //^ MODAL BODY */}
-        <FormAddInventory
+        <AddInventoryForm
           addNewTrucks={addNewTrucks}
         />
       </div>

@@ -2,16 +2,12 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { authService } from "../../authService";
 import { inventoryPATH } from "../../Pages/paths";
-import {
-  useHistory,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { image } from "d3-fetch";
 import cancel from "../../img/cancel.svg";
 import { useInventoryContext } from "../../inventory";
 
-const FormAddInventory = ({
-  addNewTrucks,
-}) => {
+const AddInventoryForm = ({ addNewTrucks }) => {
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
   const [images, setImages] = useState([]);
@@ -38,9 +34,9 @@ const FormAddInventory = ({
 
   const back = () => {
     history.replace(inventoryPATH);
-  }
+  };
 
-  const removeImage = index => {
+  const removeImage = (index) => {
     const list = [...images];
     list[index] = -1;
     setImages(list);
@@ -53,11 +49,10 @@ const FormAddInventory = ({
     const contents = data.get("contents").split(",");
     data.delete("contents");
     contents.map((item) => data.append("contents", item));
-    addInventory(data)
-      .then(data => {
-        setInventory([...inventory, data])
-        back();
-      })
+    addInventory(data).then((data) => {
+      setInventory([...inventory, data]);
+      back();
+    });
   };
 
   return (
@@ -189,8 +184,39 @@ const FormAddInventory = ({
         </Form.Group>
 
         <Form.Group>
-          {/* //^ ------------------------- FILES ---------------------------- */}
           <Row>
+            {/* //^ ------------------------- STATUS ---------------------------- */}
+            <Col>
+              <Form.Label className="form-label">Status</Form.Label>
+              <Form.Control as="select" required name="status" custom>
+                <option value="2">Available</option>
+                <option value="1">Pending</option>
+                <option value="0">Unavailable</option>
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please specify the availability of the truck
+              </Form.Control.Feedback>
+            </Col>
+            {/* //^ ------------------------- CONDITION ---------------------------- */}
+            <Col>
+              <Form.Label className="form-label">Condition</Form.Label>
+              <Form.Control as="select" required name="condition" custom>
+                <option value="0">Returns</option>
+                <option value="1">Overstock</option>
+                <option value="2">Salvage</option>
+                <option value="3">Shelf Pulls</option>
+                <option value="4">Warehouse Damage</option>
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please specify the availability of the truck
+              </Form.Control.Feedback>
+            </Col>
+          </Row>
+        </Form.Group>
+
+        <Form.Group>
+          <Row>
+            {/* //^ ------------------------- FILES ---------------------------- */}
             <Col>
               <Form.Label className="form-label">Manifest</Form.Label>
               {Array(manifestsCount).fill(
@@ -238,69 +264,59 @@ const FormAddInventory = ({
                 </Button>
               )}
             </Col>
-
-            {/* //^ ------------------------- STATUS ---------------------------- */}
+            {/* //^ ------------------------- IMAGES ---------------------------- */}
             <Col>
-              <Form.Label className="form-label">Status</Form.Label>
-              <Form.Control as="select" required name="status" custom>
-                <option value="2">Available</option>
-                <option value="1">Pending</option>
-                <option value="0">Unavailable</option>
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">
-                Please specify the availability of the truck
-              </Form.Control.Feedback>
+              <Form.Label className="form-label">Images</Form.Label>
+              <Button
+                onClick={() => {
+                  setImages([...images, imageCount]);
+                  setImageCount(imageCount + 1);
+                }}
+                className="form-button"
+                block
+                style={{
+                  width: "150px",
+                  backgroundColor: "#000",
+                  margin: "0rem",
+                }}
+              >
+                Add images
+              </Button>
+
+              {images.map((item, index) => {
+                if (item == index) {
+                  return (
+                    <Row
+                      key={index}
+                      className="flex-start-center"
+                      style={{ margin: "10px auto 0px" }}
+                    >
+                      <Col sm={10}>
+                        <Form.Control
+                          id={`form-image-${item}`}
+                          type="file"
+                          required
+                          name="images"
+                          style={{ fontSize: "1rem", color: "black" }}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please add an image.
+                        </Form.Control.Feedback>
+                      </Col>
+                      <Col sm={2}>
+                        <Image
+                          id={`form-image-cancel-${index}`}
+                          src={cancel}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => removeImage(index)}
+                        />
+                      </Col>
+                    </Row>
+                  );
+                }
+              })}
             </Col>
           </Row>
-        </Form.Group>
-
-        <Form.Group>
-          {/* //^ ------------------------- IMAGES ---------------------------- */}
-          <Form.Label className="form-label">Images</Form.Label>
-          <Button
-            onClick={() => {
-              setImages([...images, imageCount]);
-              setImageCount(imageCount + 1);
-            }}
-            className="form-button"
-            block
-            style={{
-              width: "150px",
-              backgroundColor: "#000",
-              margin: "0rem",
-            }}
-          >
-            Add images
-          </Button>
-
-          {images.map((item, index) => {
-            if (item == index) {
-              return (
-                <Row key={index} className="flex-start-center" style={{ margin: "10px auto 0px" }}>
-                  <Col sm={10}>
-                    <Form.Control
-                      id={`form-image-${item}`}
-                      type="file"
-                      required
-                      name="images"
-                      style={{ fontSize: "1rem", color: "black" }}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please add an image.
-                    </Form.Control.Feedback>
-                  </Col>
-                  <Col sm={2}>
-                    <Image
-                      id={`form-image-cancel-${index}`}
-                      src={cancel}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => removeImage(index)}
-                    />
-                  </Col>
-                </Row>
-              );
-            }
-          })}
         </Form.Group>
 
         <div className="form-footer-container">
@@ -318,4 +334,4 @@ const FormAddInventory = ({
   );
 };
 
-export default FormAddInventory;
+export default AddInventoryForm;

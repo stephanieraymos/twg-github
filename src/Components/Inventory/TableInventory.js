@@ -80,7 +80,7 @@ const TableInventory = ({ trucks }) => {
                       : status === 1
                       ? `${retail_price}`
                       : `${retail_price}`
-                  }`}</td>{" "}
+                  }`}</td>
                   <td>{`${
                     status === 0
                       ? "SOLD"
