@@ -20,31 +20,56 @@ const UpdateTruckForm = ({
   const [tempImageCount, setTempImageCount] = useState(0);
 
   const {
-    id, setId,
-    sellerId, setSellerId,
-    buyerId, setBuyerId,
-    loadId, setLoadId,
-    category, setCategory,
-    commission, setCommission,
-    contents, setContents,
-    cost, setCost,
-    created, setCreated,
-    fob, setFob,
-    lane, setLane,
-    owner, setOwner,
-    palletCount, setPalletCount,
-    price, setPrice,
-    retailPrice, setRetailPrice,
-    source, setSource,
-    units, setUnits,
-    paid, setPaid,
-    shippingStatus, setShippingStatus,
-    sold, setSold,
-    status, setStatus,
-    images, setImages,
-    manifests, setManifests,
-    imageObjects, setImageObjects,
-    manifestObjects, setManifestObjects
+    id,
+    setId,
+    sellerId,
+    setSellerId,
+    buyerId,
+    setBuyerId,
+    loadId,
+    setLoadId,
+    category,
+    setCategory,
+    commission,
+    setCommission,
+    contents,
+    setContents,
+    cost,
+    setCost,
+    created,
+    setCreated,
+    fob,
+    setFob,
+    lane,
+    setLane,
+    owner,
+    setOwner,
+    palletCount,
+    setPalletCount,
+    price,
+    setPrice,
+    retailPrice,
+    setRetailPrice,
+    source,
+    setSource,
+    units,
+    setUnits,
+    paid,
+    setPaid,
+    shippingStatus,
+    setShippingStatus,
+    sold,
+    setSold,
+    status,
+    setStatus,
+    images,
+    setImages,
+    manifests,
+    setManifests,
+    imageObjects,
+    setImageObjects,
+    manifestObjects,
+    setManifestObjects,
   } = useInventoryContext();
 
   const removeImage = (index) => {
@@ -52,12 +77,12 @@ const UpdateTruckForm = ({
     list[index] = -1;
     setTempImages(list);
   };
-  console.log(paid, shippingStatus)
+  console.log(paid, shippingStatus);
 
   useEffect(() => {
-    console.log('imageObjects', imageObjects);
-    console.log('manifestObjects', manifestObjects);
-  }, [])
+    console.log("imageObjects", imageObjects);
+    console.log("manifestObjects", manifestObjects);
+  }, []);
 
   return (
     <>
@@ -179,6 +204,7 @@ const UpdateTruckForm = ({
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Details</Form.Label>
           <Form.Control
+            as="textarea"
             type="text"
             defaultValue={contents}
             name="contents"
@@ -424,9 +450,14 @@ const UpdateTruckForm = ({
                         src={undo}
                         alt="undo"
                         onClick={() => {
-                          console.log("file to be added back", manifests[index]);
+                          console.log(
+                            "file to be added back",
+                            manifests[index]
+                          );
                           setDeletedManifests(
-                            deletedManifests.filter((item) => item !== manifests[index])
+                            deletedManifests.filter(
+                              (item) => item !== manifests[index]
+                            )
                           );
                           console.log("old manifest", deletedManifests);
                         }}
@@ -437,7 +468,10 @@ const UpdateTruckForm = ({
                         alt="remove"
                         onClick={() => {
                           console.log("file to be deleted", manifests[index]);
-                          setDeletedManifests([...deletedManifests, manifests[index]]);
+                          setDeletedManifests([
+                            ...deletedManifests,
+                            manifests[index],
+                          ]);
                           console.log("old manifest", deletedManifests);
                         }}
                       />
@@ -540,7 +574,9 @@ const UpdateTruckForm = ({
                         onClick={() => {
                           console.log("image to be added back", images[index]);
                           setDeletedImages(
-                            deletedImages.filter((item) => item !== images[index])
+                            deletedImages.filter(
+                              (item) => item !== images[index]
+                            )
                           );
                           console.log("old image", deletedImages);
                         }}
