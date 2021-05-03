@@ -460,7 +460,7 @@ export default function AdminDashboard() {
           <Card className={classes.card} variant="outlined">
             <CardContent>
               <Typography className={classes.title_centered} gutterBottom>
-                Total Sellers
+                Total Vendors
               </Typography>
               <Typography
                 className={classes.body_centered}
@@ -477,7 +477,7 @@ export default function AdminDashboard() {
                 color="primary"
                 onClick={() => updateTable(5)}
               >
-                View All Sellers
+                View All Vendors
               </Button>
             </CardActions>
           </Card>
