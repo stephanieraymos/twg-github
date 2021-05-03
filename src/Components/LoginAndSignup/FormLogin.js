@@ -15,6 +15,7 @@ const FormLogin = () => {
     false
   );
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [isLoginIncorrect, setIsLoginIncorrect] = useState(false);
@@ -30,6 +31,7 @@ const FormLogin = () => {
 
   const resetValues = () => {
     setEmail("");
+    setUsername("");
     setPassword("");
     setTogglePasswordVisibility(false);
     setValidated(false);
@@ -99,6 +101,20 @@ const FormLogin = () => {
             Please enter a valid email address.
           </Form.Control.Feedback>
         </Form.Group>
+
+        {/* <Form.Group className="center-form-group">
+          <Form.Label className="form-label">Username</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            value={username}
+            name="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Form.Control.Feedback type="invalid">
+            That username doesn't exist in our database.
+          </Form.Control.Feedback>
+        </Form.Group> */}
 
         <Form.Group className="center-form-group">
           <Form.Label className="form-label">Password</Form.Label>

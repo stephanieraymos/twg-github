@@ -19,6 +19,7 @@ const AccountDetails = () => {
   let history = useHistory();
 
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
@@ -28,8 +29,9 @@ const AccountDetails = () => {
   useEffect(() => {
     const subscription = authService.getUserSubscriber().subscribe(user => {
       if (user) {
-        const { email, first_name, last_name, company, phone_number, billing_address } = user;
+        const { email, username, first_name, last_name, company, phone_number, billing_address } = user;
         setEmail(email);
+        setUsername(username);
         setFirstName(first_name);
         setLastName(last_name);
         setCompany(company);
@@ -115,6 +117,30 @@ const AccountDetails = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     name="email"
+                  />
+                )
+              }
+            </Col>
+
+          </Form.Group>
+          <Form.Group as={Row} className="center-form-group">
+            <Form.Label column sm={4} className="form-label">Username</Form.Label>
+            <Col sm={8}>
+              {
+                isEditing ? (
+                  <Form.Control
+                    type="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    name="username"
+                  />
+                ) : (
+                  <Form.Control
+                    type="username"
+                    readOnly
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    name="username"
                   />
                 )
               }

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
-import { userURL } from "./Pages/urls"
+import { userURL } from "./Pages/urls";
 import { useParams } from "react-router-dom";
 
 // Generating context
@@ -16,6 +16,7 @@ const AppProvider = ({ children }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [company, setCompany] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
@@ -62,6 +63,8 @@ const AppProvider = ({ children }) => {
         setLastName,
         email,
         setEmail,
+        username,
+        setUsername,
         company,
         setCompany,
         phoneNumber,

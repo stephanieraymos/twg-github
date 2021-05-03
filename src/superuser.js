@@ -15,6 +15,7 @@ const SuperuserContext = createContext();
 const SuperuserProvider = ({ children }) => {
     //////////////////////// &&--STATE--&& /////////////////////////////
     const [users, setUsers] = useState({});
+    const [username, setUsername] = useState("");
     const [id, setId] = useState("");
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -88,6 +89,7 @@ const SuperuserProvider = ({ children }) => {
                         .then((user) => {
                             setId(user["id"])
                             setEmail(user["email"]);
+                            setUsername(user["name"]);
                             setFirstName(user["first_name"]);
                             setLastName(user["last_name"]);
                             setCompany(user["company"]);
@@ -195,6 +197,7 @@ const SuperuserProvider = ({ children }) => {
                 users, setUsers,
                 id, setId,
                 email, setEmail,
+                username, setUsername,
                 firstName, setFirstName,
                 lastName, setLastName,
                 company, setCompany,

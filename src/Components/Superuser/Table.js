@@ -25,6 +25,7 @@ const SuperuserTable = () => {
   let { url } = useRouteMatch();
   const headers = [
     "EMAIL",
+    "USERNAME",
     "FIRST NAME",
     "LAST NAME",
     "SELLER",
@@ -33,6 +34,7 @@ const SuperuserTable = () => {
   ];
   const sortFields = [
     "email",
+    "username",
     "first_name",
     "last_name",
     "is_seller",

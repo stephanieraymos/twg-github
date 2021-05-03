@@ -21,6 +21,7 @@ const SuperuserDetails = () => {
 
     const {
         email, setEmail,
+        username, setUsername,
         firstName, setFirstName,
         lastName, setLastName,
         company, setCompany,
@@ -40,6 +41,7 @@ const SuperuserDetails = () => {
 
     const fields = [
         "email",
+        "username",
         "first_name",
         "last_name",
         "company",
@@ -57,6 +59,7 @@ const SuperuserDetails = () => {
             setOriginalValues(prevState => ({
                 ...prevState,
                 "email": email,
+                "username": username,
                 "first_name": firstName,
                 "last_name": lastName,
                 "company": company,
@@ -84,6 +87,7 @@ const SuperuserDetails = () => {
     const cancel = () => {
         setIsEditing(false);
         setEmail(originalValues["email"]);
+        setUsername(originalValues["username"]);
         setFirstName(originalValues["first_name"]);
         setLastName(originalValues["last_name"]);
         setCompany(originalValues["company"]);
@@ -188,6 +192,32 @@ const SuperuserDetails = () => {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         name="email"
+                                    />
+                                )
+                            }
+                        </Col>
+
+                    </Form.Group>
+                    <Form.Group as={Row} className="center-form-group">
+                        <Form.Label column sm={4} className="form-label">Username</Form.Label>
+                        <Col sm={8}>
+                            {
+                                isEditing ? (
+                                    <Form.Control
+                                        type="username"
+                                        required
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        name="username"
+                                    />
+                                ) : (
+                                    <Form.Control
+                                        type="text"
+                                        required
+                                        readOnly
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        name="username"
                                     />
                                 )
                             }

@@ -154,6 +154,14 @@ const CreateUserModal = ({
                         </Form.Group>
 
                         <Form.Group className="center-form-group">
+                            <Form.Label className="form-label">Username</Form.Label>
+                            <Form.Control type="username" required name="username" />
+                            <Form.Control.Feedback type="invalid">
+                                This username is not available, please choose another.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="center-form-group">
                             <Form.Label className="form-label">First Name</Form.Label>
                             <Form.Control type="text" required name="first_name" />
                             <Form.Control.Feedback type="invalid">
