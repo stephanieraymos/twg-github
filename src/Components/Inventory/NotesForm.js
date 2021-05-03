@@ -111,7 +111,7 @@ const NotesForm = ({ id }) => {
             <Form.Group>
               <div className="form-label-and-button-container">
                 <Form.Label column sm={4} className="truck-data-title">
-                  Sales Notes:
+                  Sales Notes
                 </Form.Label>
                 <div className="form-header-buttons-container">
                   <button
@@ -185,7 +185,7 @@ const NotesForm = ({ id }) => {
             <Form.Group>
               <div className="form-label-and-button-container">
                 <Form.Label column sm={4} className="truck-data-title">
-                  Accounting Notes:
+                  Accounting Notes
                 </Form.Label>
                 <div className="form-header-buttons-container">
                   <button
@@ -258,7 +258,7 @@ const NotesForm = ({ id }) => {
             <Form.Group>
               <div className="form-label-and-button-container">
                 <Form.Label column sm={4} className="truck-data-title">
-                  Logistics Notes:
+                  Logistics Notes
                 </Form.Label>
                 <div className="form-header-buttons-container">
                   <button
