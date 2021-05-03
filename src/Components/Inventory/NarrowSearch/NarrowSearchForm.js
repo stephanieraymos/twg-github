@@ -4,14 +4,12 @@ import { useInventoryContext } from "../../../inventory";
 
 const NarrowSearchForm = () => {
   const { inventory } = useInventoryContext();
-  const mapped = inventory.map((item) => {
+  const mappedInventory = inventory.map((item) => {
     let { fob } = item;
     return fob;
   });
-  console.log("mapped", mapped);
-  const set = new Set(mapped);
-  const setArr = [...set];
-  console.log("setArr", setArr);
+  const uniqueSet = new Set(mappedInventory);
+  const setArr = [...uniqueSet]; //Creating new array with Set (no duplicates)
 
   return (
     <>
