@@ -4,12 +4,15 @@ import { useInventoryContext } from "../../../inventory";
 
 const NarrowSearchForm = () => {
   const { inventory } = useInventoryContext();
+  //^ FOB MAP + SET
   const mappedFob = inventory.map((item) => {
     let { fob } = item;
     return fob;
   });
   const uniqueFobSet = new Set(mappedFob);
   const setFobArr = [...uniqueFobSet]; //Creating new array with Set (no duplicates)
+
+  //^ CATEGORIES MAP + SET
   const mappedCategories = inventory.map((item) => {
     let { category } = item;
     return category;
@@ -17,9 +20,11 @@ const NarrowSearchForm = () => {
   const uniqueCategorySet = new Set(mappedCategories);
   const setCategoriesArr = [...uniqueCategorySet]; //Creating new array with Set (no duplicates)
 
+  //^ HANDLE CLICK
   const handleClick = () => {
     console.log("checked");
   };
+  
   return (
     <>
       <Form className={`${window.innerWidth <= 1024 ? "form-flex" : null}`}>
@@ -40,10 +45,6 @@ const NarrowSearchForm = () => {
                   />
                 );
               })}
-
-              {/* {Object.values(
-                inventory.reduce((map, next) => ({ ...map, [next]: true }), {})
-              )} */}
             </Form.Group>
           </Col>
           <Col>

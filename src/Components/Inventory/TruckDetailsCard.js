@@ -27,6 +27,7 @@ const TruckDetailsCard = ({ id, current }) => {
     shippingStatus,
     sold,
     status,
+    condition,
     accountingNotes,
     logisticsNotes,
     salesNotes,
@@ -264,6 +265,33 @@ const TruckDetailsCard = ({ id, current }) => {
                   <span className="truck-data-title">FOB </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {fob}
+                  </span>
+                </p>
+              </Card.Header>
+            </Card>
+            {/* //^ CONDITION CARD */}
+            <Card style={{ border: "none" }}>
+              <Card.Header
+                style={{
+                  padding: 0,
+                  borderBottom: "none",
+                  borderRadius: ".4rem",
+                }}
+              >
+                <p className="data-wrapper">
+                  <span className="truck-data-title">Condition </span>
+                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
+                    {`${
+                      condition === 0
+                        ? "returns"
+                        : condition === 1
+                        ? "overstock"
+                        : condition === 2
+                        ? "salvage"
+                        : condition === 3
+                        ? "shelf pulls"
+                        : "warehouse damage"
+                    }`}
                   </span>
                 </p>
               </Card.Header>
