@@ -76,7 +76,7 @@ const UpdateTruckDetails = () => {
       <div>
         <Navigation />
       </div>
-      <h1 className="update-truck-header">Edit truck details</h1>
+      <h1 className="update-truck-header">Edit details</h1>
 
       <div className="update-truck-form-container">
         <UpdateTruckForm
