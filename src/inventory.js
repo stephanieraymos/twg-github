@@ -49,6 +49,7 @@ const InventoryProvider = ({ children }) => {
   const [inventory, setInventory] = useState([]);
   const [imageObjects, setImageObjects] = useState([]);
   const [manifestObjects, setManifestObjects] = useState([]);
+  
 
   let history = useHistory();
 

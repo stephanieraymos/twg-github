@@ -17,7 +17,7 @@ import {
 } from "./Hooks/useHeaders";
 import { useStyles } from "./Hooks/useStyles";
 import MarketingArea from "./MarketingArea";
-
+import AvailableInventoriesButton from "./AvailableInventoriesButton";
 
 export default function BuyerDashboard() {
   const classes = useStyles();
@@ -205,30 +205,7 @@ export default function BuyerDashboard() {
     <div className={classes.root}>
       <Grid container spacing={2}>
         <Grid item xs={gridSize}>
-          <Card className={classes.card} variant="outlined">
-            <CardContent>
-              <Typography className={classes.title_centered} gutterBottom>
-                Available Inventories
-              </Typography>
-              <Typography
-                className={classes.body_centered}
-                variant="h5"
-                component="h2"
-              >
-                {availableInventory.length}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                className={classes.button}
-                variant="outlined"
-                color="primary"
-                onClick={() => updateTable(0)}
-              >
-                View Available Inventories
-              </Button>
-            </CardActions>
-          </Card>
+          <AvailableInventoriesButton availableInventory={availableInventory} />
         </Grid>
         <Grid item xs={gridSize}>
           <Card className={classes.card} variant="outlined">

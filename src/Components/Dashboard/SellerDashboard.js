@@ -20,6 +20,7 @@ import {
   useSellerInventory,
 } from "./Hooks/useHeaders";
 import MarketingArea from "./MarketingArea";
+import AvailableInventoriesButton from "./AvailableInventoriesButton";
 
 export default function SellerDashboard() {
   const classes = useStyles();
@@ -263,35 +264,14 @@ export default function SellerDashboard() {
     setSelectedTable(index);
     tableRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={gridSize}>
-          <Card className={classes.card} variant="outlined">
-            <CardContent>
-              <Typography className={classes.title_centered} gutterBottom>
-                Your Available Inventories
-              </Typography>
-              <Typography
-                className={classes.body_centered}
-                variant="h5"
-                component="h2"
-              >
-                {availableInventory.length}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                className={classes.button}
-                variant="outlined"
-                color="primary"
-                onClick={() => updateTable(0)}
-              >
-                View Your Available Inventories
-              </Button>
-            </CardActions>
-          </Card>
+          <AvailableInventoriesButton
+            availableInventory={availableInventory}
+            updateTable={updateTable}
+          />
         </Grid>
         <Grid item xs={gridSize}>
           <Card className={classes.card} variant="outlined">

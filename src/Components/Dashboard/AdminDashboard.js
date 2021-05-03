@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useInventoryContext } from "../../inventory";
 import { authService } from "../../authService";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import {
+  Grid,
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+} from "@material-ui/core";
 import CustomTable from "./DashboardTable";
 import Chart from "../D3/Chart";
 import { useSuperuserContext } from "../../superuser";
@@ -22,6 +24,7 @@ import {
   useAllInventoryHeaders,
 } from "./Hooks/useHeaders";
 import { date, monthNames } from "./Hooks/useMonths";
+import AvailableInventoriesButton from "./AvailableInventoriesButton";
 
 export default function AdminDashboard() {
   const classes = useStyles();
@@ -301,30 +304,7 @@ export default function AdminDashboard() {
     <div className={classes.root}>
       <Grid container spacing={2}>
         <Grid item xs={gridSize}>
-          <Card className={classes.card} variant="outlined">
-            <CardContent>
-              <Typography className={classes.title_centered} gutterBottom>
-                Your Available Inventories
-              </Typography>
-              <Typography
-                className={classes.body_centered}
-                variant="h5"
-                component="h2"
-              >
-                {availableInventory.length}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                className={classes.button}
-                variant="outlined"
-                color="primary"
-                onClick={() => updateTable(0)}
-              >
-                View Your Available Inventories
-              </Button>
-            </CardActions>
-          </Card>
+          <AvailableInventoriesButton availableInventory={availableInventory} />
         </Grid>
         <Grid item xs={gridSize}>
           <Card className={classes.card} variant="outlined">
@@ -484,7 +464,6 @@ export default function AdminDashboard() {
           </Card>
         </Grid>
         <Grid item xs={12} ref={tableRef}>
-
           {/* <CustomTable
             data={data}
             defaultOrderBy={defaultOrderBy}
