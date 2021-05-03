@@ -13,6 +13,7 @@ import { useSuperuserContext } from "../../superuser";
 import Barplot from "./DashboardBarplot";
 import dashboard from "../../css/dashboard.css";
 import { useStyles } from "./Hooks/useStyles";
+import MarketingArea from "./MarketingArea";
 // import { useSellerInventory } from "./useSellerInventory";
 import {
   useAvailableHeaders,
@@ -483,14 +484,15 @@ export default function AdminDashboard() {
           </Card>
         </Grid>
         <Grid item xs={12} ref={tableRef}>
-          <CustomTable
+
+          {/* <CustomTable
             data={data}
             defaultOrderBy={defaultOrderBy}
             title={title}
             headers={headers}
             filterBy={filterBy}
             width={width}
-          />
+          /> */}
         </Grid>
         <Grid item xs={12} ref={userTableRef}>
           <CustomTable

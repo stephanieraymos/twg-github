@@ -10,8 +10,14 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CustomTable from "./DashboardTable";
 import Barplot from "./DashboardBarplot";
-import { useAvailableHeaders, useUnpaidHeaders, usePurchasedHeaders } from "./Hooks/useHeaders";
+import {
+  useAvailableHeaders,
+  useUnpaidHeaders,
+  usePurchasedHeaders,
+} from "./Hooks/useHeaders";
 import { useStyles } from "./Hooks/useStyles";
+import MarketingArea from "./MarketingArea";
+
 
 export default function BuyerDashboard() {
   const classes = useStyles();
@@ -277,14 +283,33 @@ export default function BuyerDashboard() {
           </Card>
         </Grid>
         <Grid item xs={12} ref={tableRef}>
-          <CustomTable
+          <Card className={classes.card} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.body_centered}
+                variant="h5"
+                component="h2"
+              >
+                <MarketingArea />
+              </Typography>
+            </CardContent>
+          </Card>
+          {/* <CustomTable
             data={data}
             defaultOrderBy={defaultOrderBy}
             title={title}
             headers={headers}
             filterBy={filterBy}
             width={width}
-          />
+          /> */}
+          {/* <CustomTable
+            data={data}
+            defaultOrderBy={defaultOrderBy}
+            title={title}
+            headers={headers}
+            filterBy={filterBy}
+            width={width}
+          /> */}
         </Grid>
         {width < 1250 ? (
           <>

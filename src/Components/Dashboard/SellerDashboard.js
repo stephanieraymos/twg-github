@@ -11,7 +11,15 @@ import Typography from "@material-ui/core/Typography";
 import CustomTable from "./DashboardTable";
 import { useStyles } from "./Hooks/useStyles";
 import { date, monthNames } from "./Hooks/useMonths";
-import { useFinancialHeaders, useFinancialByMonthHeaders, useAvailableHeaders, useSoldHeaders, useSales24HoursHeaders, useSellerInventory } from "./Hooks/useHeaders";
+import {
+  useFinancialHeaders,
+  useFinancialByMonthHeaders,
+  useAvailableHeaders,
+  useSoldHeaders,
+  useSales24HoursHeaders,
+  useSellerInventory,
+} from "./Hooks/useHeaders";
+import MarketingArea from "./MarketingArea";
 
 export default function SellerDashboard() {
   const classes = useStyles();
@@ -364,14 +372,26 @@ export default function SellerDashboard() {
           </Card>
         </Grid>
         <Grid item xs={12} ref={tableRef}>
-          <CustomTable
+          <Card className={classes.card} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.body_centered}
+                variant="h5"
+                component="h2"
+              >
+                <MarketingArea />
+              </Typography>
+            </CardContent>
+          </Card>
+
+          {/* <CustomTable
             data={data}
             defaultOrderBy={defaultOrderBy}
             title={title}
             headers={headers}
             filterBy={filterBy}
             width={width}
-          />
+          /> */}
         </Grid>
         <Grid item xs={12}>
           <CustomTable
