@@ -11,6 +11,9 @@ const NarrowSearchForm = () => {
   const uniqueSet = new Set(mappedInventory);
   const setArr = [...uniqueSet]; //Creating new array with Set (no duplicates)
 
+  const handleClick = () => {
+    console.log("checked");
+  };
   return (
     <>
       <Form className={`${window.innerWidth <= 1024 ? "form-flex" : null}`}>
@@ -19,8 +22,17 @@ const NarrowSearchForm = () => {
             <Form.Group name="fob">
               <Form.Label className="form-label-styles">Location</Form.Label>
 
-              {setArr.map((item) => {
-                return <Form.Check type="checkbox" label={item} />;
+              {setArr.map((item, index) => {
+                return (
+                  <Form.Check
+                    key={index}
+                    type="checkbox"
+                    label={item}
+                    onClick={() => {
+                      handleClick();
+                    }}
+                  />
+                );
               })}
 
               {/* {Object.values(
