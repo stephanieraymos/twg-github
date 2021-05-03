@@ -1,17 +1,33 @@
 import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
+import { useInventoryContext } from "../../../inventory";
 
 const NarrowSearchForm = () => {
+  const { inventory } = useInventoryContext();
+  const mapped = inventory.map((item) => {
+    let { fob } = item;
+    return fob;
+  });
+  console.log("mapped", mapped);
+  const set = new Set(mapped);
+  const setArr = [...set];
+  console.log("setArr", setArr);
+
   return (
     <>
       <Form className={`${window.innerWidth <= 1024 ? "form-flex" : null}`}>
         <Row>
           <Col>
-            <Form.Group>
+            <Form.Group name="fob">
               <Form.Label className="form-label-styles">Location</Form.Label>
-              <Form.Check type="checkbox" label="Sacramento" />
-              <Form.Check type="checkbox" label="Woodland" />
-              <Form.Check type="checkbox" label="Roseville" />
+
+              {setArr.map((item) => {
+                return <Form.Check type="checkbox" label={item} />;
+              })}
+
+              {/* {Object.values(
+                inventory.reduce((map, next) => ({ ...map, [next]: true }), {})
+              )} */}
             </Form.Group>
           </Col>
           <Col>

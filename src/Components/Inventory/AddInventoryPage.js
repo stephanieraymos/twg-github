@@ -29,7 +29,7 @@ const AddInventoryModal = ({ addNewTrucks }) => {
             className="form-label"
             style={{ color: "black", fontSize: "36px", margin: "0px 24px" }}
           >
-            Add New Truck
+            Add New Load
           </div>
         </div>
 
