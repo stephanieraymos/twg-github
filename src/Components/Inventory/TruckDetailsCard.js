@@ -71,7 +71,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">ID: </span>
+                  <span className="truck-data-title">ID </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {loadId}
                   </span>
@@ -88,7 +88,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Program: </span>
+                  <span className="truck-data-title">Program </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {source}
                   </span>
@@ -105,7 +105,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Price: </span>
+                  <span className="truck-data-title">Price </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     ${price}
                   </span>
@@ -122,7 +122,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Cost: </span>
+                  <span className="truck-data-title">Cost </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     ${cost}
                   </span>
@@ -140,7 +140,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Retail Price: </span>
+                  <span className="truck-data-title">Retail Price </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     ${retailPrice}
                   </span>
@@ -157,7 +157,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Commission: </span>
+                  <span className="truck-data-title">Commission </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {commission}%
                   </span>
@@ -174,7 +174,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Category: </span>
+                  <span className="truck-data-title">Category </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {category}
                   </span>
@@ -191,7 +191,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Owner: </span>
+                  <span className="truck-data-title">Owner </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {owner}
                   </span>
@@ -208,7 +208,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Units: </span>
+                  <span className="truck-data-title">Units </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {units}
                   </span>
@@ -225,7 +225,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Pallets: </span>
+                  <span className="truck-data-title">Pallets </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {palletCount}
                   </span>
@@ -242,7 +242,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">FOB: </span>
+                  <span className="truck-data-title">FOB </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {fob}
                   </span>
@@ -259,7 +259,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Lane: </span>
+                  <span className="truck-data-title">Lane </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {lane}
                   </span>
@@ -276,7 +276,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Shipping Status: </span>
+                  <span className="truck-data-title">Shipping Status </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {`${
                       shippingStatus === 0
@@ -316,7 +316,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Status: </span>
+                  <span className="truck-data-title">Status </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {`${
                       status === 0
