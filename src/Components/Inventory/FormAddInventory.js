@@ -149,15 +149,12 @@ const FormAddInventory = ({
           </Form.Control.Feedback>
         </Form.Group>
 
-        {/* //^ ------------------------- CONTENTS ---------------------------- */}
+        {/* //^ ------------------------- DETAILS ---------------------------- */}
         <Form.Group>
-          <Form.Label className="form-label">Contents</Form.Label>
+          <Form.Label className="form-label">Details</Form.Label>
           <Form.Control type="text" name="contents" />
-          <Form.Text muted>
-            Separate each content with a comma, e.g., clothes,toys
-          </Form.Text>
           <Form.Control.Feedback type="invalid">
-            Please specify the contents inside the truck.
+            Please add some details about the truck.
           </Form.Control.Feedback>
         </Form.Group>
 
