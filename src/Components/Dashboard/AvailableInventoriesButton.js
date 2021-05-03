@@ -28,16 +28,17 @@ const AvailableInventoriesButton = ({ availableInventory, updateTable }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button
-          className={classes.button}
-          variant="outlined"
-          color="primary"
-          onClick={() => updateTable(0)}
-        >
-          {is_seller
-            ? "View Your Available Inventories"
-            : "View Available Inventories"}
-        </Button>
+        <a className={classes.button} href="/inventory">
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => updateTable(0)}
+          >
+            {is_seller
+              ? "View Your Available Inventories"
+              : "View Available Inventories"}
+          </Button>
+        </a>
       </CardActions>
     </Card>
   );
