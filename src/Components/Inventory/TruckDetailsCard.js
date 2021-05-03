@@ -4,8 +4,11 @@ import { Card, Accordion, Carousel, Image } from "react-bootstrap";
 import { FaAngleDoubleDown } from "react-icons/fa";
 import NotesForm from "./NotesForm";
 import { useInventoryContext } from "../../inventory";
+import { authService } from "../../authService";
 
 const TruckDetailsCard = ({ id, current }) => {
+  const { is_seller, is_admin } = authService.getUser();
+
   const {
     sellerId,
     buyerId,
@@ -80,7 +83,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 </p>
               </Card.Header>
             </Card>
-            {/* //^ TRUCK NAME CARD */}
+            {/* //^ TRUCK PROGRAM CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
                 style={{
@@ -93,52 +96,6 @@ const TruckDetailsCard = ({ id, current }) => {
                   <span className="truck-data-title">Program </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
                     {source}
-                  </span>
-                </p>
-              </Card.Header>
-            </Card>
-            {/* //^ TRUCK PRICE CARD */}
-            <Card style={{ border: "none" }}>
-              <Card.Header
-                style={{
-                  padding: 0,
-                  borderBottom: "none",
-                  borderRadius: ".4rem",
-                }}
-              >
-                <p className="data-wrapper">
-                  <span className="truck-data-title">Price </span>
-                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {`${
-                      status === 0
-                        ? "SOLD"
-                        : status === 1
-                        ? `${price}`
-                        : `${price}`
-                    }`}
-                  </span>
-                </p>
-              </Card.Header>
-            </Card>
-            {/* //^ OUR COST CARD */}
-            <Card style={{ border: "none" }}>
-              <Card.Header
-                style={{
-                  padding: 0,
-                  borderBottom: "none",
-                  borderRadius: ".4rem",
-                }}
-              >
-                <p className="data-wrapper">
-                  <span className="truck-data-title">Cost </span>
-                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {`${
-                      status === 0
-                        ? "SOLD"
-                        : status === 1
-                        ? `${cost}`
-                        : `${cost}`
-                    }`}
                   </span>
                 </p>
               </Card.Header>
@@ -167,7 +124,8 @@ const TruckDetailsCard = ({ id, current }) => {
                 </p>
               </Card.Header>
             </Card>
-            {/* //^ COMMISSION CARD */}
+
+            {/* //^ TRUCK PRICE CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
                 style={{
@@ -177,13 +135,72 @@ const TruckDetailsCard = ({ id, current }) => {
                 }}
               >
                 <p className="data-wrapper">
-                  <span className="truck-data-title">Commission </span>
+                  <span className="truck-data-title">Sale Price </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {commission}%
+                    {`${
+                      status === 0
+                        ? "SOLD"
+                        : status === 1
+                        ? `${price}`
+                        : `${price}`
+                    }`}
                   </span>
                 </p>
               </Card.Header>
             </Card>
+
+            {/* //^ OUR COST CARD */}
+            {is_seller || is_admin ? (
+              <Card style={{ border: "none" }}>
+                <Card.Header
+                  style={{
+                    padding: 0,
+                    borderBottom: "none",
+                    borderRadius: ".4rem",
+                  }}
+                >
+                  <p className="data-wrapper">
+                    <span className="truck-data-title">Cost </span>
+                    <span
+                      className="truck-data"
+                      style={{ paddingTop: ".5rem" }}
+                    >
+                      {`${
+                        status === 0
+                          ? "SOLD"
+                          : status === 1
+                          ? `${cost}`
+                          : `${cost}`
+                      }`}
+                    </span>
+                  </p>
+                </Card.Header>
+              </Card>
+            ) : null}
+
+            {/* //^ COMMISSION CARD */}
+            {is_seller || is_admin ? (
+              <Card style={{ border: "none" }}>
+                <Card.Header
+                  style={{
+                    padding: 0,
+                    borderBottom: "none",
+                    borderRadius: ".4rem",
+                  }}
+                >
+                  <p className="data-wrapper">
+                    <span className="truck-data-title">Commission </span>
+                    <span
+                      className="truck-data"
+                      style={{ paddingTop: ".5rem" }}
+                    >
+                      {commission}%
+                    </span>
+                  </p>
+                </Card.Header>
+              </Card>
+            ) : null}
+
             {/* //^ CATEGORY CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
@@ -202,22 +219,29 @@ const TruckDetailsCard = ({ id, current }) => {
               </Card.Header>
             </Card>
             {/* //^ OWNER CARD */}
-            <Card style={{ border: "none" }}>
-              <Card.Header
-                style={{
-                  padding: 0,
-                  borderBottom: "none",
-                  borderRadius: ".4rem",
-                }}
-              >
-                <p className="data-wrapper">
-                  <span className="truck-data-title">Owner </span>
-                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {owner}
-                  </span>
-                </p>
-              </Card.Header>
-            </Card>
+
+            {is_seller || is_admin ? (
+              <Card style={{ border: "none" }}>
+                <Card.Header
+                  style={{
+                    padding: 0,
+                    borderBottom: "none",
+                    borderRadius: ".4rem",
+                  }}
+                >
+                  <p className="data-wrapper">
+                    <span className="truck-data-title">Owner </span>
+                    <span
+                      className="truck-data"
+                      style={{ paddingTop: ".5rem" }}
+                    >
+                      {owner}
+                    </span>
+                  </p>
+                </Card.Header>
+              </Card>
+            ) : null}
+
             {/* //^ UNITS CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
@@ -297,22 +321,28 @@ const TruckDetailsCard = ({ id, current }) => {
               </Card.Header>
             </Card>
             {/* //^ LANE CARD */}
-            <Card style={{ border: "none" }}>
-              <Card.Header
-                style={{
-                  padding: 0,
-                  borderBottom: "none",
-                  borderRadius: ".4rem",
-                }}
-              >
-                <p className="data-wrapper">
-                  <span className="truck-data-title">Lane </span>
-                  <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    {lane}
-                  </span>
-                </p>
-              </Card.Header>
-            </Card>
+            {is_seller || is_admin ? (
+              <Card style={{ border: "none" }}>
+                <Card.Header
+                  style={{
+                    padding: 0,
+                    borderBottom: "none",
+                    borderRadius: ".4rem",
+                  }}
+                >
+                  <p className="data-wrapper">
+                    <span className="truck-data-title">Lane </span>
+                    <span
+                      className="truck-data"
+                      style={{ paddingTop: ".5rem" }}
+                    >
+                      {lane}
+                    </span>
+                  </p>
+                </Card.Header>
+              </Card>
+            ) : null}
+
             {/* //^ SHIPPING STATUS CARD */}
             <Card style={{ border: "none" }}>
               <Card.Header
@@ -377,29 +407,32 @@ const TruckDetailsCard = ({ id, current }) => {
               </Card.Header>
             </Card>
             {/* //^ TRUCK DETAILS ACCORDION */}
-            <Accordion>
-              <Card style={{ border: "none" }} className="contents-accordion">
-                <Accordion.Toggle
-                  as={Card.Header}
-                  eventKey="0"
-                  className="all-accordions"
-                >
-                  <p className="data-wrapper">
-                    <span className="truck-data-title">Details </span>
-                    <span className="truck-data-title">
-                      <FaAngleDoubleDown />
-                    </span>
-                  </p>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body
-                    style={{ color: "black", backgroundColor: "transparent" }}
+            {is_admin ? (
+              <Accordion>
+                <Card style={{ border: "none" }} className="contents-accordion">
+                  <Accordion.Toggle
+                    as={Card.Header}
+                    eventKey="0"
+                    className="all-accordions"
                   >
-                    <span>{contents}</span>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
+                    <p className="data-wrapper">
+                      <span className="truck-data-title">Details </span>
+                      <span className="truck-data-title">
+                        <FaAngleDoubleDown />
+                      </span>
+                    </p>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body
+                      style={{ color: "black", backgroundColor: "transparent" }}
+                    >
+                      <span>{contents}</span>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+            ) : null}
+
             {/* //^ TRUCK MANIFEST ACCORDION */}
             <Accordion>
               <Card style={{ border: "none" }}>
