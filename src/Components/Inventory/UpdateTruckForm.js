@@ -175,9 +175,9 @@ const UpdateTruckForm = ({
           </Form.Control.Feedback>
         </Form.Group>
 
-        {/* //^ ----------CONTENTS---------- */}
+        {/* //^ ----------DETAILS---------- */}
         <Form.Group className="center-form-group">
-          <Form.Label className="form-label">Contents</Form.Label>
+          <Form.Label className="form-label">Details</Form.Label>
           <Form.Control
             type="text"
             defaultValue={contents}
@@ -185,12 +185,8 @@ const UpdateTruckForm = ({
             onChange={(e) => setContents(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
-            Please specify the contents inside the truck.
+            Please add details about this load.
           </Form.Control.Feedback>
-          <Form.Text muted>
-            Separate each content with a comma (no space character), e.g.,
-            clothes,toys
-          </Form.Text>
         </Form.Group>
 
         <Form.Group>

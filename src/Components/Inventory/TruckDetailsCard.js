@@ -329,7 +329,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 </p>
               </Card.Header>
             </Card>
-            {/* //^ TRUCK CONTENTS ACCORDION */}
+            {/* //^ TRUCK DETAILS ACCORDION */}
             <Accordion>
               <Card style={{ border: "none" }} className="contents-accordion">
                 <Accordion.Toggle
@@ -338,7 +338,7 @@ const TruckDetailsCard = ({ id, current }) => {
                   className="all-accordions"
                 >
                   <p className="data-wrapper">
-                    <span className="truck-data-title">Contents: </span>
+                    <span className="truck-data-title">Details: </span>
                     <span className="truck-data-title">
                       <FaAngleDoubleDown />
                     </span>
