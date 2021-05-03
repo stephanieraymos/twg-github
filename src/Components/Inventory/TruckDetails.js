@@ -79,7 +79,7 @@ const TruckDetails = () => {
               }}
               className="delete-truck-btn"
             >
-              <FaTimes /> Delete truck
+              <FaTimes /> Delete load
             </Button>
 
             <Button
@@ -91,7 +91,7 @@ const TruckDetails = () => {
                 });
               }}
             >
-              <FaEdit /> Edit truck
+              <FaEdit /> Edit load
             </Button>
           </>
         )}

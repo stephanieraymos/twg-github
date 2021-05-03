@@ -338,7 +338,7 @@ const TruckDetailsCard = ({ id, current }) => {
                   className="all-accordions"
                 >
                   <p className="data-wrapper">
-                    <span className="truck-data-title">Details: </span>
+                    <span className="truck-data-title">Details </span>
                     <span className="truck-data-title">
                       <FaAngleDoubleDown />
                     </span>
@@ -353,7 +353,7 @@ const TruckDetailsCard = ({ id, current }) => {
                 </Accordion.Collapse>
               </Card>
             </Accordion>
-            {/* //^ TRUCK FILES ACCORDION */}
+            {/* //^ TRUCK MANIFEST ACCORDION */}
             <Accordion>
               <Card style={{ border: "none" }}>
                 <Accordion.Toggle
@@ -362,7 +362,7 @@ const TruckDetailsCard = ({ id, current }) => {
                   className="all-accordions"
                 >
                   <p className="data-wrapper">
-                    <span className="truck-data-title">Files: </span>
+                    <span className="truck-data-title">Manifests </span>
                     <span className="truck-data-title">
                       <FaAngleDoubleDown />
                     </span>

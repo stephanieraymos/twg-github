@@ -362,7 +362,7 @@ const UpdateTruckForm = ({
                 <option value="1">Yes</option>
               </Form.Control>
             </Col>
-            {/* //^ ----------FILES---------- */}
+            {/* //^ ----------MANIFESTS---------- */}
             <Col>
               <Form.Label className="form-label">Manifest</Form.Label>
               {Array(manifestsCount).fill(
@@ -375,10 +375,10 @@ const UpdateTruckForm = ({
                     style={{ fontSize: "1rem", color: "black" }}
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please add a file.
+                    Please add a manifest.
                   </Form.Control.Feedback>
                   <Form.Text muted>
-                    Select multiple files by holding down the SHIFT key
+                    Select multiple manifests by holding down the SHIFT key
                   </Form.Text>
                 </>
               )}
@@ -396,7 +396,7 @@ const UpdateTruckForm = ({
                     margin: "0rem",
                   }}
                 >
-                  Add Files
+                  Add Manifest/s
                 </Button>
               ) : (
                 <Button
@@ -412,7 +412,7 @@ const UpdateTruckForm = ({
                     margin: ".75rem 0rem",
                   }}
                 >
-                  Remove Files
+                  Remove Manifests
                 </Button>
               )}
             </Col>
