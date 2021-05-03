@@ -6,7 +6,6 @@ import NotesForm from "./NotesForm";
 import { useInventoryContext } from "../../inventory";
 
 const TruckDetailsCard = ({ id, current }) => {
-  
   const {
     sellerId,
     buyerId,
@@ -33,8 +32,10 @@ const TruckDetailsCard = ({ id, current }) => {
     salesNotes,
     images,
     manifests,
-    imageObjects, setImageObjects,
-    manifestObjects, setManifestObjects
+    imageObjects,
+    setImageObjects,
+    manifestObjects,
+    setManifestObjects,
   } = useInventoryContext();
   return (
     <>
@@ -107,7 +108,13 @@ const TruckDetailsCard = ({ id, current }) => {
                 <p className="data-wrapper">
                   <span className="truck-data-title">Price </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    ${price}
+                    {`${
+                      status === 0
+                        ? "SOLD"
+                        : status === 1
+                        ? `${price}`
+                        : `${price}`
+                    }`}
                   </span>
                 </p>
               </Card.Header>
@@ -124,7 +131,13 @@ const TruckDetailsCard = ({ id, current }) => {
                 <p className="data-wrapper">
                   <span className="truck-data-title">Cost </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    ${cost}
+                    {`${
+                      status === 0
+                        ? "SOLD"
+                        : status === 1
+                        ? `${cost}`
+                        : `${cost}`
+                    }`}
                   </span>
                 </p>
               </Card.Header>
@@ -142,7 +155,13 @@ const TruckDetailsCard = ({ id, current }) => {
                 <p className="data-wrapper">
                   <span className="truck-data-title">Retail Price </span>
                   <span className="truck-data" style={{ paddingTop: ".5rem" }}>
-                    ${retailPrice}
+                    {`${
+                      status === 0
+                        ? "SOLD"
+                        : status === 1
+                        ? `${retailPrice}`
+                        : `${retailPrice}`
+                    }`}
                   </span>
                 </p>
               </Card.Header>
