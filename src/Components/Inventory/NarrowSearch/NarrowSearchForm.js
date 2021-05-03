@@ -4,12 +4,18 @@ import { useInventoryContext } from "../../../inventory";
 
 const NarrowSearchForm = () => {
   const { inventory } = useInventoryContext();
-  const mappedInventory = inventory.map((item) => {
+  const mappedFob = inventory.map((item) => {
     let { fob } = item;
     return fob;
   });
-  const uniqueSet = new Set(mappedInventory);
-  const setArr = [...uniqueSet]; //Creating new array with Set (no duplicates)
+  const uniqueFobSet = new Set(mappedFob);
+  const setFobArr = [...uniqueFobSet]; //Creating new array with Set (no duplicates)
+  const mappedCategories = inventory.map((item) => {
+    let { category } = item;
+    return category;
+  });
+  const uniqueCategorySet = new Set(mappedCategories);
+  const setCategoriesArr = [...uniqueCategorySet]; //Creating new array with Set (no duplicates)
 
   const handleClick = () => {
     console.log("checked");
@@ -22,7 +28,7 @@ const NarrowSearchForm = () => {
             <Form.Group name="fob">
               <Form.Label className="form-label-styles">Location</Form.Label>
 
-              {setArr.map((item, index) => {
+              {setFobArr.map((item, index) => {
                 return (
                   <Form.Check
                     key={index}
@@ -43,9 +49,18 @@ const NarrowSearchForm = () => {
           <Col>
             <Form.Group>
               <Form.Label className="form-label-styles">Categories</Form.Label>
-              <Form.Check type="checkbox" label="Clothing" />
-              <Form.Check type="checkbox" label="Office" />
-              <Form.Check type="checkbox" label="Home" />
+              {setCategoriesArr.map((item, index) => {
+                return (
+                  <Form.Check
+                    key={index}
+                    type="checkbox"
+                    label={item}
+                    onClick={() => {
+                      handleClick();
+                    }}
+                  />
+                );
+              })}
             </Form.Group>
           </Col>
           <Col>
