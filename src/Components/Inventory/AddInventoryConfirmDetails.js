@@ -68,6 +68,16 @@ const AddInventoryFormConfirmDetails = ({ addNewTrucks }) => {
           <Form.Label className="form-label">Load ID</Form.Label>
           <Form.Control type="text" readOnly name="id" />
         </Form.Group>
+        {/* //^ ------------------- BOL ---------------------- */}
+        <Form.Group>
+          <Form.Label className="form-label">BOL</Form.Label>
+          <Form.Control type="text" readOnly name="bol" />
+        </Form.Group>
+        {/* //^ ------------------- SEAL ---------------------- */}
+        <Form.Group>
+          <Form.Label className="form-label">Seal Number</Form.Label>
+          <Form.Control type="text" readOnly name="seal" />
+        </Form.Group>
 
         {/* //^ ------------------- PROGRAM / SOURCE ---------------------- */}
         <Form.Group>
