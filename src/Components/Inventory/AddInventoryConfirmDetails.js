@@ -75,22 +75,10 @@ const AddInventoryFormConfirmDetails = ({ addNewTrucks }) => {
           <Form.Control type="text" readOnly name="program" />
         </Form.Group>
 
-        <Form.Group>
-          {/* //^ -------------------------- FOB ----------------------------- */}
-          <Form.Label className="form-label">FOB</Form.Label>
-          <Form.Control type="text" readOnly name="fob" />
-        </Form.Group>
-
         {/* //^ ------------------------- CATEGORY ---------------------------- */}
         <Form.Group>
           <Form.Label className="form-label">Category</Form.Label>
           <Form.Control type="text" readOnly name="category" />
-        </Form.Group>
-
-        {/* //^ ------------------------- OWNER ---------------------------- */}
-        <Form.Group>
-          <Form.Label className="form-label">Owner</Form.Label>
-          <Form.Control type="text" readOnly name="owner" />
         </Form.Group>
 
         <Form.Group>

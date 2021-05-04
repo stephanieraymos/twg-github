@@ -99,7 +99,7 @@ const SuperuserProvider = ({ children }) => {
                             setIsActive(user["is_active"]);
                             setIsVerified(user["is_verified"]);
                             setIsSeller(user["is_seller"]);
-                            setIsTeamMember(user["is_team_member"];
+                            setIsTeamMember(user["is_team_member"]);
                             setIsAdmin(user["is_admin"]);
                             setIsSuperuser(user["is_superuser"]);
                             setDateJoined(user["date_joined"]);

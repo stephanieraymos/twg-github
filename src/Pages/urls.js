@@ -34,12 +34,12 @@ let inventoryV2URL = "https://api.thewholesalegroup.com/v2/inventory/edit/";
 let inventoryV2FilesURL = "https://api.thewholesalegroup.com/v2/inventory/files/";
 
 if (development) {
-    inventoryV2GetURL = "https://api.thewholesalegroup.com/test/v2/inventory/";
-    inventoryV2GetByIdURL = "https://api.thewholesalegroup.com/test/v2/inventory/?id=";
-    inventoryV2GetBySellerIdURL = "https://api.thewholesalegroup.com/test/v2/inventory/?sellerId=";
-    inventoryV2GetByBuyerIdURL = "https://api.thewholesalegroup.com/test/v2/inventory/?buyerId=";
-    inventoryV2URL = "https://api.thewholesalegroup.com/test/v2/inventory/edit/";
-    inventoryV2FilesURL = "https://api.thewholesalegroup.com/test/v2/inventory/files/";
+    inventoryV2GetURL = "http://143.110.225.28/v2/inventory/";
+    inventoryV2GetByIdURL = "http://143.110.225.28/v2/inventory/?id=";
+    inventoryV2GetBySellerIdURL = "http://143.110.225.28/v2/inventory/?sellerId=";
+    inventoryV2GetByBuyerIdURL = "http://143.110.225.28/v2/inventory/?buyerId=";
+    inventoryV2URL = "http://143.110.225.28/v2/inventory/edit/";
+    inventoryV2FilesURL = "http://143.110.225.28/v2/inventory/files/";
 }
 
 export {
