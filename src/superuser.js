@@ -27,6 +27,7 @@ const SuperuserProvider = ({ children }) => {
     const [isVerified, setIsVerified] = useState(false);
     const [isSeller, setIsSeller] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isTeamMember, setIsTeamMember] = useState(false);
     const [isSuperuser, setIsSuperuser] = useState(false);
     const [dateJoined, setDateJoined] = useState("");
     const [lastLogin, setLastLogin] = useState("");
@@ -98,6 +99,7 @@ const SuperuserProvider = ({ children }) => {
                             setIsActive(user["is_active"]);
                             setIsVerified(user["is_verified"]);
                             setIsSeller(user["is_seller"]);
+                            setIsTeamMember(user["is_team_member"];
                             setIsAdmin(user["is_admin"]);
                             setIsSuperuser(user["is_superuser"]);
                             setDateJoined(user["date_joined"]);
@@ -206,6 +208,7 @@ const SuperuserProvider = ({ children }) => {
                 isActive, setIsActive,
                 isVerified, setIsVerified,
                 isSeller, setIsSeller,
+                isTeamMember, setIsTeamMember,
                 isAdmin, setIsAdmin,
                 isSuperuser, setIsSuperuser,
                 dateJoined, setDateJoined,
