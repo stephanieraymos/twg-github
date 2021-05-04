@@ -2,15 +2,15 @@ import React from "react";
 import AddInventoryForm from "./AddInventoryForm";
 import { Image } from "react-bootstrap";
 import Navigation from "../Navigation/Navigation";
-import {
-  useHistory,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import back from "../../img/back.svg";
 import { inventoryPATH } from "../../Pages/paths";
+import AddInventoryFormBOL from "./AddInventoryFormBOL";
+import { authService } from "../../authService";
 
 const AddInventoryModal = ({ addNewTrucks }) => {
-
   let history = useHistory();
+  const { is_team_member } = authService.getUser();
 
   return (
     <>
@@ -19,7 +19,10 @@ const AddInventoryModal = ({ addNewTrucks }) => {
       </div>
 
       <div>
-        <div className="flex-start-center" style={{ width: "85%", margin: "24px auto" }}>
+        <div
+          className="flex-start-center"
+          style={{ width: "85%", margin: "24px auto" }}
+        >
           <Image
             src={back}
             style={{ cursor: "pointer", height: "60px" }}
@@ -34,9 +37,11 @@ const AddInventoryModal = ({ addNewTrucks }) => {
         </div>
 
         {/* //^ MODAL BODY */}
-        <AddInventoryForm
-          addNewTrucks={addNewTrucks}
-        />
+        {is_team_member ? (
+          <AddInventoryFormBOL addNewTrucks={addNewTrucks} />
+        ) : (
+          <AddInventoryForm addNewTrucks={addNewTrucks} />
+        )}
       </div>
     </>
   );
