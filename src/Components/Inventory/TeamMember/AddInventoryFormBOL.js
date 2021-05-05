@@ -32,7 +32,7 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
   };
 
   const next = () => {
-    history.goForward(`${inventoryPATH}/seal-form-page"`);
+    history.push(`${inventoryPATH}/seal-form-page`);
   };
 
   const removeImage = (index) => {

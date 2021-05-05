@@ -11,7 +11,7 @@ import { Steps, Step } from "react-step-builder";
 
 const AddInventoryModal = ({ addNewTrucks }) => {
   let history = useHistory();
-  const { is_team_member, is_admin } = authService.getUser();
+  const { is_team_member, is_admin, is_seller } = authService.getUser();
 
   return (
     <>
@@ -43,6 +43,7 @@ const AddInventoryModal = ({ addNewTrucks }) => {
         ) : (
           <AddInventoryForm addNewTrucks={addNewTrucks} />
         )}
+        {/* <AddInventoryForm addNewTrucks={addNewTrucks} /> */}
       </div>
     </>
   );
