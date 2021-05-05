@@ -60,14 +60,14 @@ const InventoryAllTrucks = () => {
         <PrivateRoute exact path={`${path}/add`}>
           <AddInventoryPage addNewTrucks={addTruck} />
         </PrivateRoute>
+        <PrivateRoute exact path={`${path}/seal-form-page`}>
+          <AddInventoryFormSeal />
+        </PrivateRoute>
         <PrivateRoute exact path={`${path}/:id`}>
           <TruckDetails />
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/edit/:id`}>
           <UpdateTruckDetails />
-        </PrivateRoute>
-        <PrivateRoute exact path={`${path}/seal-form-page`}>
-          <AddInventoryFormSeal />
         </PrivateRoute>
       </Switch>
     </InventoryProvider>

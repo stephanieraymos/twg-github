@@ -64,9 +64,10 @@ const AddInventoryFormSeal = ({ addNewTrucks }) => {
           <Form.Label className="form-label">
             Does Seal # on truck = Seal # on BOL?
           </Form.Label>
-          <Form.Control type="select" required name="seal" />
-          <option value="1">Yes</option>
-          <option value="0">No</option>
+          <Form.Control as="select" required name="seal" custom>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </Form.Control>
           <Form.Control.Feedback type="invalid">
             Please answer yes or no.
           </Form.Control.Feedback>
