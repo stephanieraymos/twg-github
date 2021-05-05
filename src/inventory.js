@@ -44,12 +44,13 @@ const InventoryProvider = ({ children }) => {
   const [salesNotes, setSalesNotes] = useState("");
   const [images, setImages] = useState([]);
   const [manifests, setManifests] = useState([]);
+  const [seal, setSeal] = useState("");
+  const [bol, setBol] = useState("");
 
   // EXTRA
   const [inventory, setInventory] = useState([]);
   const [imageObjects, setImageObjects] = useState([]);
   const [manifestObjects, setManifestObjects] = useState([]);
-  
 
   let history = useHistory();
 
@@ -131,6 +132,8 @@ const InventoryProvider = ({ children }) => {
                 sales,
                 images,
                 manifests,
+                seal,
+                bol,
               } = data[0];
               setId(id);
               setSellerId(seller_id);
@@ -159,6 +162,8 @@ const InventoryProvider = ({ children }) => {
               setSalesNotes(sales);
               setImages(images);
               setManifests(manifests);
+              setSeal(seal);
+              setBol(bol);
               getInventoryFiles(images, manifests);
               resolve(data);
             })
@@ -421,6 +426,10 @@ const InventoryProvider = ({ children }) => {
         setImageObjects,
         manifestObjects,
         setManifestObjects,
+        seal,
+        setSeal,
+        bol,
+        setBol,
       }}
     >
       {children}

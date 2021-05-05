@@ -5,7 +5,6 @@ import { inventoryPATH } from "../../Pages/paths";
 import { useHistory, Link } from "react-router-dom";
 import cancel from "../../img/cancel.svg";
 import { useInventoryContext } from "../../inventory";
-import AddInventoryFormSeal from "./AddInventoryFormSeal";
 
 const AddInventoryFormBOL = ({ addNewTrucks }) => {
   const form = useRef(null);
@@ -30,11 +29,6 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
     } else {
       setValidated(true);
     }
-  };
-
-  const handleGoToSeal = () => {
-    //Go to next page (seal form)
-    console.log("Seal page button triggered");
   };
 
   const back = () => {
@@ -161,13 +155,16 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
         </Form.Group>
 
         <div className="form-footer-container">
-          <Link to="/AddInventoryFormSeal" className="link-unstyled">
+          <Link
+            to="/seal-form-page"
+            className="link-unstyled"
+            style={{ width: "100%" }}
+          >
             <Button
               type="submit"
               className="form-button"
               block
-              style={{ width: "100%", backgroundColor: "#f47c20" }}
-              onClick={() => handleGoToSeal()}
+              style={{ backgroundColor: "#f47c20", margin: "0 auto" }}
             >
               Next
             </Button>

@@ -11,7 +11,7 @@ import {
   accountPATH,
   emailVerificationPATH,
   superuserPATH,
-  passwordResetPATH
+  passwordResetPATH,
 } from "./Pages/paths";
 
 import { LoginRoute, PrivateRoute, SuperuserRoute } from "./Pages/router";
@@ -27,6 +27,7 @@ import { SuperuserProvider } from "./superuser";
 import ResetPasswordPage from "./Components/Users/ResetPasswordPage";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import { InventoryProvider } from "./inventory";
+import AddInventoryFormSeal from "./Components/Inventory/AddInventoryFormSeal";
 
 const App = () => {
   return (
@@ -53,6 +54,9 @@ const App = () => {
           </Route>
           <Route exact path={`${passwordResetPATH}/:id/:token/`}>
             <ResetPasswordPage />
+          </Route>
+          <Route exact path="/seal-form-page">
+            <AddInventoryFormSeal />
           </Route>
           <SuperuserProvider>
             <SuperuserRoute path={superuserPATH}>

@@ -44,9 +44,6 @@ const AddInventoryFormSeal = ({ addNewTrucks }) => {
   const postTrucks = () => {
     const data = new FormData(form.current);
     data.append("seller_id", id);
-    const contents = data.get("contents").split(",");
-    data.delete("contents");
-    contents.map((item) => data.append("contents", item));
     addInventory(data).then((data) => {
       setInventory([...inventory, data]);
       back();
