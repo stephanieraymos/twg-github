@@ -2,19 +2,18 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { authService } from "../../../authService";
 import { inventoryPATH } from "../../../Pages/paths";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, useRouteMatch, Link } from "react-router-dom";
 import cancel from "../../../img/cancel.svg";
 import { useInventoryContext } from "../../../inventory";
-import { Navigation } from "./Navigation";
 
-const AddInventoryFormBOL = ({ addNewTrucks, props }) => {
+const AddInventoryFormBOL = ({ addNewTrucks }) => {
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
   const [images, setImages] = useState([]);
   const [manifestsCount, setManifestsCount] = useState(0);
   const [imageCount, setImageCount] = useState(0);
   let history = useHistory();
-
+  let { url } = useRouteMatch();
   const { id } = authService.getUser();
 
   const { addInventory, inventory, setInventory } = useInventoryContext();
@@ -32,8 +31,8 @@ const AddInventoryFormBOL = ({ addNewTrucks, props }) => {
     }
   };
 
-  const back = () => {
-    history.replace(inventoryPATH);
+  const next = () => {
+    history.goForward(`${inventoryPATH}/seal-form-page"`);
   };
 
   const removeImage = (index) => {
@@ -48,7 +47,7 @@ const AddInventoryFormBOL = ({ addNewTrucks, props }) => {
     data.append("seller_id", id);
     addInventory(data).then((data) => {
       setInventory([...inventory, data]);
-      back();
+      next();
     });
   };
 
@@ -156,21 +155,25 @@ const AddInventoryFormBOL = ({ addNewTrucks, props }) => {
         </Form.Group>
 
         <div className="form-footer-container">
-          <Link
-            to="/seal-form-page"
-            className="link-unstyled"
-            style={{ width: "100%" }}
+          <Button
+            type="submit"
+            className="orange-form-button"
+            style={{ margin: "0 auto" }}
+            block
           >
-            <Button
+            Next
+          </Button>
+          {/* <Button
               type="submit"
-              className="form-button"
               block
-              style={{ backgroundColor: "#f47c20", margin: "0 auto" }}
+              className="orange-form-button"
+              onClick={(e) => {
+                e.preventDefault();
+                history.push(`${url}/seal-form-page`);
+              }}
             >
               Next
-            </Button>
-            <Navigation handleSubmit={(e) => handleSubmit()}/>
-          </Link>
+            </Button> */}
         </div>
       </Form>
     </>

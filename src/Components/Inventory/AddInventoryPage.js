@@ -6,19 +6,13 @@ import { useHistory } from "react-router-dom";
 import back from "../../img/back.svg";
 import { inventoryPATH } from "../../Pages/paths";
 import AddInventoryFormBOL from "./TeamMember/AddInventoryFormBOL";
-import AddInventoryFormSeal from "./TeamMember/AddInventoryFormSeal";
 import { authService } from "../../authService";
 import { Steps, Step } from "react-step-builder";
 
 const AddInventoryModal = ({ addNewTrucks }) => {
   let history = useHistory();
   const { is_team_member, is_admin } = authService.getUser();
-  const config = {
-    navigation: {
-      component: Navigation,
-      location: "before", // or after
-    },
-  };
+
   return (
     <>
       <div>
@@ -45,11 +39,7 @@ const AddInventoryModal = ({ addNewTrucks }) => {
 
         {/* //^ MODAL BODY */}
         {is_admin ? (
-          <Steps config={config}>
-            <Step component={AddInventoryFormBOL} />
-            <Step component={AddInventoryFormSeal} />
-            {/* <Step component={FinalStep} /> */}
-          </Steps>
+          <AddInventoryFormBOL />
         ) : (
           <AddInventoryForm addNewTrucks={addNewTrucks} />
         )}

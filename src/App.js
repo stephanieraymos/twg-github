@@ -55,7 +55,7 @@ const App = () => {
           <Route exact path={`${passwordResetPATH}/:id/:token/`}>
             <ResetPasswordPage />
           </Route>
-          <Route exact path="/seal-form-page">
+          <Route exact path={`${inventoryPATH}/seal-form-page`}>
             <AddInventoryFormSeal />
           </Route>
           <SuperuserProvider>

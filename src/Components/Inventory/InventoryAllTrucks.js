@@ -15,6 +15,7 @@ import AddInventoryPage from "./AddInventoryPage";
 import { InventoryProvider } from "../../inventory";
 import NarrowYourSearch from "./NarrowSearch/NarrowYourSearch";
 import { authService } from "../../authService";
+import AddInventoryFormSeal from "./TeamMember/AddInventoryFormSeal";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -36,9 +37,7 @@ const InventoryAllTrucks = () => {
             <Container className="flex-parent-container" fluid>
               <div
                 className={`${
-                  is_seller || is_admin
-                    ? "table-top-container"
-                    : null
+                  is_seller || is_admin ? "table-top-container" : null
                 }`}
               >
                 <AddInventoryButton />
@@ -66,6 +65,9 @@ const InventoryAllTrucks = () => {
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/edit/:id`}>
           <UpdateTruckDetails />
+        </PrivateRoute>
+        <PrivateRoute exact path={`${path}/seal-form-page`}>
+          <AddInventoryFormSeal />
         </PrivateRoute>
       </Switch>
     </InventoryProvider>

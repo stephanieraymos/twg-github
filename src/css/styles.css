@@ -615,6 +615,20 @@ input:hover {
   outline-style: none;
   margin: 1rem 1.5rem;
 }
+
+.orange-form-button {
+  font-family: "Montserrat";
+  border-color: transparent !important;
+  text-align: center;
+  text-justify: center;
+  height: 50px;
+  cursor: pointer;
+  align-self: center;
+  outline-style: none;
+  margin: 1rem 1.5rem;
+  background-color: var(--orange) !important;
+}
+
 .link-unstyled:hover {
   text-decoration: none;
 }
