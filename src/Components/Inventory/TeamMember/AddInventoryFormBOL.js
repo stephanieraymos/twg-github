@@ -14,9 +14,9 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
   const [imageCount, setImageCount] = useState(0);
   let history = useHistory();
   let { url } = useRouteMatch();
-  const { id } = authService.getUser();
+  const { id, warehouse_location } = authService.getUser();
 
-  const { addInventory, inventory, setInventory, fob } = useInventoryContext();
+  const { addInventory, inventory, setInventory } = useInventoryContext();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -90,7 +90,7 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
                 type="text"
                 readOnly
                 name="fob"
-                value={fob}
+                value={warehouse_location}
               />
               {/* FOB will be based on user that is logged in (their location specified in their acct) */}
             </Col>

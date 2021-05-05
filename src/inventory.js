@@ -46,6 +46,7 @@ const InventoryProvider = ({ children }) => {
   const [manifests, setManifests] = useState([]);
   const [seal, setSeal] = useState("");
   const [bol, setBol] = useState("");
+  const [warehouseLocation, setWarehouseLocation] = useState("");
 
   // EXTRA
   const [inventory, setInventory] = useState([]);
@@ -134,6 +135,7 @@ const InventoryProvider = ({ children }) => {
                 manifests,
                 seal,
                 bol,
+                warehouseLocation,
               } = data[0];
               setId(id);
               setSellerId(seller_id);
@@ -164,6 +166,7 @@ const InventoryProvider = ({ children }) => {
               setManifests(manifests);
               setSeal(seal);
               setBol(bol);
+              setWarehouseLocation(warehouseLocation);
               getInventoryFiles(images, manifests);
               resolve(data);
             })
@@ -234,6 +237,36 @@ const InventoryProvider = ({ children }) => {
         .catch(() => history.push("/logout"));
     });
   };
+
+  // //^ ---- GET USER LOCATION BY ID ----
+  // const getUserLocation = (id) => {
+  //   return new Promise((resolve, reject) => {
+  //     authService
+  //       .checkToken()
+  //       .then(() => {
+  //         fetch(`${inventoryv2GetByTeamMemberIdURL}${id}`, {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         })
+  //           .then((response) => {
+  //             if (response.ok) {
+  //               return response.json();
+  //             } else {
+  //               reject(response);
+  //             }
+  //           })
+  //           .then((data) => {
+  //             resolve(data);
+  //           })
+  //           .catch((error) => {
+  //             reject(error);
+  //           });
+  //       })
+  //       .catch(() => history.push("/logout"));
+  //   });
+  // };
 
   // fet files from Spaces
   const getInventoryFiles = (images, manifests) => {
@@ -430,6 +463,8 @@ const InventoryProvider = ({ children }) => {
         setSeal,
         bol,
         setBol,
+        warehouseLocation,
+        setWarehouseLocation,
       }}
     >
       {children}
