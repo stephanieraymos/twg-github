@@ -1,12 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
-import { authService } from "../../authService";
-import { inventoryPATH } from "../../Pages/paths";
+import { authService } from "../../../authService";
+import { inventoryPATH } from "../../../Pages/paths";
 import { useHistory, Link } from "react-router-dom";
-import cancel from "../../img/cancel.svg";
-import { useInventoryContext } from "../../inventory";
+import cancel from "../../../img/cancel.svg";
+import { useInventoryContext } from "../../../inventory";
+import { Navigation } from "./Navigation";
 
-const AddInventoryFormBOL = ({ addNewTrucks }) => {
+const AddInventoryFormBOL = ({ addNewTrucks, props }) => {
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
   const [images, setImages] = useState([]);
@@ -168,6 +169,7 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
             >
               Next
             </Button>
+            <Navigation handleSubmit={(e) => handleSubmit()}/>
           </Link>
         </div>
       </Form>

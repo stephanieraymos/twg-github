@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { authService } from "../../authService";
-import { inventoryPATH } from "../../Pages/paths";
+import { authService } from "../../../authService";
+import { inventoryPATH } from "../../../Pages/paths";
 import { useHistory } from "react-router-dom";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../../inventory";
 
 const AddInventoryFormSeal = ({ addNewTrucks }) => {
   const form = useRef(null);

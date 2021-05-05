@@ -27,7 +27,7 @@ import { SuperuserProvider } from "./superuser";
 import ResetPasswordPage from "./Components/Users/ResetPasswordPage";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import { InventoryProvider } from "./inventory";
-import AddInventoryFormSeal from "./Components/Inventory/AddInventoryFormSeal";
+import AddInventoryFormSeal from "./Components/Inventory/TeamMember/AddInventoryFormSeal";
 
 const App = () => {
   return (
