@@ -10,7 +10,7 @@ import { authService } from "../../authService";
 
 const AddInventoryModal = ({ addNewTrucks }) => {
   let history = useHistory();
-  const { is_team_member } = authService.getUser();
+  const { is_team_member, is_admin } = authService.getUser();
 
   return (
     <>
@@ -37,7 +37,7 @@ const AddInventoryModal = ({ addNewTrucks }) => {
         </div>
 
         {/* //^ MODAL BODY */}
-        {is_team_member ? (
+        {is_admin ? (
           <AddInventoryFormBOL addNewTrucks={addNewTrucks} />
         ) : (
           <AddInventoryForm addNewTrucks={addNewTrucks} />

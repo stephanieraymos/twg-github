@@ -2,9 +2,10 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { authService } from "../../authService";
 import { inventoryPATH } from "../../Pages/paths";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import cancel from "../../img/cancel.svg";
 import { useInventoryContext } from "../../inventory";
+import AddInventoryFormSeal from "./AddInventoryFormSeal";
 
 const AddInventoryFormBOL = ({ addNewTrucks }) => {
   const form = useRef(null);
@@ -33,8 +34,8 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
 
   const handleGoToSeal = () => {
     //Go to next page (seal form)
-    console.log("Seal page button triggered")
-  }
+    console.log("Seal page button triggered");
+  };
 
   const back = () => {
     history.replace(inventoryPATH);
@@ -50,9 +51,6 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
   const postTrucks = () => {
     const data = new FormData(form.current);
     data.append("seller_id", id);
-    const contents = data.get("contents").split(",");
-    data.delete("contents");
-    contents.map((item) => data.append("contents", item));
     addInventory(data).then((data) => {
       setInventory([...inventory, data]);
       back();
@@ -66,7 +64,7 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
         noValidate
         validated={validated}
         onSubmit={handleSubmit}
-        style={{ width: "85%", margin: "24px auto" }}
+        style={{ width: "80%", margin: "24px auto" }}
       >
         {/* //^ ------------------- BOL ---------------------- */}
         <Form.Group>
@@ -94,7 +92,13 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
             {/* Auto generate this value based on load id */}
             <Col>
               <Form.Label className="form-label">FOB</Form.Label>
-              <Form.Control type="text" readOnly name="fob" />
+              <Form.Control
+                type="text"
+                readOnly
+                name="fob"
+                value="fob will go here"
+              />
+              {/* FOB will be based on user that is logged in (their location specified in their acct) */}
             </Col>
           </Row>
         </Form.Group>
@@ -157,15 +161,17 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
         </Form.Group>
 
         <div className="form-footer-container">
-          <Button
-            type="submit"
-            className="form-button"
-            block
-            style={{ width: "100%", backgroundColor: "#f47c20" }}
-            onClick={() => handleGoToSeal()}
-          >
-            Next
-          </Button>
+          <Link to="/AddInventoryFormSeal" className="link-unstyled">
+            <Button
+              type="submit"
+              className="form-button"
+              block
+              style={{ width: "100%", backgroundColor: "#f47c20" }}
+              onClick={() => handleGoToSeal()}
+            >
+              Next
+            </Button>
+          </Link>
         </div>
       </Form>
     </>

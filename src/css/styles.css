@@ -64,7 +64,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--dark-gray);
-  
 }
 
 h1,
@@ -616,9 +615,8 @@ input:hover {
   outline-style: none;
   margin: 1rem 1.5rem;
 }
-
-.full-view-height {
-  height: 100vh;
+.link-unstyled:hover {
+  text-decoration: none;
 }
 
 .reset-page-wrap {
@@ -696,4 +694,3 @@ input:hover {
   justify-content: space-between;
   margin: 0 1rem;
 }
-
