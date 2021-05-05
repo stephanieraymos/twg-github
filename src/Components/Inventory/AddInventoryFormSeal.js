@@ -1,17 +1,13 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Row, Col, Image } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { authService } from "../../authService";
 import { inventoryPATH } from "../../Pages/paths";
 import { useHistory } from "react-router-dom";
-import cancel from "../../img/cancel.svg";
 import { useInventoryContext } from "../../inventory";
 
 const AddInventoryFormSeal = ({ addNewTrucks }) => {
   const form = useRef(null);
   const [validated, setValidated] = useState(false);
-  const [images, setImages] = useState([]);
-  const [manifestsCount, setManifestsCount] = useState(0);
-  const [imageCount, setImageCount] = useState(0);
   let history = useHistory();
 
   const { id } = authService.getUser();
@@ -24,7 +20,6 @@ const AddInventoryFormSeal = ({ addNewTrucks }) => {
     event.stopPropagation();
     if (form.checkValidity() === true) {
       setValidated(false);
-      setManifestsCount(0);
       postTrucks();
     } else {
       setValidated(true);
@@ -43,12 +38,6 @@ const AddInventoryFormSeal = ({ addNewTrucks }) => {
 
   const back = () => {
     history.replace(inventoryPATH);
-  };
-
-  const removeImage = (index) => {
-    const list = [...images];
-    list[index] = -1;
-    setImages(list);
   };
 
   //^---- POST (ADD INVENTORY) ----
