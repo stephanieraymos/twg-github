@@ -24,10 +24,10 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
     event.stopPropagation();
     if (form.checkValidity() === true) {
       setValidated(false);
-      setManifestsCount(0);
       postTrucks();
     } else {
       setValidated(true);
+      console.log("Check failed")
     }
   };
 
