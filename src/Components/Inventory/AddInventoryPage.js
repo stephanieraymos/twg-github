@@ -7,7 +7,6 @@ import back from "../../img/back.svg";
 import { inventoryPATH } from "../../Pages/paths";
 import AddInventoryFormBOL from "./TeamMember/AddInventoryFormBOL";
 import { authService } from "../../authService";
-import { Steps, Step } from "react-step-builder";
 
 const AddInventoryModal = ({ addNewTrucks }) => {
   let history = useHistory();
