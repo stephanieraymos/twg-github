@@ -46,7 +46,9 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
     const data = new FormData(form.current);
     data.append("seller_id", id);
     addInventory(data).then((data) => {
-      setInventory([...inventory, data]);
+      // setInventory([...inventory, data]);
+      inventory = JSON.parse(localStorage.getItem(...inventory, data));
+
       next();
     });
   };

@@ -135,7 +135,7 @@ const checkToken = () => {
 };
 
 
-// RESET
+// RESET Runs on logout
 const resetLocalStorage = () => {
     localStorage.removeItem(userKey);
     localStorage.removeItem(isAuthKey);
@@ -332,6 +332,7 @@ const resetPassword = (id, token, data) => {
     });
 };
 
+//Grabs every user and login grabs one user
 const fetchUser = () => {
     return new Promise((resolve, reject) => {
         checkToken()
