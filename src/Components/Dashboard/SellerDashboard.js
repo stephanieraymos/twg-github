@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 import { authService } from "../../authService";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";

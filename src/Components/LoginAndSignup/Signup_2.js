@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useGlobalContext } from "../../context";
+import { useGlobalContext } from "../../context/context";
 import { Button, Modal, Form, InputGroup, Image } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import mail from "../../img/mail.svg";

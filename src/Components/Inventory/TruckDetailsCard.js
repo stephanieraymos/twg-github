@@ -3,7 +3,7 @@ import logo from "../../img/w-logo.png";
 import { Card, Accordion, Carousel, Image } from "react-bootstrap";
 import { FaAngleDoubleDown } from "react-icons/fa";
 import NotesForm from "./NotesForm";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 import { authService } from "../../authService";
 
 const TruckDetailsCard = ({ id, current }) => {

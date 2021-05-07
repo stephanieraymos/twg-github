@@ -13,7 +13,7 @@ import TruckDetailsCard from "./TruckDetailsCard";
 import { FaAngleDoubleLeft, FaTimes, FaEdit } from "react-icons/fa";
 import { Button } from "react-bootstrap";
 import { inventoryPATH } from "../../Pages/paths";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 
 const TruckDetails = () => {
   const { id } = useParams();

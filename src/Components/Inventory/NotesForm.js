@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useGlobalContext } from "../../context";
+import { useGlobalContext } from "../../context/context";
 import { Form, Col, Row } from "react-bootstrap";
 import { FaEdit } from "react-icons/fa";
 import { authService } from "../../authService";
 import { useHistory } from "react-router-dom";
-import { useInventoryContext } from "../../inventory"
+import { useInventoryContext } from "../../context/inventory"
 
 const NotesForm = ({ id }) => {
   const salesForm = useRef(null);

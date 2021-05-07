@@ -6,8 +6,8 @@ import {
   inventoryV2GetByBuyerIdURL,
   inventoryV2URL,
   inventoryV2FilesURL,
-} from "./Pages/urls";
-import { authService } from "./authService";
+} from "../Pages/urls";
+import { authService } from "../authService";
 import { useHistory } from "react-router-dom";
 import { create } from "d3-selection";
 import { v4 as uuidv4 } from "uuid";

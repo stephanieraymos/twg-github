@@ -3,7 +3,7 @@ import { Table, Image, Form, InputGroup, Button } from "react-bootstrap";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import checkGreen from "../../img/check-circle-green.svg";
 import checkRed from "../../img/check-circle-red.svg";
-import { useSuperuserContext } from "../../superuser";
+import { useSuperuserContext } from "../../context/superuser";
 import search from "../../img/search.svg";
 import CreateUserModal from "./CreateUserModal";
 

@@ -3,7 +3,7 @@ import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
 import undo from "../../img/undo.svg";
 
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 
 const UpdateTruckForm = ({
   form,

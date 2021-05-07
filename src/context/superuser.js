@@ -4,8 +4,8 @@ import React, {
     useContext,
     createContext,
 } from "react";
-import { superuserURL } from "./Pages/urls";
-import { authService } from "./authService";
+import { superuserURL } from "../Pages/urls";
+import { authService } from "../authService";
 import { useHistory } from "react-router-dom";
 
 // Generating context

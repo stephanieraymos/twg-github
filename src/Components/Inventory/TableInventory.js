@@ -4,7 +4,7 @@ import { sorttable } from "sorttable";
 import { v4 as uuidv4 } from "uuid";
 
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 
 const TableInventory = ({ trucks }) => {
   let history = useHistory();

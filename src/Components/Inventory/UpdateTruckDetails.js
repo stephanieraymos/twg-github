@@ -9,10 +9,10 @@ import {
   imageURL,
 } from "../../Pages/urls";
 import UpdateTruckForm from "./UpdateTruckForm";
-import { useTruckContext } from "../../truckContext";
+import { useTruckContext } from "../../context/truckContext";
 
 import { inventoryPATH } from "../../Pages/paths";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 
 const UpdateTruckDetails = () => {
   const { id } = useParams();

@@ -2,7 +2,7 @@ import cancel from "../../img/cancel.svg";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
 import React, { useState, useRef } from "react";
-import { useSuperuserContext } from "../../superuser";
+import { useSuperuserContext } from "../../context/superuser";
 import { Button, Modal, Form, InputGroup, Image, Row, Col } from "react-bootstrap";
 
 const CreateUserModal = ({
