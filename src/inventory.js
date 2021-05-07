@@ -21,7 +21,6 @@ const InventoryProvider = ({ children }) => {
   const [id, setId] = useState("");
   const [sellerId, setSellerId] = useState("");
   const [buyerId, setBuyerId] = useState("");
-  const [loadId, setLoadId] = useState(uuidv4());
   const [category, setCategory] = useState("");
   const [commission, setCommission] = useState(0.0);
   const [contents, setContents] = useState([]);
@@ -48,6 +47,8 @@ const InventoryProvider = ({ children }) => {
   const [seal, setSeal] = useState("");
   const [bol, setBol] = useState("");
   const [warehouseLocation, setWarehouseLocation] = useState("");
+
+  const [loadId, setLoadId] = useState(uuidv4());
   // console.log(loadId)
   // EXTRA
   const [inventory, setInventory] = useState([]);
@@ -388,6 +389,14 @@ const InventoryProvider = ({ children }) => {
         .catch(() => history.push("/logout"));
     });
   };
+
+  //Attempting to grab first 3 characters of source to add to the beginning of the uuid
+  // Object.values(source);
+  // console.log(source)
+  // const sourceAbv = source.map((location) => {
+  //   return location.substring(0, 3);
+  // });
+  // console.log(sourceAbv);
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (
