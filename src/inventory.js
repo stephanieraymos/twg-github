@@ -48,7 +48,7 @@ const InventoryProvider = ({ children }) => {
   const [bol, setBol] = useState("");
   const [warehouseLocation, setWarehouseLocation] = useState("");
 
-  const [loadId, setLoadId] = useState(uuidv4());
+  const [loadId, setLoadId] = useState("");
   // console.log(loadId)
   // EXTRA
   const [inventory, setInventory] = useState([]);
@@ -111,6 +111,7 @@ const InventoryProvider = ({ children }) => {
                 id,
                 seller_id,
                 buyer_id,
+                loadId= uuidv4(),
                 category,
                 commission,
                 contents,
@@ -141,7 +142,7 @@ const InventoryProvider = ({ children }) => {
               setId(id);
               setSellerId(seller_id);
               setBuyerId(buyer_id);
-              setLoadId(uuidv4());
+              setLoadId(loadId);
               setCategory(category);
               setCommission(commission);
               setContents(contents);
@@ -178,7 +179,6 @@ const InventoryProvider = ({ children }) => {
         .catch(() => history.push("/logout"));
     });
   };
-
   //^ ---- GET INVENTORY BY BUYER ID ----
   const getInventoryByBuyerId = (id) => {
     return new Promise((resolve, reject) => {
