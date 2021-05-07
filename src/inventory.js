@@ -111,7 +111,6 @@ const InventoryProvider = ({ children }) => {
                 id,
                 seller_id,
                 buyer_id,
-                loadId= uuidv4(),
                 category,
                 commission,
                 contents,
@@ -142,7 +141,7 @@ const InventoryProvider = ({ children }) => {
               setId(id);
               setSellerId(seller_id);
               setBuyerId(buyer_id);
-              setLoadId(loadId);
+              setLoadId(uuidv4());
               setCategory(category);
               setCommission(commission);
               setContents(contents);
@@ -171,6 +170,7 @@ const InventoryProvider = ({ children }) => {
               setWarehouseLocation(warehouseLocation);
               getInventoryFiles(images, manifests);
               resolve(data);
+              data.append(loadId);
             })
             .catch((error) => {
               reject(error);
