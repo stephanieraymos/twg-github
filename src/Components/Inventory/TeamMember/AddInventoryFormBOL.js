@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { authService } from "../../../authService";
 import { inventoryPATH } from "../../../Pages/paths";
@@ -12,11 +12,13 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
   const [images, setImages] = useState([]);
   const [manifestsCount, setManifestsCount] = useState(0);
   const [imageCount, setImageCount] = useState(0);
+  const [newInventory, setNewInventory] = useState("");
   let history = useHistory();
   let { url } = useRouteMatch();
   const { id, warehouse_location } = authService.getUser();
 
   const { addInventory, inventory, setInventory } = useInventoryContext();
+  console.log(localStorage)
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -27,7 +29,7 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
       postTrucks();
     } else {
       setValidated(true);
-      console.log("Check failed")
+      console.log("Check failed");
     }
   };
 
@@ -41,16 +43,30 @@ const AddInventoryFormBOL = ({ addNewTrucks }) => {
     setImages(list);
   };
 
+  useEffect((data) => {
+    setNewInventory(JSON.parse(localStorage.getItem(...inventory, data)));
+    if (localStorage.getItem(...inventory, data)) {
+      setNewInventory({
+        data,
+      });
+    } else {
+      setNewInventory({
+        bol: "",
+        pallet_count: "",
+      });
+    }
+  }, []);
+
   //^---- POST (ADD INVENTORY) ----
   const postTrucks = () => {
     const data = new FormData(form.current);
     data.append("seller_id", id);
     addInventory(data).then((data) => {
-      // setInventory([...inventory, data]);
-      inventory = JSON.parse(localStorage.getItem(...inventory, data));
-
+      setInventory([...inventory, data]);
+      localStorage.setItem(...inventory, data, JSON.stringify(data));
       next();
     });
+    return data;
   };
 
   return (

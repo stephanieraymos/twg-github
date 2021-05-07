@@ -10,6 +10,7 @@ import {
 import { authService } from "./authService";
 import { useHistory } from "react-router-dom";
 import { create } from "d3-selection";
+import { v4 as uuidv4 } from "uuid";
 
 // Generating context
 const InventoryContext = createContext();
@@ -20,7 +21,7 @@ const InventoryProvider = ({ children }) => {
   const [id, setId] = useState("");
   const [sellerId, setSellerId] = useState("");
   const [buyerId, setBuyerId] = useState("");
-  const [loadId, setLoadId] = useState("");
+  const [loadId, setLoadId] = useState(uuidv4());
   const [category, setCategory] = useState("");
   const [commission, setCommission] = useState(0.0);
   const [contents, setContents] = useState([]);
@@ -47,7 +48,7 @@ const InventoryProvider = ({ children }) => {
   const [seal, setSeal] = useState("");
   const [bol, setBol] = useState("");
   const [warehouseLocation, setWarehouseLocation] = useState("");
-
+  // console.log(loadId)
   // EXTRA
   const [inventory, setInventory] = useState([]);
   const [imageObjects, setImageObjects] = useState([]);
@@ -109,7 +110,6 @@ const InventoryProvider = ({ children }) => {
                 id,
                 seller_id,
                 buyer_id,
-                load_id,
                 category,
                 commission,
                 contents,
@@ -140,7 +140,7 @@ const InventoryProvider = ({ children }) => {
               setId(id);
               setSellerId(seller_id);
               setBuyerId(buyer_id);
-              setLoadId(load_id);
+              setLoadId(uuidv4());
               setCategory(category);
               setCommission(commission);
               setContents(contents);

@@ -17,7 +17,7 @@ const TableInventory = ({ trucks }) => {
   }
   trucks.sort(dynamicSort("status"));
 
-  const { inventory } = useInventoryContext();
+  const { inventory, loadId } = useInventoryContext();
 
   return (
     <>
@@ -42,7 +42,6 @@ const TableInventory = ({ trucks }) => {
             {inventory.map((item) => {
               let {
                 id,
-                load_id,
                 price,
                 source,
                 category,
@@ -52,7 +51,7 @@ const TableInventory = ({ trucks }) => {
                 retail_price,
                 status,
               } = item;
-
+              console.log(loadId);
               return (
                 <tr
                   className={`${
@@ -66,7 +65,7 @@ const TableInventory = ({ trucks }) => {
                 >
                   <td>
                     <Link className="table-id-link" to={`${url}/${id}`}>
-                      {load_id}
+                      {loadId}
                     </Link>
                   </td>
                   <td>{source}</td>
