@@ -15,6 +15,7 @@ import { InventoryProvider } from "../../context/inventory";
 import NarrowYourSearch from "./NarrowSearch/NarrowYourSearch";
 import { authService } from "../../authService";
 import AddInventoryFormSeal from "./TeamMember/AddInventoryFormSeal";
+import AddInventoryTeamMember from "./AddInventoryTeamMember/AddInventoryTeamMember";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -57,7 +58,13 @@ const InventoryAllTrucks = () => {
           </>
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/add`}>
-          <AddInventoryPage addNewTrucks={addTruck} />
+          <>
+            <div>
+              <Navigation />
+            </div>
+            <AddInventoryTeamMember />
+          </>
+          {/* <AddInventoryPage addNewTrucks={addTruck} /> */}
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/seal-form-page`}>
           <AddInventoryFormSeal />
