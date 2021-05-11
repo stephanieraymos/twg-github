@@ -1,24 +1,41 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
+import { 
+    Grid, 
+    TextField, 
+    Typography, 
+    MenuItem, 
+    ButtonGroup,
+    Button
+} from '@material-ui/core';
+import { validate } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-    paddingRight: theme.spacing(5),
-    paddingLeft: theme.spacing(5),
-    '& > *': {
-        margin: theme.spacing(1),
-        width: '40%',
-      },
-  },
+    root: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(3),
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4),
+        width: "100%",
+    },
+    textField: {
+        width: "100%",
+        fontFamily: "Montserrat, sans-serif",
+    },
+    title: {
+        fontFamily: "Montserrat, sans-serif",
+        fontWeight: 700,
+        color: theme.palette.text.primary,
+    },
+    button: {
+        marginTop: theme.spacing(2)
+    }
 }));
 
 export default function BillOfLadingView(props) {
     const classes = useStyles();
-    const { index, refs, validated, next } = props
+    const { data, setData, handleNext } = props
+    const [errors, setErrors] = useState({});
     const facilities = [
         "T-01",
         "T-02",
@@ -26,89 +43,143 @@ export default function BillOfLadingView(props) {
         "T-04"
     ]
 
+    const handleOnSubmit = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        // get the form and put each key/value pair into the object
+        const form = new FormData(event.currentTarget);
+        const data = {};
+        const allErrors = {};
+        form.forEach((value, key) => {
+            // set the errors if the value is blank
+            if ((value && typeof value === "string") || (value && value.size && value.size > 0)) {
+                data[key] = value
+            } else {
+                allErrors[key] = true
+            }
+        });
+
+        setErrors(allErrors);
+
+        if (Object.keys(allErrors).length == 0) {
+            // append to current data object
+            setData(prevData => ({
+                ...prevData,
+                ...data
+            }))
+            // go to next page
+            handleNext();
+        }
+    }
+
+    // get current date to pre-fill the date area
+    const getCurrentDateTime = () => {
+        const date = new Date();
+        return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}T${("0" + date.getHours()).slice(-2)}:${("0" + date.getMinutes()).slice(-2)}`
+    }
+
     return (
-        <>
-            <form className={classes.root} noValidate autoComplete="off">
+        <form onSubmit={handleOnSubmit} noValidate>
+        <Grid className={classes.root} container spacing={2}>
+            {/* Title */}
+            <Grid item xs={7}>
+                <Typography className={classes.title} 
+                    gutterBottom
+                    variant="h5"
+                    component="h2" >
+                    Bill of Lading
+                </Typography>
+            </Grid>
+            {/* Received Date */}
+            <Grid item xs={5}>
                 <TextField
+                    className={classes.textField}
                     required
-                    id="bill-of-lading"
-                    label="Bill of Lading #"
+                    id="created"
+                    label="Received Date"
+                    type="datetime-local"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    name="created"
+                    defaultValue={data["created"] || getCurrentDateTime()}
+                    error={!!errors["created"]}
+                />
+            </Grid>
+            {/* Bill of Lading Number */}
+            <Grid item xs={6}>
+                <TextField
+                    className={classes.textField}
+                    required
+                    id="bol"
+                    label="Bill of Lading Number"
                     variant="outlined"
                     type="number"
                     name="bol"
+                    error={!!errors["bol"]}
+                    helperText={!!errors["bol"] ? "Please enter a valid BOL number" : ""}
+                    defaultValue={data["bol"]}
                 />
+            </Grid>
+            {/* Bill of Lading File */}
+            <Grid item xs={6}>
                 <TextField
+                    className={classes.textField}
                     required
-                    id="bill-of-lading"
-                    label="# of Pallets"
+                    id="bol_file"
+                    type="file"
                     variant="outlined"
-                    name="pallet_count"
+                    helperText="Please upload the Bill of Lading file or image"
+                    name="bol_file"
+                    error={!!errors["bol_file"]}
                 />
-            </form>
-            {/* <Form
-                ref={refs[index]}
-                noValidate
-                validated={validated}
-                onSubmit={next}
-                className={classes.root}
-            >
-                <Form.Group>
-                    <Row>
-                        <Col>
-                            <Form.Label className="form-label">Bill of Lading #</Form.Label>
-                            <Form.Control type="text" required name="bol" />
-                            <Form.Control.Feedback type="invalid">
-                                Please enter the bill of lading number.
-                            </Form.Control.Feedback>
-                        </Col>
-                        <Col>
-                            <Form.Label className="form-label"># of Pallets</Form.Label>
-                            <Form.Control type="text" required name="pallet_count" />
-                            <Form.Control.Feedback type="invalid">
-                                Please enter the expected number of pallets.
-                            </Form.Control.Feedback>
-                        </Col>
-                    </Row>
-                </Form.Group>
+            </Grid>
+            {/* Pallet Number */}
+            <Grid item xs={6}>
+                <TextField
+                    className={classes.textField}
+                    required
+                    id="pallet_count"
+                    label="Number of Pallets"
+                    variant="outlined"
+                    type="number"
+                    name="pallet_count"
+                    error={!!errors["pallet_count"]}
+                    helperText={!!errors["pallet_count"] ? "Please enter a valid number" : ""}
+                    defaultValue={data["pallet_count"]}
+                />
+            </Grid>
+            {/* Facility */}
+            <Grid item xs={6}>
+                <TextField
+                    className={classes.textField}
+                    required
+                    id="facility"
+                    select
+                    label="Facility"
+                    variant="outlined"
+                    value={facilities[0]}
+                    name="facility"
+                    error={!!errors["facility"]}
+                    defaultValue={data["facility"]}
+                    >
+                    {facilities.map((option, index) => (
+                        <MenuItem key={index} value={option}>
+                            {option}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Grid>
 
-                <Form.Group>
-                    <Row>
-                        <Col>
-                            <Form.Label className="form-label">Facility</Form.Label>
-                            <Form.Control as="select" name="facility">
-                                {
-                                    facilities.map(value => {
-                                        return (
-                                            <option>{value}</option>
-                                        );
-                                    })
-                                }
-                            </Form.Control>
-                            <Form.Control.Feedback type="invalid">
-                                Please enter retail price.
-                            </Form.Control.Feedback>
-                        </Col>
-                        <Col>
-                            <Form.Label className="form-label"># of Pallets</Form.Label>
-                            <TextField
-                                id="datetime"
-                                type="datetime-local"
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                inputProps={{
-                                    step: 300, // 5 min
-                                }}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please enter our price.
-                            </Form.Control.Feedback>
-                        </Col>
-                    </Row>
-                </Form.Group>
-                
-            </Form> */}
-        </>
+            {/* Next Buttton */}
+            <Grid container justify = "center" className={classes.button}>
+                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+                    <Button type="submit" size="large">Next</Button>
+                </ButtonGroup>
+            </Grid>
+
+        </Grid>
+        </form>
     );
 }

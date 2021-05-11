@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { color } from 'd3-color';
 import BillOfLadingView from "./BillOfLadingView";
+import SealView from "./SealView";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
     },
     paper: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(5),
         marginRight: theme.spacing(5),
         marginLeft: theme.spacing(5),
         borderRadius: 20,
@@ -44,14 +45,19 @@ export default function AddInventoryTeamMember() {
     const [validated, setValidated] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [palletCount, setPalletCount] = useState(1);
-    const [completed, setCompleted] = React.useState({});
+    const [completed, setCompleted] = useState({});
     const steps = [
         'Bill of Lading',
         'Seal',
-        'Pallet #1'
+        'Pallets'
     ];
+    const [data, setData] = useState({});
 
     const handleNext = () => {
+        setCompleted(prevCompleted => ({
+            ...prevCompleted,
+            [activeStep]: true
+        }));
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -68,7 +74,7 @@ export default function AddInventoryTeamMember() {
             <Stepper nonLinear alternativeLabel activeStep={activeStep}>
                 {steps.map((label, index) => (
                 <Step key={label}>
-                    <StepButton className={classes.stepper} onClick={() => setActiveStep(index)} completed={true}>
+                    <StepButton className={classes.stepper} onClick={() => setActiveStep(index)} completed={completed[index]}>
                         <Typography className={classes.stepper}>
                             {label}
                         </Typography>
@@ -77,7 +83,16 @@ export default function AddInventoryTeamMember() {
                 ))}
             </Stepper>
             <Paper className={classes.paper}>
-                <BillOfLadingView index={0} refs={refs} validated={validated} next={handleNext} />
+                {
+                    activeStep == 0 &&
+                    <BillOfLadingView data={data} setData={setData} handleNext={handleNext} />
+                }
+                {
+                    activeStep == 1 &&
+                    <SealView data={data} setData={setData} handleNext={handleNext} handleBack={handleBack} />
+                }
+                {/* <BillOfLadingView setData={setData} handleNext={handleNext} /> */}
+                {/* <SealView index={0} refs={refs} validated={validated} next={handleNext} /> */}
             </Paper>
             {/* <div>
                 {activeStep === steps.length ? (
