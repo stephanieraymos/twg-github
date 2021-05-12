@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepButton from '@material-ui/core/StepButton';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import { color } from 'd3-color';
+import {
+    Stepper,
+    Step,
+    StepButton,
+    Typography,
+    Paper
+} from '@material-ui/core';
 import BillOfLadingView from "./BillOfLadingView";
 import SealView from "./SealView";
 import PalletView from "./PalletView";
 import { v4 as uuidv4 } from "uuid";
+import { useInventoryContext } from "../../../context/inventory";
+import { json } from 'd3-fetch';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,6 +53,9 @@ export default function AddInventoryTeamMember() {
     ]);
     const [data, setData] = useState({});
     const [id, setId] = useState(uuidv4().substring(0,8));
+    const [handleFinishClick, setHandleFinishClick] = useState(false);
+
+    const { addInventory } = useInventoryContext();
 
     const handleNext = () => {
         setCompleted(prevCompleted => ({
@@ -70,16 +74,55 @@ export default function AddInventoryTeamMember() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
+    const handleFinish = () => {
+        setHandleFinishClick(true);
+    }
+
+    const performPOST = () => {
+        const formData = new FormData();
+        // append all the data into FormData
+        Object.entries(data).forEach(([key, value]) => {
+            formData.append(key, value)
+        });
+        // append all the pallet data into FormData
+        const palletData = []
+        // Grab all the pallet data except images
+        // Get images and append to form daat seperately
+        Object.entries(pallets).forEach(([key, value]) => {
+            palletData.push({
+                'pallet_id': value['pallet_id'],
+                'height': value['height'],
+                'exceptions': value['exceptions'],
+                'notes': value['notes'],
+            })
+            // create an array in FormData
+            for (const image of value['images']) {
+                formData.append(`pallet_images_${key}`, image);
+            }
+        });
+        formData.append("pallets", JSON.stringify(palletData));
+        for (var key of formData.entries()) {
+            console.log(key[0] + ', ' + key[1]);
+        }
+        addInventory(formData)
+            .then((data) => {
+                console.log("data added", data)
+            })
+            .catch(error => console.log(error))
+    }
 
     useEffect(() => {
         console.log("data", data);
+        if (handleFinishClick) {
+            performPOST();
+        }
     }, [data])
 
     useEffect(() => {
         console.log("pallets", pallets);
+        if (handleFinishClick) {
+            performPOST();
+        }
     }, [pallets])
 
     return (
@@ -102,7 +145,7 @@ export default function AddInventoryTeamMember() {
                 }
                 {
                     activeStep == 1 &&
-                    <SealView data={data} setData={setData} handleNext={handleNext} handleBack={handleBack} />
+                    <SealView data={data} setData={setData} handleNext={handleNext} handleBack={handleBack} handleFinish={handleFinish} />
                 }
                 {
                     activeStep >= 2 &&
@@ -111,7 +154,7 @@ export default function AddInventoryTeamMember() {
                         const currentIndex = index + 1;
                         if (currentIndex == activeStep - 1)
                             return (
-                                <PalletView key={index} index={currentIndex} palletId={`${data["facility"]}-${id}-${currentIndex}`} pallets={pallets} setPallets={setPallets} handleNext={handleNext} handleBack={handleBack} />
+                                <PalletView key={index} index={currentIndex} palletId={`${data["facility"]}-${id}-${currentIndex}`} pallets={pallets} setPallets={setPallets} handleNext={handleNext} handleBack={handleBack} handleFinish={handleFinish} />
                             );
                     })
                 }

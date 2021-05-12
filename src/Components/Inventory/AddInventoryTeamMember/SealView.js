@@ -42,12 +42,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SealView(props) {
     const classes = useStyles();
-    const { data, setData, handleNext, handleBack } = props
+    const { data, setData, handleNext, handleBack, handleFinish } = props
     const [errors, setErrors] = useState({});
     const [hasSeal, setHasSeal] = useState(data["has_seal"] != null ? data["has_seal"] : true);
     const [isSealMatchBOL, setIsSealMatchBOL] = useState(data["seal_match"] != null ? data["seal_match"] : true);
     const [addPalletClick, setAddPalletClick] = useState(false);
     const [sealFile, setSealFile] = useState(null);
+    const [hasExisting, setHasExisting] = useState(false);
+
+    useEffect(() => {
+        if (data['seal_file']) {
+            setHasExisting(true);
+            setSealFile(data['seal_file']);
+        }
+    }, [data])
 
     const handleHasSealChange = (event) => {
         // reset values according to the options
@@ -92,7 +100,7 @@ export default function SealView(props) {
 
         if (Object.keys(allErrors).length == 0) {
             // add seal file if there's any
-            if (sealFile)
+            if (sealFile && hasSeal)
                 data["seal_file"] = sealFile
             // append to current data object
             setData(prevData => ({
@@ -102,12 +110,13 @@ export default function SealView(props) {
                 ["seal_match"]: isSealMatchBOL
             }))
 
+            setAddPalletClick(false);
+
             // go to next page
             if (addPalletClick) {
-                setAddPalletClick(false);
                 handleNext();
             } else{
-                // handleFinish();
+                handleFinish();
             }
                 
         }
@@ -265,7 +274,7 @@ export default function SealView(props) {
                 <Grid container justify = "center" className={classes.button}>
                     <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                         <Button id="back" type="button" onClick={handleBack} size="large">Back</Button>
-                        <Button id="add" type="submit" onClick={() => setAddPalletClick(true)} size="large">Add Pallet</Button>
+                        <Button id="add" type="submit" onClick={() => setAddPalletClick(true)} size="large">{hasExisting ? "Save & Continue" : "Add Pallet"}</Button>
                         <Button id="next" type="submit" size="large">Finish</Button>
                     </ButtonGroup>
                 </Grid>

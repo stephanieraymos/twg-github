@@ -27,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 700,
         color: theme.palette.text.primary,
     },
+    time: {
+        fontFamily: "Montserrat, sans-serif",
+        fontWeight: 500,
+        textAlign: "right",
+        color: theme.palette.text.secondary,
+    },
     button: {
         marginTop: theme.spacing(2)
     },
@@ -44,6 +50,32 @@ export default function BillOfLadingView(props) {
     ]
     const [facility, setFacility] = useState(facilities[0]);
     const [bolFile, setBolFile] = useState(null);
+
+    // get current date to pre-fill the date area
+    const getCurrentDateTime = () => {
+        const date = new Date();
+        return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}T${("0" + date.getHours()).slice(-2)}:${("0" + date.getMinutes()).slice(-2)}`
+    }
+
+    const [startDateTime, setStartDateTime] = useState(data["start"] || getCurrentDateTime());
+
+    const convertStartDateTimeToReadableString = () => {
+        const date = startDateTime.split('T')[0].split('-');
+        const time = startDateTime.split('T')[1].split(':');
+        const year = date[0];
+        const day = date[1];
+        const month = date[2];
+        let hour = time[0];
+        const minute = time[1];
+        let timeOfDay = 'AM';
+
+        if (hour > 11) {
+            timeOfDay = 'PM';
+            hour = (hour % 13) + 1;
+        }
+
+        return `${month}/${day}/${year} ${hour}:${minute} ${timeOfDay}`
+    }
 
     useEffect(() => {
         if (data['bol_file'])
@@ -71,7 +103,9 @@ export default function BillOfLadingView(props) {
 
         if (Object.keys(allErrors).length == 0) {
             // append to current data object
-            data["bol_file"] = bolFile
+            if (bolFile)
+                data["bol_file"] = bolFile
+            data['start'] = startDateTime
             setData(prevData => ({
                 ...prevData,
                 ...data
@@ -79,12 +113,6 @@ export default function BillOfLadingView(props) {
             // go to next page
             handleNext();
         }
-    }
-
-    // get current date to pre-fill the date area
-    const getCurrentDateTime = () => {
-        const date = new Date();
-        return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}T${("0" + date.getHours()).slice(-2)}:${("0" + date.getMinutes()).slice(-2)}`
     }
 
     // Add file to a state variable
@@ -105,7 +133,7 @@ export default function BillOfLadingView(props) {
         <form onSubmit={handleOnSubmit} noValidate>
         <Grid className={classes.root} container spacing={2}>
             {/* Title */}
-            <Grid item xs={7}>
+            <Grid item xs={6}>
                 <Typography className={classes.title} 
                     gutterBottom
                     variant="h5"
@@ -114,20 +142,10 @@ export default function BillOfLadingView(props) {
                 </Typography>
             </Grid>
             {/* Received Date */}
-            <Grid item xs={5}>
-                <TextField
-                    className={classes.textField}
-                    required
-                    id="created"
-                    label="Received Date"
-                    type="datetime-local"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    name="created"
-                    defaultValue={data["created"] || getCurrentDateTime()}
-                    error={!!errors["created"]}
-                />
+            <Grid item xs={6}>
+                <Typography className={classes.time}>
+                    Started: {convertStartDateTimeToReadableString()}
+                </Typography>
             </Grid>
             {/* Bill of Lading Number */}
             <Grid item xs={4}>

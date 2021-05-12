@@ -18,6 +18,9 @@ import {
 } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 
+
+// label: bol #, ficility, Pallet id and barcode, lane
+
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: theme.spacing(2),
@@ -45,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PalletView(props) {
     const classes = useStyles();
-    const { index, palletId, pallets, setPallets, handleNext, handleBack } = props
+    const { index, palletId, pallets, setPallets, handleNext, handleBack, handleFinish } = props
     const [errors, setErrors] = useState({});
     const heights = [
         "0 - 6 inches",
@@ -126,6 +129,7 @@ export default function PalletView(props) {
             "exceptions": exception,
             "height": height,
             "images": imageFiles,
+            "notes": '',
         }
 
         // Only add notes if 'Other' is checked
@@ -147,7 +151,7 @@ export default function PalletView(props) {
 
     const handleOnSubmit = (event) => {
         handleAddAndSubmit(event);
-        //handleFinish();
+        handleFinish();
     }
 
     return (
@@ -225,19 +229,19 @@ export default function PalletView(props) {
                     <FormLabel component="legend">Exceptions</FormLabel>
                     <FormGroup>
                         <FormControlLabel
-                            control={<Checkbox checked={exceptions["Display Only"]} onChange={handleExceptionsChange} name="Display Only" />}
+                            control={<Checkbox color="primary" checked={exceptions["Display Only"]} onChange={handleExceptionsChange} name="Display Only" />}
                             label="Display Only"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={exceptions["Store Fixture"]} onChange={handleExceptionsChange} name="Store Fixture" />}
+                            control={<Checkbox color="primary" checked={exceptions["Store Fixture"]} onChange={handleExceptionsChange} name="Store Fixture" />}
                             label="Store Fixture"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={exceptions["Undersized"]} onChange={handleExceptionsChange} name="Undersized" />}
+                            control={<Checkbox color="primary" checked={exceptions["Undersized"]} onChange={handleExceptionsChange} name="Undersized" />}
                             label="Undersized"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={exceptions["Other"]} onChange={handleExceptionsChange} name="Other" />}
+                            control={<Checkbox color="primary" checked={exceptions["Other"]} onChange={handleExceptionsChange} name="Other" />}
                             label="Other"
                         />
                     </FormGroup>
@@ -268,8 +272,8 @@ export default function PalletView(props) {
             <Grid container justify = "center" className={classes.button}>
                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                     <Button id="back" type="button" onClick={handleBack} size="large">Back</Button>
-                    <Button id="add" type="button" onClick={handleAddPallet} size="large">{hasExisting ? "Save" : "Add Another Pallet"}</Button>
-                    <Button id="next" type="submit" size="large">{hasExisting ? "Next" : "Finish"}</Button>
+                    <Button id="add" type="button" onClick={handleAddPallet} size="large">{hasExisting ? "Save & Continue" : "Add Another Pallet"}</Button>
+                    <Button id="next" type="submit" size="large">Finish</Button>
                 </ButtonGroup>
             </Grid>
 
