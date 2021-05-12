@@ -6,9 +6,9 @@ import {
     Typography, 
     MenuItem, 
     ButtonGroup,
-    Button
+    Button,
+    Chip
 } from '@material-ui/core';
-import { validate } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginTop: theme.spacing(2)
-    }
+    },
 }));
 
 export default function BillOfLadingView(props) {
@@ -42,6 +42,13 @@ export default function BillOfLadingView(props) {
         "T-03",
         "T-04"
     ]
+    const [facility, setFacility] = useState(facilities[0]);
+    const [bolFile, setBolFile] = useState(null);
+
+    useEffect(() => {
+        if (data['bol_file'])
+            setBolFile(data['bol_file']);
+    }, [data])
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
@@ -64,6 +71,7 @@ export default function BillOfLadingView(props) {
 
         if (Object.keys(allErrors).length == 0) {
             // append to current data object
+            data["bol_file"] = bolFile
             setData(prevData => ({
                 ...prevData,
                 ...data
@@ -77,6 +85,20 @@ export default function BillOfLadingView(props) {
     const getCurrentDateTime = () => {
         const date = new Date();
         return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}T${("0" + date.getHours()).slice(-2)}:${("0" + date.getMinutes()).slice(-2)}`
+    }
+
+    // Add file to a state variable
+    const handleAddFile = (event) => {
+        event.preventDefault();
+        // set file
+        setBolFile(event.target.files[0])
+        // this part ensures that we can upload more files later on
+        event.target.value = null
+    }
+
+    const handleDeleteFile = (event) => {
+        event.preventDefault();
+        setBolFile(null);
     }
 
     return (
@@ -108,42 +130,27 @@ export default function BillOfLadingView(props) {
                 />
             </Grid>
             {/* Bill of Lading Number */}
-            <Grid item xs={6}>
+            <Grid item xs={4}>
                 <TextField
                     className={classes.textField}
                     required
                     id="bol"
                     label="Bill of Lading Number"
                     variant="outlined"
-                    type="number"
                     name="bol"
                     error={!!errors["bol"]}
                     helperText={!!errors["bol"] ? "Please enter a valid BOL number" : ""}
                     defaultValue={data["bol"]}
                 />
             </Grid>
-            {/* Bill of Lading File */}
-            <Grid item xs={6}>
-                <TextField
-                    className={classes.textField}
-                    required
-                    id="bol_file"
-                    type="file"
-                    variant="outlined"
-                    helperText="Please upload the Bill of Lading file or image"
-                    name="bol_file"
-                    error={!!errors["bol_file"]}
-                />
-            </Grid>
             {/* Pallet Number */}
-            <Grid item xs={6}>
+            <Grid item xs={4}>
                 <TextField
                     className={classes.textField}
                     required
                     id="pallet_count"
                     label="Number of Pallets"
                     variant="outlined"
-                    type="number"
                     name="pallet_count"
                     error={!!errors["pallet_count"]}
                     helperText={!!errors["pallet_count"] ? "Please enter a valid number" : ""}
@@ -151,7 +158,7 @@ export default function BillOfLadingView(props) {
                 />
             </Grid>
             {/* Facility */}
-            <Grid item xs={6}>
+            <Grid item xs={4}>
                 <TextField
                     className={classes.textField}
                     required
@@ -159,10 +166,11 @@ export default function BillOfLadingView(props) {
                     select
                     label="Facility"
                     variant="outlined"
-                    value={facilities[0]}
                     name="facility"
                     error={!!errors["facility"]}
-                    defaultValue={data["facility"]}
+                    helperText={!!errors["facility"] ? "Please select a facility" : ""}
+                    value={facility}
+                    onChange={(e) => setFacility(e.target.value)}
                     >
                     {facilities.map((option, index) => (
                         <MenuItem key={index} value={option}>
@@ -171,6 +179,24 @@ export default function BillOfLadingView(props) {
                     ))}
                 </TextField>
             </Grid>
+
+            {/* Bill of Lading File */}
+            <Grid item xs={12}>
+                <Button variant="contained" color="primary" size="large" component="label">
+                    Add BOL File
+                    <input
+                        type="file"
+                        hidden
+                        onChange={handleAddFile}
+                    />
+                </Button>
+            </Grid>
+            {
+                bolFile != null &&
+                <Grid item xs={12}>
+                    <Chip label={bolFile.name} onDelete={handleDeleteFile} color="primary" />
+                </Grid>
+            }
 
             {/* Next Buttton */}
             <Grid container justify = "center" className={classes.button}>

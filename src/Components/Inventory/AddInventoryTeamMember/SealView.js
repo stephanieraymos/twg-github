@@ -12,7 +12,7 @@ import {
     FormControlLabel,
     Radio,
     ButtonGroup,
-    Button
+    Button, Chip
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,36 +34,47 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginTop: theme.spacing(2)
+    },
+    chip: {
+        marginBottom: theme.spacing(1)
     }
 }));
 
-export default function BillOfLadingView(props) {
+export default function SealView(props) {
     const classes = useStyles();
     const { data, setData, handleNext, handleBack } = props
     const [errors, setErrors] = useState({});
-    const [hasSeal, setHasSeal] = useState(data["has_seal"] || true);
-    const [isSealMatchBOL, setIsSealMatchBOL] = useState(data["seal_match"] || true);
+    const [hasSeal, setHasSeal] = useState(data["has_seal"] != null ? data["has_seal"] : true);
+    const [isSealMatchBOL, setIsSealMatchBOL] = useState(data["seal_match"] != null ? data["seal_match"] : true);
+    const [addPalletClick, setAddPalletClick] = useState(false);
+    const [sealFile, setSealFile] = useState(null);
 
     const handleHasSealChange = (event) => {
+        // reset values according to the options
         let value = event.target.value
-        if (value === "Yes")
-            setHasSeal(true)
-        else
-            setHasSeal(false)
+        if (value === "Yes") {
+            setHasSeal(true);
+            delete data["seal_note_1"];
+        } else {
+            setHasSeal(false);
+            delete data["seal"];
+            delete data["seal_file"];
+        }
     }
 
     const handleIsSealMatchBOLChange = (event) => {
+        // reset values according to the options
         let value = event.target.value
-        if (value === "Yes")
-            setIsSealMatchBOL(true)
-        else
-            setIsSealMatchBOL(false)
+        if (value === "Yes") {
+            setIsSealMatchBOL(true);
+            delete data["seal_note_2"];
+        } else
+            setIsSealMatchBOL(false);
     }
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-
         // get the form and put each key/value pair into the object
         const form = new FormData(event.currentTarget);
         const data = {};
@@ -80,6 +91,9 @@ export default function BillOfLadingView(props) {
         setErrors(allErrors);
 
         if (Object.keys(allErrors).length == 0) {
+            // add seal file if there's any
+            if (sealFile)
+                data["seal_file"] = sealFile
             // append to current data object
             setData(prevData => ({
                 ...prevData,
@@ -87,9 +101,30 @@ export default function BillOfLadingView(props) {
                 ["has_seal"]: hasSeal,
                 ["seal_match"]: isSealMatchBOL
             }))
+
             // go to next page
-            handleNext();
+            if (addPalletClick) {
+                setAddPalletClick(false);
+                handleNext();
+            } else{
+                // handleFinish();
+            }
+                
         }
+    }
+
+    // Add images to a state variable
+    const handleAddFile = (event) => {
+        event.preventDefault();
+        // set file
+        setSealFile(event.target.files[0])
+        // this part ensures that we can upload more files later on
+        event.target.value = null
+    }
+
+    const handleDeleteFile = (event) => {
+        event.preventDefault();
+        setSealFile(null);
     }
 
     return (
@@ -114,6 +149,7 @@ export default function BillOfLadingView(props) {
                             value={hasSeal ? "Yes" : "No"} 
                             onChange={handleHasSealChange}
                             required
+                            name="has_seal"
                         >
                             <FormControlLabel 
                                 control={<Radio color="primary" />}
@@ -141,6 +177,7 @@ export default function BillOfLadingView(props) {
                             name="seal_note_1"
                             error={!!errors["seal_note_1"]}
                             helperText={!!errors["seal_note_1"] ? "Please explain why there's no seal" : ""}
+                            defaultValue={data["seal_note_1"]}
                         />
                     </Grid>
                 }
@@ -149,32 +186,36 @@ export default function BillOfLadingView(props) {
                     hasSeal &&
                     <>
                         {/* Seal Number */}
-                        <Grid item xs={6}>
+                        <Grid item xs={7}>
                             <TextField
                                 className={classes.textField}
                                 required
                                 id="seal"
                                 label="Seal Number"
                                 variant="outlined"
-                                type="number"
                                 name="seal"
                                 error={!!errors["seal"]}
                                 helperText={!!errors["seal"] ? "Please enter a valid seal number" : ""}
+                                defaultValue={data["seal"]}
                             />
                         </Grid>
                         {/* Seal Image */}
-                        <Grid item xs={6}>
-                            <TextField
-                                className={classes.textField}
-                                required
-                                id="seal_file"
-                                type="file"
-                                variant="outlined"
-                                helperText="Please upload an image or file of the seal*"
-                                name="seal_file"
-                                error={!!errors["seal_file"]}
-                            />
+                        <Grid item xs={12}>
+                            <Button variant="contained" color="primary" size="large" component="label">
+                                Add Seal Image
+                                <input
+                                    type="file"
+                                    hidden
+                                    onChange={handleAddFile}
+                                />
+                            </Button>
                         </Grid>
+                        {
+                            sealFile != null &&
+                            <Grid item xs={12}>
+                                <Chip className={classes.chip} label={sealFile.name} onDelete={handleDeleteFile} color="primary" />
+                            </Grid>
+                        }
                     </>
                 }
 
@@ -187,6 +228,7 @@ export default function BillOfLadingView(props) {
                             value={isSealMatchBOL ? "Yes" : "No"} 
                             onChange={handleIsSealMatchBOLChange}
                             required
+                            name="seal_match"
                         >
                             <FormControlLabel 
                                 control={<Radio color="primary" />}
@@ -213,7 +255,8 @@ export default function BillOfLadingView(props) {
                             required
                             name="seal_note_2"
                             error={!!errors["seal_note_2"]}
-                            helperText={!!errors["seal_note_2"] ? "Please explain why the mismatch seal numbers" : ""}
+                            helperText={!!errors["seal_note_2"] ? "Please explain the mismatch seal numbers" : ""}
+                            defaultValue={data["seal_note_2"]}
                         />
                     </Grid>
                 }
@@ -222,7 +265,8 @@ export default function BillOfLadingView(props) {
                 <Grid container justify = "center" className={classes.button}>
                     <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                         <Button id="back" type="button" onClick={handleBack} size="large">Back</Button>
-                        <Button id="next" type="submit" size="large">Next</Button>
+                        <Button id="add" type="submit" onClick={() => setAddPalletClick(true)} size="large">Add Pallet</Button>
+                        <Button id="next" type="submit" size="large">Finish</Button>
                     </ButtonGroup>
                 </Grid>
 
