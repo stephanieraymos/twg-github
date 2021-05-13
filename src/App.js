@@ -25,6 +25,8 @@ import { SuperuserProvider } from "./context/superuser";
 import ResetPasswordPage from "./Components/Users/ResetPasswordPage";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import AddInventoryFormSeal from "./Components/Inventory/TeamMember/AddInventoryFormSeal";
+import AddInventoryTeamMember from "./Components/Inventory/AddInventoryTeamMember/AddInventoryTeamMember";
+import { InventoryProvider } from "./context/inventory";
 
 const App = () => {
   return (
@@ -34,7 +36,12 @@ const App = () => {
           <LoginRoute exact path={loginPATH}>
             <Login2 />
           </LoginRoute>
-          <PrivateRoute exact path={dashboardPATH}>
+          <InventoryProvider>
+            <PrivateRoute path={dashboardPATH}>
+              <AddInventoryTeamMember />
+            </PrivateRoute>
+          </InventoryProvider>
+          {/* <PrivateRoute exact path={dashboardPATH}>
             <Dashboard />
           </PrivateRoute>
           <PrivateRoute path={inventoryPATH}>
@@ -59,7 +66,7 @@ const App = () => {
             <SuperuserRoute path={superuserPATH}>
               <SuperuserHome />
             </SuperuserRoute>
-          </SuperuserProvider>
+          </SuperuserProvider> */}
         </Switch>
       </Router>
     </>

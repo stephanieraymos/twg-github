@@ -12,7 +12,7 @@ import SealView from "./SealView";
 import PalletView from "./PalletView";
 import { v4 as uuidv4 } from "uuid";
 import { useInventoryContext } from "../../../context/inventory";
-import { json } from 'd3-fetch';
+import Navigation from "../../Navigation/Navigation";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
     },
     paper: {
-        marginTop: theme.spacing(5),
-        marginRight: theme.spacing(5),
-        marginLeft: theme.spacing(5),
+        margin: theme.spacing(5),
         borderRadius: 20,
     }
 }));
@@ -101,9 +99,6 @@ export default function AddInventoryTeamMember() {
             }
         });
         formData.append("pallets", JSON.stringify(palletData));
-        for (var key of formData.entries()) {
-            console.log(key[0] + ', ' + key[1]);
-        }
         addInventory(formData)
             .then((data) => {
                 console.log("data added", data)
@@ -112,14 +107,12 @@ export default function AddInventoryTeamMember() {
     }
 
     useEffect(() => {
-        console.log("data", data);
         if (handleFinishClick) {
             performPOST();
         }
     }, [data])
 
     useEffect(() => {
-        console.log("pallets", pallets);
         if (handleFinishClick) {
             performPOST();
         }
@@ -127,6 +120,9 @@ export default function AddInventoryTeamMember() {
 
     return (
         <div className={classes.root}>
+            <div>
+              <Navigation />
+            </div>
             <Stepper nonLinear alternativeLabel activeStep={activeStep}>
                 {steps.map((label, index) => (
                     <Step key={label}>
@@ -141,11 +137,11 @@ export default function AddInventoryTeamMember() {
             <Paper className={classes.paper}>
                 {
                     activeStep == 0 &&
-                    <BillOfLadingView data={data} setData={setData} handleNext={handleNext} />
+                    <BillOfLadingView id={`${data["facility"]}-${id}`} data={data} setData={setData} handleNext={handleNext} />
                 }
                 {
                     activeStep == 1 &&
-                    <SealView data={data} setData={setData} handleNext={handleNext} handleBack={handleBack} handleFinish={handleFinish} />
+                    <SealView id={`${data["facility"]}-${id}`} data={data} setData={setData} handleNext={handleNext} handleBack={handleBack} handleFinish={handleFinish} />
                 }
                 {
                     activeStep >= 2 &&

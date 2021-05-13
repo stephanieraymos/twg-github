@@ -20,30 +20,30 @@ import {
 } from "../../Pages/paths";
 
 export const links = [
-  {
-    id: 1,
-    url: dashboardPATH,
-    text: "Dashboard",
-    icon: <FaUserCircle />
-  },
-  {
-    id: 2,
-    url: inventoryPATH,
-    text: "Inventory",
-    icon: <FaTruckMoving />
-  },
-  {
-    id: 3,
-    url: accountPATH,
-    text: "Account",
-    icon: <FaUserFriends />
-  },
-  {
-    id: 4,
-    url: superuserPATH,
-    text: "Superuser",
-    icon: <FaUserFriends />
-  },
+  // {
+  //   id: 1,
+  //   url: dashboardPATH,
+  //   text: "Dashboard",
+  //   icon: <FaUserCircle />
+  // },
+  // {
+  //   id: 2,
+  //   url: inventoryPATH,
+  //   text: "Inventory",
+  //   icon: <FaTruckMoving />
+  // },
+  // {
+  //   id: 3,
+  //   url: accountPATH,
+  //   text: "Account",
+  //   icon: <FaUserFriends />
+  // },
+  // {
+  //   id: 4,
+  //   url: superuserPATH,
+  //   text: "Superuser",
+  //   icon: <FaUserFriends />
+  // },
   // {
   //   id: 3,
   //   url: "/users",
@@ -69,7 +69,7 @@ export const links = [
   //   icon: <FaUserFriends />,
   // },
   {
-    id: 5,
+    id: 1,
     url: "/logout",
     text: "Log Out",
     icon: <FaUserFriends />,

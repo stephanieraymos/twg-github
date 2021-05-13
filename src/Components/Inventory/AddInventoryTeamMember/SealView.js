@@ -1,11 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { 
     Grid, 
     TextField, 
     Typography, 
-    MenuItem, 
-    Divider,
     FormControl,
     FormLabel,
     RadioGroup,
@@ -14,41 +11,23 @@ import {
     ButtonGroup,
     Button, Chip
 } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(3),
-        paddingLeft: theme.spacing(4),
-        paddingRight: theme.spacing(4),
-        width: "100%",
-    },
-    textField: {
-        width: "100%",
-        fontFamily: "Montserrat, sans-serif",
-    },
-    title: {
-        fontFamily: "Montserrat, sans-serif",
-        fontWeight: 700,
-        color: theme.palette.text.primary,
-    },
-    button: {
-        marginTop: theme.spacing(2)
-    },
-    chip: {
-        marginBottom: theme.spacing(1)
-    }
-}));
+import useStyles from "./style";
+import FileViewer from "react-file-viewer";
+import CameraDialog from "./CameraDialog";
+import NoFileComponent from "./NoFileComponent";
 
 export default function SealView(props) {
     const classes = useStyles();
-    const { data, setData, handleNext, handleBack, handleFinish } = props
+    const { id, data, setData, handleNext, handleBack, handleFinish } = props
     const [errors, setErrors] = useState({});
     const [hasSeal, setHasSeal] = useState(data["has_seal"] != null ? data["has_seal"] : true);
     const [isSealMatchBOL, setIsSealMatchBOL] = useState(data["seal_match"] != null ? data["seal_match"] : true);
     const [addPalletClick, setAddPalletClick] = useState(false);
     const [sealFile, setSealFile] = useState(null);
     const [hasExisting, setHasExisting] = useState(false);
+    const [openCamera, setOpenCamera] = useState(false);
+    const [fileType, setFileType] = useState("");
+    const [filePath, setFilePath] = useState("");
 
     useEffect(() => {
         if (data['seal_file']) {
@@ -122,6 +101,19 @@ export default function SealView(props) {
         }
     }
 
+    const capture = useCallback((imageSrc) => {
+        fetch(imageSrc)
+            .then(res => res.blob())
+            .then(blob => {
+                var fileOfBlob = new File([blob], `${id}-bol.jpeg`, {
+                    type: "image/jpeg",
+                });
+                setSealFile(fileOfBlob);
+                closeCameraDialog();
+            })
+            .catch(error => console.log("Image Binary Conversion Error:", error))
+    }, [setSealFile]);
+
     // Add images to a state variable
     const handleAddFile = (event) => {
         event.preventDefault();
@@ -136,9 +128,27 @@ export default function SealView(props) {
         setSealFile(null);
     }
 
+    useEffect(() => {
+        // set the file path and extension if there's a file
+        if (sealFile) {
+            setFilePath(URL.createObjectURL(sealFile));
+            setFileType(sealFile.name.split('.').pop());
+        } else {
+            setFilePath("");
+            setFileType("");
+        }
+    }, [sealFile])
+
+    const openCameraDialog = () => setOpenCamera(true);
+    const closeCameraDialog = () => setOpenCamera(false);
+
     return (
         <form onSubmit={handleOnSubmit} noValidate>
-            <Grid className={classes.root} container spacing={2}>
+            <Grid 
+                className={classes.root} 
+                container 
+                spacing={2}
+                justify="space-between">
                 {/* Title */}
                 <Grid item xs={12}>
                     <Typography 
@@ -149,134 +159,188 @@ export default function SealView(props) {
                         Seal Information
                     </Typography>
                 </Grid>
-                {/* Is Seal Available */}
-                <Grid item xs={hasSeal ? 7 : 6}>
-                    <FormControl component="fieldset">
-                        <FormLabel>Does the truck have a seal?</FormLabel>
-                        <RadioGroup aria-label="hasSeal" 
-                            row={true}
-                            value={hasSeal ? "Yes" : "No"} 
-                            onChange={handleHasSealChange}
-                            required
-                            name="has_seal"
-                        >
-                            <FormControlLabel 
-                                control={<Radio color="primary" />}
-                                label="Yes"
-                                value="Yes" />
-                            <FormControlLabel 
-                                control={<Radio color="primary" />}
-                                label="No"
-                                value="No" />
-                        </RadioGroup>
-                    </FormControl>
-                </Grid>
+                <Grid
+                    container 
+                    spacing={2}
+                    item
+                    xs={6}>
 
-                {
-                    !hasSeal &&
-                    <Grid item xs={6}>
-                        <TextField
-                            className={classes.textField}
-                            id="seal_note_1"
-                            label="Explain"
-                            multiline
-                            rows={3}
-                            variant="outlined"
-                            required
-                            name="seal_note_1"
-                            error={!!errors["seal_note_1"]}
-                            helperText={!!errors["seal_note_1"] ? "Please explain why there's no seal" : ""}
-                            defaultValue={data["seal_note_1"]}
-                        />
+                    {/* Is Seal Available */}
+                    <Grid item xs={12}>
+                        <FormControl component="fieldset">
+                            <FormLabel className={classes.label}>Does the truck have a seal?</FormLabel>
+                            <RadioGroup aria-label="hasSeal" 
+                                row={true}
+                                value={hasSeal ? "Yes" : "No"} 
+                                onChange={handleHasSealChange}
+                                required
+                                name="has_seal"
+                            >
+                                <FormControlLabel 
+                                    control={<Radio color="primary" />}
+                                    label="Yes"
+                                    value="Yes" />
+                                <FormControlLabel 
+                                    control={<Radio color="primary" />}
+                                    label="No"
+                                    value="No" />
+                            </RadioGroup>
+                        </FormControl>
                     </Grid>
-                }
 
-                {
-                    hasSeal &&
-                    <>
-                        {/* Seal Number */}
-                        <Grid item xs={7}>
+                    {
+                        !hasSeal &&
+                        <Grid item xs={12}>
+                            <Typography className={classes.label}>
+                                Explain
+                            </Typography>
                             <TextField
                                 className={classes.textField}
-                                required
-                                id="seal"
-                                label="Seal Number"
+                                id="seal_note_1"
+                                multiline
+                                rows={3}
                                 variant="outlined"
-                                name="seal"
-                                error={!!errors["seal"]}
-                                helperText={!!errors["seal"] ? "Please enter a valid seal number" : ""}
-                                defaultValue={data["seal"]}
+                                required
+                                name="seal_note_1"
+                                error={!!errors["seal_note_1"]}
+                                helperText={!!errors["seal_note_1"] ? "Please explain why there's no seal" : ""}
+                                defaultValue={data["seal_note_1"]}
                             />
                         </Grid>
-                        {/* Seal Image */}
-                        <Grid item xs={12}>
-                            <Button variant="contained" color="primary" size="large" component="label">
-                                Add Seal Image
-                                <input
-                                    type="file"
-                                    hidden
-                                    onChange={handleAddFile}
-                                />
-                            </Button>
-                        </Grid>
-                        {
-                            sealFile != null &&
-                            <Grid item xs={12}>
-                                <Chip className={classes.chip} label={sealFile.name} onDelete={handleDeleteFile} color="primary" />
-                            </Grid>
-                        }
-                    </>
-                }
+                    }
 
-                {/* Does Seal Match Number on BOL */}
-                <Grid item xs={6}>
-                    <FormControl component="fieldset">
-                        <FormLabel>Does the seal number match the number in the Bill of Lading?</FormLabel>
-                        <RadioGroup aria-label="hasSeal" 
-                            row={true}
-                            value={isSealMatchBOL ? "Yes" : "No"} 
-                            onChange={handleIsSealMatchBOLChange}
-                            required
-                            name="seal_match"
-                        >
-                            <FormControlLabel 
-                                control={<Radio color="primary" />}
-                                label="Yes"
-                                value="Yes" />
-                            <FormControlLabel 
-                                control={<Radio color="primary" />}
-                                label="No"
-                                value="No" />
-                        </RadioGroup>
-                    </FormControl>
+                    {
+                        hasSeal &&
+                        <>
+                            {/* Seal Number */}
+                            <Grid item xs={12}>
+                                <Typography className={classes.label}>
+                                    Seal Number
+                                </Typography>
+                                <TextField
+                                    className={classes.textField}
+                                    required
+                                    id="seal"
+                                    variant="outlined"
+                                    name="seal"
+                                    error={!!errors["seal"]}
+                                    helperText={!!errors["seal"] ? "Please enter a valid seal number" : ""}
+                                    defaultValue={data["seal"]}
+                                />
+                            </Grid>
+                            {/* Add File Buttton */}
+                            <Grid item xs={12}>
+                                <Typography className={classes.label}>
+                                    Attach File/Image
+                                </Typography>
+                                <Button className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
+                                    Add Seal Image
+                                    <input
+                                        type="file"
+                                        hidden
+                                        onChange={handleAddFile}
+                                    />
+                                </Button>
+                                <Button variant="contained" color="primary" size="large" onClick={openCameraDialog}>
+                                    Take a picture
+                                </Button>
+                            </Grid>
+
+                            {
+                                sealFile != null &&
+                                <Grid item xs={12}>
+                                    <Chip className={classes.chip} label={sealFile.name} onDelete={handleDeleteFile} color="primary" />
+                                </Grid>
+                            }
+                        </>
+                    }
+
+                    {/* Does Seal Match Number on BOL */}
+                    <Grid item xs={12}>
+                        <FormControl component="fieldset">
+                            <FormLabel className={classes.label2}>Does the seal number match the number in the Bill of Lading?</FormLabel>
+                            <RadioGroup aria-label="hasSeal" 
+                                row={true}
+                                value={isSealMatchBOL ? "Yes" : "No"} 
+                                onChange={handleIsSealMatchBOLChange}
+                                required
+                                name="seal_match"
+                            >
+                                <FormControlLabel 
+                                    control={<Radio color="primary" />}
+                                    label="Yes"
+                                    value="Yes" />
+                                <FormControlLabel 
+                                    control={<Radio color="primary" />}
+                                    label="No"
+                                    value="No" />
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+
+                    {
+                        !isSealMatchBOL &&
+                        <Grid item xs={12}>
+                            <Typography className={classes.label}>
+                                Explain
+                            </Typography>
+                            <TextField
+                                className={classes.textField}
+                                id="seal_note_2"
+                                multiline
+                                rows={3}
+                                variant="outlined"
+                                required
+                                name="seal_note_2"
+                                error={!!errors["seal_note_2"]}
+                                helperText={!!errors["seal_note_2"] ? "Please explain the mismatch seal numbers" : ""}
+                                defaultValue={data["seal_note_2"]}
+                            />
+                        </Grid>
+                    }
+
+                </Grid>
+                <Grid
+                    container 
+                    spacing={2}
+                    item
+                    xs={6}>
+
+                    <Grid item xs={12}>
+                        <Typography className={classes.label}>
+                            File/Image Preview
+                        </Typography>
+                        <div style={{height: "400px", overflowY: 'scroll'}}>
+                            <FileViewer
+                                fileType={fileType} 
+                                filePath={filePath}
+                                errorComponent={NoFileComponent}
+                                unsupportedComponent={NoFileComponent}
+                                onError={e => console.log(e, "error in file-viewer")} />
+                        </div>
+                    </Grid>
+
+                </Grid>
+                
+                <CameraDialog capture={capture} open={openCamera} handleClose={closeCameraDialog} />
+
+                {/* Back & Next & Finish button */}
+                <Grid item className={classes.button}>
+                    <Button variant="contained" type="button" onClick={handleBack} color="primary" size="large">
+                        Back
+                    </Button>
                 </Grid>
 
-                {
-                    !isSealMatchBOL &&
-                    <Grid item xs={6}>
-                        <TextField
-                            className={classes.textField}
-                            id="seal_note_2"
-                            label="Explain"
-                            multiline
-                            rows={3}
-                            variant="outlined"
-                            required
-                            name="seal_note_2"
-                            error={!!errors["seal_note_2"]}
-                            helperText={!!errors["seal_note_2"] ? "Please explain the mismatch seal numbers" : ""}
-                            defaultValue={data["seal_note_2"]}
-                        />
-                    </Grid>
-                }
+                <Grid item className={classes.button}>
+                    <Button variant="contained" type="submit" onClick={() => setAddPalletClick(true)} color="primary" size="large">
+                        {hasExisting ? "Save & Continue" : "Add Pallet"}
+                    </Button>
+                </Grid>
 
-                {/* Back & Next button */}
-                <Grid container justify = "center" className={classes.button}>
-                    <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                        <Button id="back" type="button" onClick={handleBack} size="large">Back</Button>
-                        <Button id="add" type="submit" onClick={() => setAddPalletClick(true)} size="large">{hasExisting ? "Save & Continue" : "Add Pallet"}</Button>
-                        <Button id="next" type="submit" size="large">Finish</Button>
-                    </ButtonGroup>
+                <Grid item className={classes.button}>
+                    <Button variant="contained" type="submit" color="primary" size="large">
+                    Finish
+                    </Button>
                 </Grid>
 
             </Grid>

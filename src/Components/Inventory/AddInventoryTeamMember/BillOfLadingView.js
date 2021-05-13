@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { 
     Grid, 
     TextField, 
@@ -7,40 +6,16 @@ import {
     MenuItem, 
     ButtonGroup,
     Button,
-    Chip
+    Chip,
 } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(3),
-        paddingLeft: theme.spacing(4),
-        paddingRight: theme.spacing(4),
-        width: "100%",
-    },
-    textField: {
-        width: "100%",
-        fontFamily: "Montserrat, sans-serif",
-    },
-    title: {
-        fontFamily: "Montserrat, sans-serif",
-        fontWeight: 700,
-        color: theme.palette.text.primary,
-    },
-    time: {
-        fontFamily: "Montserrat, sans-serif",
-        fontWeight: 500,
-        textAlign: "right",
-        color: theme.palette.text.secondary,
-    },
-    button: {
-        marginTop: theme.spacing(2)
-    },
-}));
+import FileViewer from "react-file-viewer";
+import CameraDialog from "./CameraDialog";
+import useStyles from "./style"
+import NoFileComponent from "./NoFileComponent";
 
 export default function BillOfLadingView(props) {
     const classes = useStyles();
-    const { data, setData, handleNext } = props
+    const { id, data, setData, handleNext } = props
     const [errors, setErrors] = useState({});
     const facilities = [
         "T-01",
@@ -50,6 +25,9 @@ export default function BillOfLadingView(props) {
     ]
     const [facility, setFacility] = useState(facilities[0]);
     const [bolFile, setBolFile] = useState(null);
+    const [openCamera, setOpenCamera] = useState(false);
+    const [fileType, setFileType] = useState("");
+    const [filePath, setFilePath] = useState("");
 
     // get current date to pre-fill the date area
     const getCurrentDateTime = () => {
@@ -63,8 +41,8 @@ export default function BillOfLadingView(props) {
         const date = startDateTime.split('T')[0].split('-');
         const time = startDateTime.split('T')[1].split(':');
         const year = date[0];
-        const day = date[1];
-        const month = date[2];
+        const month = date[1];
+        const day = date[2];
         let hour = time[0];
         const minute = time[1];
         let timeOfDay = 'AM';
@@ -115,6 +93,19 @@ export default function BillOfLadingView(props) {
         }
     }
 
+    const capture = useCallback((imageSrc) => {
+        fetch(imageSrc)
+            .then(res => res.blob())
+            .then(blob => {
+                var fileOfBlob = new File([blob], `${id}-bol.jpeg`, {
+                    type: "image/jpeg",
+                });
+                setBolFile(fileOfBlob);
+                closeCameraDialog();
+            })
+            .catch(error => console.log("Image Binary Conversion Error:", error))
+    }, [setBolFile]);
+
     // Add file to a state variable
     const handleAddFile = (event) => {
         event.preventDefault();
@@ -129,9 +120,27 @@ export default function BillOfLadingView(props) {
         setBolFile(null);
     }
 
+    useEffect(() => {
+        // set the file path and extension if there's a file
+        if (bolFile) {
+            setFilePath(URL.createObjectURL(bolFile));
+            setFileType(bolFile.name.split('.').pop());
+        } else {
+            setFilePath("");
+            setFileType("");
+        }
+    }, [bolFile])
+
+    const openCameraDialog = () => setOpenCamera(true);
+    const closeCameraDialog = () => setOpenCamera(false);
+
     return (
         <form onSubmit={handleOnSubmit} noValidate>
-        <Grid className={classes.root} container spacing={2}>
+        <Grid 
+            className={classes.root} 
+            container 
+            spacing={2}
+            justify="center" >
             {/* Title */}
             <Grid item xs={6}>
                 <Typography className={classes.title} 
@@ -141,86 +150,132 @@ export default function BillOfLadingView(props) {
                     Bill of Lading
                 </Typography>
             </Grid>
-            {/* Received Date */}
+
+            {/* Start */}
             <Grid item xs={6}>
                 <Typography className={classes.time}>
                     Started: {convertStartDateTimeToReadableString()}
                 </Typography>
             </Grid>
-            {/* Bill of Lading Number */}
-            <Grid item xs={4}>
-                <TextField
-                    className={classes.textField}
-                    required
-                    id="bol"
-                    label="Bill of Lading Number"
-                    variant="outlined"
-                    name="bol"
-                    error={!!errors["bol"]}
-                    helperText={!!errors["bol"] ? "Please enter a valid BOL number" : ""}
-                    defaultValue={data["bol"]}
-                />
-            </Grid>
-            {/* Pallet Number */}
-            <Grid item xs={4}>
-                <TextField
-                    className={classes.textField}
-                    required
-                    id="pallet_count"
-                    label="Number of Pallets"
-                    variant="outlined"
-                    name="pallet_count"
-                    error={!!errors["pallet_count"]}
-                    helperText={!!errors["pallet_count"] ? "Please enter a valid number" : ""}
-                    defaultValue={data["pallet_count"]}
-                />
-            </Grid>
-            {/* Facility */}
-            <Grid item xs={4}>
-                <TextField
-                    className={classes.textField}
-                    required
-                    id="facility"
-                    select
-                    label="Facility"
-                    variant="outlined"
-                    name="facility"
-                    error={!!errors["facility"]}
-                    helperText={!!errors["facility"] ? "Please select a facility" : ""}
-                    value={facility}
-                    onChange={(e) => setFacility(e.target.value)}
-                    >
-                    {facilities.map((option, index) => (
-                        <MenuItem key={index} value={option}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </TextField>
+
+            <Grid
+                container 
+                spacing={2}
+                item
+                xs={6} >
+                    
+                {/* Bill of Lading Number */}
+                <Grid item xs={12}>
+                    <Typography className={classes.label}>
+                        Bill of Lading Number
+                    </Typography>
+                    <TextField
+                        className={classes.textField}
+                        required
+                        id="bol"
+                        variant="outlined"
+                        name="bol"
+                        error={!!errors["bol"]}
+                        helperText={!!errors["bol"] ? "Please enter a valid BOL number" : ""}
+                        defaultValue={data["bol"]}
+                    />
+                </Grid>
+                {/* Pallet Number */}
+                <Grid item xs={12}>
+                    <Typography className={classes.label}>
+                        Number of Pallets
+                    </Typography>
+                    <TextField
+                        className={classes.textField}
+                        required
+                        id="pallet_count"
+                        variant="outlined"
+                        name="pallet_count"
+                        error={!!errors["pallet_count"]}
+                        helperText={!!errors["pallet_count"] ? "Please enter a valid number" : ""}
+                        defaultValue={data["pallet_count"]}
+                    />
+                </Grid>
+                {/* Facility */}
+                <Grid item xs={12}>
+                    <Typography className={classes.label}>
+                        Facility
+                    </Typography>
+                    <TextField
+                        className={classes.textField}
+                        required
+                        id="facility"
+                        select
+                        variant="outlined"
+                        name="facility"
+                        error={!!errors["facility"]}
+                        helperText={!!errors["facility"] ? "Please select a facility" : ""}
+                        value={facility}
+                        onChange={(e) => setFacility(e.target.value)}
+                        >
+                        {facilities.map((option, index) => (
+                            <MenuItem key={index} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
+
+                {/* Add File Buttton */}
+                <Grid item xs={12}>
+                    <Typography className={classes.label}>
+                        Attach File/Image
+                    </Typography>
+                    <Button className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
+                        Add BOL File
+                        <input
+                            type="file"
+                            hidden
+                            onChange={handleAddFile}
+                        />
+                    </Button>
+                    <Button variant="contained" color="primary" size="large" onClick={openCameraDialog}>
+                        Take a picture
+                    </Button>
+                </Grid>
+
+                {
+                    bolFile != null &&
+                    <Grid item xs={12}>
+                        <Chip label={bolFile.name} onDelete={handleDeleteFile} color="primary" />
+                    </Grid>
+                }
             </Grid>
 
-            {/* Bill of Lading File */}
-            <Grid item xs={12}>
-                <Button variant="contained" color="primary" size="large" component="label">
-                    Add BOL File
-                    <input
-                        type="file"
-                        hidden
-                        onChange={handleAddFile}
-                    />
-                </Button>
-            </Grid>
-            {
-                bolFile != null &&
+            {/* File/Image Preview */}
+            <Grid
+                container 
+                spacing={2}
+                item
+                xs={6}>
+
                 <Grid item xs={12}>
-                    <Chip label={bolFile.name} onDelete={handleDeleteFile} color="primary" />
+                    <Typography className={classes.label}>
+                        File/Image Preview
+                    </Typography>
+                    <div style={{height: "400px", overflowY: 'scroll'}}>
+                        <FileViewer
+                            fileType={fileType} 
+                            filePath={filePath}
+                            errorComponent={NoFileComponent}
+                            unsupportedComponent={NoFileComponent}
+                            onError={e => console.log(e, "error in file-viewer")} />
+                    </div>
                 </Grid>
-            }
+            </Grid>
+
+            <CameraDialog capture={capture} open={openCamera} handleClose={closeCameraDialog} />
 
             {/* Next Buttton */}
-            <Grid container justify = "center" className={classes.button}>
-                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button type="submit" size="large">Next</Button>
-                </ButtonGroup>
+            <Grid item className={classes.button}>
+                <Button variant="contained" type="submit" color="primary" size="large" onClick={openCameraDialog}>
+                    Next
+                </Button>
             </Grid>
 
         </Grid>
