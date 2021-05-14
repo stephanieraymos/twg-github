@@ -13,6 +13,7 @@ import PalletView from "./PalletView";
 import { v4 as uuidv4 } from "uuid";
 import { useInventoryContext } from "../../../context/inventory";
 import Navigation from "../../Navigation/Navigation";
+import FinishView from "./ReviewView";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,7 +48,9 @@ export default function AddInventoryTeamMember() {
     const [completed, setCompleted] = useState({});
     const [steps, setSteps] = useState([
         'Bill of Lading',
-        'Seal'
+        'Seal & Lane',
+        'Pallet #1',
+        'Review'
     ]);
     const [data, setData] = useState({});
     const [id, setId] = useState(uuidv4().substring(0,8));
@@ -55,17 +58,22 @@ export default function AddInventoryTeamMember() {
 
     const { addInventory } = useInventoryContext();
 
-    const handleNext = () => {
+    const handleNext = (isReview=false) => {
         setCompleted(prevCompleted => ({
             ...prevCompleted,
             [activeStep]: true
         }));
         const newActiveStep = activeStep + 1
         setActiveStep(newActiveStep);
-        const newTitle = `Pallet #${newActiveStep - 1}`
-        if (newActiveStep > 1 && !steps.includes(newTitle)) {
-            setSteps(prevSteps => [...prevSteps, newTitle])
+
+        if (!isReview) {
+            let newTitle = `Pallet #${newActiveStep - 1}`
+
+            if (newActiveStep > 1 && !steps.includes(newTitle)) {
+                setSteps(prevSteps => [...prevSteps.slice(0, -1), newTitle, "Review"])
+            }
         }
+        
     };
 
     const handleBack = () => {
@@ -102,6 +110,7 @@ export default function AddInventoryTeamMember() {
         addInventory(formData)
             .then((data) => {
                 console.log("data added", data)
+                window.location.reload()
             })
             .catch(error => console.log(error))
     }
@@ -111,12 +120,6 @@ export default function AddInventoryTeamMember() {
             performPOST();
         }
     }, [data])
-
-    useEffect(() => {
-        if (handleFinishClick) {
-            performPOST();
-        }
-    }, [pallets])
 
     return (
         <div className={classes.root}>
@@ -145,14 +148,18 @@ export default function AddInventoryTeamMember() {
                 }
                 {
                     activeStep >= 2 &&
-                    new Array(activeStep - 1).fill(0).map((value, index) =>{
-                        // only show the view that match the current active step
-                        const currentIndex = index + 1;
-                        if (currentIndex == activeStep - 1)
-                            return (
-                                <PalletView key={index} index={currentIndex} palletId={`${data["facility"]}-${id}-${currentIndex}`} pallets={pallets} setPallets={setPallets} handleNext={handleNext} handleBack={handleBack} handleFinish={handleFinish} />
-                            );
-                    })
+                    (activeStep == steps.length - 1 ? (
+                        <FinishView pallets={pallets} data={data} setData={setData} handleBack={handleBack} handleFinish={handleFinish}/>
+                    ) : (
+                        new Array(activeStep - 1).fill(0).map((value, index) =>{
+                            // only show the view that match the current active step
+                            const currentIndex = index + 1;
+                            if (currentIndex == activeStep - 1)
+                                return (
+                                    <PalletView key={index} index={currentIndex} palletId={`${data["facility"]}-${id}-${currentIndex}`} pallets={pallets} setPallets={setPallets} handleNext={handleNext} handleBack={handleBack} />
+                                );
+                        })
+                    ))
                 }
             </Paper>
         </div>

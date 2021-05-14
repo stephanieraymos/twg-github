@@ -8,8 +8,9 @@ import {
     RadioGroup,
     FormControlLabel,
     Radio,
-    ButtonGroup,
-    Button, Chip
+    Button, 
+    Chip,
+    FormHelperText
 } from '@material-ui/core';
 import useStyles from "./style";
 import FileViewer from "react-file-viewer";
@@ -18,20 +19,17 @@ import NoFileComponent from "./NoFileComponent";
 
 export default function SealView(props) {
     const classes = useStyles();
-    const { id, data, setData, handleNext, handleBack, handleFinish } = props
+    const { id, data, setData, handleNext, handleBack } = props
     const [errors, setErrors] = useState({});
     const [hasSeal, setHasSeal] = useState(data["has_seal"] != null ? data["has_seal"] : true);
     const [isSealMatchBOL, setIsSealMatchBOL] = useState(data["seal_match"] != null ? data["seal_match"] : true);
-    const [addPalletClick, setAddPalletClick] = useState(false);
     const [sealFile, setSealFile] = useState(null);
-    const [hasExisting, setHasExisting] = useState(false);
     const [openCamera, setOpenCamera] = useState(false);
     const [fileType, setFileType] = useState("");
     const [filePath, setFilePath] = useState("");
 
     useEffect(() => {
         if (data['seal_file']) {
-            setHasExisting(true);
             setSealFile(data['seal_file']);
         }
     }, [data])
@@ -75,6 +73,9 @@ export default function SealView(props) {
             }
         });
 
+        if (sealFile == null)
+            allErrors['seal_file'] = true
+
         setErrors(allErrors);
 
         if (Object.keys(allErrors).length == 0) {
@@ -89,15 +90,8 @@ export default function SealView(props) {
                 ["seal_match"]: isSealMatchBOL
             }))
 
-            setAddPalletClick(false);
-
             // go to next page
-            if (addPalletClick) {
-                handleNext();
-            } else{
-                handleFinish();
-            }
-                
+            handleNext();    
         }
     }
 
@@ -156,7 +150,7 @@ export default function SealView(props) {
                         gutterBottom
                         variant="h5"
                         component="h2" >
-                        Seal Information
+                        Seal & Lane
                     </Typography>
                 </Grid>
                 <Grid
@@ -233,7 +227,7 @@ export default function SealView(props) {
                                 <Typography className={classes.label}>
                                     Attach File/Image
                                 </Typography>
-                                <Button className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
+                                <Button id="add-seal-image" className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
                                     Add Seal Image
                                     <input
                                         type="file"
@@ -241,9 +235,13 @@ export default function SealView(props) {
                                         onChange={handleAddFile}
                                     />
                                 </Button>
-                                <Button variant="contained" color="primary" size="large" onClick={openCameraDialog}>
+                                <Button id="take-a-picture" variant="contained" color="primary" size="large" onClick={openCameraDialog}>
                                     Take a picture
                                 </Button>
+                                {
+                                    !!errors["seal_file"] &&
+                                    <FormHelperText className={classes.helperText}>Please add a file or image</FormHelperText>
+                                }
                             </Grid>
 
                             {
@@ -299,6 +297,23 @@ export default function SealView(props) {
                         </Grid>
                     }
 
+                    {/* Lane */}
+                    <Grid item xs={12}>
+                        <Typography className={classes.label}>
+                            Lane
+                        </Typography>
+                        <TextField
+                            className={classes.textField}
+                            required
+                            id="lane"
+                            variant="outlined"
+                            name="lane"
+                            error={!!errors["lane"]}
+                            helperText={!!errors["lane"] ? "Please enter a lane" : ""}
+                            defaultValue={data["lane"]}
+                        />
+                    </Grid>
+
                 </Grid>
                 <Grid
                     container 
@@ -319,27 +334,20 @@ export default function SealView(props) {
                                 onError={e => console.log(e, "error in file-viewer")} />
                         </div>
                     </Grid>
-
                 </Grid>
-                
+
                 <CameraDialog capture={capture} open={openCamera} handleClose={closeCameraDialog} />
 
                 {/* Back & Next & Finish button */}
                 <Grid item className={classes.button}>
-                    <Button variant="contained" type="button" onClick={handleBack} color="primary" size="large">
+                    <Button id="back" variant="contained" type="button" onClick={handleBack} color="primary" size="large">
                         Back
                     </Button>
                 </Grid>
 
                 <Grid item className={classes.button}>
-                    <Button variant="contained" type="submit" onClick={() => setAddPalletClick(true)} color="primary" size="large">
-                        {hasExisting ? "Save & Continue" : "Add Pallet"}
-                    </Button>
-                </Grid>
-
-                <Grid item className={classes.button}>
-                    <Button variant="contained" type="submit" color="primary" size="large">
-                    Finish
+                    <Button id="finish" variant="contained" type="submit" color="primary" size="large">
+                        Next
                     </Button>
                 </Grid>
 

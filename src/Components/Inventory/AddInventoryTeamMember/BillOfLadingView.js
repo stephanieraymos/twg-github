@@ -3,10 +3,10 @@ import {
     Grid, 
     TextField, 
     Typography, 
-    MenuItem, 
-    ButtonGroup,
+    MenuItem,
     Button,
     Chip,
+    FormHelperText,
 } from '@material-ui/core';
 import FileViewer from "react-file-viewer";
 import CameraDialog from "./CameraDialog";
@@ -76,6 +76,9 @@ export default function BillOfLadingView(props) {
                 allErrors[key] = true
             }
         });
+
+        if (bolFile == null)
+            allErrors['bol_file'] = true
 
         setErrors(allErrors);
 
@@ -176,7 +179,7 @@ export default function BillOfLadingView(props) {
                         variant="outlined"
                         name="bol"
                         error={!!errors["bol"]}
-                        helperText={!!errors["bol"] ? "Please enter a valid BOL number" : ""}
+                        helperText={!!errors["bol"] ? "Please enter a BOL number" : ""}
                         defaultValue={data["bol"]}
                     />
                 </Grid>
@@ -192,7 +195,7 @@ export default function BillOfLadingView(props) {
                         variant="outlined"
                         name="pallet_count"
                         error={!!errors["pallet_count"]}
-                        helperText={!!errors["pallet_count"] ? "Please enter a valid number" : ""}
+                        helperText={!!errors["pallet_count"] ? "Please enter a pallet count" : ""}
                         defaultValue={data["pallet_count"]}
                     />
                 </Grid>
@@ -226,7 +229,7 @@ export default function BillOfLadingView(props) {
                     <Typography className={classes.label}>
                         Attach File/Image
                     </Typography>
-                    <Button className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
+                    <Button id="add-bol-file" className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
                         Add BOL File
                         <input
                             type="file"
@@ -234,9 +237,13 @@ export default function BillOfLadingView(props) {
                             onChange={handleAddFile}
                         />
                     </Button>
-                    <Button variant="contained" color="primary" size="large" onClick={openCameraDialog}>
+                    <Button id="take-a-picture" variant="contained" color="primary" size="large" onClick={openCameraDialog}>
                         Take a picture
                     </Button>
+                    {
+                        !!errors["bol_file"] &&
+                        <FormHelperText className={classes.helperText}>Please add a file or image</FormHelperText>
+                    }
                 </Grid>
 
                 {
@@ -273,7 +280,7 @@ export default function BillOfLadingView(props) {
 
             {/* Next Buttton */}
             <Grid item className={classes.button}>
-                <Button variant="contained" type="submit" color="primary" size="large" onClick={openCameraDialog}>
+                <Button id="next" variant="contained" type="submit" color="primary" size="large">
                     Next
                 </Button>
             </Grid>

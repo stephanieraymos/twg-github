@@ -5,7 +5,6 @@ import {
     TextField, 
     Typography, 
     MenuItem, 
-    ButtonGroup,
     Button,
     FormLabel,
     FormControl,
@@ -14,18 +13,18 @@ import {
     FormGroup,
     Chip,
     GridList,
-    GridListTile
+    GridListTile,
+    FormHelperText
 } from '@material-ui/core';
 import useStyles from "./style";
-import FileViewer from "react-file-viewer";
 import CameraDialog from "./CameraDialog";
 import NoFileComponent from "./NoFileComponent";
 
-// label: bol #, ficility, Pallet id and barcode, lane
+// label: bol #, facility, Pallet id and barcode, lane
 
 export default function PalletView(props) {
     const classes = useStyles();
-    const { index, palletId, pallets, setPallets, handleNext, handleBack, handleFinish } = props
+    const { index, palletId, pallets, setPallets, handleNext, handleBack } = props
     const [errors, setErrors] = useState({});
     const heights = [
         "0 - 6 inches",
@@ -135,13 +134,39 @@ export default function PalletView(props) {
     };
 
     const handleAddPallet = (event) => {
-        handleAddAndSubmit(event);
-        handleNext();
+
+        const allErrors = {};
+
+        if (imageFiles.length == 0)
+            allErrors['images'] = true
+
+        if (exceptions["Other"])
+            allErrors['notes'] = true
+
+        setErrors(allErrors);
+
+        if (Object.keys(allErrors).length == 0) {
+            handleAddAndSubmit(event);
+            handleNext();
+        }
     }
 
     const handleOnSubmit = (event) => {
-        handleAddAndSubmit(event);
-        handleFinish();
+
+        const allErrors = {};
+
+        if (imageFiles.length == 0)
+            allErrors['images'] = true
+
+        if (exceptions["Other"])
+            allErrors['notes'] = true
+
+        setErrors(allErrors);
+
+        if (Object.keys(allErrors).length == 0) {
+            handleAddAndSubmit(event);
+            handleNext(true);
+        }
     }
 
     const openCameraDialog = () => setOpenCamera(true);
@@ -212,7 +237,7 @@ export default function PalletView(props) {
                     <Typography className={classes.label}>
                         Attach Images
                     </Typography>
-                    <Button className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
+                    <Button id="add-image" className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
                         Add Images
                         <input
                             type="file"
@@ -221,9 +246,13 @@ export default function PalletView(props) {
                             onChange={handleAddImagesClick}
                         />
                     </Button>
-                    <Button variant="contained" color="primary" size="large" onClick={openCameraDialog}>
+                    <Button id="take-pictures" variant="contained" color="primary" size="large" onClick={openCameraDialog}>
                         Take pictures
                     </Button>
+                    {
+                        !!errors["images"] &&
+                        <FormHelperText className={classes.helperText}>Please images of the pallet</FormHelperText>
+                    }
                 </Grid>
 
                 {
@@ -241,7 +270,7 @@ export default function PalletView(props) {
 
                 {/* Exceptions */}
                 <Grid item xs={12}>
-                    <FormControl error={!!errors["exceptions"]} component="fieldset" className={classes.formControl}>
+                    <FormControl component="fieldset" className={classes.formControl}>
                         <FormLabel className={classes.label}>Exceptions</FormLabel>
                         <FormGroup>
                             <FormControlLabel
@@ -313,20 +342,20 @@ export default function PalletView(props) {
 
             {/* Back & Next & Finish button */}
             <Grid item className={classes.button}>
-                <Button variant="contained" type="button" onClick={handleBack} color="primary" size="large">
+                <Button id="back" variant="contained" type="button" onClick={handleBack} color="primary" size="large">
                     Back
                 </Button>
             </Grid>
 
             <Grid item className={classes.button}>
-                <Button variant="contained" type="button" onClick={handleAddPallet} color="primary" size="large">
-                    {hasExisting ? "Save & Continue" : "Add Another Pallet"}
+                <Button id="continue" variant="contained" type="button" onClick={handleAddPallet} color="primary" size="large">
+                    {hasExisting ? "Save & Continue" : "Save & Add Another Pallet"}
                 </Button>
             </Grid>
 
             <Grid item className={classes.button}>
-                <Button variant="contained" type="submit" color="primary" size="large">
-                    Finish
+                <Button id="finish" variant="contained" type="submit" color="primary" size="large">
+                    Save & Review
                 </Button>
             </Grid>
 

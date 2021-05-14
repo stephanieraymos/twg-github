@@ -36,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(1),
     },
+    label3: {
+        fontFamily: "Montserrat, sans-serif",
+        color: theme.palette.text.secondary,
+        textAlign: "center"
+    },
     button: {
         marginTop: theme.spacing(2)
     },
@@ -49,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
     gridList: {
         height: 600,
     },
+    helperText: {
+        fontFamily: "Montserrat, sans-serif",
+        color: theme.palette.error.main,
+        marginTop: theme.spacing(1),
+    }
 }));
 
 export default useStyles;
