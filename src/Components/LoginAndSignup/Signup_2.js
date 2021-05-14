@@ -85,7 +85,7 @@ const Signup2 = () => {
         resetValues();
       })
       .catch((error) => {
-        console.log("Sign Up Error:", error);
+        console.log("Sign Up Error:", error.json());
       });
   };
 

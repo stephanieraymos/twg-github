@@ -36,11 +36,20 @@ const App = () => {
           <LoginRoute exact path={loginPATH}>
             <Login2 />
           </LoginRoute>
-          <InventoryProvider>
-            <PrivateRoute path={dashboardPATH}>
+          <PrivateRoute exact path={dashboardPATH}>
+            <InventoryProvider>
               <AddInventoryTeamMember />
-            </PrivateRoute>
-          </InventoryProvider>
+            </InventoryProvider>
+          </PrivateRoute>
+          <Route exact path={"/logout"}>
+            <Logout />
+          </Route>
+          <Route exact path={`${emailVerificationPATH}/:id/:token/`}>
+            <EmailVerification />
+          </Route>
+          <Route exact path={`${passwordResetPATH}/:id/:token/`}>
+            <ResetPasswordPage />
+          </Route>
           {/* <PrivateRoute exact path={dashboardPATH}>
             <Dashboard />
           </PrivateRoute>
