@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Table } from "react-bootstrap";
-import { sorttable } from "sorttable";
 import { v4 as uuidv4 } from "uuid";
 
 import { Link, useRouteMatch, useHistory } from "react-router-dom";

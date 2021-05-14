@@ -338,15 +338,15 @@ export default function SealView(props) {
 
                 <CameraDialog capture={capture} open={openCamera} handleClose={closeCameraDialog} />
 
-                {/* Back & Next & Finish button */}
+                {/* Back & Next button */}
                 <Grid item className={classes.button}>
-                    <Button id="back" variant="contained" type="button" onClick={handleBack} color="primary" size="large">
+                    <Button id="seal-back" variant="contained" type="button" onClick={handleBack} color="primary" size="large">
                         Back
                     </Button>
                 </Grid>
 
                 <Grid item className={classes.button}>
-                    <Button id="finish" variant="contained" type="submit" color="primary" size="large">
+                    <Button id="seal-next" variant="contained" type="submit" color="primary" size="large">
                         Next
                     </Button>
                 </Grid>

@@ -19,8 +19,9 @@ import {
 import useStyles from "./style";
 import CameraDialog from "./CameraDialog";
 import NoFileComponent from "./NoFileComponent";
-
-// label: bol #, facility, Pallet id and barcode, lane
+import PalletIDBarcode from "./PalletIDBarcode";
+import PDFLabel from "./PDFLabel";
+import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 
 export default function PalletView(props) {
     const classes = useStyles();
@@ -48,6 +49,7 @@ export default function PalletView(props) {
     const [imageFiles, setImageFiles] = useState([]);
     const [hasExisting, setHasExisting] = useState(false);
     const [openCamera, setOpenCamera] = useState(false);
+    const [barcode, setBarcode] = useState(null);
 
     useEffect(() => {
         // pre-fill with existing data if there is one
@@ -102,10 +104,7 @@ export default function PalletView(props) {
         setExceptions(prevExceptions => ({...prevExceptions, [event.target.name]: event.target.checked}));
     };
 
-    const handleAddAndSubmit = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
+    const handleAddAndSubmit = () => {
         let exception = []
         // get all the checked exceptions
         Object.entries(exceptions).forEach(([key, value]) => {
@@ -134,6 +133,8 @@ export default function PalletView(props) {
     };
 
     const handleAddPallet = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
         const allErrors = {};
 
@@ -146,12 +147,14 @@ export default function PalletView(props) {
         setErrors(allErrors);
 
         if (Object.keys(allErrors).length == 0) {
-            handleAddAndSubmit(event);
+            handleAddAndSubmit();
             handleNext();
         }
     }
 
     const handleOnSubmit = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
         const allErrors = {};
 
@@ -164,7 +167,7 @@ export default function PalletView(props) {
         setErrors(allErrors);
 
         if (Object.keys(allErrors).length == 0) {
-            handleAddAndSubmit(event);
+            handleAddAndSubmit();
             handleNext(true);
         }
     }
@@ -174,192 +177,209 @@ export default function PalletView(props) {
 
     return (
         <form onSubmit={handleOnSubmit} noValidate>
-        <Grid 
-            className={classes.root} 
-            container 
-            spacing={2}
-            justify="space-between">
-            {/* Title */}
-            <Grid item xs={12}>
-                <Typography className={classes.title} 
-                    gutterBottom
-                    variant="h5"
-                    component="h2" >
-                    Pallet #{index}
-                </Typography>
-            </Grid>
-            <Grid
+            <Grid 
+                className={classes.root} 
                 container 
                 spacing={2}
-                item
-                xs={6}>
-
-                {/* Pallet ID */}
-                <Grid item xs={12}>
-                    <Typography className={classes.label}>
-                        Pallet ID
+                justify="space-between">
+                {/* Title */}
+                <Grid item xs={6}>
+                    <Typography className={classes.title} 
+                        gutterBottom
+                        variant="h5"
+                        component="h2" >
+                        Pallet #{index}
                     </Typography>
-                    <TextField
-                        className={classes.textField}
-                        disabled
-                        id="pallet_id"
-                        variant="outlined"
-                        name="pallet_id"
-                        defaultValue={palletId}
-                    />
                 </Grid>
-                {/* Height */}
-                <Grid item xs={12}>
-                    <Typography className={classes.label}>
-                        Height
-                    </Typography>
-                    <TextField
-                        className={classes.textField}
-                        required
-                        id="height"
-                        select
-                        variant="outlined"
-                        name="height"
-                        error={!!errors["height"]}
-                        helperText={!!errors["height"] ? "Please select a height" : ""}
-                        value={height}
-                        onChange={(e) => setHeight(e.target.value)}
-                        >
-                        {heights.map((option, index) => (
-                            <MenuItem key={index} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Grid>
-
-                <Grid item xs={12}>
-                    <Typography className={classes.label}>
-                        Attach Images
-                    </Typography>
-                    <Button id="add-image" className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
-                        Add Images
-                        <input
-                            type="file"
-                            multiple
-                            hidden
-                            onChange={handleAddImagesClick}
-                        />
+                <Grid item className={classes.button}>
+                    <Button id="back" variant="contained" type="button" component="label" color="primary" size="large">
+                        <PDFDownloadLink style={{color: "#fff"}} document={<PDFLabel palletId={palletId} barcode={barcode} />} fileName={`${palletId}.pdf`}>
+                            {({ blob, url, loading, error }) => (loading ? 'Loading Label...' : 'Download Label')}
+                        </PDFDownloadLink>
                     </Button>
-                    <Button id="take-pictures" variant="contained" color="primary" size="large" onClick={openCameraDialog}>
-                        Take pictures
-                    </Button>
-                    {
-                        !!errors["images"] &&
-                        <FormHelperText className={classes.helperText}>Please images of the pallet</FormHelperText>
-                    }
                 </Grid>
+                <Grid
+                    container 
+                    spacing={2}
+                    item
+                    xs={6}>
 
-                {
-                    imageFiles.length > 0 &&
-                    <Grid item xs={12}>
-                        {
-                            imageFiles.map((value, index) => {
-                                return (
-                                    <Chip className={classes.chip} key={index} label={value.name} onDelete={() => handleDeleteImage(value.name)} color="primary" />
-                                );
-                            })
-                        }
-                    </Grid>
-                }
-
-                {/* Exceptions */}
-                <Grid item xs={12}>
-                    <FormControl component="fieldset" className={classes.formControl}>
-                        <FormLabel className={classes.label}>Exceptions</FormLabel>
-                        <FormGroup>
-                            <FormControlLabel
-                                control={<Checkbox color="primary" checked={exceptions["Display Only"]} onChange={handleExceptionsChange} name="Display Only" />}
-                                label="Display Only"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox color="primary" checked={exceptions["Store Fixture"]} onChange={handleExceptionsChange} name="Store Fixture" />}
-                                label="Store Fixture"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox color="primary" checked={exceptions["Undersized"]} onChange={handleExceptionsChange} name="Undersized" />}
-                                label="Undersized"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox color="primary" checked={exceptions["Other"]} onChange={handleExceptionsChange} name="Other" />}
-                                label="Other"
-                            />
-                        </FormGroup>
-                    </FormControl>
-                </Grid>
-
-                {
-                    exceptions["Other"] &&
+                    {/* Pallet ID */}
                     <Grid item xs={12}>
                         <Typography className={classes.label}>
-                            Explain "Other"
+                            Pallet ID
                         </Typography>
                         <TextField
                             className={classes.textField}
-                            id="notes"
-                            multiline
-                            rows={3}
+                            disabled
+                            id="pallet_id"
                             variant="outlined"
-                            required
-                            name="notes"
-                            error={!!errors["notes"]}
-                            helperText={!!errors["notes"] ? 'Please explain "Other"' : ""}
-                            value={notes}
-                            onChange={(e) => setNotes(e.target.value)}
+                            name="pallet_id"
+                            defaultValue={palletId}
                         />
                     </Grid>
-                }
-            </Grid>
+                    {/* Height */}
+                    <Grid item xs={12}>
+                        <Typography className={classes.label}>
+                            Height
+                        </Typography>
+                        <TextField
+                            className={classes.textField}
+                            required
+                            id="height"
+                            select
+                            variant="outlined"
+                            name="height"
+                            error={!!errors["height"]}
+                            helperText={!!errors["height"] ? "Please select a height" : ""}
+                            value={height}
+                            onChange={(e) => setHeight(e.target.value)}
+                            >
+                            {heights.map((option, index) => (
+                                <MenuItem key={index} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
 
-            {/* File/Image Preview */}
-            <Grid
-                container 
-                spacing={2}
-                item
-                xs={6}>
+                    <Grid item xs={12}>
+                        <Typography className={classes.label}>
+                            Attach Images
+                        </Typography>
+                        <Button id="add-image" className={classes.addFileButton} variant="contained" color="primary" size="large" component="label">
+                            Add Images
+                            <input
+                                type="file"
+                                multiple
+                                hidden
+                                onChange={handleAddImagesClick}
+                            />
+                        </Button>
+                        <Button id="take-pictures" variant="contained" color="primary" size="large" onClick={openCameraDialog}>
+                            Take pictures
+                        </Button>
+                        {
+                            !!errors["images"] &&
+                            <FormHelperText className={classes.helperText}>Please images of the pallet</FormHelperText>
+                        }
+                    </Grid>
 
-                <Grid item xs={12}>
-                    <Typography className={classes.label}>
-                        Image Preview
-                    </Typography>
-                    <NoFileComponent></NoFileComponent>
-                    <GridList cellHeight={300} className={classes.gridList} cols={2}>
-                        {imageFiles.map((image, index) => (
-                            <GridListTile key={index}>
-                                <img src={URL.createObjectURL(image)} alt={`image ${index}`} />
-                            </GridListTile>
-                        ))}
-                    </GridList>
+                    {
+                        imageFiles.length > 0 &&
+                        <Grid item xs={12}>
+                            {
+                                imageFiles.map((value, index) => {
+                                    return (
+                                        <Chip className={classes.chip} key={index} label={value.name} onDelete={() => handleDeleteImage(value.name)} color="primary" />
+                                    );
+                                })
+                            }
+                        </Grid>
+                    }
+
+                    {/* Exceptions */}
+                    <Grid item xs={12}>
+                        <FormControl component="fieldset" className={classes.formControl}>
+                            <FormLabel className={classes.label}>Exceptions</FormLabel>
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={<Checkbox color="primary" checked={exceptions["Display Only"]} onChange={handleExceptionsChange} name="Display Only" />}
+                                    label="Display Only"
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox color="primary" checked={exceptions["Store Fixture"]} onChange={handleExceptionsChange} name="Store Fixture" />}
+                                    label="Store Fixture"
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox color="primary" checked={exceptions["Undersized"]} onChange={handleExceptionsChange} name="Undersized" />}
+                                    label="Undersized"
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox color="primary" checked={exceptions["Other"]} onChange={handleExceptionsChange} name="Other" />}
+                                    label="Other"
+                                />
+                            </FormGroup>
+                        </FormControl>
+                    </Grid>
+
+                    {
+                        exceptions["Other"] &&
+                        <Grid item xs={12}>
+                            <Typography className={classes.label}>
+                                Explain "Other"
+                            </Typography>
+                            <TextField
+                                className={classes.textField}
+                                id="notes"
+                                multiline
+                                rows={3}
+                                variant="outlined"
+                                required
+                                name="notes"
+                                error={!!errors["notes"]}
+                                helperText={!!errors["notes"] ? 'Please explain "Other"' : ""}
+                                value={notes}
+                                onChange={(e) => setNotes(e.target.value)}
+                            />
+                        </Grid>
+                    }
                 </Grid>
+
+                {/* File/Image Preview */}
+                <Grid
+                    container 
+                    spacing={2}
+                    item
+                    xs={6}>
+
+                    <Grid item xs={12}>
+                        <Typography className={classes.label}>
+                            Label Barcode
+                        </Typography>
+                        <PalletIDBarcode palletId={palletId} setBarcode={setBarcode} />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Typography className={classes.label}>
+                            Image Preview
+                        </Typography>
+                        {
+                            imageFiles.length == 0 &&
+                            <NoFileComponent></NoFileComponent>
+                        }
+                        <GridList cellHeight={300} className={classes.gridList} cols={2}>
+                            {imageFiles.map((image, index) => (
+                                <GridListTile key={index}>
+                                    <img src={URL.createObjectURL(image)} alt={`image ${index}`} />
+                                </GridListTile>
+                            ))}
+                        </GridList>
+                    </Grid>
+                </Grid>
+
+                <CameraDialog capture={capture} open={openCamera} handleClose={closeCameraDialog} />
+
+                {/* Back & Next & Finish button */}
+                <Grid item className={classes.button}>
+                    <Button id="pallet-back" variant="contained" type="button" onClick={handleBack} color="primary" size="large">
+                        Back
+                    </Button>
+                </Grid>
+
+                <Grid item className={classes.button}>
+                    <Button id="pallet-continue" variant="contained" type="button" onClick={handleAddPallet} color="primary" size="large">
+                        {hasExisting ? "Save & Continue" : "Save & Add Another Pallet"}
+                    </Button>
+                </Grid>
+
+                <Grid item className={classes.button}>
+                    <Button id="pallet-review" variant="contained" type="submit" color="primary" size="large">
+                        Save & Review
+                    </Button>
+                </Grid>
+
             </Grid>
-
-            <CameraDialog capture={capture} open={openCamera} handleClose={closeCameraDialog} />
-
-            {/* Back & Next & Finish button */}
-            <Grid item className={classes.button}>
-                <Button id="back" variant="contained" type="button" onClick={handleBack} color="primary" size="large">
-                    Back
-                </Button>
-            </Grid>
-
-            <Grid item className={classes.button}>
-                <Button id="continue" variant="contained" type="button" onClick={handleAddPallet} color="primary" size="large">
-                    {hasExisting ? "Save & Continue" : "Save & Add Another Pallet"}
-                </Button>
-            </Grid>
-
-            <Grid item className={classes.button}>
-                <Button id="finish" variant="contained" type="submit" color="primary" size="large">
-                    Save & Review
-                </Button>
-            </Grid>
-
-        </Grid>
         </form>
     );
 }

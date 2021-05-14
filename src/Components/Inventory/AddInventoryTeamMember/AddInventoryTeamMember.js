@@ -14,6 +14,9 @@ import { v4 as uuidv4 } from "uuid";
 import { useInventoryContext } from "../../../context/inventory";
 import Navigation from "../../Navigation/Navigation";
 import FinishView from "./ReviewView";
+import PDFLabel from "./PDFLabel";
+import { PDFViewer } from '@react-pdf/renderer';
+import PalletIDBarcode from "./PalletIDBarcode";
 
 const useStyles = makeStyles((theme) => ({
     root: {

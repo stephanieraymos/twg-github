@@ -1,32 +1,74 @@
-import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { defer } from 'rxjs';
+import React, { useEffect, useState } from 'react';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 
 // Create styles
 const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'row',
-    backgroundColor: '#E4E4E4'
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1
-  }
+    page: {
+        padding: 20,
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        flexWrap: "wrap"
+    },
+    bolSection: {
+        padding: 10,
+        width: "100%",
+        color: "#000",
+        textAlign: "center",
+        fontSize: 40,
+    },
+    facilitySection: {
+        padding: 10,
+        width: "50%",
+        color: "#000",
+        textAlign: "center",
+        fontSize: 24
+    },
+    laneSection: {
+        padding: 10,
+        width: "50%",
+        color: "#000",
+        textAlign: "center",
+        fontSize: 24
+    },
+    palletIdSection: {
+        padding: 10,
+        width: "100%",
+        color: "#000",
+        textAlign: "center",
+        fontSize: 40
+    }
 });
 
-// Create Document Component
-const PDFLabel = () => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Section #1</Text>
-      </View>
-      <View style={styles.section}>
-        <Text>Section #2</Text>
-      </View>
-    </Page>
-  </Document>
-);
+// label: bol #, facility, Pallet id and barcode, lane
+
+const PDFLabel = (props) => {
+
+    const { palletId, barcode } = props
+
+    const bolNumber = "815505056";
+    const facility = "T-01";
+    const lane = "F6";
+    
+    return (
+        <Document>
+            <Page size="A4" orientation="landscape" style={styles.page}>
+                <View style={styles.bolSection}>
+                    <Text>BOL #{bolNumber}</Text>
+                </View>
+                <View style={styles.facilitySection}>
+                    <Text>Facility: {facility}</Text>
+                </View>
+                <View style={styles.laneSection}>
+                    <Text>Lane: {lane}</Text>
+                </View>
+                <View style={styles.palletIdSection}>
+                    <Text>Pallet ID</Text>
+                    <Image source={ {uri: barcode} }></Image>
+                    <Text>{palletId}</Text>
+                </View>
+            </Page>
+        </Document>
+    )
+};
 
 export default PDFLabel;

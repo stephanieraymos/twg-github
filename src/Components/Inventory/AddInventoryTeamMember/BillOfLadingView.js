@@ -280,7 +280,7 @@ export default function BillOfLadingView(props) {
 
             {/* Next Buttton */}
             <Grid item className={classes.button}>
-                <Button id="next" variant="contained" type="submit" color="primary" size="large">
+                <Button id="bol-next" variant="contained" type="submit" color="primary" size="large">
                     Next
                 </Button>
             </Grid>

@@ -83,13 +83,13 @@ export default function FinishView(props) {
 
                 {/* Back & Next & Finish button */}
                 <Grid item className={classes.button}>
-                    <Button id="back" variant="contained" type="button" onClick={handleBack} color="primary" size="large">
+                    <Button id="review-back" variant="contained" type="button" onClick={handleBack} color="primary" size="large">
                         Back
                     </Button>
                 </Grid>
 
                 <Grid item className={classes.button}>
-                    <Button id="finish" variant="contained" type="submit" color="primary" size="large">
+                    <Button id="review-finish" variant="contained" type="submit" color="primary" size="large">
                         Finish
                     </Button>
                 </Grid>
