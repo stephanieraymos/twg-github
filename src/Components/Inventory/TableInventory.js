@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Table } from "react-bootstrap";
-import { sorttable } from "sorttable";
+import { v4 as uuidv4 } from "uuid";
 
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 
 const TableInventory = ({ trucks }) => {
   let history = useHistory();
@@ -17,7 +17,7 @@ const TableInventory = ({ trucks }) => {
   }
   trucks.sort(dynamicSort("status"));
 
-  const { inventory, loadId } = useInventoryContext();
+  const { inventory } = useInventoryContext();
 
   return (
     <>
@@ -40,6 +40,7 @@ const TableInventory = ({ trucks }) => {
           </thead>
           <tbody>
             {inventory.map((item) => {
+              // setLoadId(uuidv4());
               let {
                 id,
                 price,
@@ -47,6 +48,7 @@ const TableInventory = ({ trucks }) => {
                 category,
                 units,
                 pallet_count,
+                loadId,
                 fob,
                 retail_price,
                 status,

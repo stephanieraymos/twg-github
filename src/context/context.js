@@ -1,6 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
-import { userURL } from "./Pages/urls";
-import { useParams } from "react-router-dom";
+import React, { useState, useContext } from "react";
 
 // Generating context
 const AppContext = React.createContext(null);

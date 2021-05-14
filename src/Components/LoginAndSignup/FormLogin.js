@@ -3,7 +3,7 @@ import { Button, Form, InputGroup, Image } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import visibleOn from "../../img/visibility-on.svg";
 import visibleOff from "../../img/visibility-off.svg";
-import { useGlobalContext } from "../../context";
+import { useGlobalContext } from "../../context/context";
 import users from "../../css/users.css";
 import ResetPasswordModal from "../Users/ResetPasswordModal";
 // import { toggleModal } from "toggle-modal";

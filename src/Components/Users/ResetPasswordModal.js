@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import cancel from "../../img/cancel.svg";
-import { useGlobalContext } from "../../context";
+import { useGlobalContext } from "../../context/context";
 import { authService } from "../../authService";
 import mail from "../../img/mail.svg";
 

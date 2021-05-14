@@ -7,7 +7,6 @@ import {
   logoutPATH,
   dashboardPATH,
   inventoryPATH,
-  usersPATH,
   accountPATH,
   emailVerificationPATH,
   superuserPATH,
@@ -19,15 +18,15 @@ import Login2 from "./Components/LoginAndSignup/Login_2";
 import Logout from "./Components/LoginAndSignup/Logout";
 
 import InventoryAllTrucks from "./Components/Inventory/InventoryAllTrucks";
-import AdminDashboard from "./Components/Dashboard/AdminDashboard";
 import AccountDetails from "./Components/Users/AccountDetails";
 import EmailVerification from "./Components/LoginAndSignup/EmailVerification";
 import SuperuserHome from "./Components/Superuser/Home";
-import { SuperuserProvider } from "./superuser";
+import { SuperuserProvider } from "./context/superuser";
 import ResetPasswordPage from "./Components/Users/ResetPasswordPage";
 import Dashboard from "./Components/Dashboard/Dashboard";
-import { InventoryProvider } from "./inventory";
 import AddInventoryFormSeal from "./Components/Inventory/TeamMember/AddInventoryFormSeal";
+import AddInventoryTeamMember from "./Components/Inventory/AddInventoryTeamMember/AddInventoryTeamMember";
+import { InventoryProvider } from "./context/inventory";
 
 const App = () => {
   return (
@@ -38,6 +37,20 @@ const App = () => {
             <Login2 />
           </LoginRoute>
           <PrivateRoute exact path={dashboardPATH}>
+            <InventoryProvider>
+              <AddInventoryTeamMember />
+            </InventoryProvider>
+          </PrivateRoute>
+          <Route exact path={"/logout"}>
+            <Logout />
+          </Route>
+          <Route exact path={`${emailVerificationPATH}/:id/:token/`}>
+            <EmailVerification />
+          </Route>
+          <Route exact path={`${passwordResetPATH}/:id/:token/`}>
+            <ResetPasswordPage />
+          </Route>
+          {/* <PrivateRoute exact path={dashboardPATH}>
             <Dashboard />
           </PrivateRoute>
           <PrivateRoute path={inventoryPATH}>
@@ -62,7 +75,7 @@ const App = () => {
             <SuperuserRoute path={superuserPATH}>
               <SuperuserHome />
             </SuperuserRoute>
-          </SuperuserProvider>
+          </SuperuserProvider> */}
         </Switch>
       </Router>
     </>

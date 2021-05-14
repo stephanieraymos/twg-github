@@ -5,9 +5,9 @@ import { Switch, useRouteMatch } from "react-router-dom";
 import SellerDashboard from "./SellerDashboard";
 import BuyerDashboard from "./BuyerDashboard";
 import AdminDashboard from "./AdminDashboard";
-import { InventoryProvider } from "../../inventory";
+import { InventoryProvider } from "../../context/inventory";
 import { authService } from "../../authService";
-import { SuperuserProvider } from "../../superuser";
+import { SuperuserProvider } from "../../context/superuser";
 
 const Dashboard = () => {
     document.title = "Dashboard";

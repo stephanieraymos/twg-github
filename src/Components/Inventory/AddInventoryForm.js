@@ -5,7 +5,7 @@ import { inventoryPATH } from "../../Pages/paths";
 import { useHistory } from "react-router-dom";
 import { image } from "d3-fetch";
 import cancel from "../../img/cancel.svg";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 
 const AddInventoryForm = ({ addNewTrucks }) => {
   const form = useRef(null);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Card } from "react-bootstrap";
 import NarrowSearchForm from "./NarrowSearchForm";
-import { InventoryProvider } from "../../../inventory";
+import { InventoryProvider } from "../../../context/inventory";
 
 const NarrowYourSearch = () => {
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useInventoryContext } from "../../inventory";
+import { useInventoryContext } from "../../context/inventory";
 import { authService } from "../../authService";
 import {
   Grid,
@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import CustomTable from "./DashboardTable";
 import Chart from "../D3/Chart";
-import { useSuperuserContext } from "../../superuser";
+import { useSuperuserContext } from "../../context/superuser";
 import Barplot from "./DashboardBarplot";
 import dashboard from "../../css/dashboard.css";
 import { useStyles } from "./Hooks/useStyles";

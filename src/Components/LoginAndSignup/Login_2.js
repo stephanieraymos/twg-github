@@ -5,7 +5,7 @@ import modalandsidebar from "../../css/modalandsidebar.css";
 import logo from "../../img/w-logo.png";
 import cancel from "../../img/cancel.svg";
 import Signup2 from "./Signup_2";
-import { useTruck } from "../../truckContext";
+import { useTruck } from "../../context/truckContext";
 import { Modal, Table } from "react-bootstrap";
 
 const LoginModal = () => {

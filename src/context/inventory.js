@@ -6,8 +6,8 @@ import {
   inventoryV2GetByBuyerIdURL,
   inventoryV2URL,
   inventoryV2FilesURL,
-} from "./Pages/urls";
-import { authService } from "./authService";
+} from "../Pages/urls";
+import { authService } from "../authService";
 import { useHistory } from "react-router-dom";
 import { create } from "d3-selection";
 import { v4 as uuidv4 } from "uuid";
@@ -21,7 +21,6 @@ const InventoryProvider = ({ children }) => {
   const [id, setId] = useState("");
   const [sellerId, setSellerId] = useState("");
   const [buyerId, setBuyerId] = useState("");
-  const [loadId, setLoadId] = useState(uuidv4());
   const [category, setCategory] = useState("");
   const [commission, setCommission] = useState(0.0);
   const [contents, setContents] = useState([]);
@@ -48,6 +47,8 @@ const InventoryProvider = ({ children }) => {
   const [seal, setSeal] = useState("");
   const [bol, setBol] = useState("");
   const [warehouseLocation, setWarehouseLocation] = useState("");
+
+  const [loadId, setLoadId] = useState("");
   // console.log(loadId)
   // EXTRA
   const [inventory, setInventory] = useState([]);
@@ -169,6 +170,7 @@ const InventoryProvider = ({ children }) => {
               setWarehouseLocation(warehouseLocation);
               getInventoryFiles(images, manifests);
               resolve(data);
+              data.append(loadId);
             })
             .catch((error) => {
               reject(error);
@@ -177,7 +179,6 @@ const InventoryProvider = ({ children }) => {
         .catch(() => history.push("/logout"));
     });
   };
-
   //^ ---- GET INVENTORY BY BUYER ID ----
   const getInventoryByBuyerId = (id) => {
     return new Promise((resolve, reject) => {
@@ -388,6 +389,14 @@ const InventoryProvider = ({ children }) => {
         .catch(() => history.push("/logout"));
     });
   };
+
+  //Attempting to grab first 3 characters of source to add to the beginning of the uuid
+  // Object.values(source);
+  // console.log(source)
+  // const sourceAbv = source.map((location) => {
+  //   return location.substring(0, 3);
+  // });
+  // console.log(sourceAbv);
 
   ////////////////////////// &&--PROVIDER--&& ///////////////////////////////
   return (

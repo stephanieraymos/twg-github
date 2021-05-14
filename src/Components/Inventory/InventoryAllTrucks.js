@@ -1,6 +1,6 @@
 import React from "react";
 import Navigation from "../Navigation/Navigation";
-import { useTruck } from "../../truckContext";
+import { useTruck, TruckProvider } from "../../context/truckContext";
 import AddInventoryButton from "./AddInventoryButton";
 import { Container } from "react-bootstrap";
 import TableInventory from "./TableInventory";
@@ -10,12 +10,12 @@ import { PrivateRoute } from "../../Pages/router";
 import { Switch, useRouteMatch } from "react-router-dom";
 import TruckDetails from "./TruckDetails";
 import UpdateTruckDetails from "./UpdateTruckDetails";
-import { TruckProvider } from "../../truckContext";
 import AddInventoryPage from "./AddInventoryPage";
-import { InventoryProvider } from "../../inventory";
+import { InventoryProvider } from "../../context/inventory";
 import NarrowYourSearch from "./NarrowSearch/NarrowYourSearch";
 import { authService } from "../../authService";
 import AddInventoryFormSeal from "./TeamMember/AddInventoryFormSeal";
+import AddInventoryTeamMember from "./AddInventoryTeamMember/AddInventoryTeamMember";
 
 const InventoryAllTrucks = () => {
   document.title = "Inventory - Database";
@@ -58,7 +58,13 @@ const InventoryAllTrucks = () => {
           </>
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/add`}>
-          <AddInventoryPage addNewTrucks={addTruck} />
+          <>
+            <div>
+              <Navigation />
+            </div>
+            <AddInventoryTeamMember />
+          </>
+          {/* <AddInventoryPage addNewTrucks={addTruck} /> */}
         </PrivateRoute>
         <PrivateRoute exact path={`${path}/seal-form-page`}>
           <AddInventoryFormSeal />

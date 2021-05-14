@@ -5,7 +5,7 @@ import React, {
   useContext,
   createContext,
 } from "react";
-import { inventoryV2GetURL } from "./Pages/urls";
+import { inventoryV2GetURL } from "../Pages/urls";
 
 // Generating context
 const TruckContext = createContext();

@@ -4,7 +4,7 @@ import { authService } from "../../../authService";
 import { inventoryPATH } from "../../../Pages/paths";
 import { useHistory, useRouteMatch, Link } from "react-router-dom";
 import cancel from "../../../img/cancel.svg";
-import { useInventoryContext } from "../../../inventory";
+import { useInventoryContext } from "../../../context/inventory";
 
 const AddInventoryFormBOL = ({ addNewTrucks }) => {
   const form = useRef(null);
